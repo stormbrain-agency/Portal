@@ -115,3 +115,7 @@ Route::get('/get-counties/{stateId}', [LocationController::class, 'getCountiesBy
 Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirect']);
 
 require __DIR__ . '/auth.php';
+
+
+Route::get('/registerNotification', [RegisterNotificationController::class, 'index']);
+Route::post('/registerNotification', [RegisterNotificationController::class, 'sendEmail']);
