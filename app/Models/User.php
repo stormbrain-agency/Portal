@@ -30,6 +30,7 @@ class User extends Authenticatable
         'mailing_address',
         'vendor_id',
         'county_designation',
+        'status',
         'w9_file_path',
         'last_login_at',
         'last_login_ip',

@@ -6,8 +6,8 @@
                 <img src="{{ $user->profile_photo_url }}" class="w-100"/>
             </div>
         @else
-            <div class="symbol-label fs-3 {{ app(\App\Actions\GetThemeType::class)->handle('bg-light-? text-?', $user->name) }}">
-                {{ substr($user->name, 0, 1) }}
+            <div class="symbol-label fs-3 {{ app(\App\Actions\GetThemeType::class)->handle('bg-light-? text-?', $user->first_name) }}">
+                {{ substr($user->first_name, 0, 1) }}
             </div>
         @endif
     </a>
@@ -16,7 +16,7 @@
 <!--begin::User details-->
 <div class="d-flex flex-column">
     <a href="{{ route('user-management.users.show', $user) }}" class="text-gray-800 text-hover-primary mb-1">
-        {{ $user->name }}
+        {{ $user->first_name}} {{ $user->last_name}}
     </a>
     <span>{{ $user->email }}</span>
 </div>
