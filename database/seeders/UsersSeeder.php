@@ -19,8 +19,8 @@ class UsersSeeder extends Seeder
         $demoUser = User::create([
             'first_name'              => $faker->name,
             'last_name'              => $faker->name,
-            'email'             => 'admin@demo.com',
-            'password'          => Hash::make('demo'),
+            'email'             => 'support@stormbrain.com',
+            'password'          => Hash::make('W%JdE7EhM)TC!pS(imuAzEgw'),
             'status'          => 1,
             'email_verified_at' => now(),
         ]);
