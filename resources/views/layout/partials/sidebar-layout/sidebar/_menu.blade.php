@@ -40,6 +40,7 @@
 				<!--end:Menu content-->
 			</div>
 			<!--end:Menu item-->
+			@if(!auth()->user()->hasRole('county user'))
 			<!--begin:Menu item-->
 			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
 				<!--begin:Menu link-->
@@ -91,6 +92,7 @@
 				<!--end:Menu sub-->
 			</div>
 			<!--end:Menu item-->
+			@endif
 			<!--begin:Menu item-->
 			<div class="menu-item">
 				<!--begin:Menu link-->
