@@ -65,12 +65,17 @@ class RegisteredUserController extends Controller
             'w9_file_path' => $request->w9_file_path,
             'status' => 0,
 
+
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function censoring(){
+        return view('pages.auth.censoring');
     }
 }
