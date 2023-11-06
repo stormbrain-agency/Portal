@@ -16,6 +16,12 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard'));
 });
 
+// Home > Dashboard > W-9
+Breadcrumbs::for('dashboard.upload', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('W-9', route('dashboard.w9_upload'));
+});
+
 // Home > Dashboard > User Management
 Breadcrumbs::for('user-management.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
@@ -50,40 +56,4 @@ Breadcrumbs::for('user-management.roles.show', function (BreadcrumbTrail $trail,
 Breadcrumbs::for('user-management.permissions.index', function (BreadcrumbTrail $trail) {
     $trail->parent('user-management.index');
     $trail->push('Permissions', route('user-management.permissions.index'));
-});
-
-// ---------------------------------------------
-// Home > Dashboard > County Provider Payment Resports
-Breadcrumbs::for('county-provider-payment-report.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('County Provider Payment Resports', route('county-provider-payment-report.index'));
-});
-
-
-// ---------------------------------------------
-// Home > Dashboard > County Provider W9
-Breadcrumbs::for('county-provider-w9.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('County Provider W-9', route('county-provider-w9.index'));
-});
-
-// ---------------------------------------------
-// Home > Dashboard > County MRAC/ARAC Submissions
-Breadcrumbs::for('county-mrac-arac.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('County MRAC/ARAC Submissions', route('county-mrac-arac.index'));
-});
-
-// ---------------------------------------------
-// Home > Dashboard > Notification Management
-Breadcrumbs::for('notification-management.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('Notification Management', route('notification-management.index'));
-});
-
-// ---------------------------------------------
-// Home > Dashboard > Activity Management
-Breadcrumbs::for('activity-management.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('Activity Management', route('activity-management.index'));
 });

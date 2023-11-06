@@ -24,6 +24,12 @@
 							</span>
 							<span class="menu-title">Default</span>
 						</a>
+						<a class="menu-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard.w9_upload') }}">
+							<span class="menu-bullet">
+								<span class="bullet bullet-dot"></span>
+							</span>
+							<span class="menu-title">Provider W-9</span>
+						</a>
 						<!--end:Menu link-->
 					</div>
 					<!--end:Menu item-->
@@ -35,7 +41,7 @@
 			<div class="menu-item pt-5">
 				<!--begin:Menu content-->
 				<div class="menu-content">
-					<span class="menu-heading fw-bold text-uppercase fs-7">Manager</span>
+					<span class="menu-heading fw-bold text-uppercase fs-7">Apps</span>
 				</div>
 				<!--end:Menu content-->
 			</div>
@@ -92,11 +98,20 @@
 			</div>
 			<!--end:Menu item-->
 			<!--begin:Menu item-->
+			<div class="menu-item pt-5">
+				<!--begin:Menu content-->
+				<div class="menu-content">
+					<span class="menu-heading fw-bold text-uppercase fs-7">Help</span>
+				</div>
+				<!--end:Menu content-->
+			</div>
+			<!--end:Menu item-->
+			<!--begin:Menu item-->
 			<div class="menu-item">
 				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('county-provider-payment-report.*') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
+				<a class="menu-link" href="https://preview.keenthemes.com/html/metronic/docs/base/utilities" target="_blank">
 					<span class="menu-icon">{!! getIcon('rocket', 'fs-2') !!}</span>
-					<span class="menu-title">Payment Resports</span>
+					<span class="menu-title">Components</span>
 				</a>
 				<!--end:Menu link-->
 			</div>
@@ -104,9 +119,9 @@
 			<!--begin:Menu item-->
 			<div class="menu-item">
 				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('county-provider-w9.*') ? 'active' : '' }}" href="{{ route('county-provider-w9.index') }}">
+				<a class="menu-link" href="https://preview.keenthemes.com/laravel/metronic/docs" target="_blank">
 					<span class="menu-icon">{!! getIcon('abstract-26', 'fs-2') !!}</span>
-					<span class="menu-title">W-9 Manager</span>
+					<span class="menu-title">Documentation</span>
 				</a>
 				<!--end:Menu link-->
 			</div>
@@ -114,38 +129,13 @@
 			<!--begin:Menu item-->
 			<div class="menu-item">
 				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
+				<a class="menu-link" href="https://preview.keenthemes.com/laravel/metronic/docs/changelog" target="_blank">
 					<span class="menu-icon">{!! getIcon('code', 'fs-2') !!}</span>
-					<span class="menu-title">MRAC/ARAC Manager</span>
+					<span class="menu-title">Changelog v8.2.0</span>
 				</a>
 				<!--end:Menu link-->
 			</div>
 			<!--end:Menu item-->
-			
-			<!-- ADMIN -->
-		@if(auth()->user()->hasRole('admin'))
-			<!--begin:Menu item-->
-			<div class="menu-item">
-				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('notification-management.*') ? 'active' : '' }}" href="{{ route('notification-management.index') }}">
-					<span class="menu-icon">{!! getIcon('code', 'fs-2') !!}</span>
-					<span class="menu-title">Notifications</span>
-				</a>
-				<!--end:Menu link-->
-			</div>
-			<!--end:Menu item-->
-			<!--begin:Menu item-->
-			<div class="menu-item">
-				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('activity-management.*') ? 'active' : '' }}" href="{{ route('activity-management.index') }}">
-					<span class="menu-icon">{!! getIcon('code', 'fs-2') !!}</span>
-					<span class="menu-title">Activity Management</span>
-				</a>
-				<!--end:Menu link-->
-			</div>
-			<!--end:Menu item-->
-		@endif
-		
 		</div>
 		<!--end::Menu-->
 	</div>
