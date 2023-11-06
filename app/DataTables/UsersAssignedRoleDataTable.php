@@ -67,8 +67,7 @@ class UsersAssignedRoleDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('user')->addClass('d-flex align-items-center')->name('name'),
-            Column::make('name'),
+            Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
             Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
             Column::computed('action')
                 ->addClass('text-end text-nowrap')

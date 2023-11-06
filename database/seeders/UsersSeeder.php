@@ -21,6 +21,7 @@ class UsersSeeder extends Seeder
             'last_name'              => $faker->name,
             'email'             => 'admin@demo.com',
             'password'          => Hash::make('demo'),
+            'status'          => 1,
             'email_verified_at' => now(),
         ]);
 
@@ -29,6 +30,7 @@ class UsersSeeder extends Seeder
             'last_name'              => $faker->name,
             'email'             => 'manager@demo.com',
             'password'          => Hash::make('demo'),
+            'status'          => 1,
             'email_verified_at' => now(),
         ]);
         $demoUser3 = User::create([
@@ -36,13 +38,15 @@ class UsersSeeder extends Seeder
             'last_name'              => $faker->name,
             'email'             => 'viewonly@demo.com',
             'password'          => Hash::make('demo'),
+            'status'          => 1,
             'email_verified_at' => now(),
         ]);
         $demoUser4 = User::create([
-            'first_name'              => $faker->name,
-            'last_name'              => $faker->name,
+            'first_name'              => "Alex",
+            'last_name'              => "Sandro",
             'email'             => 'countyuser@demo.com',
             'password'          => Hash::make('demo'),
+            'status'          => 1,
             'email_verified_at' => now(),
         ]);
     }
