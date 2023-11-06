@@ -44,6 +44,13 @@ class UsersSeeder extends Seeder
         $demoUser4 = User::create([
             'first_name'              => "Alex",
             'last_name'              => "Sandro",
+            'business_phone'              => "1234567899",
+            'mobile_phone'              => "033-561188",
+            'mailing_address'              => "mail@gmail.com",
+            'vendor_id'              => "9855-6665",
+            'county_designation'              => "9855-6665",
+            'status'              => "9855-6665",
+            'w9_file_path'              => "download.com",
             'email'             => 'countyuser@demo.com',
             'password'          => Hash::make('demo'),
             'status'          => 1,
