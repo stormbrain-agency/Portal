@@ -32,6 +32,8 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.update');
+    Route::get('censoring', [RegisteredUserController::class, 'censoring'])
+                ->name('censoring');
 });
 
 Route::middleware('auth')->group(function () {

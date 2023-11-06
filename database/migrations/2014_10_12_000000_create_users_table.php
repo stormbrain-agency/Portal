@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('vendor_id')->nullable();
             $table->string('county_designation')->nullable();
             $table->text('w9_file_path')->nullable();
-            $table->string('avatar')->nullable();
+            $table->integer('status');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

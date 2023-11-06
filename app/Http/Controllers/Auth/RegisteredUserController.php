@@ -37,23 +37,45 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'business_phone' => ['required', 'string', 'max:255'],
+            'mobile_phone' => ['required', 'string', 'max:255'],
+            'mailing_address' => ['required', 'string', 'max:255'],
+            'vendor_id' => ['required', 'string', 'max:255'],
+            'county_designation' => ['required', 'string', 'max:255'],
+            'w9_file_path' => ['required', 'string', 'max:255'],
+
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'last_login_at' => \Illuminate\Support\Carbon::now()->toDateTimeString(),
-            'last_login_ip' => $request->getClientIp()
+            'last_login_ip' => $request->getClientIp(),
+            'business_phone' => $request->business_phone,
+            'mobile_phone' => $request->mobile_phone,
+            'mailing_address' => $request->mailing_address,
+            'vendor_id' => $request->vendor_id,
+            'county_designation' => $request->county_designation,
+            'w9_file_path' => $request->w9_file_path,
+            'status' => 0,
+
+
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function censoring(){
+        return view('pages.auth.censoring');
     }
 }
