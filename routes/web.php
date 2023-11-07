@@ -72,7 +72,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    Route::get('/help-faq', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
 
 });
 

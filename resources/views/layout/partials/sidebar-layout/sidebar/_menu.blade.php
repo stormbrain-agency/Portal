@@ -40,7 +40,7 @@
 				<!--end:Menu content-->
 			</div>
 			<!--end:Menu item-->
-			@if(!auth()->user()->hasRole('county user'))
+			@if(!auth()->user()->hasRole('county user') && count(auth()->user()->roles) != 0)
 			<!--begin:Menu item-->
 			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
 				<!--begin:Menu link-->
