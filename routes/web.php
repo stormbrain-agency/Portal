@@ -54,6 +54,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [CountyProviderW9Controller::class,'index'])->name('index');
             
         });
+
+        Route::prefix('dashboard')->name('dashboard.')->group(function () {
+            Route::get('/w9_upload', [W9_Upload_Controller::class, 'showUploadForm'])->name('w9_upload');
+            Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
+            Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
+        });
     });
 
     Route::middleware(['permission:read mrac_arac'])->group(function () {
@@ -77,11 +83,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
 
-    Route::prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::get('/w9_upload', [W9_Upload_Controller::class, 'showUploadForm'])->name('w9_upload');
-        Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
-        Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
-    });
+
 
 
 });
