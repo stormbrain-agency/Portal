@@ -16,6 +16,12 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('dashboard'));
 });
 
+// Home > Dashboard > W-9
+Breadcrumbs::for('dashboard.upload', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('W-9', route('dashboard.w9_upload'));
+});
+
 // Home > Dashboard > User Management
 Breadcrumbs::for('user-management.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');

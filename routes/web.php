@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Controllers\W9_Upload_Controller ;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +74,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
+
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/w9_upload', [W9_Upload_Controller::class, 'showUploadForm'])->name('w9_upload');
+        Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
+        Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
+        Route::get('/export/csv', [FileController::class, 'exportCsv']);
+    });
+
 
 });
 
