@@ -51,7 +51,13 @@
             <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
         </div>
         <!--end::Separator-->
+        @if ($errors->has('notfounduser'))
+            <span class="text-danger">{{ $errors->first('notfounduser') }}</span>
+        @endif
 
+         @if ($errors->has('email'))
+            <span class="text-danger">{{ $errors->first('email') }}</span>
+        @endif
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
