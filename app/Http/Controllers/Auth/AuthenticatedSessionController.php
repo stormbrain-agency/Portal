@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -33,17 +34,35 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-
-        $request->session()->regenerate();
-
-        $request->user()->update([
-            'last_login_at' => Carbon::now()->toDateTimeString(),
-            'last_login_ip' => $request->getClientIp()
-        ]);
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $checkUser = $request->user();
+        if (!$checkUser) {
+            return redirect()->route('login')->withErrors(['notfounduser' => 'Login information is incorrect']);
+        }
+        if ($checkUser) {
+            if ($checkUser->status == 1) {
+                if ($checkUser->email_verified_at == null || $checkUser->email_verified_at == '') {
+                    Auth::logout();
+                    return redirect()->route('confirm_email');
+                }
+                $request->session()->regenerate();
+                
+                $request->user()->update([
+                    'last_login_at' => Carbon::now()->toDateTimeString(),
+                    'last_login_ip' => $request->getClientIp()
+                ]);
+                
+                return redirect()->intended(RouteServiceProvider::HOME);
+                
+            }elseif($checkUser->status == 0){
+                Auth::logout();
+                return redirect()->route('censoring');
+            }elseif($checkUser->status == 2){
+                Auth::logout();
+                return redirect()->route('confirm_email');
+            }
+        
+        }
     }
-
     /**
      * Destroy an authenticated session.
      *
