@@ -1,14 +1,18 @@
 <?php
-
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class W9Upload extends Model
 {
-    protected $table = 'files';
+    use HasFactory;
+    protected $table = 'w9_upload';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
 
     protected $fillable = [
-        'user_name', 'file_name','comment',
+        'date',
+        'country',
+        'user',
+        'comments'
     ];
 }

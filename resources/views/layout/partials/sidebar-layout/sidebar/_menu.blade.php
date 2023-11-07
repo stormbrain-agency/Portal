@@ -106,7 +106,7 @@
 			<!--begin:Menu item-->
 			<div class="menu-item">
 				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('county-provider-w9.*') ? 'active' : '' }}" href="{{ route('county-provider-w9.index') }}">
+				<a class="menu-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard.w9_upload') }}">
 					<span class="menu-icon">{!! getIcon('abstract-26', 'fs-2') !!}</span>
 					<span class="menu-title">W-9 Manager</span>
 				</a>
