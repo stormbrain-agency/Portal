@@ -21,6 +21,7 @@
                 </div>
             @endif
             <form action="/dashboard/w9_upload" method="post" enctype="multipart/form-data">
+
                 @csrf
                 <div class="form-group">
                     <input type="file" class="form-control-file" name="file" id="w9_uploadInput">
@@ -30,6 +31,10 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Upload</button>
+                </div>
+
+                <div class="form-group">
+                    <a href="/export/csv" class="btn btn-primary">Export CSV</a>
                 </div>
 
                 <div class="form-group">

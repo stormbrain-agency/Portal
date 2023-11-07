@@ -26,6 +26,8 @@ use App\Http\Controllers\W9_Upload_Controller ;
 |
 */
 
+Route::get('/export/csv', [W9_Upload_Controller::class, 'exportCsv']);
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/', [DashboardController::class, 'index']);
@@ -79,7 +81,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/w9_upload', [W9_Upload_Controller::class, 'showUploadForm'])->name('w9_upload');
         Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
         Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
-        Route::get('/export/csv', [FileController::class, 'exportCsv']);
     });
 
 
