@@ -38,7 +38,6 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'business_phone' => ['required', 'string', 'max:255'],
@@ -65,17 +64,18 @@ class RegisteredUserController extends Controller
             'w9_file_path' => $request->w9_file_path,
             'status' => 0,
 
-
         ]);
 
         event(new Registered($user));
 
-        // Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+        return response()->json(['status' => 'success', 'message' => 'successful']);
     }
 
     public function censoring(){
         return view('pages.auth.censoring');
+    }
+
+    public function confirm_email(){
+        return view('pages.auth.confirm-email');
     }
 }

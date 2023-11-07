@@ -34,6 +34,8 @@ Route::middleware('guest')->group(function () {
                 ->name('password.update');
     Route::get('censoring', [RegisteredUserController::class, 'censoring'])
                 ->name('censoring');
+    Route::get('confirm_email', [RegisteredUserController::class, 'confirm_email'])
+                ->name('confirm_email');
 });
 
 Route::middleware('auth')->group(function () {
