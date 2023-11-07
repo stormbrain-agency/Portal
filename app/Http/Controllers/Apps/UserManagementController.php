@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Apps;
 
 use App\DataTables\UsersDataTable;
+use App\DataTables\UsersPendingDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -63,5 +64,10 @@ class UserManagementController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function users_pending(UsersPendingDataTable $dataTable)
+    {
+        return $dataTable->render('pages.apps.user-management.users-pending.list');
     }
 }
