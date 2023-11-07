@@ -119,7 +119,7 @@
 			<div class="menu-item">
 				<!--begin:Menu link-->
 				<a class="menu-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard.w9_upload') }}">
-					<span class="menu-icon">{!! getIcon('abstract-26', 'fs-2') !!}</span>
+					<span class="menu-icon devtest">{!! getIcon('abstract-26', 'fs-2') !!}</span>
 					<span class="menu-title">W-9 Manager</span>
 				</a>
 				<!--end:Menu link-->
