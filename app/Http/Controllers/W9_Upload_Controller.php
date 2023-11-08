@@ -81,12 +81,12 @@ class W9_Upload_Controller extends Controller
                 $newFile->comments = $request->input('comments');
                 $newFile->original_name = $uniqueName;
                 $newFile->save();
-                return redirect('/dashboard/w9_upload')->with('success', 'File uploaded successfully.');
+                return redirect('/county-provider-w9/w9_upload')->with('success', 'File uploaded successfully.');
             } else {
-                return redirect('/dashboard/w9_upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
+                return redirect('/county-provider-w9/w9_upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
             }
         } else {
-            return redirect('/dashboard/w9_upload')->with('error', 'No file selected.');
+            return redirect('/county-provider-w9/w9_upload')->with('error', 'No file selected.');
         }
     }
     public function downloadFile($filename)
