@@ -45,8 +45,7 @@ class RegisteredUserController extends Controller
             'mailing_address' => ['required', 'string', 'max:255'],
             'vendor_id' => ['required', 'string', 'max:255'],
             'county_designation' => ['required', 'string', 'max:255'],
-            'w9_file_path' => ['required', 'file', 'mimes:zip'], 
-
+            'w9_file_path' => ['required', 'string', 'max:255'],
 
         ]);
 
@@ -62,6 +61,7 @@ class RegisteredUserController extends Controller
             'mailing_address' => $request->mailing_address,
             'vendor_id' => $request->vendor_id,
             'county_designation' => $request->county_designation,
+            'w9_file_path' => $request->w9_file_path,
             'status' => 0,
 
         ]);

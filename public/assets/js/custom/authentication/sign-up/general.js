@@ -246,11 +246,6 @@ var KTSignupGeneral = function () {
                         validators: {
                             notEmpty: {
                                 message: 'W-9 File Upload is required'
-                            },
-                            file: {
-                                extension: 'zip',
-                                type: 'application/zip',
-                                message: 'The selected file is not a valid ZIP file'
                             }
                         }
                     },'toc': {
