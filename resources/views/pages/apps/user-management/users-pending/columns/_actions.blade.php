@@ -13,19 +13,24 @@
     <!--end::Menu item-->
 
     <!--begin::Menu item-->
+    @if (!$user->status == 1 || !$user->status == 2)
+        
     <div class="menu-item px-3">
         <a href="#" class="menu-link px-3" data-kt-user-id="{{ $user->id }}" data-bs-toggle="modal" data-kt-action="approve_row">
             Approve
         </a>
     </div>
+    @endif
     <!--end::Menu item-->
 
+    @if (!$user->status == 1 || !$user->status == 2)
     <!--begin::Menu item-->
     <div class="menu-item px-3">
         <a href="#" class="menu-link px-3" data-kt-user-id="{{ $user->id }}" data-bs-toggle="modal" data-kt-action="deny_row">
             Deny
         </a>
     </div>
+    @endif
     <!--end::Menu item-->
 
     <!--begin::Menu item-->

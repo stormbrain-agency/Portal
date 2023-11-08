@@ -1,7 +1,7 @@
 <!--begin::Navbar-->
 <div class="app-navbar flex-shrink-0">
     <!--begin::Search-->
-    <div class="app-navbar-item align-items-stretch ms-1 ms-md-3">
+    {{-- <div class="app-navbar-item align-items-stretch ms-1 ms-md-3">
         @include(config('settings.KT_THEME_LAYOUT_DIR').'/partials/sidebar-layout/search/_dropdown')
     </div>
     <!--end::Search-->
@@ -34,7 +34,7 @@
 		<div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">{!! getIcon('element-11', 'fs-2') !!}</div>
         @include('partials/menus/_my-apps-menu')
         <!--end::Menu wrapper-->
-    </div>
+    </div> --}}
     <!--end::My apps links-->
     <!--begin::User menu-->
 	<div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">

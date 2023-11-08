@@ -23,6 +23,9 @@ class UsersPendingDataTable extends DataTable
             ->editColumn('user', function (User $user) {
                 return view('pages.apps.user-management.users.columns._user', compact('user'));
             })
+            ->editColumn('status', function (User $user) {
+                return view('pages.apps.user-management.users-pending.columns._status', compact('user'));
+            })
             ->editColumn('w9_file_path', function (User $user) {
                 return $user->w9_file_path;
             })
