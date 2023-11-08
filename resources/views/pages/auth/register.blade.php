@@ -123,7 +123,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" placeholder="W-9 File Upload" name="w9_file_path" autocomplete="off" class="form-control bg-transparent"/>
+            <input type="file" placeholder="W-9 File Upload" name="w9_file_path" autocomplete="off" class="form-control bg-transparent" accept=".zip"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->

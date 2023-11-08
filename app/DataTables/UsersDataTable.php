@@ -44,7 +44,7 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->where('status', 1);
+        return $model->newQuery()->where('status', 1)->whereNotNull('email_verified_at');
     }
 
     /**

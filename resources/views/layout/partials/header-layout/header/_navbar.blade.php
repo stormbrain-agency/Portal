@@ -1,7 +1,7 @@
 <!--begin::Navbar-->
 <div class="app-navbar flex-shrink-0">
     <!--begin::Search-->
-    <div class="app-navbar-item align-items-stretch ms-1 ms-md-3">
+    {{-- <div class="app-navbar-item align-items-stretch ms-1 ms-md-3">
         @include(config('settings.KT_THEME_LAYOUT_DIR').'/partials/header-layout/search/_dropdown')
     </div>
     <!--end::Search-->
@@ -28,7 +28,7 @@
             <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
         </div>
         <!--end::Menu wrapper-->
-    </div>
+    </div> --}}
     <!--end::Chat-->
     <!--begin::My apps links-->
     <div class="app-navbar-item ms-1 ms-md-3">

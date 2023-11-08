@@ -27,18 +27,25 @@ class UserPending extends Component
 
     public function approveUser($id)
     {
-        
-        User::where('id', $id)->update(['status' => 1]);
+        if (auth()->user()->can('county users management')) {
+            User::where('id', $id)->update(['status' => 1, 'email_verified_at' => now()]);
+            $user = User::find($id);
+            $user->assignRole('county user');
 
-        $this->emit('success', 'User successfully approved');
+            $this->emit('success', 'User successfully approved');
+        }else{
+            $this->emit('error', 'You do not have permission to perform this action');
+        }
     }
 
     public function denyUser($id)
     {
-        
-        User::where('id', $id)->update(['status' => 2]);
-        
-        $this->emit('success', 'User successfully denied');
+        if (auth()->user()->can('county users management')) {
+            User::where('id', $id)->update(['status' => 2]);
+            $this->emit('success', 'User successfully denied');
+        }else{
+            $this->emit('error', 'You do not have permission to perform this action');
+        }
     }
 
     public function hydrate()

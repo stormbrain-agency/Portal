@@ -52,23 +52,27 @@
         </div>
         <!--end::Separator-->
         @if ($errors->has('notfounduser'))
+        <div class="fv-row mb-4">
             <span class="text-danger">{{ $errors->first('notfounduser') }}</span>
+        </div>
         @endif
 
-         @if ($errors->has('email'))
+        @if ($errors->has('email'))
+        <div class="fv-row mb-4">
             <span class="text-danger">{{ $errors->first('email') }}</span>
+        </div>
         @endif
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" value="demo@demo.com"/>
+            <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent" value=""/>
             <!--end::Email-->
         </div>
 
         <!--end::Input group--->
         <div class="fv-row mb-3">
             <!--begin::Password-->
-            <input type="password" placeholder="Password" name="password" autocomplete="off" class="form-control bg-transparent" value="demo"/>
+            <input type="password" placeholder="Password" name="password" autocomplete="off" class="form-control bg-transparent" value=""/>
             <!--end::Password-->
         </div>
         <!--end::Input group--->
