@@ -32,8 +32,13 @@ document.querySelectorAll('[data-kt-action="update_row"]').forEach(function (ele
 
 document.querySelectorAll('[data-kt-action="approve_row"]').forEach(function (element) {
     element.addEventListener('click', function () {
-        console.log("ok");
         Livewire.emit("approve_user", this.getAttribute("data-kt-user-id"));
+    });
+});
+
+document.querySelectorAll('[data-kt-action="deny_row"]').forEach(function (element) {
+    element.addEventListener('click', function () {
+        Livewire.emit("deny_user", this.getAttribute("data-kt-user-id"));
     });
 });
 
