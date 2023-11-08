@@ -9,7 +9,7 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
-class UsersDataTable extends DataTable
+class UsersPendingDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,17 +23,15 @@ class UsersDataTable extends DataTable
             ->editColumn('user', function (User $user) {
                 return view('pages.apps.user-management.users.columns._user', compact('user'));
             })
-            ->editColumn('role', function (User $user) {
-                return ucwords($user->roles->first()?->name);
+            ->editColumn('w9_file_path', function (User $user) {
+                return $user->w9_file_path;
             })
-            ->editColumn('last_login_at', function (User $user) {
-                return sprintf('<div class="badge badge-light fw-bold">%s</div>', $user->last_login_at ? $user->last_login_at->diffForHumans() : $user->updated_at->diffForHumans());
-            })
+
             ->editColumn('created_at', function (User $user) {
                 return $user->created_at->format('d M Y, h:i a');
             })
             ->addColumn('action', function (User $user) {
-                return view('pages.apps.user-management.users.columns._actions', compact('user'));
+                return view('pages.apps.user-management.users-pending.columns._actions', compact('user'));
             })
             ->setRowId('id');
     }
@@ -44,7 +42,10 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->where('status', 1);
+        return $model->newQuery()
+                ->where('status', 0)
+                ->orWhere('status', 2)
+                ->orWhereNull('email_verified_at');
     }
 
     /**
@@ -60,7 +61,7 @@ class UsersDataTable extends DataTable
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(2)
-            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users/columns/_draw-scripts.js')) . "}");
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users-pending/columns/_draw-scripts.js')) . "}");
     }
 
     /**
@@ -71,9 +72,10 @@ class UsersDataTable extends DataTable
         if (auth()->user()->hasRole('admin')) {
             return [
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
-                Column::make('role')->searchable(false),
-                Column::make('last_login_at')->title('Last Login'),
-                Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
+                Column::make('status')->addClass('text-nowrap')->name('status'),
+                Column::make('business_phone')->title('Business Phone')->addClass('text-nowrap'),
+                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
+                Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
                 Column::computed('action')
                     ->addClass('text-end text-nowrap')
                     ->exportable(false)
@@ -83,9 +85,10 @@ class UsersDataTable extends DataTable
         }else{
              return [
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
-                Column::make('role')->searchable(false),
-                Column::make('last_login_at')->title('Last Login'),
-                Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
+                Column::make('status')->addClass('text-nowrap')->name('status'),
+                Column::make('business_phone')->title('Business Phone')->addClass('text-nowrap'),
+                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
+                Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
             ];
         }
     }

@@ -40,7 +40,7 @@
 				<!--end:Menu content-->
 			</div>
 			<!--end:Menu item-->
-			@if(!auth()->user()->hasRole('county user'))
+			@if(!auth()->user()->hasRole('county user') && count(auth()->user()->roles) != 0)
 			<!--begin:Menu item-->
 			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
 				<!--begin:Menu link-->
@@ -60,6 +60,18 @@
 								<span class="bullet bullet-dot"></span>
 							</span>
 							<span class="menu-title">Users</span>
+						</a>
+						<!--end:Menu link-->
+					</div>
+					<!--end:Menu item-->
+					<!--begin:Menu item-->
+					<div class="menu-item">
+						<!--begin:Menu link-->
+						<a class="menu-link {{ request()->routeIs('user-management.users-pending.*') ? 'active' : '' }}" href="{{ route('user-management.users-pending.index') }}">
+							<span class="menu-bullet">
+								<span class="bullet bullet-dot"></span>
+							</span>
+							<span class="menu-title">Pending Users</span>
 						</a>
 						<!--end:Menu link-->
 					</div>
@@ -106,8 +118,8 @@
 			<!--begin:Menu item-->
 			<div class="menu-item">
 				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('county-provider-w9.*') ? 'active' : '' }}" href="{{ route('county-provider-w9.index') }}">
-					<span class="menu-icon">{!! getIcon('abstract-26', 'fs-2') !!}</span>
+				<a class="menu-link {{ request()->routeIs('county-provider-w9.*') ? 'active' : '' }}" href="{{ route('county-provider-w9.w9_upload') }}">
+					<span class="menu-icon devtest">{!! getIcon('abstract-26', 'fs-2') !!}</span>
 					<span class="menu-title">W-9 Manager</span>
 				</a>
 				<!--end:Menu link-->

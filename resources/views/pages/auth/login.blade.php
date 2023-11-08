@@ -1,7 +1,7 @@
 <x-auth-layout>
 
     <!--begin::Form-->
-    <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="{{ route('dashboard') }}" action="{{ route('login') }}">
+    <form class="form w-100" method="POST" novalidate="novalidate" id="kt_sign_in_form1" data-kt-redirect-url="{{ route('dashboard') }}" action="{{ route('login') }}">
         @csrf
         <!--begin::Heading-->
         <div class="text-center mb-11">
@@ -51,7 +51,13 @@
             <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
         </div>
         <!--end::Separator-->
+        @if ($errors->has('notfounduser'))
+            <span class="text-danger">{{ $errors->first('notfounduser') }}</span>
+        @endif
 
+         @if ($errors->has('email'))
+            <span class="text-danger">{{ $errors->first('email') }}</span>
+        @endif
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->

@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Controllers\W9_Upload_Controller ;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ use App\Http\Middleware\CheckPermission;
 |
 */
 
+Route::get('/export/csv', [W9_Upload_Controller::class, 'exportCsv']);
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/', [DashboardController::class, 'index']);
@@ -33,6 +36,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::name('user-management.')->group(function () {
         Route::resource('/user-management/users', UserManagementController::class);
+        Route::middleware(['permission:county users management'])->group(function () {
+        Route::prefix('/user-management/user-pending')->name('users-pending.')->group(function () {
+            Route::get('/', [UserManagementController::class,'users_pending'])->name('index');
+            
+        });
+        });
         Route::middleware(['permission:read provider payment'])->group(function () {
             Route::resource('/user-management/roles', RoleManagementController::class);
         });
@@ -48,9 +57,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['permission:read provider w9'])->group(function () {
         Route::prefix('county-provider-w9')->name("county-provider-w9.")->group(function () {
-            Route::get('/', [CountyProviderW9Controller::class,'index'])->name('index');
+            Route::get('/w9_upload', [W9_Upload_Controller::class, 'showUploadForm'])->name('w9_upload');
+            Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
+            Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
             
         });
+
+        // Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        //     Route::get('/w9_upload', [W9_Upload_Controller::class, 'showUploadForm'])->name('w9_upload');
+        //     Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
+        //     Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
+        // });
     });
 
     Route::middleware(['permission:read mrac_arac'])->group(function () {
@@ -72,7 +89,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    Route::get('/help-faq', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
+
+
+
 
 });
 
