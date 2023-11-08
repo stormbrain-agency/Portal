@@ -51,15 +51,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['permission:read provider w9'])->group(function () {
         Route::prefix('county-provider-w9')->name("county-provider-w9.")->group(function () {
-            Route::get('/', [CountyProviderW9Controller::class,'index'])->name('index');
-            
-        });
-
-        Route::prefix('dashboard')->name('dashboard.')->group(function () {
             Route::get('/w9_upload', [W9_Upload_Controller::class, 'showUploadForm'])->name('w9_upload');
             Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
             Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
+            
         });
+
+        // Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        //     Route::get('/w9_upload', [W9_Upload_Controller::class, 'showUploadForm'])->name('w9_upload');
+        //     Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
+        //     Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
+        // });
     });
 
     Route::middleware(['permission:read mrac_arac'])->group(function () {
