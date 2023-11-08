@@ -31,7 +31,7 @@ class UsersPendingDataTable extends DataTable
                 return $user->created_at->format('d M Y, h:i a');
             })
             ->addColumn('action', function (User $user) {
-                return view('pages.apps.user-management.users.columns._actions', compact('user'));
+                return view('pages.apps.user-management.users-pending.columns._actions', compact('user'));
             })
             ->setRowId('id');
     }
@@ -42,7 +42,10 @@ class UsersPendingDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->where('status', 0);
+        return $model->newQuery()
+                ->where('status', 0)
+                ->orWhere('status', 2)
+                ->orWhereNull('email_verified_at');
     }
 
     /**
@@ -58,7 +61,7 @@ class UsersPendingDataTable extends DataTable
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(2)
-            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users/columns/_draw-scripts.js')) . "}");
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users-pending/columns/_draw-scripts.js')) . "}");
     }
 
     /**
@@ -69,6 +72,7 @@ class UsersPendingDataTable extends DataTable
         if (auth()->user()->hasRole('admin')) {
             return [
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
+                Column::make('status')->addClass('text-nowrap')->name('status'),
                 Column::make('business_phone')->title('Business Phone')->addClass('text-nowrap'),
                 Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
@@ -81,6 +85,7 @@ class UsersPendingDataTable extends DataTable
         }else{
              return [
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
+                Column::make('status')->addClass('text-nowrap')->name('status'),
                 Column::make('business_phone')->title('Business Phone')->addClass('text-nowrap'),
                 Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),

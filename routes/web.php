@@ -36,7 +36,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::name('user-management.')->group(function () {
         Route::resource('/user-management/users', UserManagementController::class);
-        Route::get('/user-management/user-pending', [UserManagementController::class,"users_pending"])->name("users-pending-index");
+        Route::middleware(['permission:county users management'])->group(function () {
+        Route::prefix('/user-management/user-pending')->name('users-pending.')->group(function () {
+            Route::get('/', [UserManagementController::class,'users_pending'])->name('index');
+            
+        });
+        });
         Route::middleware(['permission:read provider payment'])->group(function () {
             Route::resource('/user-management/roles', RoleManagementController::class);
         });
