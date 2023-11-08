@@ -3,7 +3,7 @@
         Provider W-9
     @endsection
     @section('breadcrumbs')
-        {{ Breadcrumbs::render('dashboard.upload') }}
+        {{ Breadcrumbs::render('county-provider-w9.upload') }}
     @endsection
     <!--begin::Row-->
     <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
@@ -20,7 +20,7 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <form action="/dashboard/w9_upload" method="post" enctype="multipart/form-data">
+            <form action="/county-provider-w9/w9_upload" method="post" enctype="multipart/form-data">
 
                 @csrf
                 <div class="form-group">
@@ -31,6 +31,11 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Upload</button>
+                    <p>This portal site
+                    is not a storage system, but rather a secure site for
+                    transferring documents. As such, all documents in
+                    any folder will be permanently deleted after 30 days
+                    </p>
                 </div>
 
                 <div class="form-group">
@@ -80,7 +85,7 @@
                             <td>{{ $file->user }}</td>
                             <td>{{ $file->comments }}</td>
                             <td>{{ $file->original_name }}</td>
-                            <td><a href="{{ route('dashboard.w9_download', ['filename' => $file->original_name]) }}" class="btn btn-primary">Download</a></td>
+                            <td><a href="{{ route('county-provider-w9.w9_download', ['filename' => $file->original_name]) }}" class="btn btn-primary">Download</a></td>
                         </tr>
                     @endforeach
                 </tbody>
