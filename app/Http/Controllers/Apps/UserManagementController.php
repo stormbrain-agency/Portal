@@ -74,9 +74,8 @@ class UserManagementController extends Controller
     public function usersPendingShow($id)
     {
         $user = User::find($id);
-        $w9Uploads = $user->w9Upload;
-        // dd($w9Uploads);
         if ($user) {
+            $w9Uploads = $user->w9Upload;
             return view('pages.apps.user-management.users-pending.show', compact('user','w9Uploads'));
         } else {
             return view('errors.user_not_found');
