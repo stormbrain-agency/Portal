@@ -41,8 +41,11 @@ class UserPending extends Component
     public function denyUser($id)
     {
         if (auth()->user()->can('county users management')) {
-            User::where('id', $id)->update(['status' => 2]);
-            $this->emit('success', 'User successfully denied');
+            // Delete the user record with the specified ID
+            User::destroy($id);
+
+            // Emit a success event with a message
+            $this->emit('success', 'User successfully deleted');
         }else{
             $this->emit('error', 'You do not have permission to perform this action');
         }

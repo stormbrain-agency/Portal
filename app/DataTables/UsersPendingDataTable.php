@@ -21,7 +21,7 @@ class UsersPendingDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->rawColumns(['user', 'last_login_at'])
             ->editColumn('user', function (User $user) {
-                return view('pages.apps.user-management.users.columns._user', compact('user'));
+                return view('pages.apps.user-management.users-pending.columns._user', compact('user'));
             })
             ->editColumn('status', function (User $user) {
                 return view('pages.apps.user-management.users-pending.columns._status', compact('user'));
@@ -45,10 +45,7 @@ class UsersPendingDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()
-                ->where('status', 0)
-                ->orWhere('status', 2)
-                ->orWhereNull('email_verified_at');
+        return $model->newQuery()->where('status', 0)->orWhereNull('email_verified_at');
     }
 
     /**

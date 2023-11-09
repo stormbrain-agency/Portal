@@ -39,6 +39,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::middleware(['permission:county users management'])->group(function () {
         Route::prefix('/user-management/user-pending')->name('users-pending.')->group(function () {
             Route::get('/', [UserManagementController::class,'users_pending'])->name('index');
+            Route::get('/users/{id}', [UserManagementController::class,'usersPendingShow'])->name('show');
+            Route::get('/users/approve/{id}', [UserManagementController::class,'usersPendingApprove'])->name('approve');
+            Route::get('/users/deny/{id}', [UserManagementController::class,'usersPendingDeny'])->name('deny');
             
         });
         });

@@ -32,13 +32,46 @@ document.querySelectorAll('[data-kt-action="update_row"]').forEach(function (ele
 
 document.querySelectorAll('[data-kt-action="approve_row"]').forEach(function (element) {
     element.addEventListener('click', function () {
-        Livewire.emit("approve_user", this.getAttribute("data-kt-user-id"));
+        Swal.fire({
+            text: "Approve this user?",
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: "btn btn-secondary",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emit("approve_user", this.getAttribute("data-kt-user-id"));
+            }
+        });
     });
 });
 
 document.querySelectorAll('[data-kt-action="deny_row"]').forEach(function (element) {
     element.addEventListener('click', function () {
-        Livewire.emit("deny_user", this.getAttribute("data-kt-user-id"));
+        Swal.fire({
+            text: "This action will delete this user's data!\nAre you sure?",
+            icon: "warning",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            customClass: {
+                confirmButton: "btn btn-danger",
+                cancelButton: "btn btn-secondary",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emit(
+                    "deny_user",
+                    this.getAttribute("data-kt-user-id")
+                );
+            }
+        });
     });
 });
 

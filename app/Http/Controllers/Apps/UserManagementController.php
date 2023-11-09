@@ -70,4 +70,41 @@ class UserManagementController extends Controller
     {
         return $dataTable->render('pages.apps.user-management.users-pending.list');
     }
+
+    public function usersPendingShow($id)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            return view('pages.apps.user-management.users-pending.show', compact('user'));
+        } else {
+            return view('errors.user_not_found');
+        }
+    }
+
+    public function usersPendingApprove($id)
+    {
+        if (auth()->user()->can('county users management')) {
+            User::where('id', $id)->update(['status' => 1, 'email_verified_at' => now()]);
+            $user = User::find($id);
+            $user->assignRole('county user');
+
+            return redirect()->route('user-management.users.show', $user);
+
+        }else{
+            return route('user-management.users-pending.show', $user);
+        }
+    }
+
+    public function usersPendingDeny($id)
+    {
+        if (auth()->user()->can('county users management')) {
+            User::destroy($id);
+
+            return redirect()->route('user-management.users-pending.index');
+
+        }else{
+            return route('user-management.users-pending.show', $user);
+        }
+    }
 }
