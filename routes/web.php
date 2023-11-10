@@ -30,15 +30,14 @@ use App\Http\Middleware\CheckPermission;
 Route::get('/export/csv', [W9_Upload_Controller::class, 'exportCsv']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [W9_Upload_Controller::class, 'showUploadForm']);
     // Route::get('/', [DashboardController::class, 'index']);
     // Route::get('/get-counties/{stateId}', 'LocationController@getCountiesByState');
 
     Route::get('/profile', [UserManagementController::class, 'profile'])->name('profile');
     Route::get('/state', [LocationController::class, 'getStates'])->name('state');
 
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard', [W9_Upload_Controller::class, 'showUploadForm'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard', [W9_Upload_Controller::class, 'showUploadForm'])->name('dashboard');
 
     Route::name('user-management.')->group(function () {
         Route::middleware(['permission:county users management'])->group(function () {
