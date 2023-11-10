@@ -31,11 +31,8 @@
    
     <!--begin::Menu item-->
     <div class="menu-item px-5">
-        <a href="#" class="menu-link px-5">
-            <span class="menu-text">My Projects</span>
-            <span class="menu-badge">
-                <span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
-            </span>
+        <a href="{{ route('profile') }}" class="menu-link px-5">
+            <span class="menu-text">My Profile</span>
         </a>
     </div>
     <!--end::Menu item-->
@@ -51,11 +48,6 @@
 		@include('partials/theme-mode/__menu')
 	</div>
 	<!--end::Menu item-->
-    <!--begin::Menu item-->
-    <div class="menu-item px-5 my-1">
-        <a href="#" class="menu-link px-5">Account Settings</a>
-    </div>
-    <!--end::Menu item-->
     <!--begin::Menu item-->
     <div class="menu-item px-5">
         <a class="button-ajax menu-link px-5" href="#" data-action="{{ route('logout') }}" data-method="post" data-csrf="{{ csrf_token() }}" data-reload="true">

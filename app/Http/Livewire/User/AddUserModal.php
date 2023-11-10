@@ -31,7 +31,8 @@ class AddUserModal extends Component
     public $edit_mode = false;
 
     protected $rules = [
-        // 'name' => 'required|string',
+        'first_name' => 'required|string',
+        'last_name' => 'required|string',
         'email' => 'required|email',
         'role' => 'required|string',
     ];
@@ -145,8 +146,6 @@ class AddUserModal extends Component
             'vendor_id' => $this->vendor_id,
             'county_designation' => $this->county_designation,
         ];
-
-
 
         if (!$this->edit_mode) {
             $data['password'] = Hash::make($this->email);

@@ -112,12 +112,27 @@
         </div>
         <!--end::Input group--->
 
-        <!--begin::Input group--->
         <div class="fv-row mb-8">
-            <!--begin::Email-->
-            <input type="text" placeholder="County Designation" name="county_designation" autocomplete="off" class="form-control bg-transparent"/>
-            <!--end::Email-->
+            <div class="row">
+                <div class="col-6">
+                    <select id="state_option" class="form-control bg-transparent">
+                        <option value="">Select State</option>
+                        @if ($states && count($states) > 0)
+                        @foreach($states as $state)
+                            <option value="{{ $state->state_id }}">{{ $state->state_name }}</option>
+                        @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="col-6">
+                    <select id="county_option" name="county_designation" class="form-control bg-transparent">
+                        <option value="">Select County</option>
+                    </select>
+                </div>
+            </div>
+            <!--end::County Designation-->
         </div>
+
         <!--end::Input group--->
 
         <!--begin::Input group--->
@@ -161,5 +176,28 @@
         <!--end::Sign up-->
     </form>
     <!--end::Form-->
+   @push('scripts')
+    <script>
+        document.getElementById('state_option').addEventListener('change', function() {
+        var stateId = this.value;
+        var countyDropdown = document.getElementById('county_option');
 
+        countyDropdown.innerHTML = '<option value="">Select County</option>';
+
+        if (stateId) {
+            fetch('/get-counties/' + stateId)
+                .then(response => response.json())
+                .then(counties => {
+                    counties.forEach(county => {
+                        var option = document.createElement('option');
+                        option.value = county.county_fips; 
+                        option.text = county.county_full; 
+                        countyDropdown.add(option);
+                    });
+                });
+        }
+    });
+
+    </script>
+@endpush
 </x-auth-layout>

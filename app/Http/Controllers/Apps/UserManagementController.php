@@ -39,7 +39,12 @@ class UserManagementController extends Controller
      */
     public function show(User $user)
     {
-        return view('pages.apps.user-management.users.show', compact('user'));
+        if ($user) {
+            $w9Uploads = $user->w9Upload()->orderBy('created_at', 'desc')->get();
+            return view('pages.apps.user-management.users.show', compact('user','w9Uploads'));
+        } else {
+            return view('errors.404');
+        }
     }
 
     /**
@@ -78,7 +83,7 @@ class UserManagementController extends Controller
             $w9Uploads = $user->w9Upload;
             return view('pages.apps.user-management.users-pending.show', compact('user','w9Uploads'));
         } else {
-            return view('errors.user_not_found');
+            return view('errors.404');
         }
     }
 
@@ -105,6 +110,17 @@ class UserManagementController extends Controller
 
         }else{
             return route('user-management.users-pending.show', $user);
+        }
+    }
+
+    public function profile(){
+        $user = auth()->user();
+
+        if ($user) {
+            $w9Uploads = $user->w9Upload;
+            return view('pages.apps.user-management.users.show', compact('user','w9Uploads'));
+        } else {
+            return view('errors.404');
         }
     }
 }
