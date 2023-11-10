@@ -15,25 +15,19 @@ class AddUserModal extends Component
 {
     use WithFileUploads;
 
-    public $first_name;
-    public $last_name;
+    public $name;
     public $email;
-    public $business_phone;
-    public $mobile_phone;
-    public $mailing_address;
-    public $vendor_id;
-    public $county_designation;
-    public $w9_file_path;
     public $role;
     public $avatar;
     public $saved_avatar;
-    public $idUser;
+
     public $edit_mode = false;
 
     protected $rules = [
-        // 'name' => 'required|string',
+        'name' => 'required|string',
         'email' => 'required|email',
         'role' => 'required|string',
+        'avatar' => 'nullable|sometimes|image|max:1024',
     ];
 
     protected $listeners = [
@@ -62,99 +56,51 @@ class AddUserModal extends Component
 
     public function submit()
     {
+        // Validate the form input data
         $this->validate();
 
         DB::transaction(function () {
-            if ($this->edit_mode) {
-                $this->updateUserSave();
+            // Prepare the data for creating a new user
+            $data = [
+                'name' => $this->name,
+            ];
+
+            if ($this->avatar) {
+                $data['profile_photo_path'] = $this->avatar->store('avatars', 'public');
             } else {
-                $this->createUser();
-                $this->reset();
+                $data['profile_photo_path'] = null;
+            }
+
+            if (!$this->edit_mode) {
+                $data['password'] = Hash::make($this->email);
+            }
+
+            // Create a new user record in the database
+            $user = User::updateOrCreate([
+                'email' => $this->email,
+            ], $data);
+
+            if ($this->edit_mode) {
+                // Assign selected role for user
+                $user->syncRoles($this->role);
+
+                // Emit a success event with a message
+                $this->emit('success', __('User updated'));
+            } else {
+                // Assign selected role for user
+                $user->assignRole($this->role);
+
+                // Send a password reset link to the user's email
+                Password::sendResetLink($user->only('email'));
+
+                // Emit a success event with a message
+                $this->emit('success', __('New user created'));
             }
         });
 
-    }
-
-    private function createUser(){
-        $existingUser = User::where('email', $this->email)->first();
-
-        if ($existingUser) {
-            $this->emit('error', 'The email address is already in use by another user!');
-            return;
-        }
-        $data = $this->prepareUserData();
-        $data['password'] = Hash::make($this->email);
-        $data['status'] = 1;
-        $user = User::create($data);
-
-        $user->assignRole($this->role);
-
-        // Password::sendResetLink($user->only('email'));
-
-        $this->emit('success', __('User created successfully'));
-    }
-
-
-    private function updateUserSave()
-    {
-        // Get the user by ID
-        $id = $this->idUser;
-        $user = User::find($id);
-        $checkUser = User::where('email', $this->email)
-                ->where('id', '!=', $this->idUser)
-                ->first();
-
-        if ($checkUser) {
-            $this->emit('error', 'The email address is already in use by another user!');
-            return;
-        }
-        // Prevent modification of the current user's data
-        if ($user->id == Auth::id()) {
-            $this->emit('error', 'User cannot be updated');
-            return;
-        }
-
-        if (!$user) {
-            $this->emit('error', 'User does not exist');
-            return;
-        }
-
-        $data = $this->prepareUserData();
-
-        // Update user data
-        $user->update($data);
-
-        // Sync roles for the user
-        $user->syncRoles($this->role);
-
-        // Emit a success event with a message
-        $this->emit('success', __('User updated successfully'));
+        // Reset the form fields after successful submission
         $this->reset();
     }
-
-    private function prepareUserData()
-    {
-        // Prepare the data for creating or updating a user
-        $data = [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'business_phone' => $this->business_phone,
-            'mobile_phone' => $this->mobile_phone,
-            'mailing_address' => $this->mailing_address,
-            'vendor_id' => $this->vendor_id,
-            'county_designation' => $this->county_designation,
-        ];
-
-
-
-        if (!$this->edit_mode) {
-            $data['password'] = Hash::make($this->email);
-        }
-
-        return $data;
-    }
-
 
     public function deleteUser($id)
     {
@@ -177,15 +123,9 @@ class AddUserModal extends Component
 
         $user = User::find($id);
 
-        $this->idUser = $user->id;
-        $this->first_name = $user->first_name;
-        $this->last_name = $user->last_name;
+        $this->saved_avatar = $user->profile_photo_url;
+        $this->name = $user->name;
         $this->email = $user->email;
-        $this->business_phone = $user->business_phone;
-        $this->mobile_phone = $user->mobile_phone;
-        $this->mailing_address = $user->mailing_address;
-        $this->vendor_id = $user->vendor_id;
-        $this->county_designation = $user->county_designation;
         $this->role = $user->roles?->first()->name ?? '';
     }
 

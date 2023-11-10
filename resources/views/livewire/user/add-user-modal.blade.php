@@ -23,29 +23,67 @@
                     <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
-                            <div class="row">
-                                <div class="col-6">
-                                    <!--begin::Label-->
-                                    <label class="required fw-semibold fs-6 mb-2">First Name</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="hidden" wire:model.defer="idUser" name="idUser"/>
-                                    <input type="text" wire:model.defer="first_name" name="first_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="First name"/>
-                                    <!--end::Input-->
-                                    @error('first_name')
-                                    <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
-                                <div class="col-6">
-                                    <!--begin::Label-->
-                                    <label class="required fw-semibold fs-6 mb-2">Last Name</label>
-                                    <!--end::Label-->
-                                    <!--begin::Input-->
-                                    <input type="text" wire:model.defer="last_name" name="last_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Last name"/>
-                                    <!--end::Input-->
-                                    @error('last_name')
-                                    <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
+                            <!--begin::Label-->
+                            <label class="d-block fw-semibold fs-6 mb-5">Avatar</label>
+                            <!--end::Label-->
+                            <!--begin::Image placeholder-->
+                            <style>
+                                .image-input-placeholder {
+                                    background-image: url('{{ image('svg/files/blank-image.svg') }}');
+                                }
+
+                                [data-bs-theme="dark"] .image-input-placeholder {
+                                    background-image: url('{{ image('svg/files/blank-image-dark.svg') }}');
+                                }
+                            </style>
+                            <!--end::Image placeholder-->
+                            <!--begin::Image input-->
+                            <div class="image-input image-input-outline image-input-placeholder {{ $avatar || $saved_avatar ? '' : 'image-input-empty' }}" data-kt-image-input="true">
+                                <!--begin::Preview existing avatar-->
+                                @if($avatar)
+                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $avatar ? $avatar->temporaryUrl() : '' }});"></div>
+                                @else
+                                    <div class="image-input-wrapper w-125px h-125px" style="background-image: url({{ $saved_avatar }});"></div>
+                                @endif
+                                <!--end::Preview existing avatar-->
+                                <!--begin::Label-->
+                                <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                    {!! getIcon('pencil','fs-7') !!}
+                                    <!--begin::Inputs-->
+                                    <input type="file" wire:model.defer="avatar" name="avatar" accept=".png, .jpg, .jpeg"/>
+                                    <input type="hidden" name="avatar_remove"/>
+                                    <!--end::Inputs-->
+                                </label>
+                                <!--end::Label-->
+                                <!--begin::Cancel-->
+                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                    {!! getIcon('cross','fs-2') !!}
+                                </span>
+                                <!--end::Cancel-->
+                                <!--begin::Remove-->
+                                <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                    {!! getIcon('cross','fs-2') !!}
+                                </span>
+                                <!--end::Remove-->
                             </div>
+                            <!--end::Image input-->
+                            <!--begin::Hint-->
+                            <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                            <!--end::Hint-->
+                            @error('avatar')
+                            <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Full Name</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" wire:model.defer="name" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Full name"/>
+                            <!--end::Input-->
+                            @error('name')
+                            <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -57,79 +95,6 @@
                             <input type="email" wire:model.defer="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com"/>
                             <!--end::Input-->
                             @error('email')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">Business Phone Number + Ext.</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" wire:model.defer="business_phone" name="business_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Business Phone Number"/>
-                            <!--end::Input-->
-                            @error('business_phone')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">Mobile Phone Number.</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" wire:model.defer="mobile_phone" name="mobile_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Mobile Phone Number"/>
-                            <!--end::Input-->
-                            @error('mobile_phone')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">Agency Mailing Address</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" wire:model.defer="mailing_address" name="mailing_address" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Agency Mailing Address"/>
-                            <!--end::Input-->
-                            @error('mailing_address')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">Vendor ID Number</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" wire:model.defer="vendor_id" name="vendor_id" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Vendor ID Number"/>
-                            <!--end::Input-->
-                            @error('vendor_id')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">County Designation</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" wire:model.defer="county_designation" name="county_designation" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="County Designation"/>
-                            <!--end::Input-->
-                            @error('county_designation')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <!--end::Input group-->
-
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">W-9 File Upload</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="file" wire:model.defer="w9_file_path" name="w9_file_path" class="form-control form-control-solid mb-3 mb-lg-0" accept=".zip"/>
-                            <!--end::Input-->
-                            @error('w9_file_path')
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->

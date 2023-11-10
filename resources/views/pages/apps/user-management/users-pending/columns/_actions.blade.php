@@ -31,14 +31,6 @@
         </a>
     </div>
     @endif
-    @if ($user->status == 1 && ($user->email_verified_at == null || $user->email_verified_at == ""))
-    <!--begin::Menu item-->
-    <div class="menu-item px-3">
-        <a href="#" class="menu-link px-3" data-kt-user-id="{{ $user->id }}" data-kt-action="delete_row">
-            Delete
-        </a>
-    </div>
     <!--end::Menu item-->
-    @endif
 </div>
 <!--end::Menu-->
