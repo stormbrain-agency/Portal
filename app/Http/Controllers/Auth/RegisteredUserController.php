@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\State;
+use App\Models\W9Upload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rules;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+
 
 class RegisteredUserController extends Controller
 {
@@ -22,8 +25,9 @@ class RegisteredUserController extends Controller
     public function create()
     {
         addJavascriptFile('assets/js/custom/authentication/sign-up/general.js');
+        $states = State::all();
 
-        return view('pages.auth.register');
+        return view('pages.auth.register', compact('states'));
     }
 
     /**
@@ -38,6 +42,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'business_phone' => ['required', 'string', 'max:255'],
@@ -50,25 +55,55 @@ class RegisteredUserController extends Controller
 
         ]);
 
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'last_login_at' => \Illuminate\Support\Carbon::now()->toDateTimeString(),
-            'last_login_ip' => $request->getClientIp(),
-            'business_phone' => $request->business_phone,
-            'mobile_phone' => $request->mobile_phone,
-            'mailing_address' => $request->mailing_address,
-            'vendor_id' => $request->vendor_id,
-            'county_designation' => $request->county_designation,
-            'status' => 0,
+        if ($request->hasFile('w9_file_path')) {
+            $file = $request->file('w9_file_path');
+            
+            if ($file->getClientOriginalExtension() === 'zip') {
+                $originalName = $file->getClientOriginalName();
+                
+                $counter = 0;
+                $uniqueName = $originalName;
+                
+                while (file_exists(storage_path('app/uploads/' . $uniqueName))) {
+                    $counter++;
+                    $pathInfo = pathinfo($originalName);
+                    $uniqueName = $pathInfo['filename'] . "($counter)." . $pathInfo['extension'];
+                }
+                $path = $file->storeAs('uploads', $uniqueName, 'local');
 
-        ]);
+                $user = User::create([
+                    'first_name' => $request->input('first_name'),
+                    'last_name' => $request->input('last_name'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                    'last_login_at' => \Illuminate\Support\Carbon::now()->toDateTimeString(),
+                    'last_login_ip' => $request->getClientIp(),
+                    'business_phone' => $request->input('business_phone'),
+                    'mobile_phone' => $request->input('mobile_phone'),
+                    'mailing_address' => $request->input('mailing_address'),
+                    'vendor_id' => $request->input('vendor_id'),
+                    'county_designation' => $request->input('county_designation'),
+                    'status' => 0,
+                ]);
 
-        event(new Registered($user));
 
-        return response()->json(['status' => 'success', 'message' => 'successful']);
+                $userID = $user->id;
+
+                $newFile = new W9Upload();
+                $newFile->date = now();
+                $newFile->country = $request->county_designation;
+                $newFile->user_id = $userID; 
+                $newFile->original_name = $uniqueName;
+                $newFile->save();
+
+                event(new Registered($user));
+                return response()->json(['status' => 'success', 'message' => 'successful']);
+            } else{
+                return response()->json(['status' => 'error', 'message' => 'Error with W-9 File Upload']);
+            }
+
+
+        }
     }
 
     public function censoring(){

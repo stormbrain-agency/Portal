@@ -1,18 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Apps;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
-
 use App\Models\W9Upload;
 use Carbon\Carbon;
-
-use GeoIp2\Database\Reader;
 use Stevebauman\Location\Facades\Location;
-use Stevebauman\Location\Facades\Location as FacadesLocation;
-
 use League\Csv\Writer;
 
 class W9_Upload_Controller extends Controller
@@ -28,7 +21,6 @@ class W9_Upload_Controller extends Controller
 
         if ($location) {
             $country = $location->regionName;
-            // dd($country);
         } else {
             $country = 'Unknown Country';
         }
@@ -46,7 +38,7 @@ class W9_Upload_Controller extends Controller
 
         $filteredFiles = $uploadedFiles->whereBetween('created_at', [$startDate, $endDate]);
 
-        return view('upload_form', [
+        return view('pages.apps.provider-w9.w9provider', [
             'uploadedFiles' => $filteredFiles,
             'selectedMonth' => $month,
             'selectedYear' => $year,
@@ -71,13 +63,13 @@ class W9_Upload_Controller extends Controller
                 $path = $file->storeAs('uploads', $uniqueName, 'local');
                 $firstname = auth()->user()->first_name;
                 $lastname = auth()->user()->last_name;
-                $user = $firstname .''. $lastname;
+                $user = auth()->user();
                 $country = $this->getCountry($request);
 
                 $newFile = new W9Upload();
                 $newFile->date = now();
                 $newFile->country = $country;
-                $newFile->user = $user;
+                $newFile->user_id = $user->id; 
                 $newFile->comments = $request->input('comments');
                 $newFile->original_name = $uniqueName;
                 $newFile->save();

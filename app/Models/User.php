@@ -65,4 +65,14 @@ class User extends Authenticatable
 
         return $this->profile_photo_path;
     }
+
+    public function w9Upload()
+    {
+        return $this->hasMany(W9Upload::class, 'user_id', 'id');
+    }
+
+    public function county()
+    {
+        return $this->belongsTo(County::class, 'county_designation', 'county_fips');
+    }
 }

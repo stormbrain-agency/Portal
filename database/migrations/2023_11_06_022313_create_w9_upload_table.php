@@ -10,8 +10,8 @@ class CreateW9UploadTable extends Migration
             $table->id();
             $table->date('date');
             $table->string('country');
-            $table->string('user');
-            $table->string('comments')->nullable();
+            $table->unsignedBigInteger('user_id'); 
+            $table->foreign('  ')->references('id')->on('users'); 
             $table->string('original_name');
             $table->timestamps();
         });

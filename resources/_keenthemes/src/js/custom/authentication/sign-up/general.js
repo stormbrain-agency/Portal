@@ -7,6 +7,9 @@ var KTSignupGeneral = function () {
     var submitButton;
     var validator;
     var passwordMeter;
+    var stateOption;
+    var countyOption;
+
 
     // Handle form
     var handleForm = function (e) {
@@ -167,10 +170,16 @@ var KTSignupGeneral = function () {
             form,
             {
                 fields: {
-                    'name': {
+                    'first_name': {
                         validators: {
                             notEmpty: {
-                                message: 'Name is required'
+                                message: 'First name is required'
+                            }
+                        }
+                    },'last_name': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Last name is required'
                             }
                         }
                     },
@@ -212,8 +221,47 @@ var KTSignupGeneral = function () {
                                 message: 'The password and its confirm are not the same'
                             }
                         }
-                    },
-                    'toc': {
+                    },'business_phone': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Business Phone Number + Ext. is required'
+                            }
+                        }
+                    },'mobile_phone': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Mobile Phone Number is required'
+                            }
+                        }
+                    },'mailing_address': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Agency Mailing Address is required'
+                            }
+                        }
+                    },'vendor_id': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Vendor ID Number is required'
+                            }
+                        }
+                    },'county_designation': {
+                        validators: {
+                            notEmpty: {
+                                message: 'County Designation is required'
+                            }
+                        }
+                    },'w9_file_path': {
+                        validators: {
+                            notEmpty: {
+                                message: 'W-9 File Upload is required'
+                            }
+                        },file: {
+                            extension: 'zip',
+                            type: 'application/zip',
+                            message: 'The selected file is not a valid ZIP file'
+                        }
+                    },'toc': {
                         validators: {
                             notEmpty: {
                                 message: 'You must accept the terms and conditions'
@@ -255,12 +303,22 @@ var KTSignupGeneral = function () {
                     axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form)).then(function (response) {
                         if (response) {
                             form.reset();
-
-                            const redirectUrl = form.getAttribute('data-kt-redirect-url');
-
-                            if (redirectUrl) {
-                                location.href = redirectUrl;
-                            }
+                            Swal.fire({
+                                text: "Account registration successful, please wait for us to verify your account.",
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn btn-primary",
+                                },
+                                timer:10000
+                            }).then(() => {
+                                const redirectUrl = form.getAttribute('data-kt-redirect-url');
+    
+                                if (redirectUrl) {
+                                    location.href = redirectUrl;
+                                }
+                            });
                         } else {
                             // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                             Swal.fire({
@@ -274,14 +332,18 @@ var KTSignupGeneral = function () {
                             });
                         }
                     }).catch(function (error) {
+                        console.log(error);
+                        var message = error?.response?.data?.message;
                         Swal.fire({
-                            text: "Sorry, looks like there are some errors detected, please try again.",
+                            text: message
+                                ? message
+                                : "Sorry, looks like there are some errors detected, please try again.",
                             icon: "error",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
                             customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
+                                confirmButton: "btn btn-primary",
+                            },
                         });
                     }).then(() => {
                         // Hide loading indication

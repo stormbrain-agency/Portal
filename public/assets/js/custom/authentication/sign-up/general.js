@@ -173,6 +173,12 @@ var KTSignupGeneral = function () {
                                 message: 'First name is required'
                             }
                         }
+                    },'last_name': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Last name is required'
+                            }
+                        }
                     },
                     'email': {
                         validators: {
@@ -246,12 +252,11 @@ var KTSignupGeneral = function () {
                         validators: {
                             notEmpty: {
                                 message: 'W-9 File Upload is required'
-                            },
-                            file: {
-                                extension: 'zip',
-                                type: 'application/zip',
-                                message: 'The selected file is not a valid ZIP file'
                             }
+                        },file: {
+                            extension: 'zip',
+                            type: 'application/zip',
+                            message: 'The selected file is not a valid ZIP file'
                         }
                     },'toc': {
                         validators: {
