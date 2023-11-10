@@ -212,7 +212,7 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Action-->
-                                            <a href="{{ route('county-provider-w9.w9_download', ['filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
+                                            <a href="{{ route('w9_upload.w9_download', ['filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
                                             {{-- <a href="" class="btn btn-primary">Download</a> --}}
                                             <!--end::Action-->
                                         </div>
