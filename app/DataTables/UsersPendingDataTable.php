@@ -27,7 +27,7 @@ class UsersPendingDataTable extends DataTable
                 return view('pages.apps.user-management.users-pending.columns._status', compact('user'));
             })
             ->editColumn('w9_file_path', function (User $user) {
-                return $user->w9_file_path;
+                return view('pages.apps.user-management.users-pending.columns._w9-file', compact('user'));
             })
 
             ->editColumn('created_at', function (User $user) {
@@ -74,8 +74,8 @@ class UsersPendingDataTable extends DataTable
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
                 Column::make('status')->addClass('text-nowrap')->name('status'),
                 Column::make('business_phone')->title('Business Phone')->addClass('text-nowrap'),
-                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
+                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
                 Column::computed('action')
                     ->addClass('text-end text-nowrap')
                     ->exportable(false)
@@ -87,8 +87,8 @@ class UsersPendingDataTable extends DataTable
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
                 Column::make('status')->addClass('text-nowrap')->name('status'),
                 Column::make('business_phone')->title('Business Phone')->addClass('text-nowrap'),
-                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
+                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
             ];
         }
     }
