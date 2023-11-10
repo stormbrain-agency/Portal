@@ -99,8 +99,12 @@
                             <!--begin::Details item-->
                             @if ($user->vendor_id)
                             <div class="fw-bold mt-5">County Designation</div>
-                            <div class="text-gray-600">{{$user->county_designation}}</div>
+                            <div class="text-gray-600">{{$user->county->county_full}}</div>
                             @endif
+                            <!--begin::Details item-->
+                            <!--begin::Details item-->
+                            <div class="fw-bold mt-5">Last Login</div>
+                            <div class="text-gray-600">{{$user->last_login_at ? $user->last_login_at->diffForHumans() : $user->updated_at->diffForHumans()}}</div>
                             <!--begin::Details item-->
                             <!--begin::Details item-->
                             <div class="fw-bold mt-5">Joined Date</div>

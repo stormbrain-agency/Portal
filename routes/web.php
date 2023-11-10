@@ -8,6 +8,7 @@ use App\Http\Controllers\Apps\CountyProviderW9Controller;
 use App\Http\Controllers\Apps\NotificationsController;
 use App\Http\Controllers\Apps\CountyUsersController;
 use App\Http\Controllers\Apps\CountyMRAC_ARACController;
+use App\Http\Controllers\Apps\LocationController;
 use App\Http\Controllers\Apps\ActivityController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
@@ -29,9 +30,12 @@ use App\Http\Middleware\CheckPermission;
 Route::get('/export/csv', [W9_Upload_Controller::class, 'exportCsv']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-
-    // Route::get('/', [DashboardController::class, 'index']);
     Route::get('/', [W9_Upload_Controller::class, 'showUploadForm']);
+    // Route::get('/', [DashboardController::class, 'index']);
+    // Route::get('/get-counties/{stateId}', 'LocationController@getCountiesByState');
+
+    Route::get('/profile', [UserManagementController::class, 'profile'])->name('profile');
+    Route::get('/state', [LocationController::class, 'getStates'])->name('state');
 
     // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [W9_Upload_Controller::class, 'showUploadForm'])->name('dashboard');
@@ -107,7 +111,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/error', function () {
     abort(500);
 });
-
+Route::get('/get-counties/{stateId}', [LocationController::class, 'getCountiesByState']);
 Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirect']);
 
 require __DIR__ . '/auth.php';

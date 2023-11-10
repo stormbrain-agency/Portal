@@ -24,7 +24,8 @@ class AddUserModal extends Component
     public $edit_mode = false;
 
     protected $rules = [
-        'name' => 'required|string',
+        'first_name' => 'required|string',
+        'last_name' => 'required|string',
         'email' => 'required|email',
         'role' => 'required|string',
         'avatar' => 'nullable|sometimes|image|max:1024',
@@ -101,6 +102,28 @@ class AddUserModal extends Component
         // Reset the form fields after successful submission
         $this->reset();
     }
+
+    private function prepareUserData()
+    {
+        // Prepare the data for creating or updating a user
+        $data = [
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'business_phone' => $this->business_phone,
+            'mobile_phone' => $this->mobile_phone,
+            'mailing_address' => $this->mailing_address,
+            'vendor_id' => $this->vendor_id,
+            'county_designation' => $this->county_designation,
+        ];
+
+        if (!$this->edit_mode) {
+            $data['password'] = Hash::make($this->email);
+        }
+
+        return $data;
+    }
+
 
     public function deleteUser($id)
     {

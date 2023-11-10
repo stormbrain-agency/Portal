@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\State;
 use App\Models\W9Upload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+
 
 class RegisteredUserController extends Controller
 {
@@ -23,8 +25,9 @@ class RegisteredUserController extends Controller
     public function create()
     {
         addJavascriptFile('assets/js/custom/authentication/sign-up/general.js');
+        $states = State::all();
 
-        return view('pages.auth.register');
+        return view('pages.auth.register', compact('states'));
     }
 
     /**

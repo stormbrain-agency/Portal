@@ -10,7 +10,8 @@ class BootstrapDefault
         // $this->initLightSidebarLayout();
 
         // 2) Dark sidebar layout (default.html)
-        $this->initDarkSidebarLayout();
+        // $this->initDarkSidebarLayout();
+        $this->initLightSidebarLayout();
 
         // 3) Dark header layout (default_header_layout.html)
         // $this->initDarkHeaderLayout();
