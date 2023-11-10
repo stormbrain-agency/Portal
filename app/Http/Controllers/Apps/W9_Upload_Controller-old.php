@@ -1,36 +1,49 @@
 <?php
 
 namespace App\Http\Controllers\Apps;
-
-use App\DataTables\UsersDataTable;
-use App\DataTables\UsersPendingDataTable;
-use App\DataTables\W9DataTable;
 use App\Http\Controllers\Controller;
-use App\Models\W9Upload;
 use Illuminate\Http\Request;
+use App\Models\W9Upload;
+use Carbon\Carbon;
+use Stevebauman\Location\Facades\Location;
 use League\Csv\Writer;
-
-
 
 class W9_Upload_Controller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */    public function wp_upload_index(W9DataTable $dataTable)
+    public function getUploadedFiles()
     {
-        return $dataTable->render('pages.apps.provider-w9.w9provider');
+        $uploadedFiles = W9Upload::all();
+        return $uploadedFiles;
     }
-
-    public function downloadFile($filename)
+    public function getCountry(Request $request)
     {
-        $file = storage_path('app/uploads/' . $filename);
-        if (file_exists($file)) {
-            return response()->download($file);
+        $location = Location::get($request->ip);
+
+        if ($location) {
+            $country = $location->regionName;
         } else {
-            return redirect('/dashboard/w9_upload')->with('error', 'File not found.');
+            $country = 'Unknown Country';
         }
+        return $country;
     }
 
+    public function showUploadForm(Request $request)
+    {
+        $uploadedFiles = $this->getUploadedFiles();
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        $startDate = Carbon::create($year, $month, 1)->startOfDay();
+        $endDate = $startDate->copy()->endOfMonth();
+
+        $filteredFiles = $uploadedFiles->whereBetween('created_at', [$startDate, $endDate]);
+
+        return view('pages.apps.provider-w9.w9provider', [
+            'uploadedFiles' => $filteredFiles,
+            'selectedMonth' => $month,
+            'selectedYear' => $year,
+        ]);
+    }
     public function uploadFile(Request $request)
     {
         if ($request->hasFile('file')) {
@@ -48,23 +61,36 @@ class W9_Upload_Controller extends Controller
                     $uniqueName = $pathInfo['filename'] . "($counter)." . $pathInfo['extension'];
                 }
                 $path = $file->storeAs('uploads', $uniqueName, 'local');
+                $firstname = auth()->user()->first_name;
+                $lastname = auth()->user()->last_name;
                 $user = auth()->user();
+                $country = $this->getCountry($request);
+
                 $newFile = new W9Upload();
                 $newFile->date = now();
-
+                $newFile->country = $country;
                 $newFile->user_id = $user->id; 
                 $newFile->comments = $request->input('comments');
                 $newFile->original_name = $uniqueName;
                 $newFile->save();
-                return redirect('/w9_upload')->with('success', 'File uploaded successfully.');
+                return redirect('/county-provider-w9/w9_upload')->with('success', 'File uploaded successfully.');
             } else {
-                return redirect('/w9_upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
+                return redirect('/county-provider-w9/w9_upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
             }
         } else {
-            return redirect('/w9_upload')->with('error', 'No file selected.');
+            return redirect('/county-provider-w9/w9_upload')->with('error', 'No file selected.');
         }
     }
-
+    public function downloadFile($filename)
+    {
+        $file = storage_path('app/uploads/' . $filename);
+        if (file_exists($file)) {
+            return response()->download($file);
+        } else {
+            return redirect('/dashboard/w9_upload')->with('error', 'File not found.');
+        }
+    }
+    
     public function exportCsv()
     {
         $uploadedFiles = W9Upload::all();

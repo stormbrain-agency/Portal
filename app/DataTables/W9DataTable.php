@@ -19,9 +19,10 @@ class W9DataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+        //get db data
             ->rawColumns(['user', 'date', 'country', 'action']) // Add other columns as needed
             ->editColumn('user', function (W9Upload $upload) {
-                return $upload->user;
+                return $upload->user->first_name . ' ' . $upload->user->last_name;
             })
             ->editColumn('date', function (W9Upload $upload) {
                 return $upload->created_at->toDateString();
@@ -29,9 +30,18 @@ class W9DataTable extends DataTable
             ->editColumn('country', function (W9Upload $upload) {
                 return $upload->country;
             })
-            ->addColumn('action', function (W9Upload $upload) {
-                return view('pages.apps.w9-upload.actions', compact('upload'));
+            ->editColumn('comment', function (W9Upload $upload) {
+                return $upload->comments;
             })
+            ->editColumn('filename', function (W9Upload $upload) {
+                return $upload->original_name;
+            })
+
+            ->editColumn('w9_file_path', function(W9Upload $user) {
+                return '<a href="' . route('w9_upload.w9_download', ['filename' => $user->original_name]) . '" class="btn btn-primary">Download</a>';
+            })
+ 
+            ->rawColumns(['w9_file_path'])
             ->setRowId('id');
     }
 
@@ -63,14 +73,19 @@ class W9DataTable extends DataTable
      */
     public function getColumns(): array
     {
+        //view layout
         return [
-            Column::make('user')->title('User'),
-            Column::make('date')->title('Date'),
-            Column::make('country')->title('Country'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60)
+            Column::make('date')->title('Date of submissions'),
+            Column::make('country')->title('Country Designation'),
+            Column::make('user')->title('User of submission'),
+            Column::make('comment')->title('Comment'),
+            Column::make('filename')->title('File Name Submitted'),
+            // add column action
+            // Column::computed('action')
+            //     ->exportable(false)
+            //     ->printable(false)
+            //     ->width(60)
+            Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false),
         ];
     }
 

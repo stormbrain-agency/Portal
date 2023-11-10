@@ -1,15 +1,32 @@
 <x-default-layout>
+
     @section('title')
-        Provider W-9
+        Users
     @endsection
+
     @section('breadcrumbs')
-        {{ Breadcrumbs::render('county-provider-w9.upload') }}
+        {{ Breadcrumbs::render('user-management.users.index') }}
     @endsection
-    <!--begin::Row-->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-        <!--begin::Col-->
-        <div class="col-md-12">
-            <h1>File Uploads</h1>
+
+    <div class="card">
+        <!--begin::Card header-->
+        <div class="card-header border-0 pt-6">
+            <!--begin::Card title-->
+            <div class="card-title">
+                <!--begin::Search-->
+                <div class="d-flex align-items-center position-relative my-1">
+                    {!! getIcon('magnifier', 'fs-3 position-absolute ms-5') !!}
+                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search user" id="mySearchInput"/>
+                </div>
+                <!--end::Search-->
+            </div>
+            <!--begin::Card title-->
+
+            @if(auth()->user()->hasRole('admin'))
+            <!--begin::Card toolbar-->
+            <div class="card-toolbar">
+                <!--begin::Toolbar-->
+                <h1>File Uploads</h1>
             @if(session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -20,80 +37,73 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <form action="/county-provider-w9/w9_upload" method="post" enctype="multipart/form-data">
 
-                @csrf
-                <div class="form-group">
-                    <input type="file" class="form-control-file" name="file" id="w9_uploadInput">
+                <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                    <!--begin::Add user-->
+                   
+
+                    <form action="/w9_upload/w9_upload" method="post" enctype="multipart/form-data">
+
+                    @csrf
+                    <div class="form-group">
+                        <input type="file" class="form-control-file" name="file" id="w9_uploadInput">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="comments" placeholder="Comments"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                        <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                        {!! getIcon('plus', 'fs-2', '', 'i') !!}
+                        Add User
+                        </button>
+                        <p>This portal site
+                        is not a storage system, but rather a secure site for
+                        transferring documents. As such, all documents in
+                        any folder will be permanently deleted after 30 days
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <a href="/export/csv" class="btn btn-primary">Export CSV</a>
+                    </div>
+                    </form>
+                    <!--end::Add user-->
                 </div>
-                <div class="form-group">
-                    <textarea name="comments" placeholder="Comments"></textarea>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                    <p>This portal site
-                    is not a storage system, but rather a secure site for
-                    transferring documents. As such, all documents in
-                    any folder will be permanently deleted after 30 days
-                    </p>
-                </div>
-
-                <div class="form-group">
-                    <a href="/export/csv" class="btn btn-primary">Export CSV</a>
-                </div>
-
-                <div class="form-group">
-                    <label for="month">Select Month:</label>
-                    <select name="month" id="month">
-                        @for ($i = 1; $i <= 12; $i++)
-                            <option value="{{ $i }}" {{ $selectedMonth == $i ? 'selected' : '' }}>{{ date("F", mktime(0, 0, 0, $i, 1)) }}</option>
-                        @endfor
-                    </select>
-
-
-                    <label for="year">Select Year:</label>
-                    <select name="year" id="year">
-                        @for ($i = date("Y"); $i >= 2021; $i--)
-                            <option value="{{ $i }}" {{ $selectedYear == $i ? 'selected' : '' }}>{{ $i }}</option>
-                        @endfor
-                    </select>
-                    <button type="submit" class="btn btn-secondary">Filter</button>
-                </div>
-
-            </form>
-
-
-            <h2>List File Upload</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Date of Submission</th>
-                        <th>Time of Submission</th>
-                        <th>County Designation</th>
-                        <th>User who submitte1d</th>
-                        <th>Comments</th>
-                        <th>File name submitted</th>
-                        <th>Download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($uploadedFiles as $file)
-                        <tr>
-                            <td>{{ $file->created_at->format('Y-m-d') }}</td>
-                            <td>{{ substr($file->created_at, 11, 8) }}</td>
-                            <td>{{ $file->country }}</td>
-                            <td>{{ $file->user->first_name }} {{ $file->user->last_name }}</td>
-                            <td>{{ $file->comments }}</td>
-                            <td>{{ $file->original_name }}</td>
-                            <td><a href="{{ route('county-provider-w9.w9_download', ['filename' => $file->original_name]) }}" class="btn btn-primary">Download</a></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                <!--end::Toolbar-->
+                <!--begin::Modal-->
+                <livewire:user.add-user-modal></livewire:user.add-user-modal>
+                <!--end::Modal-->
+            </div>
+            <!--end::Card toolbar-->
+            @endif
         </div>
-        <!--end::Col-->
-    </div>
-    <!--end::Row-->
+        <!--end::Card header-->
 
-    
+        <!--begin::Card body-->
+        <div class="card-body py-4">
+            <!--begin::Table-->
+            <div class="table-responsive">
+                {{ $dataTable->table() }}
+            </div>
+            <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+    </div>
+
+    @push('scripts')
+        {{ $dataTable->scripts() }}
+        <script>
+            document.getElementById('mySearchInput').addEventListener('keyup', function () {
+                window.LaravelDataTables['users-table'].search(this.value).draw();
+            });
+            document.addEventListener('livewire:load', function () {
+                Livewire.on('success', function () {
+                    $('#kt_modal_add_user').modal('hide');
+                    window.LaravelDataTables['users-table'].ajax.reload();
+                });
+            });
+        </script>
+    @endpush
+
 </x-default-layout>

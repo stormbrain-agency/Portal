@@ -11,7 +11,7 @@ class CreateW9UploadTable extends Migration
             $table->date('date');
             $table->string('country');
             $table->unsignedBigInteger('user_id'); 
-            $table->foreign('user_id')->references('id')->on('users'); 
+            $table->foreign('  ')->references('id')->on('users'); 
             $table->string('original_name');
             $table->timestamps();
         });
