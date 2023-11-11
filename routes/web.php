@@ -114,6 +114,8 @@ Route::get('/error', function () {
 Route::get('/get-counties/{stateId}', [LocationController::class, 'getCountiesByState']);
 Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirect']);
 
-require __DIR__ . '/auth.php';
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 
 Route::post('/register', [RegisterNotificationController::class, 'sendEmail'])->name('registerNotification');
