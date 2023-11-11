@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Notification Mail</title>
+    <title>Mail Notification</title>
 </head>
 <body>
     <div class="wrap-content" style="color: #000000;">
