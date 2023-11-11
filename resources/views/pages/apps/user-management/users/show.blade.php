@@ -2016,46 +2016,60 @@
                             <!--begin::Table wrapper-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
-                                <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
-                                    <tbody class="fs-6 fw-semibold text-gray-600">
-                                        <tr>
-                                            <td>Email</td>
-                                            <td>smith@kpmg.com</td>
-                                            <td class="text-end">
-                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_email">
-                                                    <i class="ki-duotone ki-pencil fs-3">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Password</td>
-                                            <td>******</td>
-                                            <td class="text-end">
-                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_password">
-                                                    <i class="ki-duotone ki-pencil fs-3">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Role</td>
-                                            <td>Administrator</td>
-                                            <td class="text-end">
-                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">
-                                                    <i class="ki-duotone ki-pencil fs-3">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <form>
+                                    <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
+                                        <tbody class="fs-6 fw-semibold text-gray-600">
+                                            <tr>
+                                                <td>Name</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <input type="text" wire:model.defer="first_name" name="first_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="First name"/>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <input type="text" wire:model.defer="last_name" name="last_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Last name"/>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr><tr>
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="email" wire:model.defer="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com"/>
+                                                </td>
+                                            </tr><tr>
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="email" wire:model.defer="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com"/>
+                                                </td>
+                                            </tr><tr>
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="email" wire:model.defer="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com"/>
+                                                </td>
+                                            </tr><tr>
+                                                <td>Email</td>
+                                                <td>
+                                                    <input type="email" wire:model.defer="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@domain.com"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Password</td>
+                                                <td>******</td>
+                                                <td class="text-end">
+                                                    <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_password">
+                                                        <i class="ki-duotone ki-pencil fs-3">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                        </i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                           
+                                        </tbody>
+                                    </table>
+                                </form>
+
+                                
                                 <!--end::Table-->
                             </div>
                             <!--end::Table wrapper-->
@@ -2363,7 +2377,7 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Action-->
-                                            <a href="{{ route('county-provider-w9.w9_download', ['filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
+                                            <a href="{{ route('w9_upload.w9_download', ['filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
                                             {{-- <a href="" class="btn btn-primary">Download</a> --}}
                                             <!--end::Action-->
                                         </div>
