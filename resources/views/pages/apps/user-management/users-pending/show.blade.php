@@ -246,7 +246,7 @@
     @push('scripts')
         <script>
             document.getElementById('approveUser').addEventListener('click', function (event) {
-                event.preventDefault(); // Ngăn chặn mặc định của thẻ <a> (điều hướng)
+                event.preventDefault(); 
                 Swal.fire({
                     text: "Approve this User ?",
                     icon: "info",
@@ -265,7 +265,7 @@
                 });
             });
             document.getElementById('denyUser').addEventListener('click', function (event) {
-                event.preventDefault(); // Ngăn chặn mặc định của thẻ <a> (điều hướng)
+                event.preventDefault(); 
                 Swal.fire({
                     text: "This action will delete this user's data!\nAre you sure?",
                     icon: "warning",

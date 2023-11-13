@@ -12,8 +12,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-
-class AddUserModal extends Component
+class EditUserModal extends Component
 {
     use WithFileUploads;
 
@@ -36,6 +35,11 @@ class AddUserModal extends Component
     public $countyDropdown;
     public $edit_mode = false;
 
+    protected $listeners = [
+        'update_user' => 'updateUser',
+        'create_view' => 'createUserShow',
+    ];
+
     protected $rules = [
         'first_name' => 'required|string',
         'last_name' => 'required|string',
@@ -43,18 +47,12 @@ class AddUserModal extends Component
         'role' => 'required|string',
     ];
 
-    protected $listeners = [
-        'delete_user' => 'deleteUser',
-        'update_user' => 'updateUser',
-        'create_view' => 'createUserShow',
-    ];
-
     public function render()
     {
         $roles = Role::all();
         $this->states = State::all();
         $roles_description = [
-            'admin' => 'Best for business owners and company administrators',
+            'admin2' => 'Best for business owners and company administrators',
             'developer' => 'Best for developers or people primarily using the API',
             'analyst' => 'Best for people who need full access to analytics data, but don\'t need to update business settings',
             'support' => 'Best for employees who regularly refund payments and respond to disputes',
@@ -65,7 +63,7 @@ class AddUserModal extends Component
             $roles[$i]->description = $roles_description[$role->name] ?? '';
         }
 
-        return view('livewire.user.add-user-modal', compact('roles'));
+        return view('livewire.user.edit-user-modal', compact('roles'));
     }
 
     public function submit()
@@ -82,33 +80,14 @@ class AddUserModal extends Component
         });
 
     }
-    public function createUserShow(){
-        $this->edit_mode = false;
-        $this->reset();
-    }
-    private function createUser(){
-        $existingUser = User::where('email', $this->email)->first();
-
-        if ($existingUser) {
-            $this->emit('error', 'The email address is already in use by another user!');
-            return;
-        }
-        $data = $this->prepareUserData();
-        $data['password'] = Hash::make($this->email);
-        $data['status'] = 1;
-        $user = User::create($data);
-
-        $user->assignRole($this->role);
-
-        // Password::sendResetLink($user->only('email'));
-
-        $this->emit('success', __('User created successfully'));
-    }
-
 
     private function updateUserSave()
     {
         // Get the user by ID
+        if (!auth()->user()->hasRole('admin')) {
+           $this->emit('error', 'You do not have permission to edit!');
+            return;
+        }
         $id = $this->idUser;
         $user = User::find($id);
         $checkUser = User::where('email', $this->email)
@@ -117,11 +96,6 @@ class AddUserModal extends Component
 
         if ($checkUser) {
             $this->emit('error', 'The email address is already in use by another user!');
-            return;
-        }
-        // Prevent modification of the current user's data
-        if ($user->id == Auth::id()) {
-            $this->emit('error', 'User cannot be updated');
             return;
         }
 
@@ -140,8 +114,31 @@ class AddUserModal extends Component
 
         // Emit a success event with a message
         $this->emit('success', __('User updated successfully'));
-        $this->reset();
     }
+
+    public function updateUser($id)
+    {
+        $this->edit_mode = true;
+
+        $user = User::find($id);
+        $this->county = County::where("county_fips", $user->county_designation)->first();
+        if ($this->county) {
+            $this->stateChose = $this->county->state_id;
+            $this->updateCountyDropdown();
+        }
+        $this->idUser = $user->id;
+        $this->first_name = $user->first_name;
+        $this->last_name = $user->last_name;
+        $this->email = $user->email;
+        $this->business_phone = $user->business_phone;
+        // $this->mobile_phone = $user->mobile_phone;
+        $this->mailing_address = $user->mailing_address;
+        $this->vendor_id = $user->vendor_id;
+        $this->county_designation = $user->county_designation;
+        $this->role = $user->roles?->first()->name ?? '';
+    }
+
+    
 
     private function prepareUserData()
     {
@@ -164,59 +161,9 @@ class AddUserModal extends Component
         return $data;
     }
 
-    public function deleteUser($id)
-    {
-        // Prevent deletion of current user
-        if ($id == Auth::id()) {
-            $this->emit('error', 'User cannot be deleted');
-            return;
-        }
-
-        // Delete the user record with the specified ID
-        User::destroy($id);
-
-        // Emit a success event with a message
-        $this->emit('success', 'User successfully deleted');
-    }
-
-    public function updateUser($id)
-    {
-        $this->edit_mode = true;
-
-        $user = User::find($id);
-        $this->county = County::where("county_fips", $user->county_designation)->first();
-        if ($this->county) {
-            $this->stateChose = $this->county->state_id;
-            $this->updateCountyDropdown();
-        }
-        $this->idUser = $user->id;
-        $this->first_name = $user->first_name;
-        $this->last_name = $user->last_name;
-        $this->email = $user->email;
-        $this->business_phone = $user->business_phone;
-        $this->mobile_phone = $user->mobile_phone;
-        $this->mailing_address = $user->mailing_address;
-        $this->vendor_id = $user->vendor_id;
-        $this->county_designation = $user->county_designation;
-        $this->role = $user->roles?->first()->name ?? '';
-    }
-
     public function updateCountyDropdown()
     {
         $this->countyDropdown = County::where('state_id', $this->stateChose)->get();
     }
 
-        public function resetData()
-    {
-        $this->reset();
-        \Livewire\Livewire::dispatchScript('console.log("Modal closed and Livewire reset")');
-    }
-
-
-
-    public function hydrate()
-    {
-        $this->resetErrorBag();
-        $this->resetValidation();
-    }
 }

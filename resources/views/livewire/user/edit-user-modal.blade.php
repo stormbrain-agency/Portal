@@ -1,12 +1,12 @@
-<div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true" wire:ignore.self >
+<div class="modal fade" id="kt_modal_edit_user" tabindex="-1" aria-hidden="true" wire:ignore.self >
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <!--begin::Modal content-->
         <div class="modal-content">
             <!--begin::Modal header-->
-            <div class="modal-header" id="kt_modal_add_user_header">
+            <div class="modal-header" id="kt_modal_edit_user_header">
                 <!--begin::Modal title-->
-                <h2 class="fw-bold">Add User</h2>
+                <h2 class="fw-bold">Edit User</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
@@ -18,9 +18,9 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <form id="kt_modal_add_user_form" class="form" action="#" wire:submit.prevent="submit" enctype="multipart/form-data">
+                <form id="kt_modal_edit_user_form" class="form" action="#" wire:submit.prevent="submit" enctype="multipart/form-data">
                     <!--begin::Scroll-->
-                    <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                    <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_edit_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_user_header" data-kt-scroll-wrappers="#kt_modal_edit_user_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <div class="row">
@@ -72,8 +72,7 @@
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->
-                        @if (!$edit_mode)
-                        <!--begin::Input group-->
+                        {{-- <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fw-semibold fs-6 mb-2">Mobile Phone Number.</label>
@@ -84,8 +83,7 @@
                             @error('mobile_phone')
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <!--end::Input group-->
-                        @endif
+                        <!--end::Input group--> --}}
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -136,7 +134,6 @@
                                             <option @if ($county_designation == $countyItem->county_fips) selected @endif value="{{ $countyItem->county_fips }}">{{ $countyItem->county_full }}</option>
                                         @endforeach
                                     @endif
-
                                 </select>
                             </div>
                         </div>
@@ -148,8 +145,8 @@
 
                         <!--end::Input group-->
 
-                        {{-- <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <!--begin::Input group-->
+                        {{-- <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fw-semibold fs-6 mb-2">W-9 File Upload</label>
                             <!--end::Label-->
@@ -158,9 +155,10 @@
                             <!--end::Input-->
                             @error('w9_file_path')
                             <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <!--end::Input group--> --}}
+                        </div> --}}
+                        <!--end::Input group-->
                         <!--begin::Input group-->
+                        @if (auth()->check() && auth()->user()->id != $idUser)
                         <div class="mb-7">
                             <!--begin::Label-->
                             <label class="required fw-semibold fs-6 mb-5">Role</label>
@@ -196,11 +194,12 @@
                             @endforeach
                             <!--end::Roles-->
                         </div>
+                        @endif
                         <!--end::Input group-->
                     </div>
                     <!--end::Scroll-->
                     <!--begin::Actions-->
-                    <div class="text-center pt-15">
+                    <div class="text-center pt-5">
                         <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close" wire:loading.attr="disabled">Discard</button>
                         <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
                             <span class="indicator-label" wire:loading.remove>Submit</span>
