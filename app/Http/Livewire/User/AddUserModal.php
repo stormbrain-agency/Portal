@@ -31,7 +31,7 @@ class AddUserModal extends Component
     public $saved_avatar;
     public $idUser;
     public $states;
-    public $statelist;
+    public $stateChose;
     public $county;
     public $countyDropdown;
     public $edit_mode = false;
@@ -45,13 +45,13 @@ class AddUserModal extends Component
     protected $listeners = [
         'delete_user' => 'deleteUser',
         'update_user' => 'updateUser',
+        'create_view' => 'createUserShow',
     ];
 
     public function render()
     {
         $roles = Role::all();
         $this->states = State::all();
-
         $roles_description = [
             'admin' => 'Best for business owners and company administrators',
             'developer' => 'Best for developers or people primarily using the API',
@@ -81,7 +81,9 @@ class AddUserModal extends Component
         });
 
     }
-
+    public function createUserShow(){
+        $this->reset();
+    }
     private function createUser(){
         $existingUser = User::where('email', $this->email)->first();
 
@@ -139,11 +141,6 @@ class AddUserModal extends Component
         $this->reset();
     }
 
-    public function updateCountyDropdown()
-    {
-        $this->countyDropdown = County::where('state_id', $this->statelist)->get();
-    }
-
     private function prepareUserData()
     {
         // Prepare the data for creating or updating a user
@@ -187,7 +184,8 @@ class AddUserModal extends Component
         $user = User::find($id);
         $this->county = County::where("county_fips", $user->county_designation)->first();
         if ($this->county) {
-            $this->countyDropdown = County::where("state_id", $this->county->state_id)->get();
+            $this->stateChose = $this->county->state_id;
+            $this->updateCountyDropdown();
         }
         $this->idUser = $user->id;
         $this->first_name = $user->first_name;
@@ -200,6 +198,19 @@ class AddUserModal extends Component
         $this->county_designation = $user->county_designation;
         $this->role = $user->roles?->first()->name ?? '';
     }
+
+    public function updateCountyDropdown()
+    {
+        $this->countyDropdown = County::where('state_id', $this->stateChose)->get();
+    }
+
+        public function resetData()
+    {
+        $this->reset();
+        \Livewire\Livewire::dispatchScript('console.log("Modal closed and Livewire reset")');
+    }
+
+
 
     public function hydrate()
     {

@@ -1,4 +1,4 @@
-<div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true" wire:ignore.self>
+<div class="modal fade" id="kt_modal_add_user" tabindex="-1" aria-hidden="true" wire:ignore.self >
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <!--begin::Modal content-->
@@ -116,19 +116,11 @@
                         <!--begin::Select-->
                         <div class="row">
                             <div class="col-6">
-                                <select wire:model="statelist" wire:change="updateCountyDropdown" id="stateDropdown" name="statelist" class="form-select form-select-solid mb-3 mb-lg-0">
+                                <select wire:model="stateChose" wire:change="updateCountyDropdown" id="stateDropdown" name="stateChose" class="form-select form-select-solid mb-3 mb-lg-0">
                                     <option value="">Select State</option>
                                     @if ($states && count($states) > 0)
                                         @foreach($states as $state)
-                                            @if ($county)
-                                                @if ($county->state_id == $state->state_id)
-                                                    <option selected value="{{ $state->state_id }}">{{ $state->state_name }}</option>
-                                                @else
-                                                    <option value="{{ $state->state_id }}">{{ $state->state_name }}</option>
-                                                @endif
-                                            @else
-                                                <option value="{{ $state->state_id }}">{{ $state->state_name }}</option>
-                                            @endif
+                                            <option @if ($county_designation == $state->state_id) selected @endif value="{{ $state->state_id }}">{{ $state->state_name }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -137,19 +129,14 @@
                                 <select wire:model.defer="county_designation" name="county_designation" class="form-select form-select-solid mb-3 mb-lg-0">
                                     <option value="">Select County</option>
                                     @if ($countyDropdown && count($countyDropdown) > 0)  
-                                        @foreach($countyDropdown as $county)
-                                            @if ($county)
-                                                @if ($county->county_fips == $county->county_fips)
-                                                    <option selected value="{{ $county->county_fips }}">{{ $county->county_full }}</option>
-                                                @else
-                                                    <option value="{{ $county->county_fips }}">{{ $county->county_full }}</option>
-                                                @endif
-                                            @endif
+                                        @foreach($countyDropdown as $countyItem)
+                                            {{ $countyItem->county_full }} - {{ $countyItem->county_fips }}<br>
+                                            <option @if ($county_designation == $countyItem->county_fips) selected @endif value="{{ $countyItem->county_fips }}">{{ $countyItem->county_full }}</option>
                                         @endforeach
                                     @endif
+
                                 </select>
                             </div>
-
                         </div>
                         <!--end::Select-->
                         @error('county_designation')
