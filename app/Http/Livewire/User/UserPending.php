@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\resources\views\mail\emailAuthenticationSuccess;
 class UserPending extends Component
 {
     use WithFileUploads;
@@ -28,9 +29,10 @@ class UserPending extends Component
     public function approveUser($id)
     {
         if (auth()->user()->can('county users management')) {
-            User::where('id', $id)->update(['status' => 1, 'email_verified_at' => now()]);
+            User::where('id', $id)->update(['status' => 1]);
             $user = User::find($id);
             $data = [
+                "id" => $user,
                 "email" => $user->email,
                 'link' => url('/welcome'),
             ];
@@ -44,6 +46,24 @@ class UserPending extends Component
         }else{
             $this->emit('error', 'You do not have permission to perform this action');
         }
+    }
+
+    public function MailCheck($id)
+    {
+        User::where('id', $id)->update(['email_verified_at' => now()]);
+        $user = User::find($id);
+        $data = [
+            "id" => $user,
+            "email" => $user->email,
+            'link' => url('/login'),
+        ];
+        $user->assignRole('county user');
+        $emailAdress = $data['email'];
+        Mail::send('mail.emailAuthenticationSuccess',$data , function ($message) use ($emailAdress) {
+            $message->to($emailAdress);
+            $message->subject('Confirm Your Account');
+        });
+        return redirect('/');
     }
 
     public function denyUser($id)

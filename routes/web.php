@@ -11,6 +11,8 @@ use App\Http\Controllers\Apps\CountyMRAC_ARACController;
 use App\Http\Controllers\Apps\LocationController;
 use App\Http\Controllers\Apps\ActivityController;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\CheckMailController;
+use App\Http\Livewire\User\UserPending;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Apps\W9_Upload_Controller ;
 use Illuminate\Support\Facades\Route;
@@ -114,8 +116,11 @@ Route::get('/error', function () {
 Route::get('/get-counties/{stateId}', [LocationController::class, 'getCountiesByState']);
 Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirect']);
 
-Route::get('/welcome', function () {
-    return view('welcome');
+Route::get('/mail-checkin/{id}', [UserPending::class, 'MailCheck'])->name('mail.checkin');
+
+Route::get('/home', function () {
+    return view('/');
 });
 
 Route::post('/register', [RegisterNotificationController::class, 'sendEmail'])->name('registerNotification');
+require __DIR__ . '/auth.php';
