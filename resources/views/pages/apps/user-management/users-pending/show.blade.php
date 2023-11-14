@@ -99,7 +99,11 @@
                             <!--begin::Details item-->
                             @if ($user->vendor_id)
                             <div class="fw-bold mt-5">County Designation</div>
-                            <div class="text-gray-600">{{$user->county->county_full}}</div>
+                            <div class="text-gray-600">
+                                @if ($user && $user->county && $user->county->county_full)
+                                    {{$user->county->county_full}}
+                                @endif
+                            </div>
                             @endif
                             <!--begin::Details item-->
                             <!--begin::Details item-->

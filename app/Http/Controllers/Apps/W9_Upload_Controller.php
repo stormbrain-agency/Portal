@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 use App\Models\W9Upload;
 use Illuminate\Http\Request;
 use League\Csv\Writer;
+use App\Models\User;
+use App\Role;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 
 
@@ -56,6 +60,34 @@ class W9_Upload_Controller extends Controller
                 $newFile->comments = $request->input('comments');
                 $newFile->original_name = $uniqueName;
                 $newFile->save();
+                // Send Mail
+                $adminEmails = User::whereHas('roles', function ($query) {
+                $query->where('name', 'admin');
+                })->pluck('email');
+                $user = User::find($newFile->user_id);
+                $w9Upload = User::where('user_id', $newFile->user_id);
+                if($w9Upload){
+                    $submitted = 'submitted';
+                }else{
+                    $submitted = 'unsubmitted';
+                }
+                $data = [
+                    'data_time_submission' => $newFile->updated_at,
+                    'submitted' => $submitted,
+                    'user_email_address' => $user->email,
+                    'county_designation' => "update",
+                    'list_mail_admin' => $adminEmails,
+                    'link' => url('/w9_upload'),
+                ];
+                $dataMail = $user->email;
+                $dataMail = $data['list_mail_admin'];
+                foreach($dataMail as $emailAdress){
+                    Mail::send('mail.emailW9Upload', $data, function ($message) use ($emailAdress) {
+                        $message->to($emailAdress);
+                        $message->subject('Alert: W-9 Submission Received');
+                    });
+                }
+
                 return redirect('/w9_upload')->with('success', 'File uploaded successfully.');
             } else {
                 return redirect('/w9_upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');

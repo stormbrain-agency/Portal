@@ -7,6 +7,8 @@ use App\DataTables\UsersPendingDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\resources\views\mail\emailAuthenticationSuccess;
 
 class UserManagementController extends Controller
 {
@@ -90,12 +92,20 @@ class UserManagementController extends Controller
     public function usersPendingApprove($id)
     {
         if (auth()->user()->can('county users management')) {
-            User::where('id', $id)->update(['status' => 1, 'email_verified_at' => now()]);
+            User::where('id', $id)->update(['status' => 1]);
             $user = User::find($id);
+            $data = [
+                "id" => $user,
+                "email" => $user->email,
+                'link' => url('/welcome'),
+            ];
             $user->assignRole('county user');
-
+            $emailAdress = $data['email'];
+            Mail::send('mail.emailAuthentication',$data , function ($message) use ($emailAdress) {
+                $message->to($emailAdress);
+                $message->subject('Confirm Your Account');
+            });
             return redirect()->route('user-management.users.show', $user);
-
         }else{
             return route('user-management.users-pending.show', $user);
         }

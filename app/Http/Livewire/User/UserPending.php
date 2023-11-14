@@ -52,12 +52,14 @@ class UserPending extends Component
     {
         User::where('id', $id)->update(['email_verified_at' => now()]);
         $user = User::find($id);
+        $user = User::find($id);
         $data = [
             "id" => $user,
-            "email" => $user->email,
+            // "email" => $user->email,
+            "email" => 'molafo7888@newnime.com',
             'link' => url('/login'),
         ];
-        $user->assignRole('county user');
+        // $user->assignRole('county user');
         $emailAdress = $data['email'];
         Mail::send('mail.emailAuthenticationSuccess',$data , function ($message) use ($emailAdress) {
             $message->to($emailAdress);
