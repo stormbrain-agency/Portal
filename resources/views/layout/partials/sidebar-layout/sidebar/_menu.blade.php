@@ -124,6 +124,14 @@
 				</a>
 				<!--end:Menu link-->
 			</div>
+			<div class="menu-item">
+				<!--begin:Menu link-->
+				<a class="menu-link {{ request()->routeIs('w9_downloadhistory.*') ? 'active' : '' }}" href="{{ route('w9_downloadhistory.index') }}">
+					<span class="menu-icon devtest">{!! getIcon('abstract-26', 'fs-2') !!}</span>
+					<span class="menu-title">W-9 History Download</span>
+				</a>
+				<!--end:Menu link-->
+			</div>
 			<!--end:Menu item-->
 			<!--begin:Menu item-->
 			<div class="menu-item">

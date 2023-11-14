@@ -13,6 +13,7 @@ use App\Http\Controllers\Apps\ActivityController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Apps\W9_Upload_Controller ;
+use App\Http\Controllers\Apps\W9_Historydownload_Controller ;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
 
@@ -27,6 +28,7 @@ use App\Http\Middleware\CheckPermission;
 |
 */
 
+Route::get('/downloads', [W9_Historydownload_Controller::class, 'showDownloads'])->name('downloads');
 Route::get('/export/csv', [W9_Upload_Controller::class, 'exportCsv']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -72,6 +74,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', [W9_Upload_Controller::class,'wp_upload_index'])->name('index');
             Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
             Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
+        });
+        Route::prefix('/w9_downloadhistory')->name('w9_downloadhistory.')->group(function () {
+            Route::get('/', [W9_Historydownload_Controller::class,'w9_downloadhistory_index'])->name('index');
         });
 
         // Route::prefix('county-provider-w9')->name("county-provider-w9.")->group(function () {
