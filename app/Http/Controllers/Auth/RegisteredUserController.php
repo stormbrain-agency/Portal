@@ -96,7 +96,7 @@ class RegisteredUserController extends Controller
                 $newFile->original_name = $uniqueName;
                 $newFile->save();
 
-                event(new Registered($user));
+                // event(new Registered($user));
                 return response()->json(['status' => 'success', 'message' => 'successful']);
             } else{
                 return response()->json(['status' => 'error', 'message' => 'Error with W-9 File Upload']);

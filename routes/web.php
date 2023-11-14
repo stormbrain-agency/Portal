@@ -26,7 +26,8 @@ use App\Http\Middleware\CheckPermission;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// Route::get('password/request', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+// Route::get('password/reset/{token}', 'Auth\ForgotPasswordController@showResetForm')->name('password.reset');
 Route::get('/export/csv', [W9_Upload_Controller::class, 'exportCsv']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -41,9 +42,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::get('/dashboard', [W9_Upload_Controller::class, 'showUploadForm'])->name('dashboard');
 
     Route::name('user-management.')->group(function () {
-        Route::middleware(['permission:county users management'])->group(function () {
+        // Route::middleware(['permission:county users management'])->group(function () {
             Route::resource('/user-management/users', UserManagementController::class);
-        });
+        // });
         Route::middleware(['permission:county users management'])->group(function () {
             Route::prefix('/user-management/user-pending')->name('users-pending.')->group(function () {
                 Route::get('/', [UserManagementController::class,'users_pending'])->name('index');
@@ -53,10 +54,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 
             });
         });
-        Route::middleware(['permission:read provider payment'])->group(function () {
-            Route::resource('/user-management/roles', RoleManagementController::class);
-        });
-        Route::resource('/user-management/permissions', PermissionManagementController::class);
+        // Route::middleware(['permission:county users management'])->group(function () {
+        //     Route::resource('/user-management/roles', RoleManagementController::class);
+        //     Route::resource('/user-management/permissions', PermissionManagementController::class);
+        // });
     });
 
     Route::middleware(['permission:read provider payment'])->group(function () {
