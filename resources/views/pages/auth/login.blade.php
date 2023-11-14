@@ -51,6 +51,11 @@
             <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
         </div>
         <!--end::Separator-->
+        @if (session('status'))
+            <div class="fv-row mb-4">
+                <span class="text-primary">{{ session('status') }}</span>
+            </div>
+        @endif
         @if ($errors->has('notfounduser'))
         <div class="fv-row mb-4">
             <span class="text-danger">{{ $errors->first('notfounduser') }}</span>

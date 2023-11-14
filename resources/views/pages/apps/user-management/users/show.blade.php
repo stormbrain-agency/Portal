@@ -54,10 +54,13 @@
                                 <i class="ki-duotone ki-down fs-3"></i>
                             </span>
                         </div>
+
+                        @if((auth()->id() == $user->id && !$user->hasRole('county user')) || auth()->user()->hasRole('admin') )
                         <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit customer details">
                             <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_edit_user" data-kt-action="update_row" data-kt-user-id="{{$user->id}}">Edit</a>
                         </span>
                         <livewire:user.edit-user-modal></livewire:user.edit-user-modal>
+                        @endif
 
                     </div>
                     <!--end::Details toggle-->
@@ -170,10 +173,13 @@
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
                         <!--begin::Menu item-->
                         @if ($user->status == 1)
-                        <div class="menu-item px-5">
-                            <a href="{{ route('user-management.users.destroy', $user)}}" class="menu-link text-danger px-5">Delete User</a>
-                        </div>
+                        <form method="POST" action="{{ route('user-management.users.destroy', $user) }}" class="menu-item px-5" id="deleteUserForm">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-white menu-link text-danger px-5 w-100">Delete User</button>
+                        </form>
                         @endif
+
                         <!--end::Menu item-->
                     </div>
                     <!--end::Menu-->
@@ -2278,8 +2284,9 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Action-->
+                                            @if (!auth()->user()->hasRole('view only'))
                                             <a href="{{ route('w9_upload.w9_download', ['filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
-                                            {{-- <a href="" class="btn btn-primary">Download</a> --}}
+                                            @endif
                                             <!--end::Action-->
                                         </div>
                                         <!--end::Time-->
@@ -2342,6 +2349,7 @@
     <!--end::Modals-->
     @push('scripts')
         <script>
+          
             document.querySelectorAll('[data-kt-action="update_row"]').forEach(function (element) {
                 element.addEventListener('click', function () {
                     Livewire.emit('update_user', this.getAttribute('data-kt-user-id'));
@@ -2349,7 +2357,7 @@
             });
             document.addEventListener('livewire:load', function () {
                 Livewire.on('success', function () {
-                    $('#kt_modal_edit_user').modal('hide');
+                    $('#kt_modal_edit_user').modal('hide'); 
                     
                     setTimeout(() => {
                         
@@ -2357,18 +2365,28 @@
                     }, 1000);
                 });
             });
+              document.getElementById('deleteUserForm').addEventListener('submit', function (event) {
+                event.preventDefault();
 
-            //  document.addEventListener('livewire:load', function () {
-            //         Livewire.on('success', message => {
-            //             // Xử lý sự kiện success ở đây
-            //             console.log(message);
-            //         });
+                Swal.fire({
+                    text: "This action will delete this user's data!\nAre you sure?",
+                    icon: "warning",
+                    buttonsStyling: false,
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    customClass: {
+                        confirmButton: "btn btn-danger",
+                        cancelButton: "btn btn-secondary",
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('deleteUserForm').submit();
+                    }
+                });
+            });
 
-            //         Livewire.on('error', message => {
-            //             // Xử lý sự kiện error ở đây
-            //             console.error(message);
-            //         });
-            //     });
+
         </script>
     @endpush
 </x-default-layout>

@@ -64,6 +64,7 @@
 						<!--end:Menu link-->
 					</div>
 					<!--end:Menu item-->
+					@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 					<!--begin:Menu item-->
 					<div class="menu-item">
 						<!--begin:Menu link-->
@@ -77,7 +78,7 @@
 					</div>
 					<!--end:Menu item-->
 					<!--begin:Menu item-->
-					<div class="menu-item">
+					{{-- <div class="menu-item">
 						<!--begin:Menu link-->
 						<a class="menu-link {{ request()->routeIs('user-management.roles.*') ? 'active' : '' }}" href="{{ route('user-management.roles.index') }}">
 							<span class="menu-bullet">
@@ -98,8 +99,9 @@
 							<span class="menu-title">Permissions</span>
 						</a>
 						<!--end:Menu link-->
-					</div>
+					</div> --}}
 					<!--end:Menu item-->
+					@endif
 				</div>
 				<!--end:Menu sub-->
 			</div>

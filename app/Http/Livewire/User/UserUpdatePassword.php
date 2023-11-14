@@ -14,9 +14,19 @@ class UserUpdatePassword extends Component
 
     protected $rules = [
         'currentPassword' => 'required',
-        'newPassword' => 'required|min:8|different:currentPassword',
+        'newPassword' => 'required|min:8|regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/',
         'confirmPassword' => 'required|same:newPassword',
     ];
+
+    protected $messages = [
+        'currentPassword.required' => 'Please enter your current password.',
+        'newPassword.required' => 'Please enter a new password.',
+        'newPassword.min' => 'The new password must be at least 8 characters.',
+        'newPassword.regex' => 'The new password must contain at least one letter and one number.',
+        'confirmPassword.required' => 'Please confirm the new password.',
+        'confirmPassword.same' => 'The new password and confirmation password do not match.',
+    ];
+
 
     public function render()
     {
@@ -31,8 +41,6 @@ class UserUpdatePassword extends Component
 
         if (!Hash::check($this->currentPassword, Auth::user()->password)) {
             $this->addError('currentPassword', 'Current password is incorrect.');
-            // $this->emit('success', __('Password updated successfully.'));
-            // $this->emit('error', 'You do not have permission to edit!');
             return;
         }
         Auth::user()->update([

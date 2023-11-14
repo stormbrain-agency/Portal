@@ -45,7 +45,13 @@ class UsersPendingDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->where('status', 0)->orWhereNull('email_verified_at');
+       $query = $model->newQuery()->where('status', 0)->orWhereNull('email_verified_at');
+
+        if ($this->request->has('user') && !empty($this->request->user)) {
+            $query->where('first_name', 'like', '%' . $this->request->user . '%');
+        }
+
+        return $query;
     }
 
     /**
@@ -54,7 +60,7 @@ class UsersPendingDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('users-table')
+            ->setTableId('users-pending-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('rt' . "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>",)
