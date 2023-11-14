@@ -10,7 +10,9 @@
 
     <div class="card">
         <!--begin::Card header-->
+        @if(auth()->user()->hasRole('county user'))
         <div class="card-header border-0 pt-6">
+        
             @if(session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -44,6 +46,7 @@
             </div>
             </form>
         </div>
+        @endif
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
@@ -55,19 +58,6 @@
                 <!--end::Search-->
             </div>
             <!--begin::Card title-->
-
-            @if(auth()->user()->hasRole('county user'))
-            <!--begin::Card toolbar-->
-            <div class="card-toolbar">
-                <!--begin::Toolbar-->
-                
-                <!--end::Toolbar-->
-                <!--begin::Modal-->
-                <livewire:user.add-user-modal></livewire:user.add-user-modal>
-                <!--end::Modal-->
-            </div>
-            <!--end::Card toolbar-->
-            @endif
         </div>
         <!--end::Card header-->
 
@@ -80,7 +70,7 @@
                 @else
                     {{ $dataTable->table() }}
                 @endif
-            </div>
+            </div> 
 
             <!--end::Table-->
         </div>
