@@ -95,7 +95,7 @@ class W9_Upload_Controller extends Controller
             $csv->insertOne([
                 \Carbon\Carbon::parse($file->created_at)->toDateString(),
                 \Carbon\Carbon::parse($file->created_at)->toTimeString(),
-                $file->country,
+                $file->county_full,
                 $file->user,
                 $file->comment,
                 $file->original_name,

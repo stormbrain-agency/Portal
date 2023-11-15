@@ -41,19 +41,18 @@
                 </p>
             </div>
 
-            <div class="form-group">
-                <a href="/export/csv" class="btn btn-primary">Export CSV</a>
-            </div>
+
             </form>
         </div>
         @endif
+
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
                 <!--begin::Search-->
                 <div class="d-flex align-items-center position-relative my-1">
                     {!! getIcon('magnifier', 'fs-3 position-absolute ms-5') !!}
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search user" id="mySearchInput"/>
+                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search" id="mySearchInput"/>
                 </div>
                 <!--end::Search-->
             </div>
@@ -74,6 +73,9 @@
 
             <!--end::Table-->
         </div>
+        <div class="card-header border-0 pt-6" style="margin-bottom:50px">
+                <a href="/export/csv" class="btn btn-primary">Export CSV</a>
+            </div>
         <!--end::Card body-->
     </div>
 
@@ -81,12 +83,12 @@
         {{ $dataTable->scripts() }}
         <script>
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
-                window.LaravelDataTables['users-table'].search(this.value).draw();
+                window.LaravelDataTables['w9-upload-table'].search(this.value).draw();
             });
             document.addEventListener('livewire:load', function () {
                 Livewire.on('success', function () {
                     $('#kt_modal_add_user').modal('hide');
-                    window.LaravelDataTables['users-table'].ajax.reload();
+                    window.LaravelDataTables['w9-upload-table'].ajax.reload();
                 });
             });
         </script>
