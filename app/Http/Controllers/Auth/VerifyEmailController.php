@@ -43,7 +43,6 @@ class VerifyEmailController extends Controller
                         $user->save();
                         $this->welcome_email($user);
 
-
                         return redirect()->route('login')->with('success', 'Email has been successfully verified.');
                     } else {
                         return redirect()->route('login')->with('error', 'The verification link is not valid.');
