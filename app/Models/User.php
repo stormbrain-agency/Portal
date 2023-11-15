@@ -57,6 +57,12 @@ class User extends Authenticatable
         'last_login_at' => 'datetime',
     ];
 
+    public function isEmailVerified()
+    {
+        return !is_null($this->email_verified_at);
+    }
+
+
     public function getProfilePhotoUrlAttribute()
     {
         if ($this->profile_photo_path) {

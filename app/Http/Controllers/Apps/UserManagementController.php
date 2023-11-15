@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
 use App\DataTables\UsersPendingDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\resources\views\mail\emailAuthenticationSuccess;
 
@@ -74,7 +74,6 @@ class UserManagementController extends Controller
         if ($user->id === auth()->id()) {
             return redirect()->back()->with('error', 'You cannot delete your own account.');
         }
-
     
         $user->delete();
 
@@ -141,5 +140,18 @@ class UserManagementController extends Controller
         } else {
             return view('errors.404');
         }
+    }
+
+    protected function sendVerificationEmail(User $user)
+    {
+        $data = [
+            'name' => $user->name,
+            'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
+        ];
+
+        Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
+            $message->to($user->email);
+            $message->subject('Verify Account');
+        });
     }
 }

@@ -56,6 +56,15 @@
                 <span class="text-primary">{{ session('status') }}</span>
             </div>
         @endif
+        @if (session('success'))
+            <div class="fv-row mb-4">
+                <span class="text-primary">{{ session('success') }}</span>
+            </div>
+        @elseif (session('error'))
+            <div class="fv-row mb-4">
+                <span class="text-danger">{{ session('error') }}</span>
+            </div>
+        @endif
         @if ($errors->has('notfounduser'))
         <div class="fv-row mb-4">
             <span class="text-danger">{{ $errors->first('notfounduser') }}</span>

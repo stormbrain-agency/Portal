@@ -7,10 +7,10 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\resources\views\mail\emailAuthenticationSuccess;
 use Illuminate\Support\Facades\Crypt;
 class UserPending extends Component
@@ -25,6 +25,7 @@ class UserPending extends Component
     protected $listeners = [
         'approve_user' => 'approveUser',
         'deny_user' => 'denyUser',
+        'delete_user' => 'deleteUser',
     ];
 
     public function approveUser($id)
