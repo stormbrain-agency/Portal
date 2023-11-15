@@ -1,7 +1,7 @@
 <x-default-layout>
 
     @section('title')
-        Users
+        W9 List Download History
     @endsection
 
     @section('breadcrumbs')
@@ -34,26 +34,19 @@
         </div>
         <!--end::Card body-->
     </div>
-    <!--begin::Modal-->
-    <livewire:user.user-pending></livewire:user.user-pending>
-    <!--end::Modal-->
+
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
-            // document.getElementById('mySearchInput').addEventListener('keyup', function () {
-            //     window.LaravelDataTables['users-pending-table'].search(this.value).draw();
-            // });
+            document.getElementById('mySearchInput').addEventListener('keyup', function () {
+                window.LaravelDataTables['users-table'].search(this.value).draw();
+            });
             document.addEventListener('livewire:load', function () {
                 Livewire.on('success', function () {
                     $('#kt_modal_add_user').modal('hide');
-                    window.LaravelDataTables['users-pending-table'].ajax.reload();
+                    window.LaravelDataTables['users-table'].ajax.reload();
                 });
             });
-
-            document.getElementById('mySearchInput').addEventListener('keyup', function () {
-                window.LaravelDataTables['users-pending-table'].search(this.value).draw();
-            });
-
         </script>
     @endpush
 

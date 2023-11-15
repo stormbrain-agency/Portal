@@ -8,8 +8,8 @@ class CreateW9UploadTable extends Migration
     {
         Schema::create('w9_upload', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->string('country');
+            $table->string('comments', 150)->nullable();
+            $table->string('w9_county_fips');
             $table->unsignedBigInteger('user_id'); 
             // $table->foreign('')->references('id')->on('users'); 
             $table->string('original_name');

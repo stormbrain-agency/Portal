@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
@@ -20,8 +21,7 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request)
     {
-        addJavascriptFile('assets/js/custom/authentication/reset-password/new-password.js');
-
+        // addJavascriptFile('assets/js/custom/authentication/reset-password/new-password.js');
         return view('pages.auth.reset-password', ['request' => $request]);
     }
 
@@ -38,7 +38,16 @@ class NewPasswordController extends Controller
         $request->validate([
             'token' => ['required'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => [
+                'required',
+                'confirmed',
+                Rules\Password::defaults(),
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/[A-Za-z]/', $value) || !preg_match('/\d/', $value)) {
+                        $fail(__('The :attribute must contain at least one letter and one number.', ['attribute' => $attribute]));
+                    }
+                },
+            ],
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -56,8 +65,6 @@ class NewPasswordController extends Controller
             }
         );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         return $status == Password::PASSWORD_RESET
                     ? redirect()->route('login')->with('status', __($status))

@@ -18,6 +18,11 @@
                     {!! getIcon('magnifier', 'fs-3 position-absolute ms-5') !!}
                     <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search user" id="mySearchInput"/>
                 </div>
+                 {{-- @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif --}}
                 <!--end::Search-->
             </div>
             <!--begin::Card title-->
@@ -39,6 +44,7 @@
                 <livewire:user.add-user-modal></livewire:user.add-user-modal>
                 <!--end::Modal-->
             </div>
+
             <!--end::Card toolbar-->
             @endif
         </div>

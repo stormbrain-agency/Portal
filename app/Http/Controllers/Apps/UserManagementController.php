@@ -70,7 +70,16 @@ class UserManagementController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+          
+        if ($user->id === auth()->id()) {
+            return redirect()->back()->with('error', 'You cannot delete your own account.');
+        }
+
+    
+        $user->delete();
+
+        return redirect()->route('user-management.users.index')->with('success', 'User has been successfully deleted.');
+
     }
 
     public function users_pending(UsersPendingDataTable $dataTable)

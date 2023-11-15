@@ -16,19 +16,20 @@ class W9DataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
+
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
         //get db data
-            ->rawColumns(['user', 'date', 'country', 'action']) // Add other columns as needed
+            ->rawColumns(['user', 'date', 'w9_county_fips', 'action']) // Add other columns as needed
             ->editColumn('user', function (W9Upload $upload) {
                 return $upload->user->first_name . ' ' . $upload->user->last_name;
             })
             ->editColumn('date', function (W9Upload $upload) {
                 return $upload->created_at->toDateString();
             })
-            ->editColumn('country', function (W9Upload $upload) {
-                return $upload->country;
+            ->editColumn('w9_county_fips', function (W9Upload $upload) {
+                return $upload->county->county_full;
             })
             ->editColumn('comment', function (W9Upload $upload) {
                 return $upload->comments;
@@ -50,7 +51,17 @@ class W9DataTable extends DataTable
      */
     public function query(W9Upload $model): QueryBuilder
     {
-        return $model->newQuery();
+        $query = $model->newQuery();
+
+        $query->whereHas('user', function ($userQuery) {
+            $userQuery->where('status', 1);
+
+            if (auth()->user()->hasRole('county user')) {
+                $userQuery->where('id', auth()->user()->id);
+            }
+        });
+
+        return $query;
     }
 
     /**
@@ -74,19 +85,25 @@ class W9DataTable extends DataTable
     public function getColumns(): array
     {
         //view layout
-        return [
-            Column::make('date')->title('Date of submissions'),
-            Column::make('country')->title('Country Designation'),
-            Column::make('user')->title('User of submission'),
-            Column::make('comment')->title('Comment'),
-            Column::make('filename')->title('File Name Submitted'),
-            // add column action
-            // Column::computed('action')
-            //     ->exportable(false)
-            //     ->printable(false)
-            //     ->width(60)
-            Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false),
-        ];
+        if (auth()->user()->hasRole('view only')) {
+            return [
+                Column::make('date')->title('Date of submissions'),
+                Column::make('w9_county_fips')->title('Country Designation'),
+                Column::make('user')->title('User of submission'),
+                Column::make('comment')->title('Comment'),
+                Column::make('filename')->title('File Name Submitted'),
+            ];
+        }else{
+            return [
+                Column::make('date')->title('Date of submissions'),
+                Column::make('w9_county_fips')->title('Country Designation'),
+                Column::make('user')->title('User of submission'),
+                Column::make('comment')->title('Comment'),
+                Column::make('filename')->title('File Name Submitted'),
+                Column::make('w9_file_path')->title('Download')->searchable(true)->orderable(true),
+            ];
+        }
+
     }
 
     /**

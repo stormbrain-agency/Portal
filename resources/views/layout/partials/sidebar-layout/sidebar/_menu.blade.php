@@ -64,6 +64,7 @@
 						<!--end:Menu link-->
 					</div>
 					<!--end:Menu item-->
+					@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 					<!--begin:Menu item-->
 					<div class="menu-item">
 						<!--begin:Menu link-->
@@ -77,7 +78,7 @@
 					</div>
 					<!--end:Menu item-->
 					<!--begin:Menu item-->
-					<div class="menu-item">
+					{{-- <div class="menu-item">
 						<!--begin:Menu link-->
 						<a class="menu-link {{ request()->routeIs('user-management.roles.*') ? 'active' : '' }}" href="{{ route('user-management.roles.index') }}">
 							<span class="menu-bullet">
@@ -98,8 +99,9 @@
 							<span class="menu-title">Permissions</span>
 						</a>
 						<!--end:Menu link-->
-					</div>
+					</div> --}}
 					<!--end:Menu item-->
+					@endif
 				</div>
 				<!--end:Menu sub-->
 			</div>
@@ -121,6 +123,14 @@
 				<a class="menu-link {{ request()->routeIs('w9_upload.*') ? 'active' : '' }}" href="{{ route('w9_upload.index') }}">
 					<span class="menu-icon devtest">{!! getIcon('abstract-26', 'fs-2') !!}</span>
 					<span class="menu-title">W-9 Manager</span>
+				</a>
+				<!--end:Menu link-->
+			</div>
+			<div class="menu-item">
+				<!--begin:Menu link-->
+				<a class="menu-link {{ request()->routeIs('w9_downloadhistory.*') ? 'active' : '' }}" href="{{ route('w9_downloadhistory.index') }}">
+					<span class="menu-icon devtest">{!! getIcon('abstract-26', 'fs-2') !!}</span>
+					<span class="menu-title">W-9 History Download</span>
 				</a>
 				<!--end:Menu link-->
 			</div>

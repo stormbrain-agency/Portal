@@ -19,7 +19,7 @@ Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
 // Home > Dashboard > W-9
 Breadcrumbs::for('county-provider-w9.upload', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('W-9', route('county-provider-w9.w9_upload'));
+    $trail->push('W-9 List', route('c'));
 });
 
 // Home > Dashboard > User Management
