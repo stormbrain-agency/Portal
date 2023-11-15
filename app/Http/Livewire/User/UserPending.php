@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\resources\views\mail\emailAuthenticationSuccess;
+use Illuminate\Support\Facades\Crypt;
 class UserPending extends Component
 {
     use WithFileUploads;
@@ -31,10 +32,12 @@ class UserPending extends Component
         if (auth()->user()->can('county users management')) {
             User::where('id', $id)->update(['status' => 1]);
             $user = User::find($id);
+            $HashId = Crypt::encrypt($id);
+            
             $data = [
                 "id" => $user,
-                "email" => $user->email,
-                'link' => url('/welcome'),
+                "hash" => $HashId,
+                "email" => $user->email, 
             ];
             $user->assignRole('county user');
             $emailAdress = $data['email'];
@@ -48,15 +51,14 @@ class UserPending extends Component
         }
     }
 
-    public function MailCheck($id)
+    public function MailCheck($token)
     {
+        $id = Crypt::decrypt($token);
         User::where('id', $id)->update(['email_verified_at' => now()]);
         $user = User::find($id);
-        $user = User::find($id);
         $data = [
-            "id" => $user,
-            // "email" => $user->email,
-            "email" => 'molafo7888@newnime.com',
+            "id" => $id,
+            "email" => $user->email,
             'link' => url('/login'),
         ];
         // $user->assignRole('county user');
