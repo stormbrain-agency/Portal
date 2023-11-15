@@ -10,10 +10,9 @@ class W9Upload extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'date',
         'w9_county_fips',
         'user_id',
-        'comments'
+        'comments',
     ];
 
     public function user()
