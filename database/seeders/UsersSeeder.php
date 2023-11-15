@@ -17,25 +17,25 @@ class UsersSeeder extends Seeder
     public function run(Generator $faker)
     {
         $demoUser = User::create([
-            'first_name'              => $faker->name,
-            'last_name'              => $faker->name,
-            'email'             => 'support@stormbrain.com',
+            'first_name'              => "CDA",
+            'last_name'              => "Admin",
+            'email'             => 'development@stormbrain.com',
             'password'          => Hash::make('W%JdE7EhM)TC!pS(imuAzEgw'),
             'status'          => 1,
             'email_verified_at' => now(),
         ]);
 
         $demoUser2 = User::create([
-            'first_name'              => $faker->name,
-            'last_name'              => $faker->name,
+            'first_name'              => "CDA",
+            'last_name'              => "Manage",
             'email'             => 'manager@demo.com',
             'password'          => Hash::make('demo'),
             'status'          => 1,
             'email_verified_at' => now(),
         ]);
         $demoUser3 = User::create([
-            'first_name'              => $faker->name,
-            'last_name'              => $faker->name,
+            'first_name'              => "CDA",
+            'last_name'              => "View Only",
             'email'             => 'viewonly@demo.com',
             'password'          => Hash::make('demo'),
             'status'          => 1,
