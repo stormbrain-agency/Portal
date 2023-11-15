@@ -97,12 +97,17 @@ class AddUserModal extends Component
         $data['password'] = Hash::make($this->email);
         $data['status'] = 1;
         $user = User::create($data);
-
+        
         $user->assignRole($this->role);
+        $user->email_verified_at = now();
+        $user->save();
 
-        // Password::sendResetLink($user->only('email'));
-
-        $this->emit('success', __('User created successfully'));
+        try {
+            Password::sendResetLink($user->only('email'));
+            $this->emit('success', __('User created successfully'));
+        } catch (\Exception $e) {
+            $this->emit('error', 'Failed to send the password reset email. Please check your email address.');
+        }
     }
 
 
