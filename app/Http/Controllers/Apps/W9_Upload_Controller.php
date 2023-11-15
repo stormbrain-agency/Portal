@@ -91,6 +91,14 @@ class W9_Upload_Controller extends Controller
                     });
                 }
 
+                $mailUser = $data['user_email_address'];
+                Mail::send('mail.emailW9Upload', $data, function ($message) use ($mailUser) {
+                    $message->to($mailUser);
+                    $message->subject('Confirmation: W-9 Submission Received');
+                    $message->body('We have received your W-9 submission. 
+                    The details of the submission are as follows: ');
+                });
+
                 return redirect('/w9_upload')->with('success', 'File uploaded successfully.');
             } else {
                 return redirect('/w9_upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
