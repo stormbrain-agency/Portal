@@ -112,7 +112,7 @@
 				<!--begin:Menu link-->
 				<a class="menu-link {{ request()->routeIs('county-provider-payment-report.*') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
 					<span class="menu-icon">{!! getIcon('rocket', 'fs-2') !!}</span>
-					<span class="menu-title">Payment Resports</span>
+					<span class="menu-title">Payment Reports</span>
 				</a>
 				<!--end:Menu link-->
 			</div>

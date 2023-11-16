@@ -81,4 +81,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(County::class, 'county_designation', 'county_fips');
     }
+
+    public function paymentReport()
+    {
+        return $this->hasMany(PaymentReport::class, 'user_id', 'id');
+    }
 }
