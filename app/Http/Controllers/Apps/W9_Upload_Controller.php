@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 
-
 class W9_Upload_Controller extends Controller
-{
+{   
     public function wp_upload_index(W9DataTable $dataTable)
     {
         return $dataTable->with([
@@ -38,7 +37,7 @@ class W9_Upload_Controller extends Controller
 
 
     public function uploadFile(Request $request)
-    {
+    {                                            
         if ($request->hasFile('file')) {
             $file = $request->file('file');
     
@@ -80,25 +79,24 @@ class W9_Upload_Controller extends Controller
                     'user_email_address' => $user->email,
                     'county_designation' => "update",
                     'list_mail_admin' => $adminEmails,
+                    'check' => 'true',
                     'link' => url('/w9_upload'),
+                    'subjectUser' => 'Alert: W-9 Submission Received',
+                    'subjectAdmin' => 'Confirmation: W-9 Submission Received',
                 ];
-                $dataMail = $user->email;
-                $dataMail = $data['list_mail_admin'];
-                foreach($dataMail as $emailAdress){
-                    Mail::send('mail.emailW9Upload', $data, function ($message) use ($emailAdress) {
+                $mailAdmin = $data['list_mail_admin'];
+                $mailUser = $data['user_email_address'];
+                foreach($mailAdmin as $emailAdress){
+                    Mail::send('mail.emailW9Upload', $data, function ($message) use ($emailAdress){
                         $message->to($emailAdress);
-                        $message->subject('Alert: W-9 Submission Received');
+                        $message->subject('Confirmation: W-9 Submission Received');
                     });
                 }
-
-                $mailUser = $data['user_email_address'];
-                Mail::send('mail.emailW9Upload', $data, function ($message) use ($mailUser) {
+                $data['check'] = true;
+                Mail::send('mail.emailW9Upload', $data, function ($message) use ($mailUser){
                     $message->to($mailUser);
-                    $message->subject('Confirmation: W-9 Submission Received');
-                    $message->body('We have received your W-9 submission. 
-                    The details of the submission are as follows: ');
+                    $message->subject('Alert: W-9 Submission Received');
                 });
-
                 return redirect('/w9_upload')->with('success', 'File uploaded successfully.');
             } else {
                 return redirect('/w9_upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');

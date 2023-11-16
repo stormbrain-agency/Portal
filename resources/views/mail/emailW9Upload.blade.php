@@ -4,7 +4,11 @@
     <title>“W-9” Submission Confirmation</title>
 </head>
 <body>
-    <p>This alert is to notify you that a W-9 submission has ben received. The details of the submission are as follows: </p>
+    @if ($check === true)
+        <p>We have received your W-9 submission. The details of the submission are as follows:</p>
+    @else
+        <p>This alert is to notify you that a W-9 submission has ben received. The details of the submission are as follows:</p>
+    @endif
     <ul>
         <li>
             <span>Date/Time of Submission: </span>
