@@ -16,13 +16,10 @@ class W9DataTable extends DataTable
      *
      * @param QueryBuilder $query Results from query() method.
      */
-
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        //get db data
             ->editColumn('user', function (W9Upload $upload) {
-                // return $upload->user->first_name . ' ' . $upload->user->last_name;
                 return view('pages.apps.provider-w9.columns._user', compact('upload'));
             })
 
@@ -59,16 +56,15 @@ class W9DataTable extends DataTable
     public function query(W9Upload $model): QueryBuilder
     {
         $query = $model->newQuery();
-    
+        
         $query->join('users', 'w9_upload.user_id', '=', 'users.id')
               ->join('counties', 'w9_upload.w9_county_fips', '=', 'counties.county_fips') 
               ->where('users.status', 1)
               ->select('w9_upload.*', 'counties.county_full'); 
-    
+        
         if (auth()->user()->hasRole('county user')) {
             $query->where('users.id', auth()->user()->id);
         }
-    
         return $query;
     }
 
@@ -81,10 +77,11 @@ class W9DataTable extends DataTable
             ->setTableId('w9-upload-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('rt' . "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>")
+            ->dom('Brt')
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(1);
+            
     }
 
     /**
@@ -115,11 +112,5 @@ class W9DataTable extends DataTable
         }
     }
 
-    /**
-     * Get the filename for export.
-     */
-    protected function filename(): string
-    {
-        return 'W9Upload_' . date('YmdHis');
-    }
+
 }

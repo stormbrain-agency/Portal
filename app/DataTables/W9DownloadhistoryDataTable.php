@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\W9Downloadhistory;
+use App\Models\W9Upload;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
