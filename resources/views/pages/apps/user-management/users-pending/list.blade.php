@@ -40,6 +40,9 @@
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
+            document.getElementById('mySearchInput').addEventListener('keyup', function () {
+                window.LaravelDataTables['users-pending-table'].search(this.value).draw();
+            });
             // document.getElementById('mySearchInput').addEventListener('keyup', function () {
             //     window.LaravelDataTables['users-pending-table'].search(this.value).draw();
             // });
@@ -50,9 +53,6 @@
                 });
             });
 
-            document.getElementById('mySearchInput').addEventListener('keyup', function () {
-                window.LaravelDataTables['users-pending-table'].search(this.value).draw();
-            });
 
         </script>
     @endpush

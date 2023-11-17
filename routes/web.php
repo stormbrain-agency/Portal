@@ -3,7 +3,7 @@
 use App\Http\Controllers\Apps\PermissionManagementController;
 use App\Http\Controllers\Apps\RoleManagementController;
 use App\Http\Controllers\Apps\UserManagementController;
-use App\Http\Controllers\Apps\CountyProviderPaymentReportController;
+use App\Http\Controllers\Apps\PaymentReportController;
 use App\Http\Controllers\Apps\CountyProviderW9Controller;
 use App\Http\Controllers\Apps\NotificationsController;
 use App\Http\Controllers\Apps\CountyUsersController;
@@ -67,7 +67,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['permission:read provider payment'])->group(function () {
         Route::prefix('county-provider-payment-report')->name('county-provider-payment-report.')->group(function () {
-            Route::get('/', [CountyProviderPaymentReportController::class,'index'])->name('index');
+            Route::get('/', [PaymentReportController::class,'index'])->name('index');
+            Route::get('/downloads/{filename}', [PaymentReportController::class, 'downloadFile'])->name('download');
             
         });
     });
