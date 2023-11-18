@@ -24,9 +24,9 @@
                 <div class="d-flex flex-center flex-wrap px-5">
                     <!--begin::Links-->
                     <div class="d-flex fw-semibold text-primary fs-base">
-                        <a href="#" class="px-5" target="_blank">Terms</a>
+                        <a href="#" class="px-5" target="_blank">Privacy</a>
 
-                        <a href="#" class="px-5" target="_blank">Plans</a>
+                        <a href="#" class="px-5" target="_blank">Terms</a>
 
                         <a href="#" class="px-5" target="_blank">Contact Us</a>
                     </div>
@@ -42,28 +42,24 @@
                 <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                     <!--begin::Logo-->
                     <a href="{{ route('dashboard') }}" class="mb-12">
-                        <img alt="Logo" src="{{ image('logos/custom-1.png') }}" class="h-60px h-lg-75px"/>
+                        <img alt="Logo" src="{{ image('logos/CDA_Title_SRPP_White_Stacked.svg') }}" class="h-60px h-lg-125px"/>
                     </a>
                     <!--end::Logo-->
 
                     <!--begin::Image-->
-                    <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{ image('misc/auth-screens.png') }}" alt=""/>
+                    {{-- <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="{{ image('misc/auth-screens.png') }}" alt=""/> --}}
                     <!--end::Image-->
 
                     <!--begin::Title-->
-                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">
-                        Fast, Efficient and Productive
+                    <h1 class="d-none d-lg-block text-white fs-1 fw-medium text-center mb-7">
+                        Subsidy Payments for<br>
+                        Child Care Providers
                     </h1>
                     <!--end::Title-->
 
                     <!--begin::Text-->
                     <div class="d-none d-lg-block text-white fs-base text-center">
-                        In this kind of post, <a href="#" class="opacity-75-hover text-warning fw-bold me-1">the blogger</a>
-
-                        introduces a person they’ve interviewed <br/> and provides some background information about
-
-                        <a href="#" class="opacity-75-hover text-warning fw-bold me-1">the interviewee</a>
-                        and their <br/> work following this is a transcript of the interview.
+                        Making a difference in the California child<br>care sector by supporting child care<br>providers of all types sustain their business.
                     </div>
                     <!--end::Text-->
                 </div>
