@@ -10,14 +10,18 @@ class W9Upload extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'date',
-        'country',
+        'w9_county_fips',
         'user_id',
-        'comments'
+        'comments',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id'); 
+    }
+
+    public function county()
+    {
+        return $this->belongsTo(County::class, 'w9_county_fips', 'county_fips');
     }
 }

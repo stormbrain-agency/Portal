@@ -7,6 +7,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -23,19 +24,37 @@ class UserPending extends Component
     protected $listeners = [
         'approve_user' => 'approveUser',
         'deny_user' => 'denyUser',
+        'delete_user' => 'deleteUser',
     ];
 
     public function approveUser($id)
     {
         if (auth()->user()->can('county users management')) {
-            User::where('id', $id)->update(['status' => 1, 'email_verified_at' => now()]);
             $user = User::find($id);
-            $user->assignRole('county user');
-
-            $this->emit('success', 'User successfully approved');
+            if (!is_null($user)) {
+                $user->email_verification_hash = md5(uniqid());
+                $this->sendVerificationEmail($user);
+                $user->assignRole('county user');
+                $user->status = 1;
+                $user->save();
+                $this->emit('success', 'User successfully approved');
+            }
         }else{
             $this->emit('error', 'You do not have permission to perform this action');
         }
+    }
+
+    protected function sendVerificationEmail(User $user)
+    {
+        $data = [
+            'name' => $user->name,
+            'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
+        ];
+
+        Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
+            $message->to($user->email);
+            $message->subject('Verify Account');
+        });
     }
 
     public function denyUser($id)

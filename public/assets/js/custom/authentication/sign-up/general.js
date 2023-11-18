@@ -7,6 +7,9 @@ var KTSignupGeneral = function () {
     var submitButton;
     var validator;
     var passwordMeter;
+    var stateOption;
+    var countyOption;
+
 
     // Handle form
     var handleForm = function (e) {

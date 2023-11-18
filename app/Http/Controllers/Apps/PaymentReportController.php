@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\DataTables\PaymentReportDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\PaymentReport;
+use App\Models\County; 
 use Illuminate\Http\Request;
+use League\Csv\Writer;
 
-class CountyProviderPaymentReportController extends Controller
+class PaymentReportController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PaymentReportDataTable $dataTable)
     {
-        return view("pages.apps.provider-payment-resport.list");
+        return $dataTable->with([
+            'user' => auth()->user(),
+        ])->render('pages.apps.payment-report.list');
     }
 
     /**
@@ -61,5 +67,15 @@ class CountyProviderPaymentReportController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function downloadFile($filename)
+    {
+        $file = storage_path('app/uploads/payment-reports/'. $filename);
+        if (file_exists($file)) {
+            return response()->download($file);
+        } else {
+            return redirect('/county-provider-payment-report')->with('error', 'File not found.');
+        }
     }
 }

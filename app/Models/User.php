@@ -57,6 +57,12 @@ class User extends Authenticatable
         'last_login_at' => 'datetime',
     ];
 
+    public function isEmailVerified()
+    {
+        return !is_null($this->email_verified_at);
+    }
+
+
     public function getProfilePhotoUrlAttribute()
     {
         if ($this->profile_photo_path) {
@@ -74,5 +80,10 @@ class User extends Authenticatable
     public function county()
     {
         return $this->belongsTo(County::class, 'county_designation', 'county_fips');
+    }
+
+    public function paymentReport()
+    {
+        return $this->hasMany(PaymentReport::class, 'user_id', 'id');
     }
 }

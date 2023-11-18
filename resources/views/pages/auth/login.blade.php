@@ -7,20 +7,20 @@
         <div class="text-center mb-11">
             <!--begin::Title-->
             <h1 class="text-dark fw-bolder mb-3">
-                Sign In
+                Sign in to your account
             </h1>
             <!--end::Title-->
 
             <!--begin::Subtitle-->
-            <div class="text-gray-500 fw-semibold fs-6">
+            {{-- <div class="text-gray-500 fw-semibold fs-6">
                 Your Social Campaigns
-            </div>
+            </div> --}}
             <!--end::Subtitle--->
         </div>
         <!--begin::Heading-->
 
         <!--begin::Login options-->
-        <div class="row g-3 mb-9">
+        {{-- <div class="row g-3 mb-9">
             <!--begin::Col-->
             <div class="col-md-6">
                 <!--begin::Google link--->
@@ -43,14 +43,28 @@
                 <!--end::Google link--->
             </div>
             <!--end::Col-->
-        </div>
+        </div> --}}
         <!--end::Login options-->
 
         <!--begin::Separator-->
-        <div class="separator separator-content my-14">
+        {{-- <div class="separator separator-content my-14">
             <span class="w-125px text-gray-500 fw-semibold fs-7">Or with email</span>
-        </div>
+        </div> --}}
         <!--end::Separator-->
+        @if (session('status'))
+            <div class="fv-row mb-4">
+                <span class="text-primary">{{ session('status') }}</span>
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="fv-row mb-4">
+                <span class="text-primary">{{ session('success') }}</span>
+            </div>
+        @elseif (session('error'))
+            <div class="fv-row mb-4">
+                <span class="text-danger">{{ session('error') }}</span>
+            </div>
+        @endif
         @if ($errors->has('notfounduser'))
         <div class="fv-row mb-4">
             <span class="text-danger">{{ $errors->first('notfounduser') }}</span>
@@ -78,7 +92,7 @@
         <!--end::Input group--->
 
         <!--begin::Wrapper-->
-        <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+        <div class="d-flex flex-center flex-wrap gap-3 fs-base fw-semibold mb-8">
             <div></div>
 
             <!--begin::Link-->
@@ -99,7 +113,7 @@
 
         <!--begin::Sign up-->
         <div class="text-gray-500 text-center fw-semibold fs-6">
-            Not a Member yet?
+            Don’t have an account?
 
             <a href="{{ route('register') }}" class="link-primary">
                 Sign up

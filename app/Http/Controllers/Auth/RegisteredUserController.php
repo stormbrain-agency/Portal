@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -44,15 +45,13 @@ class RegisteredUserController extends Controller
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', 'string', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'],
             'business_phone' => ['required', 'string', 'max:255'],
             'mobile_phone' => ['required', 'string', 'max:255'],
             'mailing_address' => ['required', 'string', 'max:255'],
             'vendor_id' => ['required', 'string', 'max:255'],
             'county_designation' => ['required', 'string', 'max:255'],
             'w9_file_path' => ['required', 'file', 'mimes:zip'], 
-
-
         ]);
 
         if ($request->hasFile('w9_file_path')) {
@@ -90,13 +89,33 @@ class RegisteredUserController extends Controller
                 $userID = $user->id;
 
                 $newFile = new W9Upload();
-                $newFile->date = now();
-                $newFile->country = $request->county_designation;
+                $newFile->w9_county_fips = $request->county_designation;
                 $newFile->user_id = $userID; 
                 $newFile->original_name = $uniqueName;
                 $newFile->save();
 
-                event(new Registered($user));
+                // event(new Registered($user));
+                // Send Mail
+                $adminEmails = User::whereHas('roles', function ($query) {
+                $query->where('name', 'admin');
+                })->pluck('email');
+                $data = [
+                    'name' => $request -> input('name'),
+                    'email' => $request -> input('email'),
+                    'county_designation' => $request -> input('county_designation'),
+                    'link' => url('/user-management/user-pending/users/'. $userID .''),
+                    'time' => Carbon::now()->format('H:i:s - m/d/Y '),
+                    'list_mail' => $adminEmails,
+                ];
+                $dataMail = $data['list_mail'];
+                foreach($dataMail as $emailAdress){
+                    Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {
+                        $message->to($emailAdress);
+                        $message->subject('Alert: County User Registration - Approval
+                        Needed!');
+                    });
+                }
+
                 return response()->json(['status' => 'success', 'message' => 'successful']);
             } else{
                 return response()->json(['status' => 'error', 'message' => 'Error with W-9 File Upload']);
@@ -104,6 +123,28 @@ class RegisteredUserController extends Controller
 
 
         }
+    }
+
+    private function sendRegisterMailToAdmin($id){
+            $adminEmails = User::whereHas('roles', function ($query) {
+                $query->where('name', 'admin');
+            })->pluck('email');
+            $data = [
+                'name' => $request -> input('name'),
+                'email' => $request -> input('email'),
+                'county_designation' => $request -> input('county_designation'),
+                'link' => url('/user-management/users/'. $id .''),
+                'time' => Carbon::now()->format('H:i:s - m/d/Y '),
+                'list_mail' => $adminEmails,
+            ];
+            $dataMail = $data['list_mail'];
+            foreach($dataMail as $emailAdress){
+                Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {
+                    $message->to($emailAdress);
+                    $message->subject('Alert: County User Registration - Approval
+                    Needed!');
+                });
+            }
     }
 
     public function censoring(){

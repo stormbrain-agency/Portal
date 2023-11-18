@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
 use App\DataTables\UsersPendingDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserManagementController extends Controller
 {
@@ -68,7 +69,15 @@ class UserManagementController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+          
+        if ($user->id === auth()->id()) {
+            return redirect()->back()->with('error', 'You cannot delete your own account.');
+        }
+    
+        $user->delete();
+
+        return redirect()->route('user-management.users.index')->with('success', 'User has been successfully deleted.');
+
     }
 
     public function users_pending(UsersPendingDataTable $dataTable)
@@ -90,12 +99,17 @@ class UserManagementController extends Controller
     public function usersPendingApprove($id)
     {
         if (auth()->user()->can('county users management')) {
-            User::where('id', $id)->update(['status' => 1, 'email_verified_at' => now()]);
             $user = User::find($id);
-            $user->assignRole('county user');
-
-            return redirect()->route('user-management.users.show', $user);
-
+            if (!is_null($user)) {
+                $user->email_verification_hash = md5(uniqid());
+                $this->sendVerificationEmail($user);
+                $user->assignRole('county user');
+                $user->status = 1;
+                $user->save();
+                return redirect()->route('user-management.users-pending.show', $user);
+            }else{
+                return route('user-management.users-pending.index');
+            }
         }else{
             return route('user-management.users-pending.show', $user);
         }
@@ -122,5 +136,18 @@ class UserManagementController extends Controller
         } else {
             return view('errors.404');
         }
+    }
+
+    protected function sendVerificationEmail(User $user)
+    {
+        $data = [
+            'name' => $user->name,
+            'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
+        ];
+
+        Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
+            $message->to($user->email);
+            $message->subject('Verify Account');
+        });
     }
 }

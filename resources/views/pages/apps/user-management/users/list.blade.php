@@ -18,6 +18,11 @@
                     {!! getIcon('magnifier', 'fs-3 position-absolute ms-5') !!}
                     <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search user" id="mySearchInput"/>
                 </div>
+                 {{-- @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif --}}
                 <!--end::Search-->
             </div>
             <!--begin::Card title-->
@@ -28,7 +33,7 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                     <!--begin::Add user-->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user" data-kt-action="create_view">
                         {!! getIcon('plus', 'fs-2', '', 'i') !!}
                         Add User
                     </button>
@@ -39,6 +44,7 @@
                 <livewire:user.add-user-modal></livewire:user.add-user-modal>
                 <!--end::Modal-->
             </div>
+
             <!--end::Card toolbar-->
             @endif
         </div>

@@ -78,5 +78,5 @@ document.querySelectorAll('[data-kt-action="deny_row"]').forEach(function (eleme
 // Listen for 'success' event emitted by Livewire
 Livewire.on('success', (message) => {
     // Reload the users-table datatable
-    LaravelDataTables['users-table'].ajax.reload();
+    LaravelDataTables["users-pending-table"].ajax.reload();
 });

@@ -54,9 +54,14 @@
                                 <i class="ki-duotone ki-down fs-3"></i>
                             </span>
                         </div>
+
+                        @if((auth()->id() == $user->id && !$user->hasRole('county user')) || auth()->user()->hasRole('admin') )
                         <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit customer details">
-                            <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_update_details">Edit</a>
+                            <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_edit_user" data-kt-action="update_row" data-kt-user-id="{{$user->id}}">Edit</a>
                         </span>
+                        <livewire:user.edit-user-modal></livewire:user.edit-user-modal>
+                        @endif
+
                     </div>
                     <!--end::Details toggle-->
                     <div class="separator"></div>
@@ -151,13 +156,15 @@
                     <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_user_view_overview_events_and_logs_tab">Events & Logs</a>
                 </li>
                 <!--end:::Tab item-->
-                <!--begin:::Tab item-->
-                <li class="nav-item">
-                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_overview_security">Update Profile</a>
-                </li>
+                @if (auth()->check() && auth()->user()->id == $user->id)
+                    <!--begin:::Tab item-->
+                    <li class="nav-item">
+                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_overview_security">Security</a>
+                    </li>
+                @endif
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
-                @if (auth()->check() && auth()->user()->id != $user->id)
+                @if (auth()->user()->hasRole('admin') && auth()->user()->id != $user->id)
                 <li class="nav-item ms-auto">
                     <!--begin::Action menu-->
                     <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Actions
@@ -165,89 +172,14 @@
                     <!--begin::Menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
                         <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <div class="menu-content text-muted pb-2 px-5 fs-7 text-uppercase">Payments</div>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <a href="#" class="menu-link px-5">Create invoice</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <a href="#" class="menu-link flex-stack px-5">Create payments
-                                <span class="ms-2" data-bs-toggle="tooltip" title="Specify a target name for future usage and reference">
-                                    <i class="ki-duotone ki-information fs-7">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                        <span class="path3"></span>
-                                    </i>
-                                </span></a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start">
-                            <a href="#" class="menu-link px-5">
-                                <span class="menu-title">Subscription</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <!--begin::Menu sub-->
-                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-5">Apps</a>
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-5">Billing</a>
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-5">Statements</a>
-                                </div>
-                                <!--end::Menu item-->
-                                <!--begin::Menu separator-->
-                                <div class="separator my-2"></div>
-                                <!--end::Menu separator-->
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <div class="menu-content px-3">
-                                        <label class="form-check form-switch form-check-custom form-check-solid">
-                                            <input class="form-check-input w-30px h-20px" type="checkbox" value="" name="notifications" checked="checked" id="kt_user_menu_notifications" />
-                                            <span class="form-check-label text-muted fs-6" for="kt_user_menu_notifications">Notifications</span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <!--end::Menu item-->
-                            </div>
-                            <!--end::Menu sub-->
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu separator-->
-                        <div class="separator my-3"></div>
-                        <!--end::Menu separator-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <div class="menu-content text-muted pb-2 px-5 fs-7 text-uppercase">Account</div>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <a href="#" class="menu-link px-5">Reports</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5 my-1">
-                            <a href="#" class="menu-link px-5">Account Settings</a>
-                        </div>
-                        <!--end::Menu item-->
-                        <!--begin::Menu item-->
-                        <div class="menu-item px-5">
-                            <a href="#" class="menu-link text-danger px-5">Delete customer</a>
-                        </div>
+                        @if ($user->status == 1)
+                        <form method="POST" action="{{ route('user-management.users.destroy', $user) }}" class="menu-item px-5" id="deleteUserForm">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-white menu-link text-danger px-5 w-100">Delete User</button>
+                        </form>
+                        @endif
+
                         <!--end::Menu item-->
                     </div>
                     <!--end::Menu-->
@@ -2016,46 +1948,35 @@
                             <!--begin::Table wrapper-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
-                                <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
-                                    <tbody class="fs-6 fw-semibold text-gray-600">
-                                        <tr>
-                                            <td>Email</td>
-                                            <td>smith@kpmg.com</td>
-                                            <td class="text-end">
-                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_email">
-                                                    <i class="ki-duotone ki-pencil fs-3">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Password</td>
-                                            <td>******</td>
-                                            <td class="text-end">
-                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_password">
-                                                    <i class="ki-duotone ki-pencil fs-3">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Role</td>
-                                            <td>Administrator</td>
-                                            <td class="text-end">
-                                                <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_role">
-                                                    <i class="ki-duotone ki-pencil fs-3">
-                                                        <span class="path1"></span>
-                                                        <span class="path2"></span>
-                                                    </i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
+                                        <tbody class="fs-6 fw-semibold text-gray-600">
+                                            <tr>
+                                                <td>Password</td>
+                                                <td>******</td>
+                                                <td class="text-end">
+                                                    <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_password">
+                                                        <i class="ki-duotone ki-pencil fs-3">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                        </i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mobile Phone</td>
+                                                <td>{{$user->mobile_phone}}</td>
+                                                <td class="text-end">
+                                                    <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_mobile_phone">
+                                                        <i class="ki-duotone ki-pencil fs-3">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                        </i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                           
+                                        </tbody>
+                                    </table>
                                 <!--end::Table-->
                             </div>
                             <!--end::Table wrapper-->
@@ -2320,7 +2241,7 @@
                 </div>
                 <!--end:::Tab pane-->
                 <!--begin:::Tab pane-->
-                <div class="tab-pane fade show active" id="kt_user_view_w9_files" role="tabpanel">
+                <div class="tab-pane fade show" id="kt_user_view_w9_files" role="tabpanel">
                     <!--begin::Card-->
                     <div class="card card-flush mb-6 mb-xl-9">
                         <!--begin::Card header-->
@@ -2363,8 +2284,9 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Action-->
-                                            <a href="{{ route('county-provider-w9.w9_download', ['filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
-                                            {{-- <a href="" class="btn btn-primary">Download</a> --}}
+                                            @if (!auth()->user()->hasRole('view only'))
+                                            <a href="{{ route('w9_upload.w9_download', ['filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
+                                            @endif
                                             <!--end::Action-->
                                         </div>
                                         <!--end::Time-->
@@ -2407,7 +2329,13 @@
     @include('pages.apps/user-management/users/modals/_update-email')
     <!--end::Modal - Update email-->
     <!--begin::Modal - Update password-->
-    @include('pages.apps/user-management/users/modals/_update-password')
+    {{-- @include('pages.apps/user-management/users/modals/_update-password') --}}
+   @if (auth()->check() && auth()->user()->id == $user->id)
+        <livewire:user.user-update-password></livewire:user.user-update-password>
+        <livewire:user.user-update-mobile-phone></livewire:user.user-update-mobile-phone>
+    @endif
+
+
     <!--end::Modal - Update password-->
     <!--begin::Modal - Update role-->
     @include('pages.apps/user-management/users/modals/_update-role')
@@ -2419,4 +2347,46 @@
     @include('pages.apps/user-management/users/modals/_add-task')
     <!--end::Modal - Add task-->
     <!--end::Modals-->
+    @push('scripts')
+        <script>
+          
+            document.querySelectorAll('[data-kt-action="update_row"]').forEach(function (element) {
+                element.addEventListener('click', function () {
+                    Livewire.emit('update_user', this.getAttribute('data-kt-user-id'));
+                });
+            });
+            document.addEventListener('livewire:load', function () {
+                Livewire.on('success', function () {
+                    $('#kt_modal_edit_user').modal('hide'); 
+                    
+                    setTimeout(() => {
+                        
+                        window.location.reload();
+                    }, 1000);
+                });
+            });
+              document.getElementById('deleteUserForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    text: "This action will delete this user's data!\nAre you sure?",
+                    icon: "warning",
+                    buttonsStyling: false,
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    customClass: {
+                        confirmButton: "btn btn-danger",
+                        cancelButton: "btn btn-secondary",
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('deleteUserForm').submit();
+                    }
+                });
+            });
+
+
+        </script>
+    @endpush
 </x-default-layout>

@@ -3,7 +3,7 @@
 use App\Http\Controllers\Apps\PermissionManagementController;
 use App\Http\Controllers\Apps\RoleManagementController;
 use App\Http\Controllers\Apps\UserManagementController;
-use App\Http\Controllers\Apps\CountyProviderPaymentReportController;
+use App\Http\Controllers\Apps\PaymentReportController;
 use App\Http\Controllers\Apps\CountyProviderW9Controller;
 use App\Http\Controllers\Apps\NotificationsController;
 use App\Http\Controllers\Apps\CountyUsersController;
@@ -13,6 +13,7 @@ use App\Http\Controllers\Apps\ActivityController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Apps\W9_Upload_Controller ;
+use App\Http\Controllers\Apps\W9_Historydownload_Controller ;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
 
@@ -27,10 +28,13 @@ use App\Http\Middleware\CheckPermission;
 |
 */
 
-Route::get('/export/csv', [W9_Upload_Controller::class, 'exportCsv']);
+Route::get('/downloads', [W9_Historydownload_Controller::class, 'showDownloads'])->name('downloads');
+
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/', [UserManagementController::class, 'profile'])->name('profile');
+    // Route::get('/', [DashboardController::class, 'index']);
     Route::get('/get-counties/{stateId}', 'LocationController@getCountiesByState');
 
     Route::get('/profile', [UserManagementController::class, 'profile'])->name('profile');
@@ -40,9 +44,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::get('/dashboard', [W9_Upload_Controller::class, 'showUploadForm'])->name('dashboard');
 
     Route::name('user-management.')->group(function () {
-        Route::middleware(['permission:county users management'])->group(function () {
+        // Route::middleware(['permission:county users management'])->group(function () {
             Route::resource('/user-management/users', UserManagementController::class);
-        });
+        // });
         Route::middleware(['permission:county users management'])->group(function () {
             Route::prefix('/user-management/user-pending')->name('users-pending.')->group(function () {
                 Route::get('/', [UserManagementController::class,'users_pending'])->name('index');
@@ -52,32 +56,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 
             });
         });
-        Route::middleware(['permission:read provider payment'])->group(function () {
-            Route::resource('/user-management/roles', RoleManagementController::class);
-        });
-        Route::resource('/user-management/permissions', PermissionManagementController::class);
+
     });
 
     Route::middleware(['permission:read provider payment'])->group(function () {
         Route::prefix('county-provider-payment-report')->name('county-provider-payment-report.')->group(function () {
-            Route::get('/', [CountyProviderPaymentReportController::class,'index'])->name('index');
+            Route::get('/', [PaymentReportController::class,'index'])->name('index');
+            Route::get('/downloads/{filename}', [PaymentReportController::class, 'downloadFile'])->name('download');
             
         });
     });
 
     Route::middleware(['permission:read provider w9'])->group(function () {
-
         Route::prefix('/w9_upload')->name('w9_upload.')->group(function () {
             Route::get('/', [W9_Upload_Controller::class,'wp_upload_index'])->name('index');
             Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
             Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
         });
-
-        // Route::prefix('county-provider-w9')->name("county-provider-w9.")->group(function () {
-        //     Route::get('/w9_upload', [W9_Upload_Controller::class, 'showUploadForm'])->name('w9_upload');
-        //     Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
-        //     Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
-        // });
+        Route::prefix('/w9_downloadhistory')->name('w9_downloadhistory.')->group(function () {
+            Route::get('/', [W9_Historydownload_Controller::class,'w9_downloadhistory_index'])->name('index');
+        });
     });
     
 

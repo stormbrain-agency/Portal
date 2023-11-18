@@ -142,6 +142,7 @@
                         <i class="ki-duotone ki-down fs-2 me-0"></i></a>
                     <!--begin::Menu-->
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
+                        @if ($user->status == 0)
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
                             <a href={{ route('user-management.users-pending.approve', $user) }} id="approveUser" class="menu-link px-5">Approve User</a>
@@ -152,11 +153,14 @@
                             <a href={{ route('user-management.users-pending.deny', $user) }} id="denyUser" class="menu-link px-5 text-danger">Deny User</a>
                         </div>
                         <!--end::Menu item-->
+                        @endif
                         <!--begin::Menu item-->
-                        @if ($user->status == 1)
-                        <div class="menu-item px-5">
-                            <a href="#" class="menu-link text-danger px-5">Delete User</a>
-                        </div>
+                        @if ($user->status == 1 && $user->email_verified_at == "")
+                        <form method="POST" action="{{ route('user-management.users.destroy', $user) }}" class="menu-item px-5" id="deleteUserForm">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outline-white menu-link text-danger px-5 w-100">Delete User</button>
+                        </form>
                         @endif
                         <!--end::Menu item-->
                     </div>
@@ -246,7 +250,7 @@
     @push('scripts')
         <script>
             document.getElementById('approveUser').addEventListener('click', function (event) {
-                event.preventDefault(); // Ngăn chặn mặc định của thẻ <a> (điều hướng)
+                event.preventDefault(); 
                 Swal.fire({
                     text: "Approve this User ?",
                     icon: "info",
@@ -265,7 +269,7 @@
                 });
             });
             document.getElementById('denyUser').addEventListener('click', function (event) {
-                event.preventDefault(); // Ngăn chặn mặc định của thẻ <a> (điều hướng)
+                event.preventDefault(); 
                 Swal.fire({
                     text: "This action will delete this user's data!\nAre you sure?",
                     icon: "warning",
@@ -283,6 +287,27 @@
                     }
                 });
             });
+             document.getElementById('deleteUserForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    text: "This action will delete this user's data!\nAre you sure?",
+                    icon: "warning",
+                    buttonsStyling: false,
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    customClass: {
+                        confirmButton: "btn btn-danger",
+                        cancelButton: "btn btn-secondary",
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('deleteUserForm').submit();
+                    }
+                });
+            });
+           
         </script>
     @endpush
 </x-default-layout>

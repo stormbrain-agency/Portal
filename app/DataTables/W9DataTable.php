@@ -19,16 +19,18 @@ class W9DataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        //get db data
-            ->rawColumns(['user', 'date', 'country', 'action']) // Add other columns as needed
             ->editColumn('user', function (W9Upload $upload) {
-                return $upload->user->first_name . ' ' . $upload->user->last_name;
+                return view('pages.apps.provider-w9.columns._user', compact('upload'));
             })
-            ->editColumn('date', function (W9Upload $upload) {
-                return $upload->created_at->toDateString();
+
+            ->editColumn('created_at', function (W9Upload $upload) {
+                return $upload->created_at->toDateString();;
             })
-            ->editColumn('country', function (W9Upload $upload) {
-                return $upload->country;
+            ->editColumn('updated_at', function (W9Upload $upload) {
+                return $upload->created_at->toTimeString();
+            })
+            ->addColumn('w9_county_fips', function (W9Upload $upload) {
+                return $upload->county_full;
             })
             ->editColumn('comment', function (W9Upload $upload) {
                 return $upload->comments;
@@ -41,7 +43,10 @@ class W9DataTable extends DataTable
                 return '<a href="' . route('w9_upload.w9_download', ['filename' => $user->original_name]) . '" class="btn btn-primary">Download</a>';
             })
  
-            ->rawColumns(['w9_file_path'])
+            ->addColumn('user_first_name', function (W9Upload $upload) {
+                return $upload->user->first_name;
+            })
+            ->rawColumns(['user_first_name', 'w9_file_path'])
             ->setRowId('id');
     }
 
@@ -50,7 +55,17 @@ class W9DataTable extends DataTable
      */
     public function query(W9Upload $model): QueryBuilder
     {
-        return $model->newQuery();
+        $query = $model->newQuery();
+        
+        $query->join('users', 'w9_upload.user_id', '=', 'users.id')
+              ->join('counties', 'w9_upload.w9_county_fips', '=', 'counties.county_fips') 
+              ->where('users.status', 1)
+              ->select('w9_upload.*', 'counties.county_full'); 
+        
+        if (auth()->user()->hasRole('county user')) {
+            $query->where('users.id', auth()->user()->id);
+        }
+        return $query;
     }
 
     /**
@@ -62,10 +77,11 @@ class W9DataTable extends DataTable
             ->setTableId('w9-upload-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('rt' . "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>")
+            ->dom('Brt')
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(1);
+            
     }
 
     /**
@@ -74,26 +90,27 @@ class W9DataTable extends DataTable
     public function getColumns(): array
     {
         //view layout
-        return [
-            Column::make('date')->title('Date of submissions'),
-            Column::make('country')->title('Country Designation'),
-            Column::make('user')->title('User of submission'),
-            Column::make('comment')->title('Comment'),
-            Column::make('filename')->title('File Name Submitted'),
-            // add column action
-            // Column::computed('action')
-            //     ->exportable(false)
-            //     ->printable(false)
-            //     ->width(60)
-            Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false),
-        ];
+        if (auth()->user()->hasRole('view only')) {
+            return [
+                Column::make('created_at')->title('Date of submissions'),
+                Column::make('updated_at')->title('Time of submissions')->name('w9_upload.created_at')->orderable(true),
+                Column::make('w9_county_fips')->title('Country Designation')->name('counties.county_full')->orderable(true)->searchable(true),
+                Column::make('user')->title('User of submission')->name('users.first_name')->orderable(true),
+                Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
+                Column::make('filename')->title('File Name Submitted')->searchable(false)->orderable(false),
+            ];
+        } else {
+            return [
+                Column::make('created_at')->title('Date of submissions'),
+                Column::make('updated_at')->title('Time of submissions')->name('w9_upload.created_at')->orderable(true),
+                Column::make('w9_county_fips')->title('Country Designation')->name('counties.county_full')->orderable(true)->searchable(true),
+                Column::make('user')->title('User of submission')->name('users.first_name')->orderable(true),
+                Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
+                Column::make('filename')->title('File Name Submitted')->searchable(false)->orderable(false),
+                Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false),
+            ];
+        }
     }
 
-    /**
-     * Get the filename for export.
-     */
-    protected function filename(): string
-    {
-        return 'W9Upload_' . date('YmdHis');
-    }
+
 }

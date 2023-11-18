@@ -30,6 +30,12 @@ document.querySelectorAll('[data-kt-action="update_row"]').forEach(function (ele
     });
 });
 
+document.querySelectorAll('[data-kt-action="create_view"]').forEach(function (element) {
+    element.addEventListener('click', function () {
+        Livewire.emit("create_view");
+    });
+});
+
 // Listen for 'success' event emitted by Livewire
 Livewire.on('success', (message) => {
     // Reload the users-table datatable
