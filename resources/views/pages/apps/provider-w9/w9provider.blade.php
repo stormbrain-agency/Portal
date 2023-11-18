@@ -70,28 +70,20 @@
                     {{ $dataTable->table() }}
                 @endif
             </div> 
-
-            <!--end::Table-->
-        </div>
-        <div class="card-header border-0 pt-6" style="margin-bottom:50px">
-                <a href="/export/csv" class="btn btn-primary">Export CSV</a>
-            </div>
         <!--end::Card body-->
     </div>
 
     @push('scripts')
-        {{ $dataTable->scripts() }}
-        <script>
-            document.getElementById('mySearchInput').addEventListener('keyup', function () {
-                window.LaravelDataTables['w9-upload-table'].search(this.value).draw();
-            });
-            document.addEventListener('livewire:load', function () {
-                Livewire.on('success', function () {
-                    $('#kt_modal_add_user').modal('hide');
-                    window.LaravelDataTables['w9-upload-table'].ajax.reload();
+            {{ $dataTable->scripts() }}
+            <script>
+                var searchData = '';
+
+                document.getElementById('mySearchInput').addEventListener('keyup', function () {
+                    searchData = this.value;
+                    window.LaravelDataTables['w9-upload-table'].search(searchData).draw();
                 });
-            });
-        </script>
+                
+            </script>
     @endpush
 
 </x-default-layout>

@@ -106,40 +106,5 @@ class W9_Upload_Controller extends Controller
         }
     }
 
-    public function exportCsv()
-    {
-        $uploadedFiles = W9Upload::all();
 
-        // Create a CSV writer instance
-        $csv = Writer::createFromFileObject(new \SplTempFileObject());
-
-        // Add CSV header
-        $csv->insertOne(['Date of Submission', 'Time of Submission','County Designation', 'User who submitted', 'Comment', 'File Name']);
-
-        // Add data rows to CSV
-        foreach ($uploadedFiles as $file) {
-            $csv->insertOne([
-                \Carbon\Carbon::parse($file->created_at)->toDateString(),
-                \Carbon\Carbon::parse($file->created_at)->toTimeString(),
-                $file->county_full,
-                $file->user,
-                $file->comment,
-                $file->original_name,
-            ]);
-        }
-
-        // Set response headers for CSV file download
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="export.csv"',
-            'Pragma' => 'no-cache',
-            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
-            'Expires' => '0',
-        ];
-
-        // Create a response with CSV content and headers
-        $response = response($csv->output(), 200, $headers);
-
-        return $response;
-    }
 }
