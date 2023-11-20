@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Apps;
 use App\DataTables\PaymentReportDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\PaymentReport;
+use App\Models\PaymentReportFiles;
+use App\Models\PaymentReportDownloadHistory;
+use Illuminate\Support\Facades\Auth;
 use App\Models\County; 
 use Illuminate\Http\Request;
 use League\Csv\Writer;
@@ -71,10 +74,33 @@ class PaymentReportController extends Controller
 
     public function downloadFile($filename)
     {
-        $file = storage_path('app/uploads/payment-reports/'. $filename);
+      
+        $file = storage_path('app/uploads/payment_reports/'. $filename);
         if (file_exists($file)) {
             return response()->download($file);
         } else {
+            return redirect('/county-provider-payment-report')->with('error', 'File not found.');
+        }
+    }
+
+    public function downloadAllFiles($payment_id)
+    {
+        $user_id = Auth::id();
+        PaymentReportDownloadHistory::create([
+            'payment_report_id'=>$payment_id,
+            'user_id'=>$user_id
+        ]);
+        $payment_report_files = PaymentReportFiles::where("payment_report_id", $payment_id)->get();
+        
+        if ($payment_report_files && count($payment_report_files) > 0) {
+            foreach($payment_report_files as $payment_report_file){
+                $filename = $payment_report_file->file_path;
+                $file = storage_path('app/uploads/payment_reports/'. $filename);
+                if (file_exists($file)) {
+                    $download =  response()->download($file);
+                } 
+            }
+        }else {
             return redirect('/county-provider-payment-report')->with('error', 'File not found.');
         }
     }
