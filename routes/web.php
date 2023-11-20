@@ -63,6 +63,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::prefix('county-provider-payment-report')->name('county-provider-payment-report.')->group(function () {
             Route::get('/', [PaymentReportController::class,'index'])->name('index');
             Route::get('/downloads/{filename}', [PaymentReportController::class, 'downloadFile'])->name('download');
+            Route::get('/download-all-files/{payment_id}', [PaymentReportController::class, 'downloadAllFiles'])->name('downloadAllFiles');
             
         });
     });
