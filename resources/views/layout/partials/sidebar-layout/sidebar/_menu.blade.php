@@ -122,7 +122,7 @@
 				<!--begin:Menu link-->
 				<a class="menu-link {{ request()->routeIs('w9_upload.*') ? 'active' : '' }}" href="{{ route('w9_upload.index') }}">
 					<span class="menu-icon devtest">{!! getIcon('abstract-26', 'fs-2') !!}</span>
-					<span class="menu-title">W-9 Manager</span>
+					<span class="menu-title">County Provider W-9</span>
 				</a>
 				<!--end:Menu link-->
 			</div>
@@ -140,7 +140,7 @@
 				<!--begin:Menu link-->
 				<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
 					<span class="menu-icon">{!! getIcon('code', 'fs-2') !!}</span>
-					<span class="menu-title">MRAC/ARAC Manager</span>
+					<span class="menu-title">Couny Provider Payment MRAC/ARAC</span>
 				</a>
 				<!--end:Menu link-->
 			</div>
