@@ -21,14 +21,14 @@ class PaymentReportDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->editColumn('user', function (PaymentReport $payment_report) {
+                // return $payment_report->user->first_name;
                 return view('pages.apps.payment-report.columns._user', compact('payment_report'));
             })
-
             ->editColumn('created_at', function (PaymentReport $payment_report) {
                 return $payment_report->created_at;
             })
-            ->addColumn('county_fips', function (PaymentReport $payment_report) {
-                return $payment_report->county_full;
+            ->editColumn('county_fips', function (PaymentReport $payment_report) {
+                return $payment_report->county->county;
             })
             ->editColumn('comment', function (PaymentReport $payment_report) {
                 return $payment_report->comments;
@@ -57,6 +57,15 @@ class PaymentReportDataTable extends DataTable
     
         if (auth()->user()->hasRole('county user')) {
             $query->where('users.id', auth()->user()->id);
+        }
+
+        if (request()->has('month')) {
+            $query->whereMonth('payment_report.created_at', 5);
+        }
+
+        if (request()->has('county_fips')) {
+            dd(request('county_fips'));
+            $query->where('county_fips', request('county_fips'));
         }
     
         return $query;
@@ -87,7 +96,7 @@ class PaymentReportDataTable extends DataTable
         return [
             Column::make('created_at')->title('Date of submissions'),
             Column::make('user')->title('User of submission')->name('users.first_name')->orderable(true),
-            Column::make('county_fips')->title('Country Designation')->name('counties.county_full')->orderable(true)->searchable(true),
+            Column::make('county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
             Column::make('month')->title('Month')->name('month')->orderable(true)->searchable(true)->addClass('text-center'),
             Column::make('year')->title('Year')->name('year')->orderable(true)->searchable(true),
             Column::make('comment')->title('Comment')->searchable(false)->orderable(false),

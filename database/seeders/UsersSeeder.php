@@ -48,7 +48,7 @@ class UsersSeeder extends Seeder
             'mobile_phone'              => "033-561188",
             'mailing_address'              => "mail@gmail.com",
             'vendor_id'              => "9855-6665",
-            'county_designation'              => "9855-6665",
+            'county_designation'              => "06037",
             'status'              => "9855-6665",
             'w9_file_path'              => "download.com",
             'email'             => 'countyuser@demo.com',
