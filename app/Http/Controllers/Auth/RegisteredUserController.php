@@ -108,6 +108,8 @@ class RegisteredUserController extends Controller
                     'list_mail' => $adminEmails,
                 ];
                 $dataMail = $data['list_mail'];
+                $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
+
                 foreach($dataMail as $emailAdress){
                     Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {
                         $message->to($emailAdress);

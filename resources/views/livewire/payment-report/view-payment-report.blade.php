@@ -23,7 +23,7 @@
                     <div class="d-flex fs-4 flex-column scroll-y px-1 px-lg-10" id="kt_modal_view_payment_report_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_view_payment_report_header" data-kt-scroll-wrappers="#kt_modal_view_payment_report_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                        <div class="fv-row mb-7">
-                            <label class="fw-semibold mb-2"><b>Month/Year :</b>   <span>{{$monthYear}}</span></label>
+                            <label class="fw-semibold mb-2"><b>Month/Year :</b>   <span>{{$month_year}}</span></label>
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->

@@ -16,11 +16,13 @@ class UsersSeeder extends Seeder
      */
     public function run(Generator $faker)
     {
+        $admin_email = env('ADMIN_EMAIL', 'development@stormbrain.com');
+        $admin_password = env('ADMIN_PASSWORD', 'W%JdE7EhM)TC!pS(imuAzEgw');
         $demoUser = User::create([
             'first_name'              => "CDA",
             'last_name'              => "Admin",
-            'email'             => 'development@stormbrain.com',
-            'password'          => Hash::make('W%JdE7EhM)TC!pS(imuAzEgw'),
+            'email'             => $admin_email,
+            'password'          => Hash::make($admin_password),
             'status'          => 1,
             'email_verified_at' => now(),
         ]);
