@@ -143,10 +143,6 @@ As such, all documents in any folder will be permanently deleted after 30 days</
         <livewire:filters.county-list/>
         <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
             <!--begin::Add user-->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
-                {!! getIcon('plus', 'fs-2', '', 'i') !!}
-                Submit File
-            </button>
             <button id="export_csv" class="btn btn-outline btn-outline-solid me-2 mb-2">
                 <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
                 EXPORT AS CSV
