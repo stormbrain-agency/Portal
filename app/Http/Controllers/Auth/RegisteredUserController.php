@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 
 class RegisteredUserController extends Controller

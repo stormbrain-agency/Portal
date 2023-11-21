@@ -37,18 +37,26 @@
     </div> --}}
     <!--end::My apps links-->
     <!--begin::User menu-->
-	<div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
+    <div class="app-navbar-item  ms-1 ms-md-4">
         <!--begin::Menu wrapper-->
-		<div class="cursor-pointer symbol symbol-35px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-            @if(Auth::user()->profile_photo_url)
-                <img src="{{ \Auth::user()->profile_photo_url }}" class="rounded-3" alt="user" />
-            @else
-                <div class="symbol-label fs-3 {{ app(\App\Actions\GetThemeType::class)->handle('bg-light-? text-?', Auth::user()->first_name) }}">
-                    {{ substr(Auth::user()->first_name, 0, 1) }}
-                </div>
-            @endif
-        </div>
-        @include('partials/menus/_user-account-menu')
+        <a href="{{url('/profile')}}">
+            {!! getIcon('camera', 'fs-2') !!}
+        </a>
+        <!--end::Menu wrapper-->
+    </div>
+	<div class="app-navbar-item  ms-1 ms-md-4">
+        <!--begin::Menu wrapper-->
+        <a href="{{url('/profile')}}">
+            {!! getIcon('user', 'fs-2') !!}
+        </a>
+        <!--end::Menu wrapper-->
+    </div>
+
+    <div class="app-navbar-item ms-1 ms-md-4">
+        <!--begin::Menu wrapper--> 
+        <a class="button-ajax menu-link px-5" href="#" data-action="{{ route('logout') }}" data-method="post" data-csrf="{{ csrf_token() }}" data-reload="true">
+            Sign Out
+        </a>
         <!--end::Menu wrapper-->
     </div>
     <!--end::User menu-->

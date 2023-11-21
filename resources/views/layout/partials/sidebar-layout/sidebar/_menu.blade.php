@@ -5,7 +5,7 @@
 		<!--begin::Menu-->
 		<div class="menu menu-column menu-rounded menu-sub-indention px-3 fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 			<!--begin:Menu item-->
-			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('dashboard') ? 'here show' : '' }}">
+			{{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('dashboard') ? 'here show' : '' }}">
 				<!--begin:Menu link-->
 				<span class="menu-link">
 					<span class="menu-icon">{!! getIcon('element-11', 'fs-2') !!}</span>
@@ -29,9 +29,9 @@
 					<!--end:Menu item-->
 				</div>
 				<!--end:Menu sub-->
-			</div>
+			</div> --}}
 			<!--end:Menu item-->
-			<!--begin:Menu item-->
+			{{-- <!--begin:Menu item-->
 			<div class="menu-item pt-5">
 				<!--begin:Menu content-->
 				<div class="menu-content">
@@ -39,7 +39,7 @@
 				</div>
 				<!--end:Menu content-->
 			</div>
-			<!--end:Menu item-->
+			<!--end:Menu item--> --}}
 			@if(!auth()->user()->hasRole('county user') && count(auth()->user()->roles) != 0)
 			<!--begin:Menu item-->
 			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
@@ -145,7 +145,17 @@
 				<!--end:Menu link-->
 			</div>
 			<!--end:Menu item-->
-			
+			<!--begin:Menu item-->
+			<div class="menu-item">
+				<!--begin:Menu link-->
+				<a class="menu-link" href="{{ url('/profile') }}">
+					<span class="menu-icon">{!! getIcon('user', 'fs-2') !!}</span>
+					<span class="menu-title">Profile</span>
+				</a>
+				<!--end:Menu link-->
+			</div>
+			<!--end:Menu item-->
+
 			<!-- ADMIN -->
 		@if(auth()->user()->hasRole('admin'))
 			<!--begin:Menu item-->
