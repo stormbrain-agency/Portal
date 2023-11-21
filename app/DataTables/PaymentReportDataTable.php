@@ -76,11 +76,18 @@ class PaymentReportDataTable extends DataTable
             ->setTableId('payment_report-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('rt' . "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>")
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(1)
-            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/payment-report/columns/_draw-scripts.js')) . "}");
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/payment-report/columns/_draw-scripts.js')) . "}")
+            ->buttons([
+                [
+                    'extend' => 'csv',
+                    'text' => 'Export CSV', 
+                    'filename' => 'County Provider Payment Resports',
+                
+                ]
+        ]);
     }
 
     /**
@@ -94,7 +101,8 @@ class PaymentReportDataTable extends DataTable
             Column::make('user')->title('User of submission')->name('users.first_name')->orderable(true),
             Column::make('county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
             Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
-            Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
+            // Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
+            Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->visible(false)->exportable(false),
             Column::computed('view')
                 ->addClass('text-center text-nowrap')
                 ->exportable(false)

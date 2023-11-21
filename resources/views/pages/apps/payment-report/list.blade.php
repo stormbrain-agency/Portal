@@ -51,6 +51,10 @@
                         {!! getIcon('plus', 'fs-2', '', 'i') !!}
                         Submit File
                     </button>
+                    <button id="export_csv" class="btn btn-outline btn-outline-solid me-2 mb-2">
+                        <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                        EXPORT AS CSV
+                    </button>
                     <!--end::Add user-->
                 </div>
                 <!--end::Toolbar-->
@@ -91,7 +95,8 @@
             });
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
                 window.LaravelDataTables['payment_report-table'].search(this.value).draw();
-            });           
+            });
+              
         </script>
         <script>
          $(document).ready(function () {
@@ -109,6 +114,9 @@
                 }
                 window.LaravelDataTables['payment_report-table'].column('users.first_name:name').search(value).draw();
             });
+            $("#export_csv").on('click', function(e) {
+                window.LaravelDataTables['payment_report-table'].button('.buttons-csv').trigger();
+            })
         })
     </script>
     @endpush
