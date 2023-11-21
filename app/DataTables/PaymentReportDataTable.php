@@ -101,7 +101,7 @@ class PaymentReportDataTable extends DataTable
             Column::make('user')->title('User of submission')->name('users.first_name')->orderable(true),
             Column::make('county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
             Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
-            // Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
+            Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
             Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->visible(false)->exportable(false),
             Column::computed('view')
                 ->addClass('text-center text-nowrap')

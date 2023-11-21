@@ -27,7 +27,7 @@
             </div>
             <!--begin::Card title-->
 
-            @if(auth()->user()->hasRole('admin'))
+            {{-- @if(auth()->user()->hasRole('admin')) --}}
             <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex" style="gap: 30px">
                 <!--begin::Toolbar-->
@@ -64,7 +64,7 @@
             </div>
 
             <!--end::Card toolbar-->
-            @endif
+            {{-- @endif --}}
         </div>
         <!--end::Card header-->
 
