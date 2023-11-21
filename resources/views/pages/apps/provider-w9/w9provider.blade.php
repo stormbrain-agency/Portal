@@ -152,6 +152,7 @@ As such, all documents in any folder will be permanently deleted after 30 days</
                     {{ $dataTable->table() }}
                 @endif
             </div> 
+        </div> 
         <!--end::Card body-->
     </div>
 
