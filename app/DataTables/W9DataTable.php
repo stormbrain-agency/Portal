@@ -7,6 +7,8 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
+use Yajra\DataTables\DataTableAbstract;
+use Yajra\DataTables\Html\Builder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
 class W9DataTable extends DataTable
@@ -49,7 +51,6 @@ class W9DataTable extends DataTable
             ->rawColumns(['user_first_name', 'w9_file_path'])
             ->setRowId('id');
     }
-
     /**
      * Get the query source of dataTable.
      */
@@ -67,7 +68,6 @@ class W9DataTable extends DataTable
         }
         return $query;
     }
-
     /**
      * Optional method if you want to use the html builder.
      */
@@ -80,15 +80,21 @@ class W9DataTable extends DataTable
             ->dom('Brt')
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-            ->orderBy(1);
-            
+            ->buttons([
+                [
+                    'extend' => 'csv',
+                    'text' => 'Export CSV', 
+                    'filename' => 'County Provide W-9',
+                
+                ]
+            ])
+            ->orderBy(1);       
     }
-
     /**
      * Get the dataTable columns definition.
      */
     public function getColumns(): array
-    {
+    {        
         //view layout
         if (auth()->user()->hasRole('view only')) {
             return [
@@ -111,6 +117,4 @@ class W9DataTable extends DataTable
             ];
         }
     }
-
-
 }

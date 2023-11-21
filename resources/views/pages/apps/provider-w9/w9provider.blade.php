@@ -121,9 +121,6 @@ As such, all documents in any folder will be permanently deleted after 30 days</
                 </p>
             </div>
 
-
-
-
             </form>
         </div>
         @endif
@@ -142,6 +139,21 @@ As such, all documents in any folder will be permanently deleted after 30 days</
         </div>
         <!--end::Card header-->
 
+        <livewire:filters.user-list/>
+        <livewire:filters.county-list/>
+        <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+            <!--begin::Add user-->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
+                {!! getIcon('plus', 'fs-2', '', 'i') !!}
+                Submit File
+            </button>
+            <button id="export_csv" class="btn btn-outline btn-outline-solid me-2 mb-2">
+                <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                EXPORT AS CSV
+            </button>
+            <!--end::Add user-->
+        </div>
+
         <!--begin::Card body-->
         <div class="card-body py-4">
             <!--begin::Table-->
@@ -157,93 +169,116 @@ As such, all documents in any folder will be permanently deleted after 30 days</
     </div>
 
     @push('scripts')
-            {{ $dataTable->scripts() }}
-            <script>
-                var searchData = '';
+        {{ $dataTable->scripts() }}
+        <script>
+            var searchData = '';
 
-                document.getElementById('mySearchInput').addEventListener('keyup', function () {
-                    searchData = this.value;
-                    window.LaravelDataTables['w9-upload-table'].search(searchData).draw();
-                });
-                
-            </script>
+            document.getElementById('mySearchInput').addEventListener('keyup', function () {
+                searchData = this.value;
+                window.LaravelDataTables['w9-upload-table'].search(searchData).draw();
+            });
             
+        </script>
+        
 
-<script>
-document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
-  const dropZoneElement = inputElement.closest(".drop-zone");
+        <script>
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+        const dropZoneElement = inputElement.closest(".drop-zone");
 
-  dropZoneElement.addEventListener("click", (e) => {
-    inputElement.click();
-  });
+        dropZoneElement.addEventListener("click", (e) => {
+            inputElement.click();
+        });
 
-  inputElement.addEventListener("change", (e) => {
-    if (inputElement.files.length) {
-      updateThumbnail(dropZoneElement, inputElement.files[0]);
-    }
-  });
+        inputElement.addEventListener("change", (e) => {
+            if (inputElement.files.length) {
+            updateThumbnail(dropZoneElement, inputElement.files[0]);
+            }
+        });
 
-  dropZoneElement.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    dropZoneElement.classList.add("drop-zone--over");
-  });
+        dropZoneElement.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropZoneElement.classList.add("drop-zone--over");
+        });
 
-  ["dragleave", "dragend"].forEach((type) => {
-    dropZoneElement.addEventListener(type, (e) => {
-      dropZoneElement.classList.remove("drop-zone--over");
-    });
-  });
+        ["dragleave", "dragend"].forEach((type) => {
+            dropZoneElement.addEventListener(type, (e) => {
+            dropZoneElement.classList.remove("drop-zone--over");
+            });
+        });
 
-  dropZoneElement.addEventListener("drop", (e) => {
-    e.preventDefault();
+        dropZoneElement.addEventListener("drop", (e) => {
+            e.preventDefault();
 
-    if (e.dataTransfer.files.length) {
-      inputElement.files = e.dataTransfer.files;
-      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
-    }
+            if (e.dataTransfer.files.length) {
+            inputElement.files = e.dataTransfer.files;
+            updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+            }
 
-    dropZoneElement.classList.remove("drop-zone--over");
-  });
-});
+            dropZoneElement.classList.remove("drop-zone--over");
+        });
+        });
 
-/**
- * Updates the thumbnail on a drop zone element.
- *
- * @param {HTMLElement} dropZoneElement
- * @param {File} file
- */
-function updateThumbnail(dropZoneElement, file) {
-  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+        /**
+         * Updates the thumbnail on a drop zone element.
+         *
+         * @param {HTMLElement} dropZoneElement
+         * @param {File} file
+         */
+        function updateThumbnail(dropZoneElement, file) {
+        let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
 
-  // First time - remove the prompt
-  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
-    dropZoneElement.querySelector(".drop-zone__prompt").remove();
-  }
+        // First time - remove the prompt
+        if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+            dropZoneElement.querySelector(".drop-zone__prompt").remove();
+        }
 
-  // First time - there is no thumbnail element, so lets create it
-  if (!thumbnailElement) {
-    thumbnailElement = document.createElement("div");
-    thumbnailElement.classList.add("drop-zone__thumb");
-    dropZoneElement.appendChild(thumbnailElement);
-  }
+        // First time - there is no thumbnail element, so lets create it
+        if (!thumbnailElement) {
+            thumbnailElement = document.createElement("div");
+            thumbnailElement.classList.add("drop-zone__thumb");
+            dropZoneElement.appendChild(thumbnailElement);
+        }
 
-  thumbnailElement.dataset.label = file.name;
+        thumbnailElement.dataset.label = file.name;
 
-  // Show thumbnail for image files
-  if (file.type.startsWith("image/")) {
-    const reader = new FileReader();
+        // Show thumbnail for image files
+        if (file.type.startsWith("image/")) {
+            const reader = new FileReader();
 
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-    };
-  } else {
-    thumbnailElement.style.backgroundImage = null;
-  }
-}
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+            thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+            };
+        } else {
+            thumbnailElement.style.backgroundImage = null;
+        }
+        }
 
 
-</script>
+        </script>
+
+
+        <script>
+            $(document).ready(function () {
+                $('#county-filter').on('select2:select', function (e) {
+                    var value = e.params.data.text;
+                    if (value == "County") {
+                        value = "";
+                    }
+                    window.LaravelDataTables['w9-upload-table'].column('counties.county_full').search(value).draw();
+                });
+                $('#user-filter').on('select2:select', function (e) {
+                    var value = e.params.data.text;
+                    if (value == "User") {
+                        value = "";
+                    }
+                    window.LaravelDataTables['w9-upload-table'].column('users.first_name:name').search(value).draw();
+                });
+                $("#export_csv").on('click', function(e) {
+                    window.LaravelDataTables['w9-upload-table'].button('.buttons-csv').trigger();
+                })
+            })
+        </script>
     @endpush
 
 </x-default-layout>
