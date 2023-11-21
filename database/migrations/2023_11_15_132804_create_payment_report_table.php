@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('county_fips');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedSmallInteger('month');
-            $table->unsignedSmallInteger('year');
+            $table->string('month_year');
             $table->text('comments')->nullable();
             $table->string('document_path')->nullable();
             $table->timestamps();

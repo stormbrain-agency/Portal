@@ -12,7 +12,7 @@ class PaymentReport extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = [
-        'county_fips', 'user_id', 'month', 'year', 'comments', 'document_path'
+        'county_fips', 'user_id', 'month_year','comments', 'document_path'
     ];
 
     public function county()
@@ -30,8 +30,5 @@ class PaymentReport extends Model
         return $this->hasMany(PaymentReportFiles::class, 'payment_report_id', 'id');
     }
 
-    public function getFullDateAttribute()
-    {
-        return "{$this->month}/{$this->year}";
-    }
+  
 }

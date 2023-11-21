@@ -29,25 +29,22 @@
                             <!--begin::Select-->
                             <div class="row">
                                 <div class="col-6">
-                                    <select wire:model="month" name="month" class="form-select form-select-solid mb-3 mb-lg-0">
-                                        <option value="">Select Month</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
+                                    <select wire:model="month_year" name="month_year" class="form-select form-select-solid mb-3 mb-lg-0 text-center">
+                                        <option value="">Month/Year</option>
+                                        @for ($year = 2024; $year <= 2025; $year++)
+                                            @for ($month = 1; $month <= 12; $month++)
+                                                <option value="{{ date('F Y', strtotime($year . '-' . sprintf('%02d', $month) . '-01')) }}">
+                                                    {{ date('F Y', strtotime($year . '-' . sprintf('%02d', $month) . '-01')) }}
+                                                </option>
+                                            @endfor
+                                        @endfor
                                     </select>
-                                    @error('month')
+
+                                    @error('month_year')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="col-6">
+                                {{-- <div class="col-6">
                                     <select wire:model.defer="year" name="year" class="form-select form-select-solid mb-3 mb-lg-0">
                                         <option value="">Select Year</option>
                                         <option value="2024">2024</option>
@@ -56,7 +53,7 @@
                                     @error('year')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-                                </div>
+                                </div> --}}
                             </div>
                             <!--end::Select-->
                         </div>

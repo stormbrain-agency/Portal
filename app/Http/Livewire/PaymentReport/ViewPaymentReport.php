@@ -13,11 +13,10 @@ class ViewPaymentReport extends Component
 {
     use WithFileUploads; 
 
-    public $month;
     public $payment_id;
     public $year;
     public $comment;
-    public $monthYear;
+    public $month_year;
     public $user_id;
     public $user_name;
     public $user_email;
@@ -42,13 +41,12 @@ class ViewPaymentReport extends Component
 
         if (isset($payment_report)) {
             $this->payment_id = $payment_report->id;
-            $this->monthYear = $payment_report->getFullDateAttribute();
+            $this->month_year = $payment_report->month_year;
             $this->comment = $payment_report->comments;
-            $this->year = $payment_report->year;
             $this->user_name = $payment_report->user->first_name . ' ' . $payment_report->user->last_name;
             $this->user_id = $payment_report->user->id;
             $this->user_email = $payment_report->user->email;
-            $this->county_full = $payment_report->county->county_full;
+            $this->county_full = $payment_report->county->county;
             $this->created_at = $payment_report->created_at;
 
             $this->payment_report_files = PaymentReportFiles::where("payment_report_id", $id)->get();
