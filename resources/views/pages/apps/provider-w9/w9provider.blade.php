@@ -81,7 +81,7 @@ line-height: 16px;
     <div class="card">
         <!--begin::Card header-->
         @if(auth()->user()->hasRole('county user'))
-        <div class="border-0 pt-6">
+        <div class="card-body border-0 pt-6">
         
             @if(session('success'))
                 <div class="alert alert-success">
@@ -152,6 +152,7 @@ As such, all documents in any folder will be permanently deleted after 30 days</
                     {{ $dataTable->table() }}
                 @endif
             </div> 
+        </div> 
         <!--end::Card body-->
     </div>
 
