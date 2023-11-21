@@ -31,6 +31,20 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex" style="gap: 30px">
                 <!--begin::Toolbar-->
+                <div class="d-flex justify-content-center row " style="width: 150px">
+                    <select id="month_year" class="form-select form-select-solid text-center">
+                        <option value="">Month/Year</option>
+                            @for ($year = 2024; $year <= 2025; $year++)
+                                @for ($month = 1; $month <= 12; $month++)
+                                    <option value="{{ date('F Y', strtotime($year . '-' . sprintf('%02d', $month) . '-01')) }}">
+                                        {{ date('F Y', strtotime($year . '-' . sprintf('%02d', $month) . '-01')) }}
+                                    </option>
+                                @endfor
+                            @endfor
+                    </select>
+                </div>
+                <livewire:filters.user-list/>
+                <livewire:filters.county-list/>
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                     <!--begin::Add user-->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
@@ -74,11 +88,37 @@
                     $('#kt_modal_add_payment_report').modal('hide');
                     window.LaravelDataTables['payment_report-table'].ajax.reload();
                 });
+                document.getElementById('month_year').addEventListener('change', function() {
+                    var month_year = this.value;
+                    window.LaravelDataTables['payment_report-table'].column('month_year:name').search(month_year).draw();
+                });
             });
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
                 window.LaravelDataTables['payment_report-table'].search(this.value).draw();
             });
+              
         </script>
+        <script>
+         $(document).ready(function () {
+            $('#county-filter').on('select2:select', function (e) {
+                var value = e.params.data.text;
+                if (value == "County") {
+                    value = "";
+                }
+                window.LaravelDataTables['payment_report-table'].column('counties.county:name').search(value).draw();
+            });
+            $('#user-filter').on('select2:select', function (e) {
+                var value = e.params.data.text;
+                if (value == "User") {
+                    value = "";
+                }
+                window.LaravelDataTables['payment_report-table'].column('users.first_name:name').search(value).draw();
+            });
+            $("#export_csv").on('click', function(e) {
+                window.LaravelDataTables['payment_report-table'].button('.buttons-csv').trigger();
+            })
+        })
+    </script>
     @endpush
 
 </x-default-layout>
