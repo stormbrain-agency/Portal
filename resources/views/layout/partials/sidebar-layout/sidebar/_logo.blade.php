@@ -5,7 +5,7 @@
 		<img alt="Logo" src="{{ image('logos/default-dark.svg') }}" class="h-25px app-sidebar-logo-default" />
 		<img alt="Logo" src="{{ image('logos/default-small.svg') }}" class="h-20px app-sidebar-logo-minimize" />
 	</a>
-	<!--end::Logo image-->
+	{{-- <!--end::Logo image-->
 	<!--begin::Sidebar toggle-->
 	<!--begin::Minimized sidebar setup:
             if (isset($_COOKIE["sidebar_minimize_state"]) && $_COOKIE["sidebar_minimize_state"] === "on") {
@@ -24,6 +24,6 @@
 			sidebar_toggle.classList.add("active");  // Add the 'active' class to the sidebar toggle button
 		@endif
 	</script>
-	<!--end::Sidebar toggle-->
+	<!--end::Sidebar toggle--> --}}
 </div>
 <!--end::Logo-->

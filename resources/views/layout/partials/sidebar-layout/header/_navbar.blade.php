@@ -55,7 +55,7 @@
     <div class="app-navbar-item ms-1 ms-md-4">
         <!--begin::Menu wrapper--> 
         <a class="button-ajax menu-link px-5" href="#" data-action="{{ route('logout') }}" data-method="post" data-csrf="{{ csrf_token() }}" data-reload="true">
-            Sign Out
+            {!! getIcon('abstract-28', 'fs-2') !!}
         </a>
         <!--end::Menu wrapper-->
     </div>
