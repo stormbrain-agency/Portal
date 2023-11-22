@@ -54,7 +54,6 @@
 					<div class="menu-item">
 						<!--begin:Menu link-->
 						<a class="menu-link {{ request()->routeIs('w9_upload.*') ? 'active' : '' }}" href="{{ route('w9_upload.index') }}">
-							<span class="menu-icon devtest">{!! getIcon('abstract-26', 'fs-2') !!}</span>
 							<span class="menu-title">Submit Provider W-9</span>
 						</a>
 						<!--end:Menu link-->
@@ -62,8 +61,7 @@
 					<div class="menu-item">
 						<!--begin:Menu link-->
 						<a class="menu-link {{ request()->routeIs('w9_downloadhistory.*') ? 'active' : '' }}" href="{{ route('w9_downloadhistory.index') }}">
-							<span class="menu-icon devtest">{!! getIcon('abstract-26', 'fs-2') !!}</span>
-							<span class="menu-title">Submit History</span>
+							<span class="menu-title">Submission History</span>
 						</a>
 						<!--end:Menu link-->
 					</div>
@@ -152,7 +150,6 @@
 					<div class="menu-item">
 						<!--begin:Menu link-->
 						<a class="menu-link {{ request()->routeIs('county-provider-payment-report.*') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
-							<span class="menu-icon">{!! getIcon('rocket', 'fs-2') !!}</span>
 							<span class="menu-title">Submit Report</span>
 						</a>
 						<!--end:Menu link-->
@@ -161,7 +158,6 @@
 					<div class="menu-item">
 						<!--begin:Menu link-->
 						<a class="menu-link {{ request()->routeIs('county-provider-payment-report.*') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
-							<span class="menu-icon">{!! getIcon('rocket', 'fs-2') !!}</span>
 							<span class="menu-title">Submision History</span>
 						</a>
 						<!--end:Menu link-->

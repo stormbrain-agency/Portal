@@ -81,7 +81,7 @@
   --bs-body-line-height: 1.5;
   --bs-body-color: #071437;
   --bs-body-color-rgb: 7, 20, 55;
-  --bs-body-bg: #ffffff;
+  --bs-body-bg: #FFFFFF;
   --bs-body-bg-rgb: 255, 255, 255;
   --bs-emphasis-color: #000000;
   --bs-emphasis-color-rgb: 0, 0, 0;
@@ -124,6 +124,7 @@
   --bs-form-valid-border-color: #50cd89;
   --bs-form-invalid-color: #f1416c;
   --bs-form-invalid-border-color: #f1416c;
+  --body-bg: #F9F9F9;
 }
 
 [data-bs-theme=dark] {
@@ -194,7 +195,7 @@ body {
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
   text-align: var(--bs-body-text-align);
-  background-color: var(--bs-body-bg);
+  background-color: var(--body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -59813,7 +59814,7 @@ router-outlet {
 
 body,
 .app-default {
-  background-color: var(--bs-app-bg-color);
+  background-color: var(--body-bg);
 }
 
 .app-blank {
@@ -61833,7 +61834,6 @@ body,
     height: calc(var(--bs-app-header-height) + 1px);
     display: flex;
     align-items: center;
-    justify-content: space-between;
     position: relative;
     flex-shrink: 0;
   }
@@ -61854,9 +61854,10 @@ body,
   }
 }
 
+/* 
 .app-sidebar-logo-minimize {
   display: none;
-}
+} */
 
 .app-sidebar-footer .btn-custom .btn-icon {
   display: none;
@@ -62441,8 +62442,9 @@ body,
 
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active {
   transition: color 0.2s ease;
-  background-color: var(--bs-app-sidebar-light-menu-link-bg-color-active);
+  background-color: var(--bs-body-bg);
   color: var(--bs-primary);
+  margin-right: 0px;
 }
 
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active .menu-title {
@@ -63208,4 +63210,43 @@ body,
   [data-kt-app-layout=dark-header] .app-header .page-heading {
     color: #ffffff !important;
   }
+}
+
+/* Logo */
+.icon-menu {
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
+  padding: 4px 6px;
+  margin-right: 20px;
+  margin-left: 4px;
+}
+
+.menu-sub .menu-item .menu-title {
+  margin-left: 24px;
+}
+
+.upload-text strong {
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 16px;
+}
+
+.drop-zone__prompt {
+  font-style: italic;
+  font-size: 13px;
+  color: #596D87;
+  text-align: center;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.drop-zone__prompt.style {
+  margin: 11px 0px;
+  font-style: normal;
+}
+
+.drop-zone__prompt.style span {
+  text-decoration: underline;
 }
