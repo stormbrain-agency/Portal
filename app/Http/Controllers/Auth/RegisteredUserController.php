@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\DB;
 
 
 class RegisteredUserController extends Controller
@@ -84,8 +85,28 @@ class RegisteredUserController extends Controller
                     'county_designation' => $request->input('county_designation'),
                     'status' => 0,
                 ]);
-
-
+                // Send Mail
+                $id = DB::table('users')->max('id');
+                $adminEmails = User::whereHas('roles', function ($query) {
+                    $query->where('name', 'admin');
+                })->pluck('email');
+                $data = [
+                    'name' => $request -> input('name'),
+                    'email' => $request -> input('email'),
+                    'county_designation' => $request -> input('county_designation'),
+                    'link' => url('/user-management/users/'. $id .''), 
+                    'time' => Carbon::now()->format('H:i:s - m/d/Y '),
+                    'list_mail' => $adminEmails,
+                ];
+                $dataMail = $data['list_mail'];
+                foreach($dataMail as $emailAdress){
+                    Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {
+                        $message->to($emailAdress);
+                        $message->subject('Alert: County User Registration - Approval
+                        Needed!');
+                    });
+                }
+                //
                 $userID = $user->id;
 
                 $newFile = new W9Upload();

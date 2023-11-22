@@ -20,7 +20,7 @@ class RegisterNotificationController extends Controller
             'name' => $request -> input('name'),
             'email' => $request -> input('email'),
             'county_designation' => $request -> input('county_designation'),
-            'link' => url('/user-management/users/'. $id .''), 
+            'link' => url('/user-management/user-pending/users/'. $id .''), 
             'time' => Carbon::now()->format('H:i:s - m/d/Y '),
             'list_mail' => $adminEmails,
         ];

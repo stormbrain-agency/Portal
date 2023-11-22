@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-
+use Illuminate\resources\views\mail\emailAuthenticationSuccess;
+use Illuminate\Support\Facades\Crypt;
 class UserPending extends Component
 {
     use WithFileUploads;
@@ -30,32 +31,44 @@ class UserPending extends Component
     public function approveUser($id)
     {
         if (auth()->user()->can('county users management')) {
+            User::where('id', $id)->update(['status' => 1]);
             $user = User::find($id);
-            if (!is_null($user)) {
-                $user->email_verification_hash = md5(uniqid());
-                $this->sendVerificationEmail($user);
-                $user->assignRole('county user');
-                $user->status = 1;
-                $user->save();
-                $this->emit('success', 'User successfully approved');
-            }
+            $HashId = Crypt::encrypt($id);
+            
+            $data = [
+                "id" => $user,
+                "hash" => $HashId,
+                "email" => $user->email, 
+            ];
+            $user->assignRole('county user');
+            $emailAdress = $data['email'];
+            Mail::send('mail.emailAuthentication',$data , function ($message) use ($emailAdress) {
+                $message->to($emailAdress);
+                $message->subject('Confirm Your Account');
+            });
+            $this->emit('success', 'User successfully approved');
         }else{
             $this->emit('error', 'You do not have permission to perform this action');
         }
     }
 
-    protected function sendVerificationEmail(User $user)
+    public function MailCheck($token)
     {
+        $id = Crypt::decrypt($token);
+        User::where('id', $id)->update(['email_verified_at' => now()]);
+        $user = User::find($id);
         $data = [
-            'name' => $user->name,
-            'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
+            "id" => $id,
+            "email" => $user->email,
+            'link' => url('/login'),
         ];
-        $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
-        Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
-            $message->to($user->email);
-            $message->cc($stormbrainEmail);
-            $message->subject('Verify Account');
+        // $user->assignRole('county user');
+        $emailAdress = $data['email'];
+        Mail::send('mail.emailAuthenticationSuccess',$data , function ($message) use ($emailAdress) {
+            $message->to($emailAdress);
+            $message->subject('Confirm Your Account');
         });
+        return redirect('/');
     }
 
     public function denyUser($id)

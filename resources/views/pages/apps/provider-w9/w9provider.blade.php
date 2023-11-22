@@ -1,10 +1,21 @@
 <x-default-layout>
 <style>
-.drop-zone {
-    max-width: 1091px;
+  .title{
+    color: #252f4a;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+  .drop-zone {
+    border: 1px dashed #1973B8;
+    background: #F6FBFF;
+    border-radius: 7px;
+  }
+  .drop-zone .wrap-content{
+    max-width: 36%;
     width: auto;
-    height: 200px;
-    padding: 25px;
+    height: auto;
+    padding: 92px 0px;
     display: grid;
     align-items: center;
     justify-content: center;
@@ -14,43 +25,43 @@
     font-size: 20px;
     cursor: pointer;
     color: #cccccc;
-    border-radius: 7px;
-    border: 1px dashed #1973B8;
-    background: #F6FBFF;
-}
+    margin: 0px auto;
+  }
 
-.drop-zone--over {
-  border-style: solid;
-}
+  .drop-zone--over {
+    border-style: solid;
+  }
 
-.drop-zone__input {
-  display: none;
-}
+  .drop-zone__input {
+    display: none;
+  }
+  .card .card-body {
+    padding: 30px !important;
+  }
+  .drop-zone__thumb {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #cccccc;
+    background-size: cover;
+    position: relative;
+  }
 
-.drop-zone__thumb {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: #cccccc;
-  background-size: cover;
-  position: relative;
-}
+  .drop-zone__thumb::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px 0;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.75);
+    font-size: 14px;
+    text-align: center;
+  }
 
-.drop-zone__thumb::after {
-  content: attr(data-label);
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 5px 0;
-  color: #ffffff;
-  background: rgba(0, 0, 0, 0.75);
-  font-size: 14px;
-  text-align: center;
-}
-
-.input-comment{
+  .input-comment{
     display: flex;
     max-width: 1091px;
     width: -webkit-fill-available;
@@ -60,14 +71,20 @@
     gap: 10px;
     border-radius: 6px;
     border: 1px solid #596D87;
-}
-.upload-text{
+  }
+  .upload-text{
     color: #192D50;
-font-size: 15px;
-font-style: normal;
-font-weight: 500;
-line-height: 16px;
-}
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+  }
+
+  .btn.btn-primary{
+    margin-top: 1.5rem;
+    padding: 10px 24px !important;
+    background-color: #1973B8;
+  }
 
   </style>
     @section('title')
@@ -99,33 +116,36 @@ line-height: 16px;
             <!-- <div class="form-group">
                 <input type="file" class="form-control-file" name="file" id="w9_uploadInput">
             </div> -->
+            <div class="title">Submit Provider W-9</div>
             <div class="drop-zone">
-                <span class="upload-text">Upload ZIP File of provider W-9s (only .zip files)</span>
-                <span class="drop-zone__prompt">Drag & Drop or choose files from computer</span>
+              <div class="wrap-content">
+                <div class="icon">
+              		<img alt="icon upload" src="{{ image('logos/icon-upload.svg') }}"/>
+                </div>
+                <span class="upload-text"><strong>Upload ZIP File of provider W-9s</strong> (only .zip files)</span>
+                <span class="drop-zone__prompt style">Drag & Drop or <span>choose files</span> from computer</span>
                 <span class="drop-zone__prompt">This portal site is not a storage system, but rather a secure site for transferring documents.
-As such, all documents in any folder will be permanently deleted after 30 days</span>
-                <input type="file" name="file" class="drop-zone__input form-control-file" id="w9_uploadInput">
+                  As such, all documents in any folder will be permanently deleted after 30 days</span>
+                  <input type="file" name="file" class="drop-zone__input form-control-file" id="w9_uploadInput">
+              </div>
             </div>
-
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <p>Your Comment (max 150 characters): </p>
                 <textarea name="comments" placeholder="Please write a comment here" class="input-comment"></textarea>
-            </div>
-
+            </div> --}}
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Upload</button>
-                <p>This portal site
+                <button type="submit" class="btn btn-primary">UPLOAD FILE</button>
+                {{-- <p>This portal site
                 is not a storage system, but rather a secure site for
                 transferring documents. As such, all documents in
                 any folder will be permanently deleted after 30 days
-                </p>
+                </p> --}}
             </div>
-
             </form>
         </div>
         @endif
 
-        <div class="card-header border-0 pt-6">
+        {{-- <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
                 <!--begin::Search-->
@@ -136,7 +156,7 @@ As such, all documents in any folder will be permanently deleted after 30 days</
                 <!--end::Search-->
             </div>
             <!--begin::Card title-->
-        </div>
+        </div> --}}
         <!--end::Card header-->
 
         <livewire:filters.user-list/>
@@ -151,7 +171,7 @@ As such, all documents in any folder will be permanently deleted after 30 days</
         </div>
 
         <!--begin::Card body-->
-        <div class="card-body py-4">
+        {{-- <div class="card-body py-4">
             <!--begin::Table-->
             <div class="table-responsive">
                 @if(auth()->user()->hasRole('county user')&& auth()->user()->status == 1)
@@ -160,7 +180,7 @@ As such, all documents in any folder will be permanently deleted after 30 days</
                     {{ $dataTable->table() }}
                 @endif
             </div> 
-        </div> 
+        </div>  --}}
         <!--end::Card body-->
     </div>
 
