@@ -34,9 +34,8 @@ class UserPending extends Component
             $HashId = Crypt::encrypt($id);
             
             $data = [
-                "id" => $user,
-                "hash" => $HashId,
-                "email" => $user->email, 
+                "email" => $user->email,
+                'link' => url('/welcome'),
             ];
             $user->assignRole('county user');
             $emailAdress = $data['email'];
@@ -48,25 +47,6 @@ class UserPending extends Component
         }else{
             $this->emit('error', 'You do not have permission to perform this action');
         }
-    }
-
-    public function MailCheck($token)
-    {
-        $id = Crypt::decrypt($token);
-        User::where('id', $id)->update(['email_verified_at' => now()]);
-        $user = User::find($id);
-        $data = [
-            "id" => $id,
-            "email" => $user->email,
-            'link' => url('/login'),
-        ];
-        // $user->assignRole('county user');
-        $emailAdress = $data['email'];
-        Mail::send('mail.emailAuthenticationSuccess',$data , function ($message) use ($emailAdress) {
-            $message->to($emailAdress);
-            $message->subject('Confirm Your Account');
-        });
-        return redirect('/');
     }
 
     public function denyUser($id)
