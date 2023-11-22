@@ -23,6 +23,11 @@ class W9_Upload_Controller extends Controller
         ])->render('pages.apps.provider-w9.w9provider');
     }
 
+    public function upload()
+    {
+        return view("pages.apps.provider-w9.upload");
+    }
+
     public function downloadFile($filename)
     {
         $file = storage_path('app/uploads/' . $filename);
@@ -32,6 +37,7 @@ class W9_Upload_Controller extends Controller
             return redirect('/dashboard/w9_upload')->with('error', 'File not found.');
         }
     }
+
 
 
     public function uploadFile(Request $request)
@@ -67,17 +73,16 @@ class W9_Upload_Controller extends Controller
                         $newFile->original_name = $uniqueName;
                         $newFile->w9_county_fips = $user->county_designation;
                         $newFile->save();
-    
-                        return redirect('/w9_upload')->with('success', 'File uploaded successfully.');
+                        return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
                     }
                 }
     
-                return redirect('/w9_upload')->with('error', 'Error retrieving user county information.');
+                return redirect('/county-w9/upload')->with('error', 'Error retrieving user county information.');
             } else {
-                return redirect('/w9_upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
+                return redirect('/county-w9/upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
             }
         } else {
-            return redirect('/w9_upload')->with('error', 'No file selected.');
+            return redirect('/county-w9/upload')->with('error', 'No file selected.');
         }
     }
 

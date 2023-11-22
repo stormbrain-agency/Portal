@@ -71,9 +71,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::middleware(['permission:read provider w9'])->group(function () {
-        Route::prefix('/w9_upload')->name('w9_upload.')->group(function () {
+        Route::prefix('/county-w9')->name('w9_upload.')->group(function () {
+            //view
             Route::get('/', [W9_Upload_Controller::class,'wp_upload_index'])->name('index');
-            Route::post('/w9_upload', [W9_Upload_Controller::class, 'uploadFile']);
+            //upload
+            Route::get('/upload', [W9_Upload_Controller::class,'upload'])->name('create');
+            Route::post('/upload', [W9_Upload_Controller::class, 'uploadFile']);
+            //download
             Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
         });
         Route::prefix('/w9_downloadhistory')->name('w9_downloadhistory.')->group(function () {
