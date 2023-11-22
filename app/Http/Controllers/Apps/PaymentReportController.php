@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\County; 
 use Illuminate\Http\Request;
 use League\Csv\Writer;
+use Illuminate\Http\UploadedFile;
 
 class PaymentReportController extends Controller
 {
@@ -29,7 +30,7 @@ class PaymentReportController extends Controller
      */
     public function create()
     {
-        //
+        return view("pages.apps.payment-report.create");
     }
 
     /**
@@ -37,7 +38,41 @@ class PaymentReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'month_year' => 'required',
+            'payment_report_file' => 'required',
+
+        ]);
+
+        // dd($request->payment_report_file);
+        $user = Auth::user();
+        $countyFips = "";
+        if ($user) {
+            if (isset($user->county_designation)) {
+                $countyFips = $user->county_designation;
+            }
+        }
+        $paymentReport = PaymentReport::create([
+            'month_year' => $request->month_year,
+            'county_fips' => $countyFips,
+            'user_id' => $user->id,
+            'comments' => $request->comment,
+        ]);
+
+        foreach ($request->payment_report_file as $file) {
+            $extension = $file->getClientOriginalExtension();
+            $currentDateTime = Carbon::now()->format('Ymd_His');
+            $uniqueFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
+            $path_name = $file->storeAs('uploads/payment_reports', $uniqueFileName);
+
+            PaymentReportFiles::create([
+                'payment_report_id' => $paymentReport->id,
+                'file_path' => $uniqueFileName,
+            ]);
+        }
+
+        return view("pages.apps.payment-report.create");
+
     }
 
     /**
