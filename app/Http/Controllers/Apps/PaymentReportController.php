@@ -32,7 +32,7 @@ class PaymentReportController extends Controller
     {
         return view("pages.apps.payment-report.create");
     }
-
+    
     /**
      * Store a newly created resource in storage.
      */
@@ -58,18 +58,18 @@ class PaymentReportController extends Controller
             'user_id' => $user->id,
             'comments' => $request->comment,
         ]);
-
-        foreach ($request->payment_report_file as $file) {
-            $extension = $file->getClientOriginalExtension();
+        foreach ($request->payment_report_file as $uploadedFile) {
+            $extension = $uploadedFile->getClientOriginalExtension();
             $currentDateTime = Carbon::now()->format('Ymd_His');
-            $uniqueFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
-            $path_name = $file->storeAs('uploads/payment_reports', $uniqueFileName);
+            $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
+            $path_name = $uploadedFile->storeAs('uploads/payment_reports', $uniqueFileName);
 
             PaymentReportFiles::create([
                 'payment_report_id' => $paymentReport->id,
                 'file_path' => $uniqueFileName,
             ]);
         }
+
 
         return view("pages.apps.payment-report.create");
 

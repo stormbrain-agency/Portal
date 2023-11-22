@@ -86,7 +86,7 @@
                                 </div>
                                 <!--end::Info-->
                             </div>
-                            <input type="file" name="payment_report_file" class="drop-zone__input form-control-file" id="w9_uploadInput" multiple>
+                            <input type="file" name="payment_report_files" class="drop-zone__input form-control-file" id="payment_report_file">
 
                         </div>
                         <!--end::Dropzone-->
@@ -125,144 +125,87 @@
     @push('scripts')
 
 <!-- Add this script after including the Dropzone.js library -->
-{{-- <script>
-    // Initialize Dropzone
-    var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
-        url: "{{ route('county-provider-payment-report.store') }}",
-        // Only allow ZIP files to be uploaded
-        acceptedFiles: ".zip",
-        // Max file size is 10MB
-        maxFilesize: 10,
-        paramName: "payment_report_file",
-        autoProcessQueue: false,
-
-        // Trigger the upload when the form is submitted
-        init: function() {
-            this.on("submit", function(files) {
-                $("#submit-button").prop("disabled", true);
-                $("#submit-button").text("Uploading...");
-                $("#myform").submit();
-            });
-        },
-        // Show a progress bar when uploading files
-        sending: function(files, xhr, formData) {
-            $("#progress-bar").show();
-            $("#progress-bar").val(0);
-        },
-        // Update the progress bar as the files are uploaded
-        uploadprogress: function(file, progress, bytesSent) {
-            $("#progress-bar").val(progress);
-        },
-        // Hide the progress bar when the upload is complete
-        success: function(files, response) {
-            $("#progress-bar").hide();
-            $("#submit-button").prop("disabled", false);
-            $("#submit-button").text("Upload");
-            $("#kt_dropzonejs_example_1").removeClass("dz-started dz-dragging");
-            $("#kt_dropzonejs_example_1").find(".dz-message").addClass("dz-message-success");
-            $("#kt_dropzonejs_example_1").find(".dz-default-message").text("File uploaded successfully!");
-        },
-        // Show an error message if the upload fails
-        error: function(files, response) {
-            $("#progress-bar").hide();
-            $("#submit-button").prop("disabled", false);
-            $("#submit-button").text("Upload");
-            alert("Error uploading file: " + response.message);
-        }
-    });
-
-    // Change the name of the file field
-    myDropzone.options.paramName = "payment_report_file";
-</script> --}}
-
 <script>
+    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+  const dropZoneElement = inputElement.closest(".drop-zone");
 
-const dropZoneElement = document.getElementById('w9_uploadInput');
+  dropZoneElement.addEventListener("click", (e) => {
+    inputElement.click();
+  });
 
-dropZoneElement.addEventListener('change', (event) => {
-  const files = event.target.files;
-  const dropZone = document.getElementById('kt_dropzonejs_example_1');
-
-  if (files.length === 0) {
-    // No files selected
-  } else if (files.length === 1) {
-    // Only one file selected
-    updateThumbnail(dropZone, files[0]);
-  } else {
-    // Multiple files selected
-    for (const file of files) {
-      updateThumbnail(dropZone, file);
+  inputElement.addEventListener("change", (e) => {
+    if (inputElement.files.length) {
+      console.log(inputElement.files.length);
+      updateThumbnail(dropZoneElement, inputElement.files);
     }
-  }
-});
+  });
 
-dropZoneElement.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  dropZoneElement.classList.add('drop-zone--over');
-});
+  dropZoneElement.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZoneElement.classList.add("drop-zone--over");
+  });
 
-dropZoneElement.addEventListener('dragleave', (e) => {
-  dropZoneElement.classList.remove('drop-zone--over');
-});
+  ["dragleave", "dragend"].forEach((type) => {
+    dropZoneElement.addEventListener(type, (e) => {
+      dropZoneElement.classList.remove("drop-zone--over");
+    });
+  });
 
-dropZoneElement.addEventListener('dragend', (e) => {
-  dropZoneElement.classList.remove('drop-zone--over');
-});
+  dropZoneElement.addEventListener("drop", (e) => {
+    e.preventDefault();
 
-dropZoneElement.addEventListener('drop', (e) => {
-  e.preventDefault();
-
-  const files = e.dataTransfer.files;
-
-  if (files.length === 0) {
-    // No files dropped
-  } else if (files.length === 1) {
-    // Only one file dropped
-    updateThumbnail(dropZone, files[0]);
-  } else {
-    // Multiple files dropped
-    for (const file of files) {
-      updateThumbnail(dropZone, file);
+    if (e.dataTransfer.files.length) {
+      
+      inputElement.files = e.dataTransfer.files;
+      console.log(inputElement.files.length);
+      updateThumbnail(dropZoneElement, e.dataTransfer.files);
     }
-  }
+
+    dropZoneElement.classList.remove("drop-zone--over");
+  });
 });
 
+/**
+ * Updates the thumbnail on a drop zone element.
+ *
+ * @param {HTMLElement} dropZoneElement
+ * @param {File} file
+ */
 function updateThumbnail(dropZoneElement, file) {
-  let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
+  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
 
   // First time - remove the prompt
-  if (dropZoneElement.querySelector('.drop-zone__prompt')) {
-    dropZoneElement.querySelector('.drop-zone__prompt').remove();
+  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+    dropZoneElement.querySelector(".drop-zone__prompt").remove();
   }
 
-  // First time - there is no thumbnail element, so let's create it
+  // First time - there is no thumbnail element, so lets create it
   if (!thumbnailElement) {
-    thumbnailElement = document.createElement('div');
-    thumbnailElement.classList.add('drop-zone__thumb');
+    thumbnailElement = document.createElement("div");
+    thumbnailElement.classList.add("drop-zone__thumb");
     dropZoneElement.appendChild(thumbnailElement);
   }
 
-  thumbnailElement.dataset.label = file.name;
+  thumbnailElement.dataset.label = inputElement.files.length;
 
   // Show thumbnail for image files
-  if (file.type.startsWith('image/')) {
-    const reader = new FileReader();
+//   if (file.type.startsWith("image/")) {
+//     const reader = new FileReader();
 
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-    };
-  } else {
+//     reader.readAsDataURL(file);
+//     reader.onload = () => {
+//       thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+//     };
+//   } else {
     thumbnailElement.style.backgroundImage = null;
-  }
+  // }
 }
-
 
 </script>
 
 
 
 
-    @endpush
+@endpush
 
 </x-default-layout>
