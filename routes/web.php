@@ -116,10 +116,8 @@ Route::get('/error', function () {
 Route::get('/get-counties/{stateId}', [LocationController::class, 'getCountiesByState']);
 Route::get('/auth/redirect/{provider}', [SocialiteController::class, 'redirect']);
 
-Route::get('/mail-checkin/{token}', [UserPending::class, 'MailCheck'])->name('mail.checkin');
-
-Route::get('/home', function () {
-    return view('/');
+Route::get('/welcome', function () {
+    return view('welcome');
 });
 
 Route::post('/register', [RegisterNotificationController::class, 'sendEmail'])->name('registerNotification');

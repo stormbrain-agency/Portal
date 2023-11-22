@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\resources\views\mail\emailAuthenticationSuccess;
-use Illuminate\Support\Facades\Crypt;
 class UserPending extends Component
 {
     use WithFileUploads;
