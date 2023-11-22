@@ -44,7 +44,7 @@
         </a>
         <!--end::Menu wrapper-->
     </div>
-	<div class="app-navbar-item  ms-1 ms-md-4">
+	<div class="app-navbar-item  ms-1 ms-md-4 ">
         <!--begin::Menu wrapper-->
         <a href="{{url('/profile')}}">
             {!! getIcon('user', 'fs-2') !!}
@@ -55,7 +55,10 @@
     <div class="app-navbar-item ms-1 ms-md-4">
         <!--begin::Menu wrapper--> 
         <a class="button-ajax menu-link px-5" href="#" data-action="{{ route('logout') }}" data-method="post" data-csrf="{{ csrf_token() }}" data-reload="true">
-            {!! getIcon('abstract-28', 'fs-2') !!}
+            <i class="ki-duotone ki-entrance-left fs-2">
+                <span class="path1"></span>
+                <span class="path2"></span>
+            </i>
         </a>
         <!--end::Menu wrapper-->
     </div>

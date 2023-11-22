@@ -63213,6 +63213,12 @@ body,
 }
 
 /* Logo */
+.bg-white span {
+  position: relative;
+}
+
+.bg-white>span::after {}
+
 .icon-menu {
   border-radius: 6px;
   background: #ffffff;
