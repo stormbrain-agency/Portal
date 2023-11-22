@@ -1,4 +1,30 @@
 <x-default-layout>
+    <style>
+        .drop-zone {
+  border: 2px dashed #ccc;
+  padding: 20px;
+  text-align: center;
+}
+
+.drop-zone--over {
+  border-color: #007bff;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  background-size: cover;
+  background-position: center;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+    </style>
     {{-- @section('title')
     Monthly Payment Report Submission
     @endsection --}}
@@ -68,6 +94,26 @@
                         <!--end::Label-->
                         <!--begin::Input-->
                          <!--begin::Dropzone-->
+                         {{-- <div class="drop-zone" id="kt_dropzonejs_example_1">
+                            <div class="drop-zone__thumb"></div>
+                            <div class="dz-message needsclick text-center justify-content-center">
+                                <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+                            </div>
+                            <div class="dz-message needsclick text-center justify-content-center w-50 mx-auto">
+                                <div class="ms-4">
+                                <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload ZIP File of provider Payment Report Submission (files).</h3>
+                                <p class="fs-7 fw-semibold text-gray-500">Drag & Drop or choose files from computer</p>
+                                <p class="fs-7 fw-semibold text-gray-500 font-italic">
+                                    <i>
+                                    This portal site is not a storage system, but rather a secure site for transferring documents.
+                                    As such, all documents in any folder will be permanently deleted after 30 days.</p>
+                                    </i>
+                                </div>
+                                </div>
+                                <input type="file" name="payment_report_file" class="drop-zone__input form-control-file" id="w9_uploadInput" multiple>
+                            </div>
+                            </div> --}}
+
                         <div class="dropzone" id="kt_dropzonejs_example_1" class="justify-content-center">
                             <!--begin::Message-->
                             <div class="dz-message needsclick text-center justify-content-center">
@@ -177,56 +223,31 @@
 
 <script>
 
-const dropZoneElement = document.getElementById('w9_uploadInput');
+const dropZoneElement = document.getElementById('kt_dropzonejs_example_1');
+const inputElement = document.getElementById('w9_uploadInput');
 
-dropZoneElement.addEventListener('change', (event) => {
+// Add an event listener for the 'drop' event to the drop zone
+dropZoneElement.addEventListener('drop', (event) => {
+  // Prevent default behavior (opening the file)
+  event.preventDefault();
+
+  // Get the dropped files
+  const files = event.dataTransfer.files;
+
+  // Add the dropped files to the input element
+  inputElement.files = files;
+});
+
+// Handle file selection
+inputElement.addEventListener('change', (event) => {
   const files = event.target.files;
-  const dropZone = document.getElementById('kt_dropzonejs_example_1');
-
-  if (files.length === 0) {
-    // No files selected
-  } else if (files.length === 1) {
-    // Only one file selected
-    updateThumbnail(dropZone, files[0]);
-  } else {
-    // Multiple files selected
-    for (const file of files) {
-      updateThumbnail(dropZone, file);
-    }
+  for (const file of files) {
+    // Update the thumbnail for each file
+    updateThumbnail(dropZoneElement, file);
   }
 });
 
-dropZoneElement.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  dropZoneElement.classList.add('drop-zone--over');
-});
-
-dropZoneElement.addEventListener('dragleave', (e) => {
-  dropZoneElement.classList.remove('drop-zone--over');
-});
-
-dropZoneElement.addEventListener('dragend', (e) => {
-  dropZoneElement.classList.remove('drop-zone--over');
-});
-
-dropZoneElement.addEventListener('drop', (e) => {
-  e.preventDefault();
-
-  const files = e.dataTransfer.files;
-
-  if (files.length === 0) {
-    // No files dropped
-  } else if (files.length === 1) {
-    // Only one file dropped
-    updateThumbnail(dropZone, files[0]);
-  } else {
-    // Multiple files dropped
-    for (const file of files) {
-      updateThumbnail(dropZone, file);
-    }
-  }
-});
-
+// Update the thumbnail (optional)
 function updateThumbnail(dropZoneElement, file) {
   let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
 
@@ -256,7 +277,6 @@ function updateThumbnail(dropZoneElement, file) {
     thumbnailElement.style.backgroundImage = null;
   }
 }
-
 
 </script>
 
