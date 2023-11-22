@@ -81,11 +81,13 @@
                                     <p class="fs-7 fw-semibold text-gray-500 font-italic">
                                         <i>
                                             This portal site is not a storage system, but rather a secure site for transferring documents.
-                                            As such, all documents in any folder will be permanently deleted after 30 days</p>
+                                            As such, all documents in any folder will be permanently deleted after 30 days.</p>
                                         </i>
                                 </div>
                                 <!--end::Info-->
                             </div>
+                            <input type="file" name="payment_report_file" class="drop-zone__input form-control-file" id="w9_uploadInput" multiple>
+
                         </div>
                         <!--end::Dropzone-->
                        
@@ -120,92 +122,10 @@
         </div>
         <!--end::Card body-->
     </div>
-
     @push('scripts')
-    {{-- <script>
-        var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
-    url: "{{ route('county-provider-payment-report.store') }}",
-    paramName: "payment_report_file",
-    maxFiles: 10,
-    maxFilesize: 10, // MB
-    addRemoveLinks: true,
-            autoProcessQueue: false,
 
-    accept: function(file, done) {
-        done();
-    },
-    init: function () {
-        var submitButton = document.querySelector("#submit-button"); // Thay #submit-button bằng ID của nút submit trong form của bạn
-
-        this.on("sending", function (file, xhr, formData) {
-            // Thêm dữ liệu từ các trường form vào formData
-             formData.append('_token', document.querySelector('input[name=csrf_token]').value);
-            var formFields = {
-                month_year: document.querySelector("#month_year").value,
-                comment: "ok"
-                // Thêm các trường khác nếu cần
-            };
-
-            // Thêm dữ liệu từ form vào formData
-            for (var key in formFields) {
-                formData.append(key, formFields[key]);
-            }
-        });
-
-        submitButton.addEventListener("click", function () {
-            // Kích hoạt quá trình tải lên Dropzone khi nhấn nút submit
-            myDropzone.processQueue();
-        });
-    }
-});
-
-    </script> --}}
-    <!-- Bao gồm thư viện Dropzone.js -->
-
-<!-- Mã HTML của form của bạn -->
-
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Khởi tạo Dropzone
-        var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
-            url: "{{ route('county-provider-payment-report.store') }}", 
-            paramName: "payment_report_file",
-            maxFiles: 10, 
-            maxFilesize: 10, 
-            addRemoveLinks: true, 
-            acceptedFiles: ".zip", 
-            parallelUploads: 10, 
-            autoProcessQueue: false,
-            init: function () {
-                var submitButton = document.getElementById("submit-button");
-
-                // Tắt nút submit cho đến khi ít nhất một tệp được thêm vào
-                this.on("addedfile", function () {
-                    submitButton.removeAttribute("disabled");
-                });
-
-                // Xử lý hàng đợi khi nút submit được nhấn
-                submitButton.addEventListener("click", function () {
-                    myDropzone.processQueue();
-                });
-
-                // Sự kiện khi một tệp được tải lên thành công
-                this.on("success", function (file, response) {
-                    // Xử lý sự kiện thành công nếu cần thiết
-                    console.log(response);
-                });
-
-                // Sự kiện khi tất cả các tệp đã được tải lên
-                this.on("queuecomplete", function () {
-                    // Đặt lại form hoặc chuyển hướng đến trang khác sau khi tất cả các tệp được tải lên
-                    document.getElementById("myform").submit(); // Thay thế "your-form" bằng ID thực tế của form bạn đang sử dụng
-                });
-            },
-        });
-    });
-</script> --}}
 <!-- Add this script after including the Dropzone.js library -->
-<script>
+{{-- <script>
     // Initialize Dropzone
     var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
         url: "{{ route('county-provider-payment-report.store') }}",
@@ -253,6 +173,91 @@
 
     // Change the name of the file field
     myDropzone.options.paramName = "payment_report_file";
+</script> --}}
+
+<script>
+
+const dropZoneElement = document.getElementById('w9_uploadInput');
+
+dropZoneElement.addEventListener('change', (event) => {
+  const files = event.target.files;
+  const dropZone = document.getElementById('kt_dropzonejs_example_1');
+
+  if (files.length === 0) {
+    // No files selected
+  } else if (files.length === 1) {
+    // Only one file selected
+    updateThumbnail(dropZone, files[0]);
+  } else {
+    // Multiple files selected
+    for (const file of files) {
+      updateThumbnail(dropZone, file);
+    }
+  }
+});
+
+dropZoneElement.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZoneElement.classList.add('drop-zone--over');
+});
+
+dropZoneElement.addEventListener('dragleave', (e) => {
+  dropZoneElement.classList.remove('drop-zone--over');
+});
+
+dropZoneElement.addEventListener('dragend', (e) => {
+  dropZoneElement.classList.remove('drop-zone--over');
+});
+
+dropZoneElement.addEventListener('drop', (e) => {
+  e.preventDefault();
+
+  const files = e.dataTransfer.files;
+
+  if (files.length === 0) {
+    // No files dropped
+  } else if (files.length === 1) {
+    // Only one file dropped
+    updateThumbnail(dropZone, files[0]);
+  } else {
+    // Multiple files dropped
+    for (const file of files) {
+      updateThumbnail(dropZone, file);
+    }
+  }
+});
+
+function updateThumbnail(dropZoneElement, file) {
+  let thumbnailElement = dropZoneElement.querySelector('.drop-zone__thumb');
+
+  // First time - remove the prompt
+  if (dropZoneElement.querySelector('.drop-zone__prompt')) {
+    dropZoneElement.querySelector('.drop-zone__prompt').remove();
+  }
+
+  // First time - there is no thumbnail element, so let's create it
+  if (!thumbnailElement) {
+    thumbnailElement = document.createElement('div');
+    thumbnailElement.classList.add('drop-zone__thumb');
+    dropZoneElement.appendChild(thumbnailElement);
+  }
+
+  thumbnailElement.dataset.label = file.name;
+
+  // Show thumbnail for image files
+  if (file.type.startsWith('image/')) {
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    };
+  } else {
+    thumbnailElement.style.backgroundImage = null;
+  }
+}
+
+
 </script>
 
 
