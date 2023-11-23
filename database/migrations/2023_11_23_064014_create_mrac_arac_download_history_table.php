@@ -9,13 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('w9downloadhistory', function (Blueprint $table) {
+        Schema::create('mrac_arac_download_history', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('mrac_arac_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('original_name');
             $table->timestamps();
+
+            $table->foreign('mrac_arac_id')->references('id')->on('mrac_arac')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('w9downloadhistory');
+        Schema::dropIfExists('mrac_arac_download_history');
     }
 };

@@ -94,6 +94,7 @@ class RegisteredUserController extends Controller
                 $newFile->original_name = $uniqueName;
                 $newFile->save();
 
+                $county_designation = $user->county->county;
                 // event(new Registered($user));
                 // Send Mail
                 $adminEmails = User::whereHas('roles', function ($query) {
@@ -102,13 +103,13 @@ class RegisteredUserController extends Controller
                 $data = [
                     'name' => $request -> input('name'),
                     'email' => $request -> input('email'),
-                    'county_designation' => $request -> input('county_designation'),
+                    'county_designation' => $county_designation,
                     'link' => url('/user-management/user-pending/users/'. $userID .''),
                     'time' => Carbon::now()->format('H:i:s - m/d/Y '),
                     'list_mail' => $adminEmails,
                 ];
                 $dataMail = $data['list_mail'];
-                $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
+                // $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
 
                 foreach($dataMail as $emailAdress){
                     Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {

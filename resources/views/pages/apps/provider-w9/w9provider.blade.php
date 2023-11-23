@@ -1,7 +1,7 @@
 <x-default-layout>
 
     @section('title')
-        County Provider Payment Resports
+        County Provider W-9
     @endsection
 
     @section('breadcrumbs')
@@ -95,6 +95,7 @@
         </script>
         <script>
          $(document).ready(function () {
+
             $("#kt_daterangepicker_1").daterangepicker({
                 singleDatePicker: true,
                 showDropdowns: true,
@@ -114,6 +115,7 @@
             $('.daterangepicker .cancelBtn').on('click', function(){
                 clearDateFilter();
             });
+
             $('#county-filter').on('select2:select', function (e) {
                 var value = e.params.data.text;
                 if (value == "County") {
@@ -121,6 +123,7 @@
                 }
                 window.LaravelDataTables['w9-upload-table'].column('counties.county:name').search(value).draw();
             });
+
             $('#user-filter').on('select2:select', function (e) {
                 var value = e.params.data.id;
                 if (value == "0") {
@@ -128,6 +131,7 @@
                 }
                 window.LaravelDataTables['w9-upload-table'].column('users.email:name').search(value).draw();
             });
+            
             $("#export_csv").on('click', function(e) {
                 var table = window.LaravelDataTables['w9-upload-table'];
                 table.column('comment:name').visible(false);

@@ -5,12 +5,12 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 
     @section('title')
-        County Provider Payment Resports
+        County MRAC/ARAC Submissions
     @endsection
 
-    @section('breadcrumbs')
-        {{ Breadcrumbs::render('county-provider-payment-report.index') }}
-    @endsection
+    {{-- @section('breadcrumbs')
+        {{ Breadcrumbs::render('county-provider-mrac_arac.index') }}
+    @endsection --}}
 
      <div class="card">
         <!--begin::Card header-->
@@ -55,37 +55,28 @@
                 <livewire:filters.user-list/>
                 <livewire:filters.county-list/>
                 @endif
-                {{-- <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base"> --}}
-                    <!--begin::Add user-->
-                    <button id="export_csv" class="btn btn-outline btn-outline-solid">
-                        <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
-                        EXPORT AS CSV
-                    </button>
-                    @if(auth()->user()->hasRole('county user'))
-                    {{-- <button type="button" class="btn btn-primary me-2 mb-2" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
-                        {!! getIcon('plus', 'fs-2', '', 'i') !!}
-                        Submit File
-                    </button> --}}
-                    
-                    <a href="{{route("county-provider-payment-report.create")}}" class="btn btn-primary">
-                        {!! getIcon('file', 'fs-2', '', 'i') !!}
-                        Submit File
-                    </a>
-                    @endif
-                    <!--end::Add user-->
-                </div>
-                <!--end::Toolbar-->
-                <!--begin::Modal-->
-                <livewire:payment-report.add-payment-report></livewire:payment-report.add-payment-report>
-                <!--end::Modal-->
-            {{-- </div> --}}
+                
+                <!--begin::Add user-->
+                <button id="export_csv" class="btn btn-outline btn-outline-solid">
+                    <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                    EXPORT AS CSV
+                </button>
+                @if(auth()->user()->hasRole('county user'))
+                <a href="{{route("county-mrac-arac.create")}}" class="btn btn-primary">
+                    {!! getIcon('file', 'fs-2', '', 'i') !!}
+                    Submit File
+                </a>
+                @endif
+                <!--end::Add user-->
+            </div>
+            <!--end::Toolbar-->
 
             <!--end::Card toolbar-->
         </div>
         <!--end::Card header-->
 
         <!--begin::Card body-->
-        <livewire:payment-report.view-payment-report></livewire:payment-report.view-payment-report>
+        <livewire:mrac_arac.view-mrac-arac></livewire:mrac_arac.view-mrac-arac>
         <div class="card-body py-4">
             <!--begin::Table-->
             <div class="table-responsive">
@@ -101,15 +92,15 @@
         <script>
             document.addEventListener('livewire:load', function () {
                 Livewire.on('success', function () {
-                    window.LaravelDataTables['payment_report-table'].ajax.reload();
+                    window.LaravelDataTables['mrac_arac-table'].ajax.reload();
                 });
                 document.getElementById('month_year').addEventListener('change', function() {
                     var month_year = this.value;
-                    window.LaravelDataTables['payment_report-table'].column('month_year:name').search(month_year).draw();
+                    window.LaravelDataTables['mrac_arac-table'].column('month_year:name').search(month_year).draw();
                 });
             });
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
-                window.LaravelDataTables['payment_report-table'].search(this.value).draw();
+                window.LaravelDataTables['mrac_arac-table'].search(this.value).draw();
             });
               
         </script>
@@ -124,11 +115,11 @@
                     placeholder: 'Pick a day'
                 }
                 }, function(start, end) {
-                    window.LaravelDataTables['payment_report-table'].column('created_at:name').search(start.format('YYYY-MM-DD')).draw();            
+                    window.LaravelDataTables['mrac_arac-table'].column('created_at:name').search(start.format('YYYY-MM-DD')).draw();            
             });
 
             function clearDateFilter() {
-                window.LaravelDataTables['payment_report-table'].column('created_at:name').search('').draw();
+                window.LaravelDataTables['mrac_arac-table'].column('created_at:name').search('').draw();
             }
 
             $('.daterangepicker .cancelBtn').on('click', function(){
@@ -139,17 +130,17 @@
                 if (value == "All County") {
                     value = "";
                 }
-                window.LaravelDataTables['payment_report-table'].column('counties.county:name').search(value).draw();
+                window.LaravelDataTables['mrac_arac-table'].column('counties.county:name').search(value).draw();
             });
             $('#user-filter').on('select2:select', function (e) {
                 var value = e.params.data.id;
                 if (value == "0") {
                     value = '';
                 }
-                window.LaravelDataTables['payment_report-table'].column('users.email:name').search(value).draw();
+                window.LaravelDataTables['mrac_arac-table'].column('users.email:name').search(value).draw();
             });
             $("#export_csv").on('click', function(e) {
-                var table = window.LaravelDataTables['payment_report-table'];
+                var table = window.LaravelDataTables['mrac_arac-table'];
                 table.button('.buttons-csv').trigger();
             })
         })

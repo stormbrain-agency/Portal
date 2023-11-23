@@ -57,6 +57,7 @@ class W9DataTable extends DataTable
                 return $upload->user->email;
             })
 
+
             ->rawColumns(['user_first_name', 'w9_file_path'])
             ->setRowId('id');
     }

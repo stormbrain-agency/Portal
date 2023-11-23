@@ -30,6 +30,7 @@ class RolesPermissionsSeeder extends Seeder
             'create provider payment',
             'read provider payment',
             'download provider payment',
+            'create mrac_arac',
             'read mrac_arac',
             'download mrac_arac',
             'notification management',
@@ -117,12 +118,9 @@ class RolesPermissionsSeeder extends Seeder
             'edit profile',
             'create provider w9',
             'read provider w9',
-            'download provider w9',
             'create provider payment',
             'read provider payment',
-            'download provider payment',
             'read mrac_arac',
-            'download mrac_arac'
             );
 
         User::find(1)->assignRole('admin');

@@ -1,4 +1,55 @@
 <x-default-layout>
+<style>
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #ffffff;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1px 0;
+  color: #ffffff;
+  background: #002559;
+  font-size: 14px;
+  text-align: center;
+}
+
+.input-comment{
+    display: flex;
+    max-width: 1091px;
+    width: -webkit-fill-available;
+    height: 100px;
+    padding: 15px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 6px;
+    border: 1px solid #596D87;
+}
+.upload-text{
+    color: #192D50;
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: 16px;
+}
+</style>
     {{-- @section('title')
     Monthly Payment Report Submission
     @endsection --}}
@@ -7,7 +58,7 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                Monthly Payment Report Submission
+                Submit MRAC/ARAC
             </div>
             <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex" style="gap: 20px">
@@ -23,7 +74,7 @@
                 </i>
                 <p class="fw-semibold fs-2">Nice work!</p>
                 <p class="fw-medium text-success fs-4"> {{ session('success') }}</p>
-                <a href="{{ route('county-provider-payment-report.index') }}" class="btn btn-outline rounded-3 btn-outline-solid btn-outline-dark-subtle text-body-emphasis btn-active-light-dark">VIEW SUBMISSION HISTORY</a>
+                <a href="{{ route('county-mrac-arac.index') }}" class="btn btn-outline rounded-3 btn-outline-solid btn-outline-dark-subtle text-body-emphasis btn-active-light-dark">VIEW SUBMISSION HISTORY</a>
             </div>
         </div>
         @else
@@ -38,7 +89,7 @@
                 </i>Download Template</a>
             <hr>
 
-            <form action="{{ route('county-provider-payment-report.store') }}" method="POST" id="myform" class="form" enctype="multipart/form-data">
+            <form action="{{ route('county-mrac-arac.store') }}" method="POST" id="myform" class="form" enctype="multipart/form-data">
                 @csrf
                 <!--begin::Scroll-->
                 <div class="d-flex flex-column">
@@ -82,7 +133,7 @@
                             <div class="dz-message needsclick text-center justify-content-center w-50 mx-auto">
                                 <!--begin::Info-->
                                 <div class="ms-4">
-                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload ZIP File of provider Payment Report Submission (files).</h3>
+                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload File of provider MRAC/ARAC Submission (files).</h3>
                                     <p class="fs-7 fw-semibold text-gray-500 drop-zone__prompt">Drag & Drop or choose files from computer</p>
                                     <p class="fs-7 fw-semibold text-gray-500 font-italic">
                                         <i>
@@ -92,13 +143,13 @@
                                 </div>
                                 <!--end::Info-->
                             </div>
-                            <input type="file" multiple name="payment_report_files[]" class="drop-zone__input form-control-file" id="payment_report_file">
+                            <input type="file" multiple name="mrac_arac_files[]" class="drop-zone__input form-control-file" id="mrac_arac_file">
 
                         </div>
                         <!--end::Dropzone-->
                        
-                        @if($errors->has('payment_report_files'))
-                            <span class="text-danger">{{ $errors->first('payment_report_files') }}</span>
+                        @if($errors->has('mrac_arac_files'))
+                            <span class="text-danger">{{ $errors->first('mrac_arac_files') }}</span>
                         @endif
 
                     </div>

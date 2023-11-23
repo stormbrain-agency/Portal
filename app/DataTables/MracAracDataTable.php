@@ -3,7 +3,7 @@
 namespace App\DataTables;
 
 use Carbon\Carbon;
-use App\Models\PaymentReport;
+use App\Models\MracArac;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
@@ -12,8 +12,7 @@ use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Response;
 
-
-class PaymentReportDataTable extends DataTable
+class MracAracDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -24,30 +23,30 @@ class PaymentReportDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('user', function (PaymentReport $payment_report) {
-                // return $payment_report->user->first_name;
-                return view('pages.apps.payment-report.columns._user', compact('payment_report'));
+            ->editColumn('user', function (MracArac $mrac_arac) {
+                // return $mrac_arac->user->first_name;
+                return view('pages.apps.mrac_arac.columns._user', compact('mrac_arac'));
             })
-            ->editColumn('id', function (PaymentReport $payment_report) {
-                return '#'.$payment_report->id.''; 
+            ->editColumn('id', function (MracArac $mrac_arac) {
+                return '#'.$mrac_arac->id.''; 
             })
-            ->editColumn('created_at', function (PaymentReport $payment_report) {
-                return $payment_report->created_at->toDateString();
+            ->editColumn('created_at', function (MracArac $mrac_arac) {
+                return $mrac_arac->created_at->toDateString();
             })
-            ->editColumn('updated_at', function (PaymentReport $payment_report) {
-                return $payment_report->created_at->toTimeString();
+            ->editColumn('updated_at', function (MracArac $mrac_arac) {
+                return $mrac_arac->created_at->toTimeString();
             })
-            ->editColumn('county_fips', function (PaymentReport $payment_report) {
-                return $payment_report->county->county;
+            ->editColumn('county_fips', function (MracArac $mrac_arac) {
+                return $mrac_arac->county->county;
             })
-            ->editColumn('comment', function (PaymentReport $payment_report) {
-                return $payment_report->comments;
+            ->editColumn('comment', function (MracArac $mrac_arac) {
+                return $mrac_arac->comments;
             })
-            ->addColumn('user_first_name', function (PaymentReport $payment_report) {
-                return $payment_report->user->first_name;
+            ->addColumn('user_first_name', function (MracArac $mrac_arac) {
+                return $mrac_arac->user->first_name;
             })
-            ->editColumn('view', function (PaymentReport $payment_report) {
-                return view('pages.apps.payment-report.columns._view-action', compact('payment_report'));
+            ->editColumn('view', function (MracArac $mrac_arac) {
+                return view('pages.apps.mrac_arac.columns._view-action', compact('mrac_arac'));
             })
             ->rawColumns(['user_first_name', 'document_path'])
             ->setRowId('id');
@@ -56,13 +55,13 @@ class PaymentReportDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(PaymentReport $model): QueryBuilder
+    public function query(MracArac $model): QueryBuilder
     {
         $query = $model->newQuery();
-        $query->join('users', 'payment_report.user_id', '=', 'users.id')
-              ->join('counties', 'payment_report.county_fips', '=', 'counties.county_fips')
+        $query->join('users', 'mrac_arac.user_id', '=', 'users.id')
+              ->join('counties', 'mrac_arac.county_fips', '=', 'counties.county_fips')
               ->where('users.status', 1)
-              ->select('payment_report.*', 'counties.county_full', 'users.email'); 
+              ->select('mrac_arac.*', 'counties.county_full', 'users.email'); 
     
         if (auth()->user()->hasRole('county user')) {
             $query->where('users.id', auth()->user()->id);
@@ -93,21 +92,21 @@ class PaymentReportDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('payment_report-table')
+            ->setTableId('mrac_arac-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(1)
-            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/payment-report/columns/_draw-scripts.js')) . "}")
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/mrac_arac/columns/_draw-scripts.js')) . "}")
             ->buttons([
                 [
                     'extend' => 'csv',
                     'text' => 'Export CSV',
                     // 'action' => 'function(e, dt, button, config) {
-                    //     window.location = "'.route('county-provider-payment-report.csv').'";
+                    //     window.location = "'.route('county-provider-mrac_arac.csv').'";
                     // }',
-                    'filename' => 'County Provider Payment Reports',
+                    'filename' => 'Submit Provider Payment Report',
                     'exportOptions' => [
                         'columns' => ':visible:not(:nth-child(8))',
                         'modifier' => [
@@ -122,20 +121,20 @@ class PaymentReportDataTable extends DataTable
 
 public function csv()
 {
-    $paymentReport = new PaymentReport; // Create an instance of PaymentReport
-    $dataTable = DataTables::of($this->query($paymentReport))
+    $MracArac = new MracArac; // Create an instance of MracArac
+    $dataTable = DataTables::of($this->query($MracArac))
         ->setRowId('id')
-        ->addColumn('user_first_name', function (PaymentReport $payment_report) {
-            return $payment_report->user->first_name;
+        ->addColumn('user_first_name', function (MracArac $mrac_arac) {
+            return $mrac_arac->user->first_name;
         })
-        ->addColumn('created_at', function (PaymentReport $payment_report) {
-            return $payment_report->created_at->toDateString();
+        ->addColumn('created_at', function (MracArac $mrac_arac) {
+            return $mrac_arac->created_at->toDateString();
         })
-        ->addColumn('county_name', function (PaymentReport $payment_report) {
-            return $payment_report->county->county;
+        ->addColumn('county_name', function (MracArac $mrac_arac) {
+            return $mrac_arac->county->county;
         })
-        ->addColumn('comment', function (PaymentReport $payment_report) {
-            return $payment_report->comments;
+        ->addColumn('comment', function (MracArac $mrac_arac) {
+            return $mrac_arac->comments;
         })
         // Add other necessary columns
         ->rawColumns(['user_first_name', 'document_path'])
@@ -143,7 +142,7 @@ public function csv()
 
     $data = $dataTable->getData(true);
 
-    $csvFileName = 'payment_reports_' . date('YmdHis') . '.csv';
+    $csvFileName = 'mrac_aracs_' . date('YmdHis') . '.csv';
 
     $csvContent = fopen('php://temp', 'w');
 
@@ -199,6 +198,6 @@ public function csv()
      */
     protected function filename(): string
     {
-        return 'PaymentReport_' . date('YmdHis');
+        return 'MracArac_' . date('YmdHis');
     }
 }
