@@ -1,22 +1,7 @@
 <x-default-layout>
-
-    {{-- @section('title')
-    Monthly Payment Report Submission
-    @endsection --}}
     @if(auth()->user()->hasRole('county user'))
 
-     @if(session('success'))
-       <div class="alert alert-success">
-           {{ session('success') }}
-       </div>
-    @endif
-    @if(session('error'))
-      <div class="alert alert-danger">
-          {{ session('error') }}
-      </div>
-    @endif
     <div class="card">
-        <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
@@ -26,8 +11,20 @@
             <div class="card-toolbar gx-10 d-flex" style="gap: 20px">
             </div>
         </div>
-        <!--end::Card header-->
 
+        @if(session('success'))
+        <div class="card-body py-4 d-flex justify-content-center align-content-center">
+            <div class="success-upload d-flex flex-column justify-content-center align-items-center align-content-center h-100" style="height: 70vh !important;">
+                <i class="ki-duotone ki-questionnaire-tablet fs-5x text-primary">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                <p class="fw-semibold fs-2">Nice work!</p>
+                <p class="fw-medium text-success fs-4"> {{ session('success') }}</p>
+                <a href="{{ route('w9_upload.index') }}" class="btn btn-outline rounded-3 btn-outline-solid btn-outline-dark-subtle text-body-emphasis btn-active-light-dark">VIEW SUBMISSION HISTORY</a>
+            </div>
+        </div>
+        @else
         <!--begin::Card body-->
         <div class="card-body py-4">
             <!-- <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our FAQs or submit a request via our contact us form.</i> </span> -->
@@ -92,88 +89,89 @@
             </form>
         </div>
         <!--end::Card body-->
+        @endif
     </div>
     @endif
     @push('scripts')
 
-<!-- Add this script after including the Dropzone.js library -->
-<script>
-    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
-  const dropZoneElement = inputElement.closest(".drop-zone");
+    <!-- Add this script after including the Dropzone.js library -->
+    <script>
+        document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+      const dropZoneElement = inputElement.closest(".drop-zone");
 
-  dropZoneElement.addEventListener("click", (e) => {
-    inputElement.click();
-  });
+      dropZoneElement.addEventListener("click", (e) => {
+        inputElement.click();
+      });
 
-  inputElement.addEventListener("change", (e) => {
-    if (inputElement.files.length) {
-      console.log(inputElement.files.length);
-      updateThumbnail(dropZoneElement, inputElement.files);
-    }
-  });
+      inputElement.addEventListener("change", (e) => {
+        if (inputElement.files.length) {
+          console.log(inputElement.files.length);
+          updateThumbnail(dropZoneElement, inputElement.files);
+        }
+      });
 
-  dropZoneElement.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    dropZoneElement.classList.add("drop-zone--over");
-  });
+      dropZoneElement.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        dropZoneElement.classList.add("drop-zone--over");
+      });
 
-  ["dragleave", "dragend"].forEach((type) => {
-    dropZoneElement.addEventListener(type, (e) => {
-      dropZoneElement.classList.remove("drop-zone--over");
+      ["dragleave", "dragend"].forEach((type) => {
+        dropZoneElement.addEventListener(type, (e) => {
+          dropZoneElement.classList.remove("drop-zone--over");
+        });
+      });
+
+      dropZoneElement.addEventListener("drop", (e) => {
+        e.preventDefault();
+
+        if (e.dataTransfer.files.length) {
+          
+          inputElement.files = e.dataTransfer.files;
+          console.log(inputElement.files.length);
+          updateThumbnail(dropZoneElement, e.dataTransfer.files);
+        }
+
+        dropZoneElement.classList.remove("drop-zone--over");
+      });
     });
-  });
 
-  dropZoneElement.addEventListener("drop", (e) => {
-    e.preventDefault();
+    /**
+     * Updates the thumbnail on a drop zone element.
+     *
+     * @param {HTMLElement} dropZoneElement
+     * @param {File} file
+     */
+    function updateThumbnail(dropZoneElement, file) {
+      let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
 
-    if (e.dataTransfer.files.length) {
-      
-      inputElement.files = e.dataTransfer.files;
-      console.log(inputElement.files.length);
-      updateThumbnail(dropZoneElement, e.dataTransfer.files);
+      // First time - remove the prompt
+      if (dropZoneElement.querySelector(".drop-zone__prompt")) {
+        dropZoneElement.querySelector(".drop-zone__prompt").remove();
+      }
+
+      // First time - there is no thumbnail element, so lets create it
+      if (!thumbnailElement) {
+        thumbnailElement = document.createElement("div");
+        thumbnailElement.classList.add("drop-zone__thumb");
+        dropZoneElement.appendChild(thumbnailElement);
+      }
+
+      thumbnailElement.dataset.label = inputElement.files.length;
+
+      // Show thumbnail for image files
+    //   if (file.type.startsWith("image/")) {
+    //     const reader = new FileReader();
+
+    //     reader.readAsDataURL(file);
+    //     reader.onload = () => {
+    //       thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
+    //     };
+    //   } else {
+        thumbnailElement.style.backgroundImage = null;
+      // }
     }
 
-    dropZoneElement.classList.remove("drop-zone--over");
-  });
-});
-
-/**
- * Updates the thumbnail on a drop zone element.
- *
- * @param {HTMLElement} dropZoneElement
- * @param {File} file
- */
-function updateThumbnail(dropZoneElement, file) {
-  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
-
-  // First time - remove the prompt
-  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
-    dropZoneElement.querySelector(".drop-zone__prompt").remove();
-  }
-
-  // First time - there is no thumbnail element, so lets create it
-  if (!thumbnailElement) {
-    thumbnailElement = document.createElement("div");
-    thumbnailElement.classList.add("drop-zone__thumb");
-    dropZoneElement.appendChild(thumbnailElement);
-  }
-
-  thumbnailElement.dataset.label = inputElement.files.length;
-
-  // Show thumbnail for image files
-//   if (file.type.startsWith("image/")) {
-//     const reader = new FileReader();
-
-//     reader.readAsDataURL(file);
-//     reader.onload = () => {
-//       thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-//     };
-//   } else {
-    thumbnailElement.style.backgroundImage = null;
-  // }
-}
-
-</script>
+    </script>
 
 
 
