@@ -130,6 +130,11 @@ class W9DataTable extends DataTable
                 Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
                 Column::make('filename')->title('File Name Submitted')->searchable(false)->orderable(false),
                 Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false),
+                Column::computed('view')
+                ->addClass('text-center text-nowrap')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60),
             ];
         }
     }
