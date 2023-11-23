@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Apps\W9_Upload_Controller ;
 use App\Http\Controllers\Apps\W9_Historydownload_Controller ;
+use App\Http\Controllers\Apps\Help_FAQController ;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
 
@@ -98,10 +99,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
-
-
-
+    Route::get('/help-faq', [Help_FAQController::class, 'index'])->name('help-faq');
 
 });
 
