@@ -30,6 +30,7 @@ class RolesPermissionsSeeder extends Seeder
             'create provider payment',
             'read provider payment',
             'download provider payment',
+            'create mrac_arac',
             'read mrac_arac',
             'download mrac_arac',
             'notification management',
