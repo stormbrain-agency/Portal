@@ -27,26 +27,51 @@
             </div>
             <!--begin::Card title-->
 
-            @if(auth()->user()->hasRole('admin'))
             <!--begin::Card toolbar-->
-            <div class="card-toolbar">
+            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 20px">
                 <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                <div class="d-flex justify-content-center row" style="width: 150px">
+                    <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_1"/>
+                </div>
+                <div class="d-flex justify-content-center row" style="width: 150px">
+                    <select id="month_year" class="form-select form-select-solid text-center">
+                        <option value="">Month/Year</option>
+                            @for ($year = 2024; $year <= 2025; $year++)
+                                @for ($month = 1; $month <= 12; $month++)
+                                    <option value="{{ date('F Y', strtotime($year . '-' . sprintf('%02d', $month) . '-01')) }}">
+                                        {{ date('F Y', strtotime($year . '-' . sprintf('%02d', $month) . '-01')) }}
+                                    </option>
+                                @endfor
+                            @endfor
+                    </select>
+                </div>
+                <livewire:filters.user-list/>
+                <livewire:filters.county-list/>
+                {{-- <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base"> --}}
                     <!--begin::Add user-->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
+                    <button id="export_csv" class="btn btn-outline btn-outline-solid">
+                        <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                        EXPORT AS CSV
+                    </button>
+                    {{-- @if(auth()->user()->hasRole('county user')) --}}
+                    {{-- <button type="button" class="btn btn-primary me-2 mb-2" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
                         {!! getIcon('plus', 'fs-2', '', 'i') !!}
                         Submit File
-                    </button>
+                    </button> --}}
+                    <a href="{{route("county-provider-payment-report.create")}}" class="btn btn-primary me-2 mb-2">
+                        {!! getIcon('file', 'fs-2', '', 'i') !!}
+                        Submit File
+                    </a>
+                    {{-- @endif --}}
                     <!--end::Add user-->
                 </div>
                 <!--end::Toolbar-->
                 <!--begin::Modal-->
                 <livewire:payment-report.add-payment-report></livewire:payment-report.add-payment-report>
                 <!--end::Modal-->
-            </div>
+            {{-- </div> --}}
 
             <!--end::Card toolbar-->
-            @endif
         </div>
         <!--end::Card header-->
 
@@ -70,11 +95,62 @@
                     $('#kt_modal_add_payment_report').modal('hide');
                     window.LaravelDataTables['payment_report-table'].ajax.reload();
                 });
+                document.getElementById('month_year').addEventListener('change', function() {
+                    var month_year = this.value;
+                    window.LaravelDataTables['payment_report-table'].column('month_year:name').search(month_year).draw();
+                });
             });
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
                 window.LaravelDataTables['payment_report-table'].search(this.value).draw();
             });
+              
         </script>
+        <script>
+         $(document).ready(function () {
+            $("#kt_daterangepicker_1").daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 2022,
+                maxYear: 2026,
+                locale: {
+                    placeholder: 'Pick a day'
+                }
+                }, function(start, end) {
+                    window.LaravelDataTables['payment_report-table'].column('created_at:name').search(start.format('YYYY-MM-DD')).draw();            
+            });
+
+            function clearDateFilter() {
+                window.LaravelDataTables['payment_report-table'].column('created_at:name').search('').draw();
+            }
+
+            $('.daterangepicker .cancelBtn').on('click', function(){
+                clearDateFilter();
+            });
+            $('#county-filter').on('select2:select', function (e) {
+                var value = e.params.data.text;
+                if (value == "County") {
+                    value = "";
+                }
+                window.LaravelDataTables['payment_report-table'].column('counties.county:name').search(value).draw();
+            });
+            $('#user-filter').on('select2:select', function (e) {
+                var value = e.params.data.id;
+                if (value == "0") {
+                    value = '';
+                }
+                window.LaravelDataTables['payment_report-table'].column('users.email:name').search(value).draw();
+            });
+            $("#export_csv").on('click', function(e) {
+                var table = window.LaravelDataTables['payment_report-table'];
+                table.column('comment:name').visible(false);
+
+                table.button('.buttons-csv').trigger();
+
+                table.column('comment:name').visible(true);
+               
+            })
+        })
+    </script>
     @endpush
 
 </x-default-layout>

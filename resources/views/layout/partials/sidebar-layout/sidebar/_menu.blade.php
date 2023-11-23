@@ -165,7 +165,7 @@
 				<!--begin:Menu link-->
 				<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
 					<span class="menu-icon">{!! getIcon('code', 'fs-2') !!}</span>
-					<span class="menu-title">MRAC/ARAC Manager</span>
+					<span class="menu-title">Couny Provider Payment MRAC/ARAC</span>
 				</a>
 				<!--end:Menu link-->
 			</div>
