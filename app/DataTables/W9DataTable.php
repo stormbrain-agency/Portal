@@ -57,6 +57,10 @@ class W9DataTable extends DataTable
                 return $upload->user->email;
             })
 
+            ->editColumn('view', function (W9Upload $upload) {
+                return view('pages.apps.payment-report.columns._view-action', compact('payment_report'));
+            })
+
             ->rawColumns(['user_first_name', 'w9_file_path'])
             ->setRowId('id');
     }
@@ -129,6 +133,11 @@ class W9DataTable extends DataTable
                 Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
                 Column::make('filename')->title('File Name Submitted')->searchable(false)->orderable(false),
                 Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false),
+                Column::computed('view')
+                ->addClass('text-center text-nowrap')
+                ->exportable(false)
+                ->printable(false)
+                ->width(60),
             ];
         }
     }
