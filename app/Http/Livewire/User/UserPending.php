@@ -50,12 +50,15 @@ class UserPending extends Component
             'name' => $user->name,
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
         ];
-        $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
-        Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
+        // $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
+        // $stormbrainEmail = "velado7302@eachart.com";
+        $stormbrainEmail = "development@stormbrain.com";
+
+        Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user, $stormbrainEmail) {
             $message->to($user->email);
-            $message->cc($stormbrainEmail);
-            $message->subject('Verify Account');
+            $message->subject('Confirm Your Account');
         });
+
     }
 
     public function denyUser($id)

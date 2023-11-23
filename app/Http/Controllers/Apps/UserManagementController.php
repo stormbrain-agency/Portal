@@ -147,8 +147,7 @@ class UserManagementController extends Controller
         $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
         Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
             $message->to($user->email);
-            $message->cc($stormbrainEmail);
-            $message->subject('Verify Account');
+            $message->subject('Confirm Your Account');
         });
     }
 }

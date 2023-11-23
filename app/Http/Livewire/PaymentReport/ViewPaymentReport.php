@@ -74,16 +74,13 @@ class ViewPaymentReport extends Component
                     $file = storage_path('app/uploads/payment_reports/' . $filename);
 
                     if (file_exists($file)) {
-                        // $downloadUrls[] = $file;
                         $downloadUrls [] = route('county-provider-payment-report.download', ['filename' => $filename]);
-                        // $downloadUrls[] = route('county-provider-payment-report.download', ['filename' => $filename]);
-                        // $downloadUrls[] = '/county-provider-payment-report/download/' . $payment_report_file->id;
                     }
                 }
 
                 if (!empty($downloadUrls)) {
                     $this->emit('downloadAllFiles', $downloadUrls);
-                    // $this->emiEt('success', __('Payment report submitted successfully.'));
+        
                 }
             } else {
                 session()->flash('error', 'No files to download.');

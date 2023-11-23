@@ -9,6 +9,9 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Http\Response;
+
 
 class PaymentReportDataTable extends DataTable
 {
@@ -57,7 +60,7 @@ class PaymentReportDataTable extends DataTable
     {
         $query = $model->newQuery();
         $query->join('users', 'payment_report.user_id', '=', 'users.id')
-              ->join('counties', 'payment_report.county_fips', '=', 'counties.county_fips') 
+              ->join('counties', 'payment_report.county_fips', '=', 'counties.county_fips')
               ->where('users.status', 1)
               ->select('payment_report.*', 'counties.county_full', 'users.email'); 
     
@@ -98,19 +101,73 @@ class PaymentReportDataTable extends DataTable
             ->orderBy(1)
             ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/payment-report/columns/_draw-scripts.js')) . "}")
             ->buttons([
-            [
-                'extend' => 'csv',
-                'text' => 'Export CSV',
-                'filename' => 'County Provider Payment Reports',
-                'exportOptions' => [
-                    'modifier' => [
-                        'selected' => null,
-                        'columns' => ':not(:first-child)', 
+                [
+                    'extend' => 'csv',
+                    'text' => 'Export CSV',
+                    // 'action' => 'function(e, dt, button, config) {
+                    //     window.location = "'.route('county-provider-payment-report.csv').'";
+                    // }',
+                    'filename' => 'County Provider Payment Reports',
+                    'exportOptions' => [
+                        'columns' => ':visible:not(:nth-child(8))',
+                        'modifier' => [
+                            'page' => 'all',
+                        ],
                     ],
-                ],
-            ]
-        ]);
+
+                ]
+                ]);
     }
+
+
+public function csv()
+{
+    $paymentReport = new PaymentReport; // Create an instance of PaymentReport
+    $dataTable = DataTables::of($this->query($paymentReport))
+        ->setRowId('id')
+        ->addColumn('user_first_name', function (PaymentReport $payment_report) {
+            return $payment_report->user->first_name;
+        })
+        ->addColumn('created_at', function (PaymentReport $payment_report) {
+            return $payment_report->created_at->toDateString();
+        })
+        ->addColumn('county_name', function (PaymentReport $payment_report) {
+            return $payment_report->county->county;
+        })
+        ->addColumn('comment', function (PaymentReport $payment_report) {
+            return $payment_report->comments;
+        })
+        // Add other necessary columns
+        ->rawColumns(['user_first_name', 'document_path'])
+        ->make(true);
+
+    $data = $dataTable->getData(true);
+
+    $csvFileName = 'payment_reports_' . date('YmdHis') . '.csv';
+
+    $csvContent = fopen('php://temp', 'w');
+
+    // Output CSV header
+    fputcsv($csvContent, array_keys($data['data'][0]));
+
+    // Output CSV rows
+    foreach ($data['data'] as $row) {
+        fputcsv($csvContent, $row);
+    }
+
+    rewind($csvContent);
+
+    $csvContent = stream_get_contents($csvContent);
+
+    return response($csvContent)
+        ->header('Content-type', 'text/csv')
+        ->header('Content-Disposition', "attachment; filename=$csvFileName");
+}
+
+
+
+
+
 
     /**
      * Get the dataTable columns definition.
@@ -122,10 +179,10 @@ class PaymentReportDataTable extends DataTable
             Column::make('id')->title('ID'),
             Column::make('created_at')->title('Date'),
             Column::make('updated_at')->title('Time'),
-            Column::make('user')->title('User')->name('users.first_name')->orderable(true),
             Column::make('county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
+            Column::make('user')->title('User')->name('users.first_name')->orderable(true),
             Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
-            Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->exportable(false),
+            Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->exportable(false)->width(200),
             Column::computed('view')
                 ->addClass('text-center text-nowrap')
                 ->exportable(false)

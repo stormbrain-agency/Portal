@@ -40,7 +40,6 @@
                                     <a href="{{ route('user-management.users.show', $user_id) }}" class="text-primary-800 text-hover-primary mb-1">
                                         {{ $user_name}}
                                     </a>
-                                    {{-- <span>{{ $user_email }}</span> --}}
                                 @endif</span></label>
                         </div>
                         <!--end::Input group-->
@@ -49,29 +48,29 @@
                         </div>
 
                         <div class="fv-row mb-7">
-                            <label class="fw-semibold mb-2">
-                                <div class="row">
-                                    <div class="col-8">
+                            <label class="fw-semibold mb-2 w-100">
+                                <div class="d-flex justify-content-between">
+                                    <div>
                                         <b>File(s) :</b>
+
                                     </div>
-                                    <button type="button" id="downloadBtn" class="btn btn-primary bnt-active-light-primary btn-sm">Download All</button>
-                                    {{-- @if (isset($payment_id))
-                                    <div class="col-4">
-                                        <a href="{{ route('county-provider-payment-report.downloadAllFiles', ['payment_id' => $payment_id]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download All</a>
+                                    <div>
+
+                                        <button type="button" id="downloadBtn" class="btn btn-primary bnt-active-light-primary btn-sm">Download All</button>
                                     </div>
-                                    @endif --}}
+                                    
                                 </div>
                             </label>
                             <div class="bg-light rounded p-2 mb-2 pt-4">
                                 @if ($payment_report_files && count($payment_report_files) > 0)
                                     @foreach ($payment_report_files as $file)
                                     <div class="row p-2">
-                                        <div class="col-9">
-                                            <p>{{$file->file_path}}</p>
-                                        </div>
-                                        <div class="col-3">
-                                            <a href="{{ route('county-provider-payment-report.download', ['filename' => $file->file_path]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
-                                        </div>
+                                        {{-- <div class="col-9"> --}}
+                                            <p class="fs-6">{{$file->file_path}}</p>
+                                        {{-- </div> --}}
+                                        {{-- <div class="col-3">
+                                            <a href="{{ route('county-provider-payment-report.download', ['filename' => $file->file_path,'payment_id' => $payment_id]) }}" class="btn btn-primary bnt-active-light-primary btn-sm ">Download</a>
+                                        </div> --}}
                                     </div>
                                     @endforeach
                                 @endif
@@ -129,7 +128,6 @@
     document.addEventListener('livewire:load', function () {
         document.getElementById("downloadBtn").addEventListener("click", function () {
             Livewire.emit("triggerDownloadAllFiles");
-            console.log("Download");
         });
         Livewire.on('downloadAllFiles', function (downloadUrls) {
             downloadFilesSequentially(downloadUrls);
@@ -160,18 +158,5 @@
             document.body.removeChild(link);
         }
     });
-    // document.addEventListener('livewire:load', function () {
-    //     console.log("loaded");
-    //     Livewire.on('downloadAllFiles', function (downloadUrls) {
-    //         downloadUrls.forEach(function(url) {
-    //             var link = document.createElement('a');
-    //             link.href = url;
-    //             link.download = '';
-    //             document.body.appendChild(link);
-    //             link.click();
-    //             document.body.removeChild(link);
-    //         });
-    //     });
-    // });
 </script>
 @endpush

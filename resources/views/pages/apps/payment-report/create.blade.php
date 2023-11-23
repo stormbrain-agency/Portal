@@ -1,12 +1,58 @@
 <x-default-layout>
+<style>
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #ffffff;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1px 0;
+  color: #ffffff;
+  background: #002559;
+  font-size: 14px;
+  text-align: center;
+}
+
+.input-comment{
+    display: flex;
+    max-width: 1091px;
+    width: -webkit-fill-available;
+    height: 100px;
+    padding: 15px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 6px;
+    border: 1px solid #596D87;
+}
+.upload-text{
+    color: #192D50;
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: 16px;
+}
+</style>
     {{-- @section('title')
     Monthly Payment Report Submission
     @endsection --}}
-    {{-- @if(session('success'))
-       <div class="alert alert-success">
-           {{ session('success') }}
-       </div>
-   @endif --}}
     <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
@@ -19,7 +65,19 @@
             </div>
         </div>
         <!--end::Card header-->
-
+        @if(session('success'))
+        <div class="card-body py-4 d-flex justify-content-center align-content-center">
+            <div class="success-upload d-flex flex-column justify-content-center align-items-center align-content-center h-100" style="height: 70vh !important;">
+                <i class="ki-duotone ki-questionnaire-tablet fs-5x text-primary">
+                    <span class="path1"></span>
+                    <span class="path2"></span>
+                </i>
+                <p class="fw-semibold fs-2">Nice work!</p>
+                <p class="fw-medium text-success fs-4"> {{ session('success') }}</p>
+                <a href="{{ route('county-provider-payment-report.index') }}" class="btn btn-outline rounded-3 btn-outline-solid btn-outline-dark-subtle text-body-emphasis btn-active-light-dark">VIEW SUBMISSION HISTORY</a>
+            </div>
+        </div>
+        @else
         <!--begin::Card body-->
         <div class="card-body py-4">
             <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our FAQs or submit a request via our contact us form.</i> </span>
@@ -33,7 +91,6 @@
 
             <form action="{{ route('county-provider-payment-report.store') }}" method="POST" id="myform" class="form" enctype="multipart/form-data">
                 @csrf
-                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <!--begin::Scroll-->
                 <div class="d-flex flex-column">
                     <!--begin::Input group-->
@@ -77,7 +134,7 @@
                                 <!--begin::Info-->
                                 <div class="ms-4">
                                     <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload ZIP File of provider Payment Report Submission (files).</h3>
-                                    <p class="fs-7 fw-semibold text-gray-500">Drag & Drop or choose files from computer</p>
+                                    <p class="fs-7 fw-semibold text-gray-500 drop-zone__prompt">Drag & Drop or choose files from computer</p>
                                     <p class="fs-7 fw-semibold text-gray-500 font-italic">
                                         <i>
                                             This portal site is not a storage system, but rather a secure site for transferring documents.
@@ -86,13 +143,13 @@
                                 </div>
                                 <!--end::Info-->
                             </div>
-                            <input type="file" name="payment_report_files" class="drop-zone__input form-control-file" id="payment_report_file">
+                            <input type="file" multiple name="payment_report_files[]" class="drop-zone__input form-control-file" id="payment_report_file">
 
                         </div>
                         <!--end::Dropzone-->
                        
-                        @if($errors->has('payment_report_file'))
-                            <span class="text-danger">{{ $errors->first('payment_report_file') }}</span>
+                        @if($errors->has('payment_report_files'))
+                            <span class="text-danger">{{ $errors->first('payment_report_files') }}</span>
                         @endif
 
                     </div>
@@ -121,23 +178,21 @@
             </form>
         </div>
         <!--end::Card body-->
+        @endif
     </div>
     @push('scripts')
 
 <!-- Add this script after including the Dropzone.js library -->
 <script>
     document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
-  const dropZoneElement = inputElement.closest(".drop-zone");
+  const dropZoneElement = inputElement.closest(".dropzone");
 
   dropZoneElement.addEventListener("click", (e) => {
     inputElement.click();
   });
 
   inputElement.addEventListener("change", (e) => {
-    if (inputElement.files.length) {
-      console.log(inputElement.files.length);
       updateThumbnail(dropZoneElement, inputElement.files);
-    }
   });
 
   dropZoneElement.addEventListener("dragover", (e) => {
@@ -155,9 +210,7 @@
     e.preventDefault();
 
     if (e.dataTransfer.files.length) {
-      
       inputElement.files = e.dataTransfer.files;
-      console.log(inputElement.files.length);
       updateThumbnail(dropZoneElement, e.dataTransfer.files);
     }
 
@@ -171,34 +224,36 @@
  * @param {HTMLElement} dropZoneElement
  * @param {File} file
  */
-function updateThumbnail(dropZoneElement, file) {
-  let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+function updateThumbnail(dropZoneElement, files) {
+    let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+    let promptElement = dropZoneElement.querySelector(".drop-zone__prompt");
+    if (thumbnailElement) {
+        if (promptElement) {
+            if (files.length > 0) {
+                promptElement.style.display = 'none';
+                thumbnailElement.style.display = 'block';
+            } else {
+                promptElement.style.display = 'block';
+                thumbnailElement.style.display = 'none';
+            }
+        }
+    }
 
-  // First time - remove the prompt
-  if (dropZoneElement.querySelector(".drop-zone__prompt")) {
-    dropZoneElement.querySelector(".drop-zone__prompt").remove();
-  }
+    const fileListElement = document.createElement('ul');
+    fileListElement.classList.add('drop-zone__file-list');
+    if (!thumbnailElement) {
+        thumbnailElement = document.createElement('div');
+        thumbnailElement.classList.add('drop-zone__thumb', 'dz-message', 'needsclick', 'text-center', 'justify-content-center', 'w-50', 'mx-auto');
+        dropZoneElement.appendChild(thumbnailElement);
+    }
 
-  // First time - there is no thumbnail element, so lets create it
-  if (!thumbnailElement) {
-    thumbnailElement = document.createElement("div");
-    thumbnailElement.classList.add("drop-zone__thumb");
-    dropZoneElement.appendChild(thumbnailElement);
-  }
-
-  thumbnailElement.dataset.label = inputElement.files.length;
-
-  // Show thumbnail for image files
-//   if (file.type.startsWith("image/")) {
-//     const reader = new FileReader();
-
-//     reader.readAsDataURL(file);
-//     reader.onload = () => {
-//       thumbnailElement.style.backgroundImage = `url('${reader.result}')`;
-//     };
-//   } else {
-    thumbnailElement.style.backgroundImage = null;
-  // }
+    thumbnailElement.innerHTML = '';
+    for (const file of files) {
+        const listItemElement = document.createElement('li');
+        listItemElement.textContent = file.name;
+        fileListElement.appendChild(listItemElement);
+    }
+    thumbnailElement.appendChild(fileListElement);
 }
 
 </script>

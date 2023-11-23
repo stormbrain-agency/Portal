@@ -36,44 +36,46 @@ class PaymentReportController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'month_year' => 'required',
-            'payment_report_file' => 'required',
+   public function store(Request $request)
+{
+    // dd($request->all());
+    $request->validate([
+        'month_year' => 'required',
+        'payment_report_files.*' => 'required',
+        'comment' => 'nullable|max:150',
+    ]);
 
-        ]);
+    $user = Auth::user();
+    $countyFips = $user ? ($user->county_designation ?? '') : '';
 
-        // dd($request->payment_report_file);
-        $user = Auth::user();
-        $countyFips = "";
-        if ($user) {
-            if (isset($user->county_designation)) {
-                $countyFips = $user->county_designation;
-            }
-        }
-        $paymentReport = PaymentReport::create([
-            'month_year' => $request->month_year,
-            'county_fips' => $countyFips,
-            'user_id' => $user->id,
-            'comments' => $request->comment,
-        ]);
-        foreach ($request->payment_report_file as $uploadedFile) {
+    $paymentReport = PaymentReport::create([
+        'month_year' => $request->month_year,
+        'county_fips' => $countyFips,
+        'user_id' => $user->id,
+        'comments' => $request->comment,
+    ]);
+
+    foreach ($request->file('payment_report_files') as $uploadedFile) {
+        if ($uploadedFile->isValid()) {
             $extension = $uploadedFile->getClientOriginalExtension();
-            $currentDateTime = Carbon::now()->format('Ymd_His');
+            $currentDateTime = date('Ymd_His');
             $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
+            
             $path_name = $uploadedFile->storeAs('uploads/payment_reports', $uniqueFileName);
 
             PaymentReportFiles::create([
                 'payment_report_id' => $paymentReport->id,
                 'file_path' => $uniqueFileName,
             ]);
+        } else {
+            // Handle file upload error
+            return redirect('/county-provider-payment-report/create')->with('error', 'File upload failed.');
         }
-
-
-        return view("pages.apps.payment-report.create");
-
     }
+
+    return redirect('/county-provider-payment-report/create')->with('success', 'Files uploaded successfully.');
+}
+
 
     /**
      * Display the specified resource.
@@ -109,7 +111,21 @@ class PaymentReportController extends Controller
 
     public function downloadFile($filename)
     {
-      
+        $file = storage_path('app/uploads/payment_reports/'. $filename);
+        if (file_exists($file)) {
+            return response()->download($file);
+        } else {
+            return redirect('/county-provider-payment-report')->with('error', 'File not found.');
+        }
+    }
+
+     public function downloadFile2($filename,$payment_id)
+    {
+        $user_id = Auth::id();
+        PaymentReportDownloadHistory::create([
+            'payment_report_id'=>$payment_id,
+            'user_id'=>$user_id
+        ]);
         $file = storage_path('app/uploads/payment_reports/'. $filename);
         if (file_exists($file)) {
             return response()->download($file);
@@ -138,5 +154,9 @@ class PaymentReportController extends Controller
         }else {
             return redirect('/county-provider-payment-report')->with('error', 'File not found.');
         }
+    }
+    public function csv(PaymentReportDataTable $dataTable)
+    {
+        return $dataTable->csv();
     }
 }

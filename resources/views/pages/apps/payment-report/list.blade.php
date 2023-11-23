@@ -1,4 +1,8 @@
 <x-default-layout>
+<!-- Add these lines to include DataTables buttons extension -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 
     @section('title')
         County Provider Payment Resports
@@ -58,7 +62,7 @@
                         {!! getIcon('plus', 'fs-2', '', 'i') !!}
                         Submit File
                     </button> --}}
-                    <a href="{{route("county-provider-payment-report.create")}}" class="btn btn-primary me-2 mb-2">
+                    <a href="{{route("county-provider-payment-report.create")}}" class="btn btn-primary">
                         {!! getIcon('file', 'fs-2', '', 'i') !!}
                         Submit File
                     </a>
@@ -92,7 +96,6 @@
         <script>
             document.addEventListener('livewire:load', function () {
                 Livewire.on('success', function () {
-                    $('#kt_modal_add_payment_report').modal('hide');
                     window.LaravelDataTables['payment_report-table'].ajax.reload();
                 });
                 document.getElementById('month_year').addEventListener('change', function() {
@@ -128,7 +131,7 @@
             });
             $('#county-filter').on('select2:select', function (e) {
                 var value = e.params.data.text;
-                if (value == "County") {
+                if (value == "All County") {
                     value = "";
                 }
                 window.LaravelDataTables['payment_report-table'].column('counties.county:name').search(value).draw();
@@ -142,12 +145,7 @@
             });
             $("#export_csv").on('click', function(e) {
                 var table = window.LaravelDataTables['payment_report-table'];
-                table.column('comment:name').visible(false);
-
                 table.button('.buttons-csv').trigger();
-
-                table.column('comment:name').visible(true);
-               
             })
         })
     </script>
