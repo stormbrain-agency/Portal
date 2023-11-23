@@ -41,7 +41,7 @@ class PaymentReportController extends Controller
     // dd($request->all());
     $request->validate([
         'month_year' => 'required',
-        'payment_report_files.*' => 'required',
+        'payment_report_files' => 'required',
         'comment' => 'nullable|max:150',
     ]);
 

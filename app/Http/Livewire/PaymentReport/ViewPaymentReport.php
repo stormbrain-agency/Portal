@@ -5,6 +5,7 @@ namespace App\Http\Livewire\PaymentReport;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\PaymentReport;
+use App\Models\User;
 use App\Models\PaymentReportFiles;
 use App\Models\PaymentReportDownloadHistory;
 use Livewire\WithFileUploads;
@@ -19,6 +20,7 @@ class ViewPaymentReport extends Component
     public $month_year;
     public $user_id;
     public $user_name;
+    public $user_download_role;
     public $user_email;
     public $payment_report_files = [];
     public $download_history = [];
@@ -48,7 +50,7 @@ class ViewPaymentReport extends Component
             $this->user_email = $payment_report->user->email;
             $this->county_full = $payment_report->county->county;
             $this->created_at = $payment_report->created_at;
-
+    
             $this->payment_report_files = PaymentReportFiles::where("payment_report_id", $id)->get();
             $this->download_history = PaymentReportDownloadHistory::where("payment_report_id", $id)->get();
         }
@@ -59,14 +61,14 @@ class ViewPaymentReport extends Component
         $user_id = Auth::id();
 
         if ($user_id) {
-            PaymentReportDownloadHistory::create([
-                'payment_report_id' => $this->payment_id,
-                'user_id' => $user_id,
-            ]);
-
+            
             $payment_report_files = PaymentReportFiles::where("payment_report_id", $this->payment_id)->get();
-
+            
             if ($payment_report_files->isNotEmpty()) {
+                PaymentReportDownloadHistory::create([
+                    'payment_report_id' => $this->payment_id,
+                    'user_id' => $user_id,
+                ]);
                 $downloadUrls = [];
 
                 foreach ($payment_report_files as $payment_report_file) {
@@ -83,10 +85,12 @@ class ViewPaymentReport extends Component
         
                 }
             } else {
-                session()->flash('error', 'No files to download.');
+                $this->emit('error', __('No files to download.'));
+
             }
         } else {
-            session()->flash('error', 'User not logged in.');
+            $this->emit('error', __('User not logged in.'));
+
         }
     }
 

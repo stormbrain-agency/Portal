@@ -34,10 +34,12 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 20px">
                 <!--begin::Toolbar-->
-                <div class="d-flex justify-content-center row" style="width: 150px">
+                @if(!auth()->user()->hasRole('county user'))
+                <div style="width: 150px">
                     <input class="form-control form-control-solid" placeholder="Pick date rage" id="kt_daterangepicker_1"/>
                 </div>
-                <div class="d-flex justify-content-center row" style="width: 150px">
+                @endif
+                <div style="width: 150px">
                     <select id="month_year" class="form-select form-select-solid text-center">
                         <option value="">Month/Year</option>
                             @for ($year = 2024; $year <= 2025; $year++)
@@ -49,24 +51,27 @@
                             @endfor
                     </select>
                 </div>
+                @if(!auth()->user()->hasRole('county user'))
                 <livewire:filters.user-list/>
                 <livewire:filters.county-list/>
+                @endif
                 {{-- <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base"> --}}
                     <!--begin::Add user-->
                     <button id="export_csv" class="btn btn-outline btn-outline-solid">
                         <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
                         EXPORT AS CSV
                     </button>
-                    {{-- @if(auth()->user()->hasRole('county user')) --}}
+                    @if(auth()->user()->hasRole('county user'))
                     {{-- <button type="button" class="btn btn-primary me-2 mb-2" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
                         {!! getIcon('plus', 'fs-2', '', 'i') !!}
                         Submit File
                     </button> --}}
+                    
                     <a href="{{route("county-provider-payment-report.create")}}" class="btn btn-primary">
                         {!! getIcon('file', 'fs-2', '', 'i') !!}
                         Submit File
                     </a>
-                    {{-- @endif --}}
+                    @endif
                     <!--end::Add user-->
                 </div>
                 <!--end::Toolbar-->

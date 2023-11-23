@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center" style="width: 150px">
+<div style="width: 150px">
     <select id="user-filter" class="form-select form-select-solid" data-control="select2" data-placeholder="Select an option">
         <option value="0">All User</option>
         @if (isset($users_filter) && count($users_filter) > 0)
