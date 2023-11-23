@@ -26,5 +26,3 @@ class PaymentReportDownloadHistory extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
-
-6:43
