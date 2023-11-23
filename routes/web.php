@@ -88,7 +88,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware(['permission:read mrac_arac'])->group(function () {
         Route::prefix('county-mrac-arac')->name("county-mrac-arac.")->group(function () {
-            Route::get('/', [CountyMRAC_ARACController::class,'index'])->name('index');
+            //view
+            Route::get('/', [CountyMRAC_ARACController::class,'wp_upload_index'])->name('index');
+            //upload
+            Route::get('/upload', [CountyMRAC_ARACController::class,'upload'])->name('create');
+            Route::post('/upload', [CountyMRAC_ARACController::class, 'uploadFile']);
+            //download
+            Route::get('/downloadss/{filename}', [CountyMRAC_ARACController::class, 'downloadFile'])->name('w9_download');
         });
     });
 

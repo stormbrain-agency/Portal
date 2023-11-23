@@ -20,7 +20,7 @@ class W9_Upload_Controller extends Controller
     {
         return $dataTable->with([
             'user' => auth()->user(),
-        ])->render('pages.apps.provider-w9.w9provider');
+        ])->render('pages.apps.provider-w9.list');
     }
 
     public function upload()
