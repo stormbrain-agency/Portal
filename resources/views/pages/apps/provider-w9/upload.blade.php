@@ -130,11 +130,14 @@
 
       dropZoneElement.addEventListener("drop", (e) => {
         e.preventDefault();
+        
+        if (e.dataTransfer.files.length > 1) {
+          dropZoneElement.classList.remove("drop-zone--over");
+          return;
+        }
 
         if (e.dataTransfer.files.length) {
-          
           inputElement.files = e.dataTransfer.files;
-          console.log(inputElement.files.length);
           updateThumbnail(dropZoneElement, e.dataTransfer.files);
         }
 
@@ -150,6 +153,17 @@
      */
     function updateThumbnail(dropZoneElement, file) {
       let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+      if (thumbnailElement) {
+        if (promptElement) {
+            if (files.length > 0) {
+                promptElement.style.display = 'none';
+                thumbnailElement.style.display = 'block';
+            } else {
+                promptElement.style.display = 'block';
+                thumbnailElement.style.display = 'none';
+            }
+        }
+    }
 
       // First time - remove the prompt
       if (dropZoneElement.querySelector(".drop-zone__prompt")) {
