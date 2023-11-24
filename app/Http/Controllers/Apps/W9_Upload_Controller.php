@@ -39,7 +39,13 @@ class W9_Upload_Controller extends Controller
                 'w9_id'=>$w9_id,
                 'user_id'=>$user_id
             ]);
-            return response()->download($file);
+
+            $headers = [
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            'Pragma' => 'no-cache',
+            'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
+        ];
+            return response()->download($file, $filename, $headers);
         } else {
             return redirect('/dashboard/w9_upload')->with('error', 'File not found.');
         }
