@@ -22,7 +22,7 @@ class W9DataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->editColumn('id', function (W9Upload $upload) {
-                return $upload->id;
+                return '#'.$upload->id.''; 
             })
 
             ->editColumn('user', function (W9Upload $upload) {
@@ -72,7 +72,7 @@ class W9DataTable extends DataTable
         $query->join('users', 'w9_upload.user_id', '=', 'users.id')
               ->join('counties', 'w9_upload.w9_county_fips', '=', 'counties.county_fips') 
               ->where('users.status', 1)
-              ->select('w9_upload.*', 'counties.*','w9_upload.id'); 
+              ->select('w9_upload.*', 'counties.*','w9_upload.id','w9_upload.created_at'); 
         
         if (auth()->user()->hasRole('county user')) {
             $query->where('users.id', auth()->user()->id);
@@ -97,7 +97,7 @@ class W9DataTable extends DataTable
                     'text' => 'Export CSV',
                     'filename' => 'County Provide W-9',
                     'exportOptions' => [
-                        'columns' => ':not(:last-child)',
+                        'columns' => ':visible:not(:last-child)',
                         'page' => 'all',
                     ],
                 ]
@@ -112,14 +112,14 @@ class W9DataTable extends DataTable
         //view layout
         if (auth()->user()->hasRole('view only')) {
             return [
-                // Column::make('id')->title('ID'),
-                Column::make('created_at')->title('Date of submissions'),
-                Column::make('updated_at')->title('Time of submissions')->name('w9_upload.created_at')->orderable(true),
+                Column::make('id')->name("w9_upload.id")->title('ID'),
+                Column::make('created_at')->name("w9_upload.created_at")->title('Date'),
+                Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true),
                 Column::make('w9_county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
                 Column::make('user')->title('User of submission')->name('users.first_name')->orderable(true),
                 Column::make('email')->name("users.email")->visible(false),
-                Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
-                Column::make('filename')->title('File Name Submitted')->searchable(false)->orderable(false),
+                Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->width(200),
+                Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false)->exportable(false),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
                     ->exportable(false)
@@ -128,15 +128,14 @@ class W9DataTable extends DataTable
             ];
         } else {
             return [
-                // Column::make('id')->title('ID'),
-                Column::make('created_at')->title('Date of submissions'),
-                Column::make('updated_at')->title('Time of submissions')->name('w9_upload.created_at')->orderable(true),
+                Column::make('id')->name("w9_upload.id")->title('ID'),
+                Column::make('created_at')->name("w9_upload.created_at")->title('Date'),
+                Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true),
                 Column::make('w9_county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
                 Column::make('user')->title('User of submission')->name('users.first_name')->orderable(true),
                 Column::make('email')->name("users.email")->visible(false),
-                Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
-                Column::make('filename')->title('File Name Submitted')->searchable(false)->orderable(false),
-                Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false),
+                Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->width(200),
+                Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false)->exportable(false),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
                     ->exportable(false)

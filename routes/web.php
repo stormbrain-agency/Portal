@@ -84,8 +84,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             //view
             Route::get('/', [W9_Upload_Controller::class,'wp_upload_index'])->name('index');
             //upload
-            Route::get('/upload', [W9_Upload_Controller::class,'upload'])->name('create');
-            Route::post('/upload', [W9_Upload_Controller::class, 'uploadFile']);
+            Route::middleware(['permission:create provider w9'])->group(function () {
+                Route::get('/upload', [W9_Upload_Controller::class,'upload'])->name('create');
+                Route::post('/upload', [W9_Upload_Controller::class, 'uploadFile']);
+            });
             //download
             Route::get('/downloadss/{w9_id}/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
         });
