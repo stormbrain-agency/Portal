@@ -35,10 +35,12 @@ Route::get('/downloads', [W9_Historydownload_Controller::class, 'showDownloads']
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [UserManagementController::class, 'profile'])->name('profile');
+    Route::get('/profile', [UserManagementController::class, 'profileView'])->name('profileView');
+    Route::get('/profile/details', [UserManagementController::class, 'profileDetails'])->name('profileDetails');
     // Route::get('/', [DashboardController::class, 'index']);
     Route::get('/get-counties/{stateId}', 'LocationController@getCountiesByState');
 
-    Route::get('/profile', [UserManagementController::class, 'profile'])->name('profile');
+    // Route::get('/profile', [UserManagementController::class, 'profile'])->name('profile');
     Route::get('/state', [LocationController::class, 'getStates'])->name('state');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

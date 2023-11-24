@@ -40,181 +40,181 @@
 				<!--end:Menu content-->
 			</div>
 			<!--end:Menu item--> --}}
-			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
-				<!--begin:Menu link-->
-				<span class="menu-link">
-					<span class="menu-icon">{!! getIcon('file', 'fs-1') !!}</span>
-					<span class="menu-title">Submit Provider W-9</span>
-					<span class="menu-arrow"></span>
-				</span>
-				<!--end:Menu link-->
-				<!--begin:Menu sub-->
-				<div class="menu-sub menu-sub-accordion">
-					<!--begin:Menu item-->
-					<div class="menu-item">
-						<!--begin:Menu link-->
-						<a class="menu-link {{ request()->routeIs('w9_upload.*') ? 'active' : '' }}" href="{{ route('w9_upload.index') }}">
-							<span class="menu-title">Submit Provider W-9</span>
-						</a>
-						<!--end:Menu link-->
-					</div>
-					<div class="menu-item">
-						<!--begin:Menu link-->
-						<a class="menu-link {{ request()->routeIs('w9_downloadhistory.*') ? 'active' : '' }}" href="{{ route('w9_downloadhistory.index') }}">
-							<span class="menu-title">Submission History</span>
-						</a>
-						<!--end:Menu link-->
-					</div>
-					<!--end:Menu item-->
-				</div>
-				<!--end:Menu sub-->
-			</div>
+
+			{{-- Provider W-9 --}}
 			@if(!auth()->user()->hasRole('county user') && count(auth()->user()->roles) != 0)
-			<!--begin:Menu item-->
-			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
-				<!--begin:Menu link-->
-				<span class="menu-link">
-					<span class="menu-icon">{!! getIcon('abstract-28', 'fs-2') !!}</span>
-					<span class="menu-title">User Management</span>
-					<span class="menu-arrow"></span>
-				</span>
-				<!--end:Menu link-->
-				<!--begin:Menu sub-->
-				<div class="menu-sub menu-sub-accordion">
-					<!--begin:Menu item-->
-					<div class="menu-item">
-						<!--begin:Menu link-->
-						<a class="menu-link {{ request()->routeIs('user-management.users.*') ? 'active' : '' }}" href="{{ route('user-management.users.index') }}">
-							<span class="menu-title">Users</span>
-						</a>
-						<!--end:Menu link-->
-					</div>
-					<!--end:Menu item-->
-					@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
-					<!--begin:Menu item-->
-					<div class="menu-item">
-						<!--begin:Menu link-->
-						<a class="menu-link {{ request()->routeIs('user-management.users-pending.*') ? 'active' : '' }}" href="{{ route('user-management.users-pending.index') }}">
-							<span class="menu-title">Pending Users</span>
-						</a>
-						<!--end:Menu link-->
-					</div>
-					<!--end:Menu item-->
-					<!--begin:Menu item-->
-					{{-- <div class="menu-item">
-						<!--begin:Menu link-->
-						<a class="menu-link {{ request()->routeIs('user-management.roles.*') ? 'active' : '' }}" href="{{ route('user-management.roles.index') }}">
-							<span class="menu-bullet">
-								<span class="bullet bullet-dot"></span>
-							</span>
-							<span class="menu-title">Roles</span>
-						</a>
-						<!--end:Menu link-->
-					</div>
-					<!--end:Menu item-->
-					<!--begin:Menu item-->
-					<div class="menu-item">
-						<!--begin:Menu link-->
-						<a class="menu-link {{ request()->routeIs('user-management.permissions.*') ? 'active' : '' }}" href="{{ route('user-management.permissions.index') }}">
-							<span class="menu-bullet">
-								<span class="bullet bullet-dot"></span>
-							</span>
-							<span class="menu-title">Permissions</span>
-						</a>
-						<!--end:Menu link-->
-					</div> --}}
-					<!--end:Menu item-->
-					@endif
+				<div class="menu-item">
+					<!--begin:Menu link-->
+					<a class="menu-link {{ request()->routeIs('w9_upload.index') ? 'active' : '' }}" href="{{ route('w9_upload.index') }}">
+						<span class="menu-icon">{!! getIcon('file', 'fs-1') !!}</span>
+						<span class="menu-title">County Provider W-9</span>
+					</a>
+					<!--end:Menu link-->
 				</div>
-				<!--end:Menu sub-->
-			</div>
-			<!--end:Menu item-->
+			@else
+				<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
+					<!--begin:Menu link-->
+					<span class="menu-link ">
+						<span class="menu-icon">{!! getIcon('file', 'fs-1') !!}</span>
+						<span class="menu-title">Submit Provider W-9</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<!--end:Menu link-->
+					<!--begin:Menu sub-->
+					<div class="menu-sub menu-sub-accordion">
+						<!--begin:Menu item-->
+						<div class="menu-item">
+							<!--begin:Menu link-->
+							<a class="menu-link {{ request()->routeIs('w9_upload.create') ? 'active' : '' }}" href="{{ route('w9_upload.create') }}">
+								<span class="menu-title">Submit Provider W-9</span>
+							</a>
+							<!--end:Menu link-->
+						</div>
+						<div class="menu-item">
+							<!--begin:Menu link-->
+							<a class="menu-link {{ request()->routeIs('w9_upload.index') ? 'active' : '' }}" href="{{ route('w9_upload.index') }}">
+								<span class="menu-title">Submission History</span>
+							</a>
+							<!--end:Menu link-->
+						</div>
+						
+						<!--end:Menu item-->
+					</div>
+					<!--end:Menu sub-->
+				</div>
 			@endif
-			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
-				<!--begin:Menu link-->
-				<span class="menu-link">
-					<span class="menu-icon">{!! getIcon('abstract-28', 'fs-2') !!}</span>
-					<span class="menu-title">Submit Provider Payment Report</span>
-					<span class="menu-arrow"></span>
-				</span>
-				<!--end:Menu link-->
-				<!--begin:Menu sub-->
-				<div class="menu-sub menu-sub-accordion">
-					<!--begin:Menu item-->
-					<div class="menu-item">
-						<!--begin:Menu link-->
-						<a class="menu-link {{ request()->routeIs('county-provider-payment-report.*') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
-							<span class="menu-title">Submit Report</span>
-						</a>
-						<!--end:Menu link-->
-					</div>
-					<!--end:Menu item-->
-					<div class="menu-item">
-						<!--begin:Menu link-->
-						<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
-							<span class="menu-title">Submision History</span>
-						</a>
-						<!--end:Menu link-->
-					</div>
-					<!--end:Menu item-->
+			{{-- Payment Report --}}
+			@if(!auth()->user()->hasRole('county user') && count(auth()->user()->roles) != 0)
+				<div class="menu-item">
+					<!--begin:Menu link-->
+					<a class="menu-link {{ request()->routeIs('county-provider-payment-report.index') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
+						<span class="menu-icon">{!! getIcon('dollar', 'fs-1') !!}</span>
+						<span class="menu-title">County Provider Payment Report</span>
+					</a>
+					<!--end:Menu link-->
 				</div>
-				<!--end:Menu sub-->
-			</div>
-			<!--begin:Menu item-->
+			@else
+				<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
+					<!--begin:Menu link-->
+					<span class="menu-link }">
+						<span class="menu-icon">{!! getIcon('dollar', 'fs-1') !!}</span>
+						<span class="menu-title ">Submit Provider Payment Report</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<!--end:Menu link-->
+					<!--begin:Menu sub-->
+					<div class="menu-sub menu-sub-accordion">
+						<div class="menu-item">
+							<!--begin:Menu link-->
+							<a class="menu-link {{ request()->routeIs('county-provider-payment-report.create') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.create') }}">
+								<span class="menu-title">Submit Report</span>
+							</a>
+							<!--end:Menu link-->
+						</div>
+						<div class="menu-item">
+							<!--begin:Menu link-->
+							<a class="menu-link {{ request()->routeIs('county-provider-payment-report.index') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
+								<span class="menu-title">Submission History</span>
+							</a>
+							<!--end:Menu link-->
+						</div>
+					</div>
+					<!--end:Menu sub-->
+				</div>
+			@endif
+			<!-- MRAC/ARAC -->
+			@if(!auth()->user()->hasRole('county user') && count(auth()->user()->roles) != 0)
+				<!--begin:Menu item-->
+				<div class="menu-item">
+					<!--begin:Menu link-->
+					<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
+						<span class="menu-icon">{!! getIcon('graph-up', 'fs-1') !!}</span>
+						<span class="menu-title">MRAC/ARAC</span>
+					</a>
+					<!--end:Menu link-->
+				</div>
+				<!--end:Menu item-->
+			@endif
+			
+			<!-- Notifications -->
+			@if(auth()->user()->hasRole('admin'))
+				<div class="menu-item">
+					<a class="menu-link {{ request()->routeIs('notification-management.*') ? 'active' : '' }}" href="{{ route('notification-management.index') }}">
+						<span class="menu-icon">{!! getIcon('notification', 'fs-2') !!}</span>
+						<span class="menu-title">Notifications</span>
+					</a>
+				</div>
+			@endif
+
+			{{-- User Management --}}
+			@if(!auth()->user()->hasRole('county user') && count(auth()->user()->roles) != 0)
+				<!--begin:Menu item-->
+				<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'here show' : '' }}">
+					<!--begin:Menu link-->
+					<span class="menu-link">
+						<span class="menu-icon">{!! getIcon('user', 'fs-2') !!}</span>
+						<span class="menu-title">User Management</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<!--end:Menu link-->
+					<!--begin:Menu sub-->
+					<div class="menu-sub menu-sub-accordion">
+						<!--begin:Menu item-->
+						<div class="menu-item">
+							<!--begin:Menu link-->
+							<a class="menu-link {{ request()->routeIs('user-management.users.*') ? 'active' : '' }}" href="{{ route('user-management.users.index') }}">
+								<span class="menu-title">Users</span>
+							</a>
+							<!--end:Menu link-->
+						</div>
+						<!--end:Menu item-->
+						@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
+						<!--begin:Menu item-->
+						<div class="menu-item">
+							<!--begin:Menu link-->
+							<a class="menu-link {{ request()->routeIs('user-management.users-pending.*') ? 'active' : '' }}" href="{{ route('user-management.users-pending.index') }}">
+								<span class="menu-title">Pending Users</span>
+							</a>
+							<!--end:Menu link-->
+						</div>
+						<!--end:Menu item-->
+						@endif
+					</div>
+					<!--end:Menu sub-->
+				</div>
+				<!--end:Menu item-->
+			@endif
+			{{-- Activity Management --}}
+			@if(auth()->user()->hasRole('admin'))
+				<div class="menu-item">
+					<a class="menu-link {{ request()->routeIs('activity-management.*') ? 'active' : '' }}" href="{{ route('activity-management.index') }}">
+						<span class="menu-icon">{!! getIcon('time', 'fs-2') !!}</span>
+						<span class="menu-title">Activity </span>
+					</a>
+				</div>
+			@endif
+
+			{{-- Help/FAQ --}}
+			@if(auth()->user()->hasRole('county user') && count(auth()->user()->roles) != 0)
+				<div class="menu-item">
+					<!--begin:Menu link-->
+					<a class="menu-link {{ request()->routeIs('help-faq') ? 'active' : '' }}" href="{{ url('/help-faq') }}">
+						<span class="menu-icon">{!! getIcon('chart', 'fs-1') !!}</span>
+						<span class="menu-title">Help/FAQ</span>
+					</a>
+					<!--end:Menu link-->
+				</div>
+			@endif
+
+			{{-- Profile --}}
 			<div class="menu-item">
 				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
-					<span class="menu-icon">{!! getIcon('code', 'fs-2') !!}</span>
-					<span class="menu-title">Couny Provider Payment MRAC/ARAC</span>
-				</a>
-				<!--end:Menu link-->
-			</div>
-			<!--end:Menu item-->
-			<!--begin:Menu item-->
-			<div class="menu-item">
-				<!--begin:Menu link-->
-				<a class="menu-link " href="{{ url('/help-faq') }}">
-					<span class="menu-icon">{!! getIcon('code', 'fs-2') !!}</span>
-					<span class="menu-title">Help/FAQ</span>
-				</a>
-				<!--end:Menu link-->
-			</div>
-			<!--end:Menu item-->
-			<!--begin:Menu item-->
-			<div class="menu-item">
-				<!--begin:Menu link-->
-				<a class="menu-link" href="{{ url('/profile') }}">
-					<span class="menu-icon">{!! getIcon('user', 'fs-2') !!}</span>
+				<a class="menu-link {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ url('/profile') }}">
+					<span class="menu-icon">{!! getIcon('setting-2', 'fs-2') !!}</span>
 					<span class="menu-title">Profile</span>
 				</a>
 				<!--end:Menu link-->
 			</div>
-			<!--end:Menu item-->
-
-			<!-- ADMIN -->
-		@if(auth()->user()->hasRole('admin'))
-			<!--begin:Menu item-->
-			<div class="menu-item">
-				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('notification-management.*') ? 'active' : '' }}" href="{{ route('notification-management.index') }}">
-					<span class="menu-icon">{!! getIcon('code', 'fs-2') !!}</span>
-					<span class="menu-title">Notifications</span>
-				</a>
-				<!--end:Menu link-->
-			</div>
-			<!--end:Menu item-->
-			<!--begin:Menu item-->
-			<div class="menu-item">
-				<!--begin:Menu link-->
-				<a class="menu-link {{ request()->routeIs('activity-management.*') ? 'active' : '' }}" href="{{ route('activity-management.index') }}">
-					<span class="menu-icon">{!! getIcon('code', 'fs-2') !!}</span>
-					<span class="menu-title">Activity Management</span>
-				</a>
-				<!--end:Menu link-->
-			</div>
-			<!--end:Menu item-->
-		@endif
-		
 		</div>
 		<!--end::Menu-->
 	</div>
