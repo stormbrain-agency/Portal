@@ -8,10 +8,6 @@
         County Provider Payment Resports
     @endsection
 
-    @section('breadcrumbs')
-        {{ Breadcrumbs::render('county-provider-payment-report.index') }}
-    @endsection
-
      <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">

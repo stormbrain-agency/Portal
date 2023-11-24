@@ -56,6 +56,12 @@
                     Submit File
                 </a>
                 @endif
+                @if(auth()->user()->hasRole('admin'))
+                    <a href="{{route("county-mrac-arac.template")}}" class="btn btn-primary">
+                        {!! getIcon('file', 'fs-2', '', 'i') !!}
+                        Template
+                    </a>
+                @endif
                 <!--end::Add user-->
             </div>
             <!--end::Toolbar-->

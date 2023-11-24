@@ -65,10 +65,6 @@ class ViewPaymentReport extends Component
             $payment_report_files = PaymentReportFiles::where("payment_report_id", $this->payment_id)->get();
             
             if ($payment_report_files->isNotEmpty()) {
-                PaymentReportDownloadHistory::create([
-                    'payment_report_id' => $this->payment_id,
-                    'user_id' => $user_id,
-                ]);
                 $downloadUrls = [];
 
                 foreach ($payment_report_files as $payment_report_file) {
@@ -77,10 +73,16 @@ class ViewPaymentReport extends Component
 
                     if (file_exists($file)) {
                         $downloadUrls [] = route('county-provider-payment-report.download', ['filename' => $filename]);
+                    }else {
+                        $this->emit('error', __('Could not find ' .$filename. ' file to download.'));
                     }
                 }
 
                 if (!empty($downloadUrls)) {
+                    PaymentReportDownloadHistory::create([
+                        'payment_report_id' => $this->payment_id,
+                        'user_id' => $user_id,
+                    ]);
                     $this->emit('downloadAllFiles', $downloadUrls);
         
                 }

@@ -73,6 +73,8 @@ class ViewMracArac extends Component
 
                     if (file_exists($file)) {
                         $downloadUrls [] = route('county-mrac-arac.download', ['filename' => $filename]);
+                    }else {
+                        $this->emit('error', __('Could not find ' .$filename. ' file to download.'));
                     }
                 }
 

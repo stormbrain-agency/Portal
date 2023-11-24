@@ -43,7 +43,12 @@ class PaymentReportController extends Controller
             'month_year' => 'required',
             'payment_report_files' => 'required',
             'comment' => 'nullable|max:150',
+        ], [
+            'month_year.required' => 'The month and year field is required.',
+            'payment_report_files.required' => 'The payment report file field is required.',
+            'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);
+
 
         $user = Auth::user();
         $countyFips = $user ? ($user->county_designation ?? '') : '';
@@ -85,7 +90,11 @@ class PaymentReportController extends Controller
     {
         $request->validate([
             'payment_report_file' => 'required|file',
+        ], [
+            'payment_report_file.required' => 'Please choose a file.',
+            'payment_report_file.file' => 'The file must be a valid file.',
         ]);
+
 
         $uploadedFile = $request->file('payment_report_file');
 
@@ -152,12 +161,16 @@ class PaymentReportController extends Controller
      public function downloadTemplateFile()
     {
         $latestTemplateFile = TemplateFiles::where('type', 'payment_report')->latest()->first();
-        $filename = $latestTemplateFile->file_path;
-        $file = storage_path('app/uploads/templates/'. $filename);
-        if (file_exists($file)) {
-            return response()->download($file);
-        } else {
-            return redirect()->back()->with('error', 'File not found.');
+        if (isset($latestTemplateFile) && !empty($latestTemplateFile)) {  
+            $filename = $latestTemplateFile->file_path;
+            $file = storage_path('app/uploads/templates/'. $filename);
+            if (file_exists($file)) {
+                return response()->download($file);
+            } else {
+                return redirect()->back()->with('error', 'Payment Resport Template File not found.');
+            }
+        }else {
+                return redirect()->back()->with('error', 'Payment Resport Template File not found.');
         }
     }
 

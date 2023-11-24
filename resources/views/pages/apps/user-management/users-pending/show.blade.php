@@ -3,11 +3,6 @@
     @section('title')
         Users Pending Profile
     @endsection
-
-    @section('breadcrumbs')
-        {{ Breadcrumbs::render('user-management.users.show', $user) }}
-    @endsection
-
     <!--begin::Layout-->
     <div class="d-flex flex-column flex-lg-row">
         <!--begin::Sidebar-->
