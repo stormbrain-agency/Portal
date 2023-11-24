@@ -17,22 +17,11 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                <!--begin::Search-->
-                <div class="d-flex align-items-center position-relative my-1">
-                    {!! getIcon('magnifier', 'fs-3 position-absolute ms-5') !!}
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search user" id="mySearchInput"/>
-                </div>
-                 {{-- @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif --}}
-                <!--end::Search-->
             </div>
             <!--begin::Card title-->
 
             <!--begin::Card toolbar-->
-            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 20px">
+            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
                 <!--begin::Toolbar-->
                 @if(!auth()->user()->hasRole('county user'))
                 <div style="width: 150px">
@@ -62,15 +51,16 @@
                         EXPORT AS CSV
                     </button>
                     @if(auth()->user()->hasRole('county user'))
-                    {{-- <button type="button" class="btn btn-primary me-2 mb-2" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
-                        {!! getIcon('plus', 'fs-2', '', 'i') !!}
-                        Submit File
-                    </button> --}}
-                    
                     <a href="{{route("county-provider-payment-report.create")}}" class="btn btn-primary">
                         {!! getIcon('file', 'fs-2', '', 'i') !!}
                         Submit File
                     </a>
+                    @endif
+                    @if(auth()->user()->hasRole('admin'))
+                        <a href="{{route("county-provider-payment-report.template")}}" class="btn btn-primary">
+                            {!! getIcon('file', 'fs-2', '', 'i') !!}
+                            Template
+                        </a>
                     @endif
                     <!--end::Add user-->
                 </div>

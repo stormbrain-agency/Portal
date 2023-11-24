@@ -1,4 +1,55 @@
 <x-default-layout>
+<style>
+.drop-zone--over {
+  border-style: solid;
+}
+
+.drop-zone__input {
+  display: none;
+}
+
+.drop-zone__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #ffffff;
+  background-size: cover;
+  position: relative;
+}
+
+.drop-zone__thumb::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1px 0;
+  color: #ffffff;
+  background: #002559;
+  font-size: 14px;
+  text-align: center;
+}
+
+.input-comment{
+    display: flex;
+    max-width: 1091px;
+    width: -webkit-fill-available;
+    height: 100px;
+    padding: 15px 12px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 6px;
+    border: 1px solid #596D87;
+}
+.upload-text{
+    color: #192D50;
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: 16px;
+}
+</style>
     {{-- @section('title')
     Monthly Payment Report Submission
     @endsection --}}
@@ -31,7 +82,7 @@
         <div class="card-body py-4">
             <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our FAQs or submit a request via our contact us form.</i> </span>
             <br>
-            <a href="#" class="btn btn-bg-primary me-6 text-light mt-5">
+            <a href="{{ route('county-provider-payment-report.download_template') }}" class="btn btn-bg-primary me-6 text-light mt-5">
                 <i class="ki-duotone ki-arrow-down text-light">
                     <span class="path1"></span>
                     <span class="path2"></span>
@@ -192,7 +243,7 @@ function updateThumbnail(dropZoneElement, files) {
     fileListElement.classList.add('drop-zone__file-list');
     if (!thumbnailElement) {
         thumbnailElement = document.createElement('div');
-        thumbnailElement.classList.add('drop-zone__thumb', 'dz-message', 'needsclick', 'text-center', 'justify-content-center', 'w-50', 'mx-auto');
+        thumbnailElement.classList.add('drop-zone__thumb', 'dz-message', 'needsclick', 'justify-content-center', 'w-50', 'mx-auto');
         dropZoneElement.appendChild(thumbnailElement);
     }
 

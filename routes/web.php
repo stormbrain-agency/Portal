@@ -69,6 +69,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('/create', [PaymentReportController::class,'store'])->name('store');
                 Route::get('/create', [PaymentReportController::class,'create'])->name('create');
             });
+            Route::get('/template', [PaymentReportController::class,'template'])->name('template');
+            Route::post('/template', [PaymentReportController::class,'store_template'])->name('store_template');
+            Route::get('/template/download', [PaymentReportController::class, 'downloadTemplateFile'])->name('download_template');
             Route::get('/downloads/{filename}', [PaymentReportController::class, 'downloadFile'])->name('download');
             Route::get('/downloads/{filename}/{payment_id}', [PaymentReportController::class, 'downloadFile'])->name('download2');
             Route::get('/download-all-files/{payment_id}', [PaymentReportController::class, 'downloadAllFiles'])->name('downloadAllFiles');
@@ -84,7 +87,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/upload', [W9_Upload_Controller::class,'upload'])->name('create');
             Route::post('/upload', [W9_Upload_Controller::class, 'uploadFile']);
             //download
-            Route::get('/downloadss/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
+            Route::get('/downloadss/{w9_id}/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
         });
         Route::prefix('/w9_downloadhistory')->name('w9_downloadhistory.')->group(function () {
             Route::get('/', [W9_Historydownload_Controller::class,'w9_downloadhistory_index'])->name('index');
@@ -100,6 +103,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('/create', [CountyMRAC_ARACController::class,'store'])->name('store');
                 Route::get('/create', [CountyMRAC_ARACController::class,'create'])->name('create');
             });
+            Route::post('/template', [CountyMRAC_ARACController::class,'store_template'])->name('store_template');
+            Route::get('/template', [CountyMRAC_ARACController::class,'template'])->name('template');
             Route::get('/downloads/{filename}', [CountyMRAC_ARACController::class, 'downloadFile'])->name('download');
             Route::get('/downloads/{filename}/{payment_id}', [CountyMRAC_ARACController::class, 'downloadFile2'])->name('download2');
             Route::get('/download-all-files/{payment_id}', [CountyMRAC_ARACController::class, 'downloadAllFiles'])->name('downloadAllFiles');

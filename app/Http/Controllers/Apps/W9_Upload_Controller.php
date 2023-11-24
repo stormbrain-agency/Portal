@@ -7,8 +7,10 @@ use App\DataTables\UsersPendingDataTable;
 use App\DataTables\W9DataTable;
 use App\Http\Controllers\Controller;
 use App\Models\W9Upload;
+use App\Models\W9DownloadHistory;
 use App\Models\County; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 // use League\Csv\Writer;
 // use Illuminate\Support\Facades\Response;
 
@@ -28,10 +30,15 @@ class W9_Upload_Controller extends Controller
         return view("pages.apps.provider-w9.upload");
     }
 
-    public function downloadFile($filename)
+    public function downloadFile($w9_id, $filename)
     {
         $file = storage_path('app/uploads/' . $filename);
         if (file_exists($file)) {
+            $user_id = Auth::id();
+            W9DownloadHistory::create([
+                'w9_id'=>$w9_id,
+                'user_id'=>$user_id
+            ]);
             return response()->download($file);
         } else {
             return redirect('/dashboard/w9_upload')->with('error', 'File not found.');

@@ -1,12 +1,12 @@
-<div class="modal fade" id="kt_modal_view_mrac_arac" tabindex="-1" aria-hidden="true" wire:ignore.self >
+<div class="modal fade" id="kt_modal_view_w9" tabindex="-1" aria-hidden="true" wire:ignore.self >
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">
         <!--begin::Modal content-->
         <div class="modal-content">
             <!--begin::Modal header-->
-            <div class="modal-header" id="kt_modal_view_mrac_arac_header">
+            <div class="modal-header" id="kt_modal_view_w9_header">
                 <!--begin::Modal title-->
-                <h2 class="fw-bold">View County MRAC/ARAC Submission</h2>
+                <h2 class="fw-bold">View Country Provider W-9</h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
@@ -18,14 +18,9 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <form id="kt_modal_view_mrac_arac_form" class="form" action="#" enctype="multipart/form-data">
+                <form id="kt_modal_view_w9_form" class="form" action="#" enctype="multipart/form-data">
                     <!--begin::Scroll-->
-                    <div class="d-flex fs-4 flex-column scroll-y px-1 px-lg-10" id="kt_modal_view_mrac_arac_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_view_mrac_arac_header" data-kt-scroll-wrappers="#kt_modal_view_mrac_arac_scroll" data-kt-scroll-offset="300px">
-                        <!--begin::Input group-->
-                       <div class="fv-row mb-7">
-                            <label class="fw-semibold mb-2"><b>Month/Year :</b>   <span>{{$month_year}}</span></label>
-                        </div>
-                        <!--end::Input group-->
+                    <div class="d-flex fs-4 flex-column scroll-y px-1 px-lg-10" id="kt_modal_view_w9_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_view_w9_header" data-kt-scroll-wrappers="#kt_modal_view_w9_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <label class="fw-semibold mb-2"><b>Time of Submission :</b> <span>{{$created_at}}</span></label>
@@ -55,32 +50,26 @@
 
                                     </div>
                                     @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) 
-                                        <div>
-                                            <button type="button" id="downloadBtn" class="btn btn-primary bnt-active-light-primary btn-sm">Download All</button>
-                                        </div>
+                                        @if (isset($file_name))
+                                            <div>
+                                                <a href="{{route('w9_upload.w9_download', ['w9_id' => $w9_id, 'filename' => $file_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
+                                            </div>
+                                        @endif
                                     @endif
                                     
                                 </div>
                             </label>
                             <div class="bg-light rounded p-2 mb-2 pt-4">
-                                @if ($mrac_arac_files && count($mrac_arac_files) > 0)
-                                <ul>
-                                    @foreach ($mrac_arac_files as $file)
-                                    <li class="p-2">
-                                        {{-- <div class="col-9"> --}}
-                                            <p class="fs-6">{{$file->file_path}}</p>
-                                        {{-- </div> --}}
-                                        {{-- <div class="col-3">
-                                            <a href="{{ route('county-provider-payment-report.download', ['filename' => $file->file_path,'payment_id' => $payment_id]) }}" class="btn btn-primary bnt-active-light-primary btn-sm ">Download</a>
-                                        </div> --}}
-                                    </li>
-                                    @endforeach
-                                </ul>
+                                @if (isset($file_name))
+                                    <div class="row p-2">
+                                        <p class="fs-6">{{$file_name}}</p>
+                                    </div>
                                 @else
                                     <p class="p-2">No file found</p>
                                 @endif
                             </div>
                         </div>
+
                         @if(!auth()->user()->hasRole('county user')) 
                         <div class="fv-row mb-7">
                             <label class="fw-semibold mb-2">
@@ -138,40 +127,3 @@
     </div>
     <!--end::Modal dialog-->
 </div>
-@push('scripts')
-<script>
-    document.addEventListener('livewire:load', function () {
-        document.getElementById("downloadBtn").addEventListener("click", function () {
-            Livewire.emit("triggerDownloadAllFiles");
-        });
-        Livewire.on('downloadAllFiles', function (downloadUrls) {
-            downloadFilesSequentially(downloadUrls);
-        });
-
-        function downloadFilesSequentially(urls) {
-            if (urls.length === 0) {
-                return;
-            }
-
-            var url = urls.shift(); 
-            downloadFile(url);
-
-
-            setTimeout(function() {
-                downloadFilesSequentially(urls);
-            }, 500);
-        }
-
-        function downloadFile(url) {
-            var link = document.createElement('a');
-            link.href = url;
-            link.download = '';
-            document.body.appendChild(link);
-            setTimeout(function() {
-                link.click();
-            }, 500);
-            document.body.removeChild(link);
-        }
-    });
-</script>
-@endpush

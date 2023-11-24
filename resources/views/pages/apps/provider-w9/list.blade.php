@@ -28,9 +28,9 @@
             <!--begin::Card title-->
 
             <!--begin::Card toolbar-->
-            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 20px">
+            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
                 <!--begin::Toolbar-->
-                <div class="d-flex justify-content-center row" style="width: 150px">
+                <div style="width: 150px">
                     <input class="form-control form-control-solid" placeholder="Pick a day" id="kt_daterangepicker_1"/>
                 </div>
                 <livewire:filters.user-list/>
@@ -46,7 +46,7 @@
                         {!! getIcon('plus', 'fs-2', '', 'i') !!}
                         Submit File
                     </button> --}}
-                    <a href="/county-w9/upload" class="btn btn-primary me-2 mb-2">
+                    <a href="/county-w9/upload" class="btn btn-primary">
                         {!! getIcon('file', 'fs-2', '', 'i') !!}
                         Submit File
                     </a>
@@ -54,9 +54,6 @@
                     <!--end::Add user-->
                 </div>
                 <!--end::Toolbar-->
-                <!--begin::Modal-->
-                <livewire:payment-report.add-payment-report></livewire:payment-report.add-payment-report>
-                <!--end::Modal-->
             {{-- </div> --}}
 
             <!--end::Card toolbar-->
@@ -64,7 +61,7 @@
         <!--end::Card header-->
 
         <!--begin::Card body-->
-        <livewire:payment-report.view-payment-report></livewire:payment-report.view-payment-report>
+        <livewire:w9-provide.view-w9-provide></livewire:w9-provide.view-w9-provide>
         <div class="card-body py-4">
             <!--begin::Table-->
             <div class="table-responsive">
@@ -80,12 +77,7 @@
         <script>
             document.addEventListener('livewire:load', function () {
                 Livewire.on('success', function () {
-                    $('#kt_modal_add_payment_report').modal('hide');
                     window.LaravelDataTables['w9-upload-table'].ajax.reload();
-                });
-                document.getElementById('month_year').addEventListener('change', function() {
-                    var month_year = this.value;
-                    window.LaravelDataTables['w9-upload-table'].column('month_year:name').search(month_year).draw();
                 });
             });
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
@@ -130,11 +122,7 @@
             });
             $("#export_csv").on('click', function(e) {
                 var table = window.LaravelDataTables['w9-upload-table'];
-                table.column('comment:name').visible(false);
-
                 table.button('.buttons-csv').trigger();
-
-                table.column('comment:name').visible(true);
                
             })
         })
