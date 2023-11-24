@@ -111,13 +111,13 @@ line-height: 16px;
                             <div class="dz-message needsclick text-center justify-content-center w-50 mx-auto">
                                 <!--begin::Info-->
                                 <div class="ms-4">
-                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload ZIP File of provider Payment Report Submission (files).</h3>
+                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload Template File of provider Payment Report Submission (file).</h3>
                                     <p class="fs-7 fw-semibold text-gray-500 drop-zone__prompt">Drag & Drop or choose files from computer</p>
                                     <p class="fs-7 fw-semibold text-gray-500 font-italic">
-                                        <i>
+                                        {{-- <i>
                                             This portal site is not a storage system, but rather a secure site for transferring documents.
                                             As such, all documents in any folder will be permanently deleted after 30 days.</p>
-                                        </i>
+                                        </i> --}}
                                 </div>
                                 <!--end::Info-->
                             </div>
@@ -157,9 +157,7 @@ line-height: 16px;
   });
 
   inputElement.addEventListener("change", (e) => {
-    if (inputElement.files.length) {
-      updateThumbnail(dropZoneElement, inputElement.files[0]);
-    }
+      updateThumbnail(dropZoneElement, inputElement.files);
   });
 
   dropZoneElement.addEventListener("dragover", (e) => {
@@ -175,10 +173,15 @@ line-height: 16px;
 
   dropZoneElement.addEventListener("drop", (e) => {
     e.preventDefault();
+    
+    if (e.dataTransfer.files.length > 1) {
+      dropZoneElement.classList.remove("drop-zone--over");
+      return;
+    }
 
     if (e.dataTransfer.files.length) {
       inputElement.files = e.dataTransfer.files;
-      updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+      updateThumbnail(dropZoneElement, e.dataTransfer.files);
     }
 
     dropZoneElement.classList.remove("drop-zone--over");
@@ -215,17 +218,12 @@ function updateThumbnail(dropZoneElement, files) {
     }
 
     thumbnailElement.innerHTML = '';
-    if (files.length > 1) {
         for (const file of files) {
             const listItemElement = document.createElement('li');
             listItemElement.textContent = file.name;
             fileListElement.appendChild(listItemElement);
         }
-    }else{
-        const listItemElement = document.createElement('li');
-        listItemElement.textContent = files.name;
-        fileListElement.appendChild(listItemElement);
-    }
+    
     thumbnailElement.appendChild(fileListElement);
 }
 

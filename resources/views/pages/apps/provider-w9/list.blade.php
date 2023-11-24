@@ -1,13 +1,8 @@
 <x-default-layout>
 
     @section('title')
-        County Provider Payment Resports
+        Country Provider W-9
     @endsection
-
-    @section('breadcrumbs')
-        {{ Breadcrumbs::render('county-provider-payment-report.index') }}
-    @endsection
-
      <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
@@ -35,26 +30,21 @@
                 </div>
                 <livewire:filters.user-list/>
                 <livewire:filters.county-list/>
-                {{-- <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base"> --}}
-                    <!--begin::Add user-->
-                    <button id="export_csv" class="btn btn-outline btn-outline-solid">
-                        <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
-                        EXPORT AS CSV
-                    </button>
-                    {{-- @if(auth()->user()->hasRole('county user')) --}}
-                    {{-- <button type="button" class="btn btn-primary me-2 mb-2" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
-                        {!! getIcon('plus', 'fs-2', '', 'i') !!}
-                        Submit File
-                    </button> --}}
-                    <a href="/county-w9/upload" class="btn btn-primary">
-                        {!! getIcon('file', 'fs-2', '', 'i') !!}
-                        Submit File
-                    </a>
-                    {{-- @endif --}}
+               
+                <!--begin::Add user-->
+                <button id="export_csv" class="btn btn-outline btn-outline-solid">
+                    <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                    EXPORT AS CSV
+                </button>
+                @if(auth()->user()->hasRole('county user'))
+                <a href="/county-w9/upload" class="btn btn-primary">
+                    {!! getIcon('file', 'fs-2', '', 'i') !!}
+                    Submit File
+                </a>
+                @endif
                     <!--end::Add user-->
                 </div>
                 <!--end::Toolbar-->
-            {{-- </div> --}}
 
             <!--end::Card toolbar-->
         </div>
@@ -122,7 +112,9 @@
             });
             $("#export_csv").on('click', function(e) {
                 var table = window.LaravelDataTables['w9-upload-table'];
+                table.column('w9_file_path:name').visible(false);
                 table.button('.buttons-csv').trigger();
+                table.column('w9_file_path:name').visible(true);
                
             })
         })
