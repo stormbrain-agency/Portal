@@ -75,8 +75,8 @@ line-height: 16px;
         @endif
         @if(session('error'))
         <div class="card-body py-4">
-            <div class="alert alert-danger d-flex align-items-center p-5 mb-10">
-                <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>                    <div class="d-flex flex-column">
+            <div class="alert alert-danger d-flex align-items-center p-5 mb-1">
+                <i class="ki-duotone ki-shield-cross fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>                    <div class="d-flex flex-column">
                     <h4 class="mb-1 text-danger">Error</h4>
                     <span>{{ session('error') }}</span>
                 </div>

@@ -47,7 +47,7 @@ class W9_Upload_Controller extends Controller
         ];
             return response()->download($file, $filename, $headers);
         } else {
-            return redirect('/dashboard/w9_upload')->with('error', 'File not found.');
+            return redirect('/county-w9')->with('error', 'No file found to download.');
         }
     }
 

@@ -6,6 +6,7 @@ use App\DataTables\MracAracDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\MracArac;
 use App\Models\MracAracFiles;
+use App\Models\TemplateFiles;
 use App\Models\MracAracDownloadHistory;
 use Illuminate\Support\Facades\Auth;
 use App\Models\County; 
@@ -38,7 +39,12 @@ class CountyMRAC_ARACController extends Controller
             'month_year' => 'required',
             'mrac_arac_files' => 'required',
             'comment' => 'nullable|max:150',
-            ]);
+        ], [
+            'month_year.required' => 'The month and year field is required.',
+            'mrac_arac_files.required' => 'The Mrac Arac Files field is required.',
+            'comment.max' => 'The comment field must not exceed 150 characters.',
+        ]);
+
 
         $user = Auth::user();
         $countyFips = $user ? ($user->county_designation ?? '') : '';
@@ -70,54 +76,45 @@ class CountyMRAC_ARACController extends Controller
 
         return redirect('/county-mrac-arac/create')->with('success', 'Files uploaded successfully.');
     }
+    public function template()
+    {
+        return view("pages.apps.mrac_arac.template");
+    }
 
+    public function store_template(Request $request)
+    {
+        $request->validate([
+            'payment_report_file' => 'required|file',
+        ], [
+            'payment_report_file.required' => 'Please choose a file.',
+            'payment_report_file.file' => 'The file must be a valid file.',
+        ]);
+
+        $uploadedFile = $request->file('payment_report_file');
+
+        if ($uploadedFile->isValid()) {
+            $extension = $uploadedFile->getClientOriginalExtension();
+            $currentDateTime = date('Ymd_His');
+            $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
+            
+            $path_name = $uploadedFile->storeAs('uploads/templates', $uniqueFileName);
+            TemplateFiles::where('type', 'mrac_arac')->delete();
+            TemplateFiles::create([
+                'type' => "mrac_arac",
+                'file_path' => $uniqueFileName,
+            ]);
+
+            return redirect('/county-mrac-arac/template')->with('success', 'File uploaded successfully.');
+        } else {
+            return redirect('/county-mrac-arac/template')->with('error', 'File upload failed.');
+        }
+    }
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-    
-            if ($file->getClientOriginalExtension() === 'zip') {
-                $originalName = $file->getClientOriginalName();
-    
-                $counter = 0;
-                $uniqueName = $originalName;
-    
-                while (file_exists(storage_path('app/uploads/' . $uniqueName))) {
-                    $counter++;
-                    $pathInfo = pathinfo($originalName);
-                    $uniqueName = $pathInfo['filename'] . "($counter)." . $pathInfo['extension'];
-                }
-    
-                $path = $file->storeAs('uploads', $uniqueName, 'local');
-                $user = auth()->user();
-    
-                if ($user->county) {
-                    $county = County::join('users', 'counties.county_fips', '=', 'users.county_designation')
-                                    ->where('users.id', $user->id)
-                                    ->select('counties.county')
-                                    ->first();
-    
-                    if ($county) {
-                        $newFile = new W9Upload();
-                        $newFile->user_id = $user->id;
-                        $newFile->comments = $request->input('comments');
-                        $newFile->original_name = $uniqueName;
-                        $newFile->w9_county_fips = $user->county_designation;
-                        $newFile->save();
-                        return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
-                    }
-                }
-    
-                return redirect('/county-w9/upload')->with('error', 'Error retrieving user county information.');
-            } else {
-                return redirect('/county-w9/upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
-            }
-        } else {
-            return redirect('/county-w9/upload')->with('error', 'No file selected.');
-        }
+        
     }
 
 
@@ -143,7 +140,23 @@ class CountyMRAC_ARACController extends Controller
         if (file_exists($file)) {
             return response()->download($file);
         } else {
-            return redirect('/county-provider-payment-report')->with('error', 'File not found.');
+            return redirect('/county-mrac-arac')->with('error', 'File not found.');
         }
+    }
+
+     public function downloadTemplateFile()
+    {
+        $latestTemplateFile = TemplateFiles::where('type', 'mrac_arac')->latest()->first();
+        if (isset($latestTemplateFile) && !empty($latestTemplateFile)) {  
+            $filename = $latestTemplateFile->file_path;
+            $file = storage_path('app/uploads/templates/'. $filename);
+            if (file_exists($file)) {
+                return response()->download($file);
+            } else {
+                return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
+            }
+        }else {
+                return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
+            }
     }
 }
