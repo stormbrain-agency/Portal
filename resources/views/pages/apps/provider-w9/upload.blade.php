@@ -129,20 +129,20 @@
       });
 
       dropZoneElement.addEventListener("drop", (e) => {
-        e.preventDefault();
-        
-        if (e.dataTransfer.files.length > 1) {
-          dropZoneElement.classList.remove("drop-zone--over");
-          return;
-        }
+            e.preventDefault();
+            
+            if (e.dataTransfer.files.length > 1) {
+              dropZoneElement.classList.remove("drop-zone--over");
+              return;
+            }
 
-        if (e.dataTransfer.files.length) {
-          inputElement.files = e.dataTransfer.files;
-          updateThumbnail(dropZoneElement, e.dataTransfer.files);
-        }
+            if (e.dataTransfer.files.length) {
+              inputElement.files = e.dataTransfer.files;
+              updateThumbnail(dropZoneElement, e.dataTransfer.files);
+            }
 
-        dropZoneElement.classList.remove("drop-zone--over");
-      });
+            dropZoneElement.classList.remove("drop-zone--over");
+          });
     });
 
     /**
