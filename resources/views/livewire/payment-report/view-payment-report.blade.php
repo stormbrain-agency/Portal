@@ -64,22 +64,26 @@
                             </label>
                             <div class="bg-light rounded p-2 mb-2 pt-4">
                                 @if ($payment_report_files && count($payment_report_files) > 0)
-                                    @foreach ($payment_report_files as $file)
-                                    <div class="row p-2">
-                                        {{-- <div class="col-9"> --}}
-                                            <p class="fs-6">{{$file->file_path}}</p>
-                                        {{-- </div> --}}
-                                        {{-- <div class="col-3">
-                                            <a href="{{ route('county-provider-payment-report.download', ['filename' => $file->file_path,'payment_id' => $payment_id]) }}" class="btn btn-primary bnt-active-light-primary btn-sm ">Download</a>
-                                        </div> --}}
-                                    </div>
-                                    @endforeach
+                                    <ul>
+                                        @foreach ($payment_report_files as $file)
+                                        <li class="p-2">
+                                            {{-- <div class="col-9"> --}}
+                                                <p class="fs-6">{{$file->file_path}}</p>
+                                            {{-- </div> --}}
+                                            {{-- <div class="col-3">
+                                                <a href="{{ route('county-provider-payment-report.download', ['filename' => $file->file_path,'payment_id' => $payment_id]) }}" class="btn btn-primary bnt-active-light-primary btn-sm ">Download</a>
+                                            </div> --}}
+                                        </li>
+                                        @endforeach
+                                    </ul>
+
                                 @else
                                     <p class="p-2">No file found</p>
                                 @endif
                             </div>
                         </div>
 
+                        @if(!auth()->user()->hasRole('county user')) 
                         <div class="fv-row mb-7">
                             <label class="fw-semibold mb-2">
                                 <b>Download History:</b>
@@ -119,6 +123,7 @@
                                 @endif
                             </div>
                         </div>
+                        @endif
                     </div>
                     <!--end::Scroll-->
                     <!--begin::Actions-->

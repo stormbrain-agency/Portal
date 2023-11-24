@@ -25,52 +25,51 @@ class CountyMRAC_ARACController extends Controller
         ])->render('pages.apps.mrac_arac.list');
     }
 
-    public function upload()
+    public function create()
     {
         return view("pages.apps.mrac_arac.create");
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'month_year' => 'required',
-        'mrac_arac_files' => 'required',
-        'comment' => 'nullable|max:150',
+    {
+        $request->validate([
+            'month_year' => 'required',
+            'mrac_arac_files' => 'required',
+            'comment' => 'nullable|max:150',
+            ]);
+
+        $user = Auth::user();
+        $countyFips = $user ? ($user->county_designation ?? '') : '';
+
+        $mracArac = MracArac::create([
+            'month_year' => $request->month_year,
+            'county_fips' => $countyFips,
+            'user_id' => $user->id,
+            'comments' => $request->comment,
         ]);
 
-    $user = Auth::user();
-    $countyFips = $user ? ($user->county_designation ?? '') : '';
+        foreach ($request->file('mrac_arac_files') as $uploadedFile) {
+            if ($uploadedFile->isValid()) {
+                $extension = $uploadedFile->getClientOriginalExtension();
+                $currentDateTime = date('Ymd_His');
+                $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
+                
+                $path_name = $uploadedFile->storeAs('uploads/mrac_arac', $uniqueFileName);
 
-    $mracArac = MracArac::create([
-        'month_year' => $request->month_year,
-        'county_fips' => $countyFips,
-        'user_id' => $user->id,
-        'comments' => $request->comment,
-    ]);
-
-    foreach ($request->file('mrac_arac_files') as $uploadedFile) {
-        if ($uploadedFile->isValid()) {
-            $extension = $uploadedFile->getClientOriginalExtension();
-            $currentDateTime = date('Ymd_His');
-            $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
-            
-            $path_name = $uploadedFile->storeAs('uploads/mrac_arac', $uniqueFileName);
-
-            MracAracFiles::create([
-                'mrac_arac_id' => $mracArac->id,
-                'file_path' => $uniqueFileName,
-            ]);
-        } else {
-            // Handle file upload error
-            return redirect('/county-mrac-arac/create')->with('error', 'File upload failed.');
+                MracAracFiles::create([
+                    'mrac_arac_id' => $mracArac->id,
+                    'file_path' => $uniqueFileName,
+                ]);
+            } else {
+                // Handle file upload error
+                return redirect('/county-mrac-arac/create')->with('error', 'File upload failed.');
+            }
         }
-    }
 
-    return redirect('/county-mrac-arac/create')->with('success', 'Files uploaded successfully.');
-}
+        return redirect('/county-mrac-arac/create')->with('success', 'Files uploaded successfully.');
+    }
 
     /**
      * Display the specified resource.

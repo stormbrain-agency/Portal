@@ -45,8 +45,8 @@ class W9DataTable extends DataTable
                 return $upload->original_name;
             })
 
-            ->editColumn('w9_file_path', function(W9Upload $user) {
-                return '<a href="' . route('w9_upload.w9_download', ['filename' => $user->original_name]) . '" class="btn btn-primary">Download</a>';
+            ->editColumn('w9_file_path', function(W9Upload $upload) {
+                return '<a href="' . route('w9_upload.w9_download', ['w9_id' => $upload->id, 'filename' => $upload->original_name]) . '" class="btn btn-primary">Download</a>';
             })
  
             ->addColumn('user_first_name', function (W9Upload $upload) {
@@ -56,8 +56,9 @@ class W9DataTable extends DataTable
             ->addColumn('email', function (W9Upload $upload) {
                 return $upload->user->email;
             })
-
-
+            ->editColumn('view', function (W9Upload $upload) {
+                return view('pages.apps.provider-w9.columns._view-action', compact('upload'));
+            })
             ->rawColumns(['user_first_name', 'w9_file_path'])
             ->setRowId('id');
     }
@@ -89,6 +90,7 @@ class W9DataTable extends DataTable
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(1)
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/provider-w9/columns/_draw-scripts.js')) . "}")
             ->buttons([
                 [
                     'extend' => 'csv',
@@ -118,6 +120,11 @@ class W9DataTable extends DataTable
                 Column::make('email')->name("users.email")->visible(false),
                 Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
                 Column::make('filename')->title('File Name Submitted')->searchable(false)->orderable(false),
+                Column::computed('view')
+                    ->addClass('text-center text-nowrap')
+                    ->exportable(false)
+                    ->printable(false)
+                    ->width(60),
             ];
         } else {
             return [
@@ -130,6 +137,11 @@ class W9DataTable extends DataTable
                 Column::make('comment')->title('Comment')->searchable(false)->orderable(false),
                 Column::make('filename')->title('File Name Submitted')->searchable(false)->orderable(false),
                 Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false),
+                Column::computed('view')
+                    ->addClass('text-center text-nowrap')
+                    ->exportable(false)
+                    ->printable(false)
+                    ->width(60),
             ];
         }
     }

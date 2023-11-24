@@ -216,7 +216,7 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Action-->
-                                            <a href="{{ route('w9_upload.w9_download', ['filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
+                                            <a href="{{ route('w9_upload.w9_download', ['w9_id' => $w9Upload->id, 'filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
                                             {{-- <a href="" class="btn btn-primary">Download</a> --}}
                                             <!--end::Action-->
                                         </div>
