@@ -82,7 +82,7 @@ line-height: 16px;
         <div class="card-body py-4">
             <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our FAQs or submit a request via our contact us form.</i> </span>
             <br>
-            <a href="#" class="btn btn-bg-primary me-6 text-light mt-5">
+            <a href="{{ route('county-mrac-arac.download_template') }}" class="btn btn-bg-primary me-6 text-light mt-5">
                 <i class="ki-duotone ki-arrow-down text-light">
                     <span class="path1"></span>
                     <span class="path2"></span>
@@ -98,8 +98,8 @@ line-height: 16px;
                         <!--begin::Label-->
                         <label class="required fw-bold fs-6 mb-2">Please select Report Period:</label>
                         <div class="row">
-                            <div class="col-2">
-                                <select name="month_year" id="month_year" class="form-select border border-gray-500 mb-3 mb-lg-0 text-center form-control bg-transparent">
+                            <div class="col-12">
+                                <select name="month_year" id="month_year"style="width: 250px;" class="form-select border border-gray-500 mb-3 mb-lg-0 text-center form-control bg-transparent">
                                     <option value="">Select Month/Year</option>
                                     @for ($year = 2024; $year <= 2025; $year++)
                                         @for ($month = 1; $month <= 12; $month++)
@@ -169,6 +169,14 @@ line-height: 16px;
                 </div>
                 <!--end::Scroll-->
                 <!--begin::Actions-->
+                @if(session('error'))
+                    <div class="alert alert-danger d-flex align-items-center p-5 mb-1">
+                        <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>                    <div class="d-flex flex-column">
+                            <h4 class="mb-1 text-danger">Error</h4>
+                            <span>{{ session('error') }}</span>
+                        </div>
+                    </div>
+                @endif
                 <div class="pt-2">
                     <button type="submit" id="submit-button" class="btn btn-primary">
                         <span class="indicator-label">Upload</span>

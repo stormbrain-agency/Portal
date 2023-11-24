@@ -41,6 +41,9 @@ class UserManagementController extends Controller
     public function show(User $user)
     {
         if ($user) {
+            if ($user->status != 1) {
+                return redirect()->route('user-management.users-pending.show', $user);
+            }
             $w9Uploads = $user->w9Upload()->orderBy('created_at', 'desc')->get();
             return view('pages.apps.user-management.users.show', compact('user','w9Uploads'));
         } else {
@@ -88,7 +91,10 @@ class UserManagementController extends Controller
     public function usersPendingShow($id)
     {
         $user = User::find($id);
-        if ($user) {
+        if (isset($user)) {
+            if ($user->status == 1) {
+                return redirect()->route('user-management.users.show', $user);
+            }
             $w9Uploads = $user->w9Upload;
             return view('pages.apps.user-management.users-pending.show', compact('user','w9Uploads'));
         } else {

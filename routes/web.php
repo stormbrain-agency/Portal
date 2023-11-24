@@ -107,6 +107,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             });
             Route::post('/template', [CountyMRAC_ARACController::class,'store_template'])->name('store_template');
             Route::get('/template', [CountyMRAC_ARACController::class,'template'])->name('template');
+            Route::get('/template/download', [CountyMRAC_ARACController::class, 'downloadTemplateFile'])->name('download_template');
             Route::get('/downloads/{filename}', [CountyMRAC_ARACController::class, 'downloadFile'])->name('download');
             Route::get('/downloads/{filename}/{payment_id}', [CountyMRAC_ARACController::class, 'downloadFile2'])->name('download2');
             Route::get('/download-all-files/{payment_id}', [CountyMRAC_ARACController::class, 'downloadAllFiles'])->name('downloadAllFiles');

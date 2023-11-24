@@ -46,8 +46,8 @@ class UsersPendingDataTable extends DataTable
     public function query(User $model): QueryBuilder
     {
         $query = $model->newQuery()->where(function ($query) {
-            $query->where('status', 0)
-                ->orWhereNull('email_verified_at');
+            $query->where('status', 0);
+                
         });
 
         return $query;

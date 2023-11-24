@@ -44,7 +44,7 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->where('status', 1)->whereNotNull('email_verified_at');
+        return $model->newQuery()->where('status', 1);
     }
 
     /**
@@ -71,7 +71,7 @@ class UsersDataTable extends DataTable
         if (auth()->user()->hasRole('admin')) {
             return [
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
-                Column::make('role')->searchable(false)->orderable(false)->name("role.name"),
+                Column::make('role')->searchable(false)->name("role.name"),
                 Column::make('last_login_at')->title('Last Login'),
                 Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
                 Column::computed('action')
@@ -83,7 +83,7 @@ class UsersDataTable extends DataTable
         }else{
              return [
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
-                Column::make('role')->searchable(false)->orderable(false),
+                Column::make('role')->searchable(false),
                 Column::make('last_login_at')->title('Last Login'),
                 Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
             ];
