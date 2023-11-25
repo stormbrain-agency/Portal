@@ -62,6 +62,24 @@ class User extends Authenticatable
         return !is_null($this->email_verified_at);
     }
 
+    public function getFormattedMobilePhoneAttribute()
+    {
+        $formattedMobilePhone = substr_replace($this->attributes['mobile_phone'], '(', 0, 0);
+        $formattedMobilePhone = substr_replace($formattedMobilePhone, ') ', 4, 0);
+        $formattedMobilePhone = substr_replace($formattedMobilePhone, '-', 9, 0);
+
+        return $formattedMobilePhone;
+    }
+
+    public function getFormattedBusinessPhoneAttribute()
+    {
+        $formattedBusinessPhone = substr_replace($this->attributes['business_phone'], '(', 0, 0);
+        $formattedBusinessPhone = substr_replace($formattedBusinessPhone, ') ', 4, 0);
+        $formattedBusinessPhone = substr_replace($formattedBusinessPhone, '-', 9, 0);
+
+        return $formattedBusinessPhone;
+    }
+
 
     public function getProfilePhotoUrlAttribute()
     {

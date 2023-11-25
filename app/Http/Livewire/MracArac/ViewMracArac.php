@@ -52,7 +52,7 @@ class ViewMracArac extends Component
             $this->created_at = $mrac_arac->created_at;
     
             $this->mrac_arac_files = MracAracFiles::where("mrac_arac_id", $id)->get();
-            $this->download_history = MracAracDownloadHistory::where("mrac_arac_id", $id)->get();
+            $this->download_history = MracAracDownloadHistory::where("mrac_arac_id", $id)->orderBy('id', 'desc')->get();
         }
     }
 
