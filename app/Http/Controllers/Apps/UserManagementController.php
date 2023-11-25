@@ -131,15 +131,6 @@ class UserManagementController extends Controller
         $user = auth()->user();
         if ($user) {
             $w9Uploads = $user->w9Upload;
-            return view('pages.apps.user-management.users.show', compact('user','w9Uploads'));
-        } else {
-            return view('errors.404');
-        }
-    }
-    public function profileView(){
-        $user = auth()->user();
-        if ($user) {
-            $w9Uploads = $user->w9Upload;
             return view('pages.apps.user-management.users.profile.profile', compact('user','w9Uploads'));
         } else {
             return view('errors.404');
