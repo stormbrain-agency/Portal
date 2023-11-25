@@ -83,7 +83,6 @@
                 });
                  document.getElementById('select_role').addEventListener('change', function() {
                     var select_role = this.value;
-                    console.log(select_role);
                     window.LaravelDataTables['users-table'].column('roles.name:name').search(select_role).draw();
                 });
             });
