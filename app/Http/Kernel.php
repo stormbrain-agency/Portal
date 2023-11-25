@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'permission' => \App\Http\Middleware\CheckPermission::class,
         'check_status' => \App\Http\Middleware\CheckStatusMiddleware::class,
 
+        '2fa' => \App\Http\Middleware\TwoFactorAuthentication::class,
     ];
 }

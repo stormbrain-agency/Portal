@@ -41,7 +41,6 @@ Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
     Route::get('/state', [LocationController::class, 'getStates'])->name('state');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // Route::get('/dashboard', [W9_Upload_Controller::class, 'showUploadForm'])->name('dashboard');
 
     Route::name('user-management.')->group(function () {
         // Route::middleware(['permission:county users management'])->group(function () {
