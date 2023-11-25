@@ -52,7 +52,7 @@ class ViewPaymentReport extends Component
             $this->created_at = $payment_report->created_at;
     
             $this->payment_report_files = PaymentReportFiles::where("payment_report_id", $id)->get();
-            $this->download_history = PaymentReportDownloadHistory::where("payment_report_id", $id)->get();
+            $this->download_history = PaymentReportDownloadHistory::where("payment_report_id", $id)->orderBy('id', 'desc')->get();
         }
     }
 

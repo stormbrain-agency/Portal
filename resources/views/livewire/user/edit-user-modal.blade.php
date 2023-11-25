@@ -66,24 +66,24 @@
                             <label class="required fw-semibold fs-6 mb-2">Business Phone Number + Ext.</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" wire:model.defer="business_phone" name="business_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Business Phone Number"/>
+                            <input type="text" wire:model.defer="business_phone" id="business_phone" name="business_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Business Phone Number"/>
                             <!--end::Input-->
                             @error('business_phone')
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->
-                        {{-- <!--begin::Input group-->
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fw-semibold fs-6 mb-2">Mobile Phone Number.</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" wire:model.defer="mobile_phone" name="mobile_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Mobile Phone Number"/>
+                            <input type="text" wire:model.defer="mobile_phone" id="mobile_phone" name="mobile_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Mobile Phone Number"/>
                             <!--end::Input-->
                             @error('mobile_phone')
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <!--end::Input group--> --}}
+                        <!--end::Input group-->
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -219,3 +219,14 @@
     </div>
     <!--end::Modal dialog-->
 </div>
+
+@push('scripts')
+    <script>
+        Inputmask({
+            mask: "(999) 999-9999 ext. 9999",
+        }).mask("#business_phone");
+        Inputmask({
+            "mask" : "(999) 999-9999",
+        }).mask("#mobile_phone");
+    </script>
+@endpush
