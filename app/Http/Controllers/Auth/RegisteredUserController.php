@@ -51,7 +51,6 @@ class RegisteredUserController extends Controller
             'mailing_address' => ['required', 'string', 'max:255'],
             'vendor_id' => ['required', 'string', 'max:255'],
             'county_designation' => ['required', 'string', 'max:255'],
-            'w9_file_path' => ['required', 'file', 'mimes:zip'], 
         ]);
 
         if ($request->hasFile('w9_file_path')) {

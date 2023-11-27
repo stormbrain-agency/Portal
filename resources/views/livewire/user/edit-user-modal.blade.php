@@ -223,10 +223,10 @@
 @push('scripts')
     <script>
         Inputmask({
-            mask: "(999) 999-9999 ext. 9999",
-        }).mask("#business_phone");
-        Inputmask({
             "mask" : "(999) 999-9999",
         }).mask("#mobile_phone");
+        Inputmask({
+            mask: "(999) 999-9999 ext. 9999",
+        }).mask("#business_phone");
     </script>
 @endpush

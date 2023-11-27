@@ -31,9 +31,9 @@
                         <!--begin::Position-->
                         <div class="mb-9">
                             @if($user->status == 0)
-                                <div class="badge badge-lg badge-light-primary d-inline">Pending</div>
-                            @elseif($user->status == 1 && $user->email_verified_at == "")
-                                <div class="badge badge-lg badge-light-primary d-inline">Unverified email</div>
+                                <div class="badge badge-lg badge-light-warning d-inline">Pending</div>
+                            @elseif($user->status == 2)
+                                <div class="badge badge-lg badge-light-danger d-inline">Declined</div>
                             @endif
                         </div>
                         <!--end::Position-->
@@ -136,7 +136,7 @@
                     <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Actions
                         <i class="ki-duotone ki-down fs-2 me-0"></i></a>
                     <!--begin::Menu-->
-                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
+                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-200px fs-6" data-kt-menu="true">
                         @if ($user->status == 0)
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
@@ -150,7 +150,7 @@
                         <!--end::Menu item-->
                         @endif
                         <!--begin::Menu item-->
-                        @if ($user->status == 1 && $user->email_verified_at == "")
+                        @if ($user->status == 2)
                         <form method="POST" action="{{ route('user-management.users.destroy', $user) }}" class="menu-item px-5" id="deleteUserForm">
                             @csrf
                             @method('DELETE')
@@ -244,6 +244,27 @@
     <!--begin::Modals-->
     @push('scripts')
         <script>
+             document.getElementById('deleteUserForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    text: "This action will delete this user's data!\nAre you sure?",
+                    icon: "warning",
+                    buttonsStyling: false,
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    customClass: {
+                        confirmButton: "btn btn-danger",
+                        cancelButton: "btn btn-secondary",
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('deleteUserForm').submit();
+                    }
+                });
+            });
+            
             document.getElementById('approveUser').addEventListener('click', function (event) {
                 event.preventDefault(); 
                 Swal.fire({
@@ -266,7 +287,7 @@
             document.getElementById('denyUser').addEventListener('click', function (event) {
                 event.preventDefault(); 
                 Swal.fire({
-                    text: "This action will delete this user's data!\nAre you sure?",
+                    text: "This action will reject this user!\nAre you sure?",
                     icon: "warning",
                     buttonsStyling: false,
                     showCancelButton: true,
@@ -282,26 +303,7 @@
                     }
                 });
             });
-             document.getElementById('deleteUserForm').addEventListener('submit', function (event) {
-                event.preventDefault();
-
-                Swal.fire({
-                    text: "This action will delete this user's data!\nAre you sure?",
-                    icon: "warning",
-                    buttonsStyling: false,
-                    showCancelButton: true,
-                    confirmButtonText: "Yes",
-                    cancelButtonText: "No",
-                    customClass: {
-                        confirmButton: "btn btn-danger",
-                        cancelButton: "btn btn-secondary",
-                    },
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById('deleteUserForm').submit();
-                    }
-                });
-            });
+            
            
         </script>
     @endpush
