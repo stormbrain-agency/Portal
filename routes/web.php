@@ -53,6 +53,13 @@ Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
                 Route::get('/users/{id}', [UserManagementController::class,'usersPendingShow'])->name('show');
                 Route::get('/users/approve/{id}', [UserManagementController::class,'usersPendingApprove'])->name('approve');
                 Route::get('/users/deny/{id}', [UserManagementController::class,'usersPendingDeny'])->name('deny');
+            });
+
+            Route::prefix('/user-management/county-users')->name('county-users.')->group(function () {
+                Route::get('/', [UserManagementController::class,'county_users'])->name('index');
+                Route::get('/user/{id}', [UserManagementController::class,'usersPendingShow'])->name('show');
+                Route::get('/user/approve/{id}', [UserManagementController::class,'usersPendingApprove'])->name('approve');
+                Route::get('/user/deny/{id}', [UserManagementController::class,'usersPendingDeny'])->name('deny');
                 
             });
         });

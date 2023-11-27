@@ -88,7 +88,7 @@ class RegisteredUserController extends Controller
                     'status' => 0,
                 ]);
 
-
+                $user->assignRole('county user');
                 $userID = $user->id;
 
                 $newFile = new W9Upload();
