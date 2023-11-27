@@ -212,7 +212,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Mobile Phone</td>
-                                                <td>{{$user->mobile_phone}}</td>
+                                                <td>{{$user->getFormattedMobilePhoneAttribute()}}</td>
                                                 <td class="text-end">
                                                     <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_mobile_phone">
                                                         <i class="ki-duotone ki-pencil fs-3">

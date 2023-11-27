@@ -99,7 +99,7 @@ line-height: 16px;
                         <label class="required fw-bold fs-6 mb-2">Please select Report Period:</label>
                         <div class="row">
                             <div class="col-12">
-                                <select name="month_year" id="month_year"style="width: 250px;" class="form-select border border-gray-500 mb-3 mb-lg-0 text-center form-control bg-transparent">
+                                <select name="month_year" id="month_year" style="width: 250px;" class="form-select border border-gray-500 mb-3 mb-lg-0 text-center form-control bg-transparent">
                                     <option value="">Select Month/Year</option>
                                     @for ($year = 2024; $year <= 2025; $year++)
                                         @for ($month = 1; $month <= 12; $month++)

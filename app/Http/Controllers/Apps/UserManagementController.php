@@ -124,7 +124,12 @@ class UserManagementController extends Controller
     public function usersPendingDeny($id)
     {
         if (auth()->user()->can('county users management')) {
-            User::destroy($id);
+             $user = User::find($id);
+            if (!is_null($user)) {
+               
+                $user->status = 2;
+                $user->save();
+            }
 
             return redirect()->route('user-management.users-pending.index');
 
