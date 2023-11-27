@@ -80,9 +80,9 @@ class UsersCountyDataTable extends DataTable
     {
         if (auth()->user()->hasRole('admin')) {
             return [
-                Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
+                Column::make('user')->addClass('d-flex align-items-center')->name('first_name')->title("Full Name"),
+                Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('status')->addClass('text-nowrap')->name('status'),
-                Column::make('mobile_phone')->title('Mobile Phone')->addClass('text-nowrap'),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
                 Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
                 Column::computed('action')
@@ -93,9 +93,9 @@ class UsersCountyDataTable extends DataTable
             ];
         }else{
              return [
-                Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
+                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name')->title("Full Name"),
+                Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('status')->addClass('text-nowrap')->name('status'),
-                Column::make('mobile_phone')->title('Mobile Phone')->addClass('text-nowrap'),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
                 Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
             ];

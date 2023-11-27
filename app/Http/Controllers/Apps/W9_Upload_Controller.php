@@ -6,11 +6,14 @@ use App\DataTables\UsersDataTable;
 use App\DataTables\UsersPendingDataTable;
 use App\DataTables\W9DataTable;
 use App\Http\Controllers\Controller;
-use App\Models\W9Upload;
+use App\Models\W9Upload;    
+use App\Models\User;
 use App\Models\W9DownloadHistory;
 use App\Models\County; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+
 // use League\Csv\Writer;
 // use Illuminate\Support\Facades\Response;
 
@@ -86,6 +89,30 @@ class W9_Upload_Controller extends Controller
                         $newFile->original_name = $uniqueName;
                         $newFile->w9_county_fips = $user->county_designation;
                         $newFile->save();
+
+                        $adminEmails = User::whereHas('roles', function ($query) {
+                            $query->where('name', 'admin');
+                        })->pluck('email');
+
+                        $data = [
+                            'email' => $user->email,
+                            'name' => $user->first_name .'' . $user->last_name,
+                            'county_designation' => $user->county->county ? $user->county->county : "",
+                            'time' => $newFile->created_at,
+                        ];
+
+                        foreach($adminEmails as $adminEmail){
+                                Mail::send('mail.admin.w-9', $data, function ($message) use ($adminEmail) {
+                                $message->to($adminEmail);
+                                $message->subject('Alert: W-9 Submission Received!');
+                            });
+                        }
+                        $userEmail = $user->email;
+                        Mail::send('mail.user.w-9', $data, function ($message) use ($userEmail) {
+                            $message->to($userEmail);
+                            $message->subject('Confirmation: W-9 Submission Received!');
+                        });
+
                         return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
                     }
                 }

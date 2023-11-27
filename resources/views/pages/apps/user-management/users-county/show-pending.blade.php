@@ -1,9 +1,8 @@
 <x-default-layout>
 
     @section('title')
-        Users Details
+        Users Pending Profile
     @endsection
-
     <!--begin::Layout-->
     <div class="d-flex flex-column flex-lg-row">
         <!--begin::Sidebar-->
@@ -31,11 +30,11 @@
                         <!--end::Name-->
                         <!--begin::Position-->
                         <div class="mb-9">
-                            @foreach($user->roles as $role)
-                                <!--begin::Badge-->
-                                <div class="badge badge-lg badge-light-primary d-inline">{{ ucwords($role->name) }}</div>
-                                <!--begin::Badge-->
-                            @endforeach
+                            @if($user->status == 0)
+                                <div class="badge badge-lg badge-light-warning d-inline">Approval Needed</div>
+                            @elseif($user->status == 2)
+                                <div class="badge badge-lg badge-light-danger d-inline">Declined</div>
+                            @endif
                         </div>
                         <!--end::Position-->
                     
@@ -50,14 +49,6 @@
                                 <i class="ki-duotone ki-down fs-3"></i>
                             </span>
                         </div>
-
-                        @if((auth()->id() == $user->id && !$user->hasRole('county user')) || auth()->user()->hasRole('admin') )
-                        <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit customer details">
-                            <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_edit_user" data-kt-action="update_row" data-kt-user-id="{{$user->id}}">Edit</a>
-                        </span>
-                        <livewire:user.edit-user-modal></livewire:user.edit-user-modal>
-                        @endif
-
                     </div>
                     <!--end::Details toggle-->
                     <div class="separator"></div>
@@ -100,8 +91,8 @@
                             <div class="text-gray-600">{{$user->vendor_id}}</div>
                             @endif
                             <!--begin::Details item-->
-                             <!--begin::Details item-->
-                            @if ($user->county?->county_full)
+                            <!--begin::Details item-->
+                            @if ($user->vendor_id)
                             <div class="fw-bold mt-5">County Designation</div>
                             <div class="text-gray-600">{{$user->county->county_full}}</div>
                             @endif
@@ -112,8 +103,14 @@
                             <!--begin::Details item-->
                             <!--begin::Details item-->
                             <div class="fw-bold mt-5">Joined Date</div>
-                            <div class="text-gray-600">{{$user->created_at->format('d M Y, h:i a')}}</div>
-                            <!--begin::Details item-->
+                            <div class="text-gray-600">
+                                @if($user->created_at)
+                                    {{ $user->created_at->format('d M Y, h:i a') }}
+                                @else
+                                    No joined date available
+                                @endif
+                            </div>
+
                         </div>
                     </div>
                     <!--end::Details content-->
@@ -132,108 +129,44 @@
                     <a class="nav-link text-active-primary pb-4 active" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_w9_files">W-9 Files</a>
                 </li>
                 <!--end:::Tab item-->
+                
                 <!--begin:::Tab item-->
-                <li class="nav-item">
-                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_w9_files">Payment Reports</a>
-                </li>
-                <!--end:::Tab item-->
-                <!--begin:::Tab item-->
-                <li class="nav-item">
-                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_overview_security">MRAC/ARAC</a>
-                </li>
-                <!--end:::Tab item-->
-                <!--end:::Tab item-->
-                @if (auth()->check() && auth()->user()->id == $user->id)
-                    <!--begin:::Tab item-->
-                    <li class="nav-item">
-                        <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_overview_security">Security</a>
-                    </li>
-                @endif
-                <!--end:::Tab item-->
-                <!--begin:::Tab item-->
-                @if (auth()->user()->hasRole('admin') && auth()->user()->id != $user->id)
                 <li class="nav-item ms-auto">
                     <!--begin::Action menu-->
                     <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Actions
                         <i class="ki-duotone ki-down fs-2 me-0"></i></a>
                     <!--begin::Menu-->
-                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
+                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-200px fs-6" data-kt-menu="true">
+                        @if ($user->status == 0)
                         <!--begin::Menu item-->
-                        @if ($user->status == 1)
+                        <div class="menu-item px-5">
+                            <a href={{ route('user-management.county-users.approve', $user) }} id="approveUser" class="menu-link px-5">Approve User</a>
+                        </div>
+                        <!--end::Menu item-->
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-5 my-1">
+                            <a href={{ route('user-management.county-users.deny', $user) }} id="denyUser" class="menu-link px-5 text-danger">Deny User</a>
+                        </div>
+                        <!--end::Menu item-->
+                        @endif
+                        <!--begin::Menu item-->
+                        @if ($user->status == 2)
                         <form method="POST" action="{{ route('user-management.users.destroy', $user) }}" class="menu-item px-5" id="deleteUserForm">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-white menu-link text-danger px-5 w-100">Delete User</button>
                         </form>
                         @endif
-
                         <!--end::Menu item-->
                     </div>
                     <!--end::Menu-->
                     <!--end::Menu-->
                 </li>
                 <!--end:::Tab item-->
-                @endif
             </ul>
             <!--end:::Tabs-->
             <!--begin:::Tab content-->
             <div class="tab-content" id="myTabContent">
-                <!--begin:::Tab pane-->
-                <div class="tab-pane fade" id="kt_user_view_overview_security" role="tabpanel">
-                    <!--begin::Card-->
-                    <div class="card pt-4 mb-6 mb-xl-9">
-                        <!--begin::Card header-->
-                        <div class="card-header border-0">
-                            <!--begin::Card title-->
-                            <div class="card-title">
-                                <h2>Profile</h2>
-                            </div>
-                            <!--end::Card title-->
-                        </div>
-                        <!--end::Card header-->
-                        <!--begin::Card body-->
-                        <div class="card-body pt-0 pb-5">
-                            <!--begin::Table wrapper-->
-                            <div class="table-responsive">
-                                <!--begin::Table-->
-                                    <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
-                                        <tbody class="fs-6 fw-semibold text-gray-600">
-                                            <tr>
-                                                <td>Password</td>
-                                                <td>******</td>
-                                                <td class="text-end">
-                                                    <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_password">
-                                                        <i class="ki-duotone ki-pencil fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                        </i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Mobile Phone</td>
-                                                <td>{{$user->getFormattedMobilePhoneAttribute()}}</td>
-                                                <td class="text-end">
-                                                    <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_mobile_phone">
-                                                        <i class="ki-duotone ki-pencil fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                        </i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                           
-                                        </tbody>
-                                    </table>
-                                <!--end::Table-->
-                            </div>
-                            <!--end::Table wrapper-->
-                        </div>
-                        <!--end::Card body-->
-                    </div>
-                    <!--end::Card-->
-                </div>
-                <!--end:::Tab pane-->
                 <!--begin:::Tab pane-->
                 <div class="tab-pane fade show active" id="kt_user_view_w9_files" role="tabpanel">
                     <!--begin::Card-->
@@ -278,9 +211,8 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Action-->
-                                            @if (!auth()->user()->hasRole('view only'))
                                             <a href="{{ route('w9_upload.w9_download', ['w9_id' => $w9Upload->id, 'filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
-                                            @endif
+                                            {{-- <a href="" class="btn btn-primary">Download</a> --}}
                                             <!--end::Action-->
                                         </div>
                                         <!--end::Time-->
@@ -310,56 +242,9 @@
     </div>
     <!--end::Layout-->
     <!--begin::Modals-->
-    <!--begin::Modal - Update user details-->
-    @include('pages.apps/user-management/users/modals/_update-details')
-    <!--end::Modal - Update user details-->
-    <!--begin::Modal - Add schedule-->
-    @include('pages.apps/user-management/users/modals/_add-schedule')
-    <!--end::Modal - Add schedule-->
-    <!--begin::Modal - Add one time password-->
-    @include('pages.apps/user-management/users/modals/_add-one-time-password')
-    <!--end::Modal - Add one time password-->
-    <!--begin::Modal - Update email-->
-    @include('pages.apps/user-management/users/modals/_update-email')
-    <!--end::Modal - Update email-->
-    <!--begin::Modal - Update password-->
-    {{-- @include('pages.apps/user-management/users/modals/_update-password') --}}
-   @if (auth()->check() && auth()->user()->id == $user->id)
-        <livewire:user.user-update-password></livewire:user.user-update-password>
-        <livewire:user.user-update-mobile-phone></livewire:user.user-update-mobile-phone>
-    @endif
-
-
-    <!--end::Modal - Update password-->
-    <!--begin::Modal - Update role-->
-    @include('pages.apps/user-management/users/modals/_update-role')
-    <!--end::Modal - Update role-->
-    <!--begin::Modal - Add auth app-->
-    @include('pages.apps/user-management/users/modals/_add-auth-app')
-    <!--end::Modal - Add auth app-->
-    <!--begin::Modal - Add task-->
-    @include('pages.apps/user-management/users/modals/_add-task')
-    <!--end::Modal - Add task-->
-    <!--end::Modals-->
     @push('scripts')
         <script>
-          
-            document.querySelectorAll('[data-kt-action="update_row"]').forEach(function (element) {
-                element.addEventListener('click', function () {
-                    Livewire.emit('update_user', this.getAttribute('data-kt-user-id'));
-                });
-            });
-            document.addEventListener('livewire:load', function () {
-                Livewire.on('success', function () {
-                    $('#kt_modal_edit_user').modal('hide'); 
-                    
-                    setTimeout(() => {
-                        
-                        window.location.reload();
-                    }, 1000);
-                });
-            });
-              document.getElementById('deleteUserForm').addEventListener('submit', function (event) {
+             document.getElementById('deleteUserForm').addEventListener('submit', function (event) {
                 event.preventDefault();
 
                 Swal.fire({
@@ -379,8 +264,47 @@
                     }
                 });
             });
-
-
+            
+            document.getElementById('approveUser').addEventListener('click', function (event) {
+                event.preventDefault(); 
+                Swal.fire({
+                    text: "Approve this User ?",
+                    icon: "info",
+                    buttonsStyling: false,
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    customClass: {
+                        confirmButton: "btn btn-primary",
+                        cancelButton: "btn btn-secondary",
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = document.getElementById('approveUser').getAttribute('href');
+                    }
+                });
+            });
+            document.getElementById('denyUser').addEventListener('click', function (event) {
+                event.preventDefault(); 
+                Swal.fire({
+                    text: "This action will reject this user!\nAre you sure?",
+                    icon: "warning",
+                    buttonsStyling: false,
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    customClass: {
+                        confirmButton: "btn btn-danger",
+                        cancelButton: "btn btn-secondary",
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = document.getElementById('denyUser').getAttribute('href');
+                    }
+                });
+            });
+            
+           
         </script>
     @endpush
 </x-default-layout>

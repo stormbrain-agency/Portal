@@ -10,9 +10,11 @@ use App\Models\TemplateFiles;
 use App\Models\MracAracDownloadHistory;
 use Illuminate\Support\Facades\Auth;
 use App\Models\County; 
+use App\Models\User; 
 use Illuminate\Http\Request;
 use League\Csv\Writer;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Mail;
 
 class CountyMRAC_ARACController extends Controller
 {
@@ -73,6 +75,29 @@ class CountyMRAC_ARACController extends Controller
                 return redirect('/county-mrac-arac/create')->with('error', 'File upload failed.');
             }
         }
+
+        $adminEmails = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->pluck('email');
+
+        $data = [
+            'email' => $user->email,
+            'name' => $user->first_name .'' . $user->last_name,
+            'county_designation' => $user->county->county ? $user->county->county : "",
+            'time' => $mracArac->created_at,
+        ];
+
+        foreach($adminEmails as $adminEmail){
+                Mail::send('mail.admin.mrac-arac', $data, function ($message) use ($adminEmail) {
+                $message->to($adminEmail);
+                $message->subject('Alert: MRAC/ARAC Submission Received');
+            });
+        }
+        $userEmail = $user->email;
+        Mail::send('mail.user.mrac-arac', $data, function ($message) use ($userEmail) {
+            $message->to($userEmail);
+            $message->subject('Confirmation: MRAC/ARAC Submission Received');
+        });
 
         return redirect('/county-mrac-arac/create')->with('success', 'Files uploaded successfully.');
     }

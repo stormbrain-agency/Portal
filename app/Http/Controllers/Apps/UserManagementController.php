@@ -43,7 +43,7 @@ class UserManagementController extends Controller
     {
         if ($user) {
             if ($user->status != 1) {
-                return redirect()->route('user-management.users-pending.show', $user);
+                return redirect()->route('user-management.county-users.show', $user);
             }
             $w9Uploads = $user->w9Upload()->orderBy('created_at', 'desc')->get();
             return view('pages.apps.user-management.users.show', compact('user','w9Uploads'));
@@ -94,6 +94,24 @@ class UserManagementController extends Controller
         return $dataTable->render('pages.apps.user-management.users-county.list');
     }
 
+    public function usersCountyShow($id)
+    {
+        $user = User::find($id);
+        if (isset($user)) {
+            $w9Uploads = $user->w9Upload;
+            if ($user->status == 1) {
+                if (!$user->hasRole('county user')) {
+                    return redirect()->route('user-management.users.show', $user); 
+                }
+                return view('pages.apps.user-management.users-county.show', compact('user','w9Uploads'));
+            }else{
+                return view('pages.apps.user-management.users-county.show-pending', compact('user','w9Uploads'));
+            }
+        } else {
+            return view('errors.404');
+        }
+    }
+
     public function usersPendingShow($id)
     {
         $user = User::find($id);
@@ -118,12 +136,12 @@ class UserManagementController extends Controller
                 $user->assignRole('county user');
                 $user->status = 1;
                 $user->save();
-                return redirect()->route('user-management.users-pending.show', $user);
+                return redirect()->route('user-management.county-users.show', $user);
             }else{
-                return route('user-management.users-pending.index');
+                return route('user-management.county-users.index');
             }
         }else{
-            return route('user-management.users-pending.show', $user);
+            return route('user-management.county-users.show', $user);
         }
     }
 
@@ -137,10 +155,10 @@ class UserManagementController extends Controller
                 $user->save();
             }
 
-            return redirect()->route('user-management.users-pending.index');
+            return redirect()->route('user-management.county-users.index');
 
         }else{
-            return route('user-management.users-pending.show', $user);
+            return route('user-management.county-users.show', $user);
         }
     }
 
@@ -161,7 +179,6 @@ class UserManagementController extends Controller
             'name' => $user->name,
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
         ];
-        $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
         Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
             $message->to($user->email);
             $message->subject('Confirm Your Account');

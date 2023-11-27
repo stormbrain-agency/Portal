@@ -9,10 +9,13 @@ use App\Models\PaymentReportFiles;
 use App\Models\TemplateFiles;
 use App\Models\PaymentReportDownloadHistory;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\County; 
 use Illuminate\Http\Request;
 use League\Csv\Writer;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Mail;
+
 
 class PaymentReportController extends Controller
 {
@@ -77,6 +80,30 @@ class PaymentReportController extends Controller
                 return redirect('/county-provider-payment-report/create')->with('error', 'File upload failed.');
             }
         }
+
+        $adminEmails = User::whereHas('roles', function ($query) {
+            $query->where('name', 'admin');
+        })->pluck('email');
+
+        $data = [
+            'email' => $user->email,
+            'name' => $user->first_name .'' . $user->last_name,
+            'county_designation' => $user->county->county ? $user->county->county : "",
+            'time' => $paymentReport->created_at,
+        ];
+
+        foreach($adminEmails as $adminEmail){
+                Mail::send('mail.admin.payment-report', $data, function ($message) use ($adminEmail) {
+                $message->to($adminEmail);
+                $message->subject('Alert: Payment Report Submission Received!');
+            });
+        }
+        $userEmail = $user->email;
+        Mail::send('mail.user.payment-report', $data, function ($message) use ($userEmail) {
+            $message->to($userEmail);
+            $message->subject('Confirmation: Payment Report Submission Received!!');
+        });
+
 
         return redirect('/county-provider-payment-report/create')->with('success', 'Files uploaded successfully.');
     }
