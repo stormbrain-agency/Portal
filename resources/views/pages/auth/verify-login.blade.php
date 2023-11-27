@@ -4,10 +4,10 @@
             <img src="{{ image('auth/smartphone.svg') }}" alt="">
         </div>
         <div class="title mb-9">Two Step Verification</div>
-        <div class="sub-title mb-9">Enter the verification code we sent to </div>
+        <div class="sub-title mb-2">Enter the verification code we sent to </div>
         <div class="phone-number mb-9">******7859</div>
         <form action="get">
-            <label class=" mb-9" for="btn-verify">Type your 6 digit security code</label>
+            <label class="mb-4" for="btn-verify">Type your 6 digit security code</label>
             <div class="d-flex align-items-center justify-content-between mb-9">
                 <input class="code" type="text" inputmode placeholder="0" min="0" max="9" required>
                 <input class="code" type="text" placeholder="0" min="0" max="9" required>
@@ -67,13 +67,14 @@
         }
 
         form input[type="submit"]{
-            padding: 0px 24px;
+            padding: 10px 24px;
             margin: 0px auto;
             background: #3E97FF;
             border: 1px solid #3E97FF;
             width: max-content;
             color: var(--bs-white);
             display: block;
+            font-size: 16px;
         }
 
     </style>

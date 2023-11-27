@@ -59813,7 +59813,7 @@ router-outlet {
 
 body,
 .app-default {
-  background-color: var(--bs-app-bg-color);
+  background-color: #F9F9F9;
 }
 
 .app-blank {
@@ -63262,10 +63262,14 @@ body,
 }
 
 
-#kt_app_header_wrapper .app-navbar .profile {
-  background-color: var(--bs-white);
+#kt_app_header_wrapper .app-navbar .menu-link {
   border-radius: 50px;
   padding: 9px 12px;
+  transition: all 300ms;
+}
+
+#kt_app_header_wrapper .app-navbar .menu-link:hover {
+  background-color: var(--bs-white);
 }
 
 .card.help-faq .box-question .content {

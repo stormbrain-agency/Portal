@@ -40,7 +40,7 @@
 	<div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
 		<div class="cursor-pointer symbol symbol-35px d-flex align-item-center" >
             <div class="app-navbar-item">
-                <a class="menu-link px-5" href="{{ url('/profile') }}">
+                <a class="menu-link" href="{{ url('/profile') }}">
                     <span class="menu-icon">{!! getIcon('notification-on', 'fs-2') !!}</span>
                 </a>
             </div>
@@ -50,7 +50,7 @@
                 </a>
             </div>
             <div class="app-navbar-item">
-                <a class="button-ajax menu-link px-5" href="#" data-action="{{ route('logout') }}" data-method="post" data-csrf="{{ csrf_token() }}" data-reload="true">
+                <a class="button-ajax menu-link" href="#" data-action="{{ route('logout') }}" data-method="post" data-csrf="{{ csrf_token() }}" data-reload="true">
                     {!! getIcon('exit-right', 'fs-1') !!}
                 </a>
             </div>
