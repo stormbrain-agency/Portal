@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password',
         'business_phone',
         'mobile_phone',
+        'phone_verified',
         'mailing_address',
         'vendor_id',
         'county_designation',

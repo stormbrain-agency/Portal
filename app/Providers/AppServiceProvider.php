@@ -30,6 +30,8 @@ class AppServiceProvider extends ServiceProvider
 
         Livewire::component('mrac_arac.view-mrac-arac', \App\Http\Livewire\MracArac\ViewMracArac::class);
 
+        Livewire::component('2fa.phone-number-verify', \App\Http\Livewire\TwoFA\PhoneNumberVerify::class);
+
         KTBootstrap::init();
     }
 }
