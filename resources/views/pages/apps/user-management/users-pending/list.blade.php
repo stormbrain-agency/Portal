@@ -1,13 +1,9 @@
 <x-default-layout>
 
     @section('title')
-        Users
+        Users Pending
     @endsection
-
-    @section('breadcrumbs')
-        {{ Breadcrumbs::render('user-management.users.index') }}
-    @endsection
-
+  
     <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">

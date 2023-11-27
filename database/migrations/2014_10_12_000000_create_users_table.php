@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('business_phone')->nullable();
             $table->string('mobile_phone')->nullable();
+            $table->boolean('phone_verified')->default(false);
             $table->string('mailing_address')->nullable();
             $table->string('vendor_id')->nullable();
             $table->string('county_designation')->nullable();

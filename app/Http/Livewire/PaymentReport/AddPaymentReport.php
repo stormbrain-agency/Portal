@@ -12,8 +12,7 @@ class AddPaymentReport extends Component
 {
     use WithFileUploads; 
 
-    public $month;
-    public $year;
+    public $month_year;
     public $comment;
     public $payment_report_file = [];
 
@@ -25,8 +24,7 @@ class AddPaymentReport extends Component
     public function store()
     {
         $this->validate([
-            'month' => 'required',
-            'year' => 'required',
+            'month_year' => 'required',
             'payment_report_file' => 'required',
 
         ]);
@@ -40,8 +38,7 @@ class AddPaymentReport extends Component
             }
         }
         $paymentReport = PaymentReport::create([
-            'month' => $this->month,
-            'year' => $this->year,
+            'month_year' => $this->month_year,
             'county_fips' => $countyFips,
             'user_id' => $user->id,
             'comments' => $this->comment,
@@ -59,16 +56,6 @@ class AddPaymentReport extends Component
             ]);
         }
 
-
-
-        // foreach ($this->payment_report_file as $file) {
-        //     $path = $file->storeAs('uploads/payment_reports', $file->getClientOriginalName());
-
-        //     PaymentReportFiles::create([
-        //         'payment_report_id' => $paymentReport->id,
-        //         'file_path' => $path,
-        //     ]);
-        // }
 
         $this->reset();
 

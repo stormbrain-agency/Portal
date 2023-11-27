@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password',
         'business_phone',
         'mobile_phone',
+        'phone_verified',
         'mailing_address',
         'vendor_id',
         'county_designation',
@@ -60,6 +61,30 @@ class User extends Authenticatable
     public function isEmailVerified()
     {
         return !is_null($this->email_verified_at);
+    }
+
+    public function getFormattedMobilePhoneAttribute()
+    {
+        if ($this->attributes['mobile_phone'] == "") {
+            return "";
+        }
+        $formattedMobilePhone = substr_replace($this->attributes['mobile_phone'], '(', 0, 0);
+        $formattedMobilePhone = substr_replace($formattedMobilePhone, ') ', 4, 0);
+        $formattedMobilePhone = substr_replace($formattedMobilePhone, '-', 9, 0);
+
+        return $formattedMobilePhone;
+    }
+
+    public function getFormattedBusinessPhoneAttribute()
+    {
+        if ($this->attributes['business_phone'] == "") {
+            return "";
+        }
+        $formattedBusinessPhone = substr_replace($this->attributes['business_phone'], '(', 0, 0);
+        $formattedBusinessPhone = substr_replace($formattedBusinessPhone, ') ', 4, 0);
+        $formattedBusinessPhone = substr_replace($formattedBusinessPhone, '-', 9, 0);
+
+        return $formattedBusinessPhone;
     }
 
 

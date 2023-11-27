@@ -18,12 +18,12 @@
             <!--begin::Modal body-->
             <div class="modal-body px-5 my-7">
                 <!--begin::Form-->
-                <form id="kt_modal_view_payment_report_form" class="form" action="#" wire:submit.prevent="store" enctype="multipart/form-data">
+                <form id="kt_modal_view_payment_report_form" class="form" action="#" enctype="multipart/form-data">
                     <!--begin::Scroll-->
                     <div class="d-flex fs-4 flex-column scroll-y px-1 px-lg-10" id="kt_modal_view_payment_report_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_view_payment_report_header" data-kt-scroll-wrappers="#kt_modal_view_payment_report_scroll" data-kt-scroll-offset="300px">
                         <!--begin::Input group-->
                        <div class="fv-row mb-7">
-                            <label class="fw-semibold mb-2"><b>Month/Year :</b>   <span>{{$monthYear}}</span></label>
+                            <label class="fw-semibold mb-2"><b>Month/Year :</b>   <span>{{$month_year}}</span></label>
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -38,9 +38,8 @@
                                 <span>
                                 @if ($user_id)
                                     <a href="{{ route('user-management.users.show', $user_id) }}" class="text-primary-800 text-hover-primary mb-1">
-                                        {{ $user_name}}
+                                        {{ $user_name}} 
                                     </a>
-                                    {{-- <span>{{ $user_email }}</span> --}}
                                 @endif</span></label>
                         </div>
                         <!--end::Input group-->
@@ -49,22 +48,82 @@
                         </div>
 
                         <div class="fv-row mb-7">
-                            <label class="fw-semibold mb-2"><b>File(s) :</b></label>
+                            <label class="fw-semibold mb-2 w-100">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <b>File(s) :</b>
+
+                                    </div>
+                                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) 
+                                        <div>
+                                            <button type="button" id="downloadBtn" class="btn btn-primary bnt-active-light-primary btn-sm">Download All</button>
+                                        </div>
+                                    @endif
+                                    
+                                </div>
+                            </label>
                             <div class="bg-light rounded p-2 mb-2 pt-4">
                                 @if ($payment_report_files && count($payment_report_files) > 0)
-                                    @foreach ($payment_report_files as $file)
-                                    <div class="row p-2">
-                                        <div class="col-9">
-                                            <p>{{$file->file_path}}</p>
-                                        </div>
-                                        <div class="col-3">
-                                            <a href="{{ route('county-provider-payment-report.download', ['filename' => $file->file_path]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
-                                        </div>
-                                    </div>
-                                    @endforeach
+                                    <ul>
+                                        @foreach ($payment_report_files as $file)
+                                        <li class="p-2">
+                                            {{-- <div class="col-9"> --}}
+                                                <p class="fs-6">{{$file->file_path}}</p>
+                                            {{-- </div> --}}
+                                            {{-- <div class="col-3">
+                                                <a href="{{ route('county-provider-payment-report.download', ['filename' => $file->file_path,'payment_id' => $payment_id]) }}" class="btn btn-primary bnt-active-light-primary btn-sm ">Download</a>
+                                            </div> --}}
+                                        </li>
+                                        @endforeach
+                                    </ul>
+
+                                @else
+                                    <p class="p-2">No file found</p>
                                 @endif
                             </div>
                         </div>
+
+                        @if(!auth()->user()->hasRole('county user')) 
+                        <div class="fv-row mb-7">
+                            <label class="fw-semibold mb-2">
+                                <b>Download History:</b>
+                            </label>
+                            <div class="bg-light rounded p-2 mb-2 pt-4" style="max-height: 300px; overflow: auto;">
+                                @if (isset($download_history) && count($download_history) > 0)
+                                    <table class="table w-100 align-middle">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-center text-nowrap"><b>#</b></th>
+                                                <th scope="col" class="text-nowrap"><b>User</b></th>
+                                                <th scope="col" class="text-center text-nowrap"><b>Downloaded at </b></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            @foreach($download_history as $index => $download)
+                                                <tr>
+                                                    <th scope="row" class="text-center text-nowrap">{{ $index + 1 }}</th>
+                                                    <td class=" text-nowrap">
+                                                        @if (isset($download->user->id) && !empty($download->user->id))
+                                                        <a href="{{ route('user-management.users.show', $download->user->id) }}"> {{ $download->user->first_name}} {{ $download->user->last_name}} 
+                                                            @if (isset($download->user->roles?->first()?->name))
+                                                            <span class="fs-6 fw-bold">
+                                                                ({{ ucwords($download->user->roles?->first()?->name)}})
+                                                            </span> 
+                                                            @endif
+                                                        </a>
+                                                        @endif 
+                                                    </td>
+                                                    <td class="text-center text-nowrap">{{ $download['created_at']->format('Y-m-d H:i:s') }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <p class="p-2">No one has downloaded it yet</p>
+                                @endif
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <!--end::Scroll-->
                     <!--begin::Actions-->
@@ -81,3 +140,40 @@
     </div>
     <!--end::Modal dialog-->
 </div>
+@push('scripts')
+<script>
+    document.addEventListener('livewire:load', function () {
+        document.getElementById("downloadBtn").addEventListener("click", function () {
+            Livewire.emit("triggerDownloadAllFiles");
+        });
+        Livewire.on('downloadAllFiles', function (downloadUrls) {
+            downloadFilesSequentially(downloadUrls);
+        });
+
+        function downloadFilesSequentially(urls) {
+            if (urls.length === 0) {
+                return;
+            }
+
+            var url = urls.shift(); 
+            downloadFile(url);
+
+
+            setTimeout(function() {
+                downloadFilesSequentially(urls);
+            }, 500);
+        }
+
+        function downloadFile(url) {
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = '';
+            document.body.appendChild(link);
+            setTimeout(function() {
+                link.click();
+            }, 500);
+            document.body.removeChild(link);
+        }
+    });
+</script>
+@endpush

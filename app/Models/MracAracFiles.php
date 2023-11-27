@@ -1,22 +1,24 @@
 <?php
+
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class W9Downloadhistory extends Model
+class MracAracFiles extends Model
 {
     use HasFactory;
-    protected $table = 'w9downloadhistory';
+    protected $table = 'mrac_arac_files';
     protected $primaryKey = 'id';
     public $timestamps = true;
 
     protected $fillable = [
-        'original_name',
-        'user_id'
+        'file_path',
+        'mrac_arac_id'
     ];
 
-    public function user()
+    public function mracArac()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id'); 
+        return $this->belongsTo(MracArac::class, 'mrac_arac_id', 'id');
     }
 }

@@ -16,11 +16,13 @@ class UsersSeeder extends Seeder
      */
     public function run(Generator $faker)
     {
+        $admin_email = env('ADMIN_EMAIL', 'development@stormbrain.com');
+        $admin_password = env('ADMIN_PASSWORD', 'W%JdE7EhM)TC!pS(imuAzEgw');
         $demoUser = User::create([
             'first_name'              => "CDA",
             'last_name'              => "Admin",
-            'email'             => 'development@stormbrain.com',
-            'password'          => Hash::make('W%JdE7EhM)TC!pS(imuAzEgw'),
+            'email'             => $admin_email,
+            'password'          => Hash::make($admin_password),
             'status'          => 1,
             'email_verified_at' => now(),
         ]);
@@ -48,10 +50,25 @@ class UsersSeeder extends Seeder
             'mobile_phone'              => "033-561188",
             'mailing_address'              => "mail@gmail.com",
             'vendor_id'              => "9855-6665",
-            'county_designation'              => "9855-6665",
-            'status'              => "9855-6665",
+            'county_designation'              => "06037",
+            'status'              => 1,
             'w9_file_path'              => "download.com",
             'email'             => 'countyuser@demo.com',
+            'password'          => Hash::make('demo'),
+            'status'          => 1,
+            'email_verified_at' => now(),
+        ]);
+        $demoUser5 = User::create([
+            'first_name'              => "Demo",
+            'last_name'              => "2FA",
+            'business_phone'              => "1234567899",
+            'mobile_phone'              => "0338561188",
+            'mailing_address'              => "mail@gmail.com",
+            'vendor_id'              => "9855-6665",
+            'county_designation'              => "06037",
+            'status'              => 1,
+            'w9_file_path'              => "download.com",
+            'email'             => 'test2fa@demo.com',
             'password'          => Hash::make('demo'),
             'status'          => 1,
             'email_verified_at' => now(),

@@ -33,7 +33,7 @@ class EditUserModal extends Component
     public $stateChose;
     public $county;
     public $countyDropdown;
-    public $edit_mode = false;
+    public $edit_mode = true;
 
     protected $listeners = [
         'update_user' => 'updateUser',
@@ -41,10 +41,27 @@ class EditUserModal extends Component
     ];
 
     protected $rules = [
-        'first_name' => 'required|string',
-        'last_name' => 'required|string',
-        'email' => 'required|email',
+        'first_name' => ['required', 'string', 'max:255'],
+        'last_name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255'],
         'role' => 'required|string',
+    ];
+
+    protected $rules_for_county_user = [
+        'first_name' => ['required', 'string', 'max:255'],
+        'last_name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255'],
+        'business_phone' => ['required', 'string', 'max:255', 'regex:/^\(\d{3}\) \d{3}-\d{4} ext\. \d{4}$/'],
+        'mobile_phone' => ['required', 'string', 'max:255', 'regex:/^\(\d{3}\) \d{3}-\d{4}$/'],
+        'mailing_address' => ['required', 'string', 'max:255'],
+        'vendor_id' => ['required', 'string', 'max:255'],
+        'county_designation' => ['required', 'string', 'max:255'],
+        'role' => ['required', 'string'],
+    ];
+
+    protected $messages = [
+        'business_phone.regex' => 'Please use the format (XXX) XXX-XXXX ext. XXXX.',
+        'mobile_phone.regex' => 'Please use the format (XXX) XXX-XXXX.',
     ];
 
     public function render()
@@ -68,7 +85,9 @@ class EditUserModal extends Component
 
     public function submit()
     {
-        $this->validate();
+        $checkRules = $this->role === 'county user' ? $this->rules_for_county_user : $this->rules;
+
+        $this->validate($checkRules);
 
         DB::transaction(function () {
             if ($this->edit_mode) {
@@ -131,7 +150,7 @@ class EditUserModal extends Component
         $this->last_name = $user->last_name;
         $this->email = $user->email;
         $this->business_phone = $user->business_phone;
-        // $this->mobile_phone = $user->mobile_phone;
+        $this->mobile_phone = $user->mobile_phone;
         $this->mailing_address = $user->mailing_address;
         $this->vendor_id = $user->vendor_id;
         $this->county_designation = $user->county_designation;
@@ -143,12 +162,15 @@ class EditUserModal extends Component
     private function prepareUserData()
     {
         // Prepare the data for creating or updating a user
+        $cleanedMobilePhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
+        $cleanedBusinessPhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
+
         $data = [
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
-            'business_phone' => $this->business_phone,
-            'mobile_phone' => $this->mobile_phone,
+            'business_phone' => $cleanedBusinessPhoneNumber,
+            'mobile_phone' => $cleanedMobilePhoneNumber,
             'mailing_address' => $this->mailing_address,
             'vendor_id' => $this->vendor_id,
             'county_designation' => $this->county_designation,

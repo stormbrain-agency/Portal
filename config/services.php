@@ -42,4 +42,9 @@ return [
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         'redirect'      => '/auth/redirect/facebook',
     ],
+    'twilio' => [
+        'account_sid' => env('AC94c9061253c202c1f8c5bbb43fb2528f'),
+        'auth_token' => env('8a162e00e1b3812d9e1849e89b035cf5'),
+        'from' => env('+17604520825'),
+    ],
 ];

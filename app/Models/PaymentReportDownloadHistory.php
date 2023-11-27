@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentReportDownloadHistory extends Model
 {
     use HasFactory;
-    protected $table = 'payment_report_download_historyx';
+    protected $table = 'payment_report_download_history';
     protected $primaryKey = 'id';
     public $timestamps = true;
 

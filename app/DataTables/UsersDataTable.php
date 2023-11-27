@@ -44,7 +44,14 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->where('status', 1)->whereNotNull('email_verified_at');
+        $query = $model->newQuery();
+
+        $query->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->select('users.*', 'roles.name as role_name')
+            ->where('users.status', 1);
+        return $query;
+
     }
 
     /**
@@ -59,7 +66,7 @@ class UsersDataTable extends DataTable
             ->dom('rt' . "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>",)
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-            ->orderBy(2)
+            ->orderBy(3)
             ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users/columns/_draw-scripts.js')) . "}");
     }
 
@@ -71,7 +78,7 @@ class UsersDataTable extends DataTable
         if (auth()->user()->hasRole('admin')) {
             return [
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
-                Column::make('role')->searchable(false)->orderable(false)->name("role.name"),
+                Column::make('role')->name("roles.name"),
                 Column::make('last_login_at')->title('Last Login'),
                 Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
                 Column::computed('action')
@@ -83,7 +90,7 @@ class UsersDataTable extends DataTable
         }else{
              return [
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name'),
-                Column::make('role')->searchable(false)->orderable(false),
+                Column::make('role')->name("roles.name"),
                 Column::make('last_login_at')->title('Last Login'),
                 Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
             ];

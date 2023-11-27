@@ -50,21 +50,27 @@ class UserPending extends Component
             'name' => $user->name,
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
         ];
+        // $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
+        // $stormbrainEmail = "velado7302@eachart.com";
+        // $stormbrainEmail = "development@stormbrain.com";
 
         Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
             $message->to($user->email);
-            $message->subject('Verify Account');
+            $message->subject('Confirm Your Account');
         });
+
     }
 
     public function denyUser($id)
     {
         if (auth()->user()->can('county users management')) {
-            // Delete the user record with the specified ID
-            User::destroy($id);
-
-            // Emit a success event with a message
-            $this->emit('success', 'User successfully deleted');
+             $user = User::find($id);
+            if (!is_null($user)) {
+               
+                $user->status = 2;
+                $user->save();
+                $this->emit('success', 'User has been successfully rejected');
+            }
         }else{
             $this->emit('error', 'You do not have permission to perform this action');
         }

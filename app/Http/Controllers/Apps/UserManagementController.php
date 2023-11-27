@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
 use App\DataTables\UsersPendingDataTable;
+use App\DataTables\UsersCountyDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
@@ -41,6 +42,9 @@ class UserManagementController extends Controller
     public function show(User $user)
     {
         if ($user) {
+            if ($user->status != 1) {
+                return redirect()->route('user-management.users-pending.show', $user);
+            }
             $w9Uploads = $user->w9Upload()->orderBy('created_at', 'desc')->get();
             return view('pages.apps.user-management.users.show', compact('user','w9Uploads'));
         } else {
@@ -85,10 +89,18 @@ class UserManagementController extends Controller
         return $dataTable->render('pages.apps.user-management.users-pending.list');
     }
 
+    public function county_users(UsersCountyDataTable $dataTable)
+    {
+        return $dataTable->render('pages.apps.user-management.users-county.list');
+    }
+
     public function usersPendingShow($id)
     {
         $user = User::find($id);
-        if ($user) {
+        if (isset($user)) {
+            if ($user->status == 1) {
+                return redirect()->route('user-management.users.show', $user);
+            }
             $w9Uploads = $user->w9Upload;
             return view('pages.apps.user-management.users-pending.show', compact('user','w9Uploads'));
         } else {
@@ -118,7 +130,12 @@ class UserManagementController extends Controller
     public function usersPendingDeny($id)
     {
         if (auth()->user()->can('county users management')) {
-            User::destroy($id);
+             $user = User::find($id);
+            if (!is_null($user)) {
+               
+                $user->status = 2;
+                $user->save();
+            }
 
             return redirect()->route('user-management.users-pending.index');
 
@@ -144,10 +161,10 @@ class UserManagementController extends Controller
             'name' => $user->name,
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
         ];
-
+        $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
         Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
             $message->to($user->email);
-            $message->subject('Verify Account');
+            $message->subject('Confirm Your Account');
         });
     }
 }

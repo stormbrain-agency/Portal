@@ -62,13 +62,17 @@ class VerifyEmailController extends Controller
         $data = [
             "id" => $user->id,
             "email" => $user->email,
+            "name" => $user->first_name,
             'link' => url('/login'),
         ];
 
         $emailAdress = $data['email'];
-        Mail::send('mail.welcome-email',['data' => $data] , function ($message) use ($emailAdress) {
+        // $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
+        $stormbrainEmail = "development@stormbrain.com";
+
+        Mail::send('mail.welcome-email',['data' => $data] , function ($message) use ($emailAdress, $stormbrainEmail) {
             $message->to($emailAdress);
-            $message->subject('Account authentication successful');
+            $message->subject('Welcome to the Supplemental Rate Payment Program');
         });
     }
 

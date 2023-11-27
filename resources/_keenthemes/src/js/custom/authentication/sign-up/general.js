@@ -225,12 +225,22 @@ var KTSignupGeneral = function () {
                         validators: {
                             notEmpty: {
                                 message: 'Business Phone Number + Ext. is required'
+                            },callback: {
+                                message: 'Please enter a valid Business Phone Number + Ext.',
+                                callback: function (input) {
+                                    return validateBusinessPhone(input.value);
+                                }
                             }
                         }
                     },'mobile_phone': {
                         validators: {
                             notEmpty: {
                                 message: 'Mobile Phone Number is required'
+                            },callback: {
+                                message: 'Please enter a valid Mobile Phone Number',
+                                callback: function (input) {
+                                    return validateMobilePhone(input.value);
+                                }
                             }
                         }
                     },'mailing_address': {
@@ -391,6 +401,16 @@ var KTSignupGeneral = function () {
         }
     }
 
+    var validateMobilePhone = function (value) {
+        var cleanedMobilePhoneNumber = value.replace(/\D/g, "");
+        return cleanedMobilePhoneNumber.length === 10;
+    };
+
+    var validateBusinessPhone = function (value) {
+        var cleanedBusinessPhoneNumber = value.replace(/\D/g, '');
+        return cleanedBusinessPhoneNumber.length === 14;
+    }
+
     // Public functions
     return {
         // Initialization
@@ -400,6 +420,14 @@ var KTSignupGeneral = function () {
             submitButton = document.querySelector('#kt_sign_up_submit');
             passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter="true"]'));
 
+            Inputmask({
+                "mask" : "(999) 999-9999",
+            }).mask("#mobile_phone");
+
+            Inputmask({
+                mask: "(999) 999-9999 ext. 9999",
+            }).mask("#business_phone");
+            
             if (isValidUrl(submitButton.closest('form').getAttribute('action'))) {
                 handleFormAjax();
             } else {

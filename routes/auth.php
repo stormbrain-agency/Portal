@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\RegisteredNotificationController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Livewire\TwoFA\PhoneNumberVerify ;
 use Illuminate\Support\Facades\Route;
 
 
@@ -28,21 +29,19 @@ Route::post('reset-password', [NewPasswordController::class, 'store'])
 Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, 'verify'])
             ->name('verification.verify');
 
+Route::get('censoring', [RegisteredUserController::class, 'censoring'])
+            ->name('censoring');
+Route::get('confirm_email', [RegisteredUserController::class, 'confirm_email'])
+            ->name('confirm_email');
+
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
-
     Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
-
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
-
-    Route::get('censoring', [RegisteredUserController::class, 'censoring'])
-                ->name('censoring');
-    Route::get('confirm_email', [RegisteredUserController::class, 'confirm_email'])
-                ->name('confirm_email');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']); 
 });
 
 Route::middleware('auth')->group(function () {
@@ -60,4 +59,15 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
+    Route::get('/logout', function () {
+            Auth::logout(); 
+            return redirect('/login'); 
+        })->name('logout_to_login');
+
+    Route::prefix('/verify')->group(function () {
+        Route::get('/phone', function () { 
+            return view('pages.auth.verify-phone');
+        })->name('verify.phone');
+    });
 });

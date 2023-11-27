@@ -22,7 +22,7 @@
 
     <!--begin::Menu item-->
     <div class="menu-item px-3">
-        <a href="#" class="menu-link px-3" data-kt-user-id="{{ $user->id }}" data-kt-action="delete_row">
+        <a href="#" class="menu-link px-3 text-danger" data-kt-user-id="{{ $user->id }}" data-kt-action="delete_row">
             Delete
         </a>
     </div>

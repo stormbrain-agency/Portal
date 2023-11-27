@@ -35,7 +35,7 @@
                     <!--begin::Input group=-->
                     <div class="fv-row mb-10 text-left">
                         <label class="required form-label fw-semibold fs-6 mb-2" >New Mobile Phone</label>
-                        <input class="form-control form-control-lg form-control-solid" wire:model.defer="newMobilePhone" type="text" placeholder="" name="newMobilePhone" autocomplete="off" />
+                        <input class="form-control form-control-lg form-control-solid" wire:model.defer="newMobilePhone" id="newMobilePhone" type="text" placeholder="" name="newMobilePhone" autocomplete="off" />
                     </div>
                     @error('newMobilePhone')
                         <span class="text-danger">{{ $message }}</span> @enderror
@@ -59,3 +59,10 @@
     </div>
     <!--end::Modal dialog-->
 </div>
+@push('scripts')
+    <script>
+        Inputmask({
+            "mask" : "(999) 999-9999",
+        }).mask("#newMobilePhone");
+    </script>
+@endpush

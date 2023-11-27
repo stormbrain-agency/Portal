@@ -51,7 +51,6 @@ class RegisteredUserController extends Controller
             'mailing_address' => ['required', 'string', 'max:255'],
             'vendor_id' => ['required', 'string', 'max:255'],
             'county_designation' => ['required', 'string', 'max:255'],
-            'w9_file_path' => ['required', 'file', 'mimes:zip'], 
         ]);
 
         if ($request->hasFile('w9_file_path')) {
@@ -70,6 +69,10 @@ class RegisteredUserController extends Controller
                 }
                 $path = $file->storeAs('uploads', $uniqueName, 'local');
 
+                $cleanedMobilePhoneNumber = str_replace(['(', ')', ' ', '-'], '', $request->input('mobile_phone'));
+                $cleanedBusinessPhoneNumber = str_replace(['(', ')', ' ', '-'], '', $request->input('business_phone'));
+
+
                 $user = User::create([
                     'first_name' => $request->input('first_name'),
                     'last_name' => $request->input('last_name'),
@@ -77,15 +80,15 @@ class RegisteredUserController extends Controller
                     'password' => Hash::make($request->input('password')),
                     'last_login_at' => \Illuminate\Support\Carbon::now()->toDateTimeString(),
                     'last_login_ip' => $request->getClientIp(),
-                    'business_phone' => $request->input('business_phone'),
-                    'mobile_phone' => $request->input('mobile_phone'),
+                    'business_phone' => $cleanedBusinessPhoneNumber,
+                    'mobile_phone' => $cleanedMobilePhoneNumber,
                     'mailing_address' => $request->input('mailing_address'),
                     'vendor_id' => $request->input('vendor_id'),
                     'county_designation' => $request->input('county_designation'),
                     'status' => 0,
                 ]);
 
-
+                $user->assignRole('county user');
                 $userID = $user->id;
 
                 $newFile = new W9Upload();
@@ -94,6 +97,7 @@ class RegisteredUserController extends Controller
                 $newFile->original_name = $uniqueName;
                 $newFile->save();
 
+                $county_designation = $user->county->county;
                 // event(new Registered($user));
                 // Send Mail
                 $adminEmails = User::whereHas('roles', function ($query) {
@@ -102,12 +106,14 @@ class RegisteredUserController extends Controller
                 $data = [
                     'name' => $request -> input('name'),
                     'email' => $request -> input('email'),
-                    'county_designation' => $request -> input('county_designation'),
+                    'county_designation' => $county_designation,
                     'link' => url('/user-management/user-pending/users/'. $userID .''),
                     'time' => Carbon::now()->format('H:i:s - m/d/Y '),
                     'list_mail' => $adminEmails,
                 ];
                 $dataMail = $data['list_mail'];
+                // $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
+
                 foreach($dataMail as $emailAdress){
                     Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {
                         $message->to($emailAdress);
