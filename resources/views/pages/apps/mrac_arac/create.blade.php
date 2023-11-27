@@ -79,7 +79,7 @@ line-height: 16px;
         </div>
         @else
         <!--begin::Card body-->
-        <div class="card-body py-4">
+        <div class="card-body py-4 pt-0">
             <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our FAQs or submit a request via our contact us form.</i> </span>
             <br>
             <a href="{{ route('county-mrac-arac.download_template') }}" class="btn btn-bg-primary me-6 text-light mt-5">

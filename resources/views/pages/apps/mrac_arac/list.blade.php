@@ -17,11 +17,12 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
+                MRAC/ARAC | Submission MRAC/ARAC 
             </div>
             <!--begin::Card title-->
 
             <!--begin::Card toolbar-->
-            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
+            <div class="card-toolbar gx-10 d-flex justify-content-end mt-3" style="gap: 10px; width:100%">
                 <!--begin::Toolbar-->
                 @if(!auth()->user()->hasRole('county user'))
                 <div style="width: 150px">

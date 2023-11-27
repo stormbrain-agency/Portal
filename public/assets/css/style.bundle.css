@@ -34830,6 +34830,7 @@ fieldset:disabled .btn {
   --bs-text-warning: #ffc700;
   --bs-text-danger: #f1416c;
   --bs-text-dark: #071437;
+  --bs-text-dark-2: #192D50;
   --bs-text-muted: #99A1B7;
   --bs-text-gray-100: #F9F9F9;
   --bs-text-gray-200: #F1F1F2;
@@ -40931,6 +40932,10 @@ h6,
 .card .card-header .card-title .card-label {
   font-weight: 500;
   font-size: 1.275rem;
+  color: var(--bs-text-dark);
+}
+
+.card .card-header .card-title {
   color: var(--bs-text-dark);
 }
 
@@ -63241,7 +63246,7 @@ body,
 
 .card.help-faq .title {
   margin-bottom: 50px;
-  color: #192D50;
+  color: var(--bs-text-dark-2);
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -63303,7 +63308,7 @@ body,
 }
 
 .page-profile .title {
-  color: #192D50;
+  color: var(--bs-text-dark-2);
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -63317,7 +63322,7 @@ body,
 }
 
 .page-profile .wrap-content label {
-  color: #192D50;
+  color: var(--bs-text-dark-2);
   font-size: 14px;
   font-weight: 600;
   line-height: 14px;
@@ -63350,7 +63355,7 @@ body,
 }
 
 .page-profile .wrap-top span {
-  color: #192D50;
+  color: var(--bs-text-dark-2);
   font-size: 24px !important;
   margin-right: 2px;
 }

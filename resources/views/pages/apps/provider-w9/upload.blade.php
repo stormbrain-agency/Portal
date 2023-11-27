@@ -26,11 +26,8 @@
         </div>
         @else
         <!--begin::Card body-->
-        <div class="card-body py-4">
+        <div class="card-body py-4 pt-0">
             <!-- <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our FAQs or submit a request via our contact us form.</i> </span> -->
-            <br>
-            
-
             <form action="/county-w9/upload" method="POST" id="myform" class="form" enctype="multipart/form-data">
                 @csrf
                 <!--begin::Scroll-->
