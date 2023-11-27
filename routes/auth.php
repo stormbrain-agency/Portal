@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\RegisteredNotificationController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Livewire\TwoFA\PhoneNumberVerify ;
 use Illuminate\Support\Facades\Route;
 
 
@@ -63,4 +64,10 @@ Route::middleware('auth')->group(function () {
             Auth::logout(); 
             return redirect('/login'); 
         })->name('logout_to_login');
+
+    Route::prefix('/verify')->group(function () {
+        Route::get('/phone', function () { 
+            return view('pages.auth.verify-phone');
+        })->name('verify.phone');
+    });
 });
