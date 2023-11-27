@@ -48,7 +48,7 @@ class UsersPendingDataTable extends DataTable
     public function query(User $model): QueryBuilder
     {
         $query = $model->newQuery()->where(function ($query) {
-            $query->where('status', 0);
+            $query->where('status', 0)->orWhere('status', 2);;
                 
         });
 

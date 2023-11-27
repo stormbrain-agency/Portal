@@ -65,6 +65,9 @@ class User extends Authenticatable
 
     public function getFormattedMobilePhoneAttribute()
     {
+        if ($this->attributes['mobile_phone'] == "") {
+            return "";
+        }
         $formattedMobilePhone = substr_replace($this->attributes['mobile_phone'], '(', 0, 0);
         $formattedMobilePhone = substr_replace($formattedMobilePhone, ') ', 4, 0);
         $formattedMobilePhone = substr_replace($formattedMobilePhone, '-', 9, 0);
@@ -74,6 +77,9 @@ class User extends Authenticatable
 
     public function getFormattedBusinessPhoneAttribute()
     {
+        if ($this->attributes['business_phone'] == "") {
+            return "";
+        }
         $formattedBusinessPhone = substr_replace($this->attributes['business_phone'], '(', 0, 0);
         $formattedBusinessPhone = substr_replace($formattedBusinessPhone, ') ', 4, 0);
         $formattedBusinessPhone = substr_replace($formattedBusinessPhone, '-', 9, 0);

@@ -27,9 +27,18 @@
             </div>
             <!--begin::Card title-->
 
-            @if(auth()->user()->hasRole('admin'))
             <!--begin::Card toolbar-->
-            <div class="card-toolbar">
+            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
+                <div style="width: 150px">
+                    <select id="select_role" class="form-select form-select-solid text-center">
+                        <option value="">Select Role</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Manager">Manager</option>
+                        <option value="View Only">View Only</option>
+                        <option value="County User">County User</option>
+                    </select>
+                </div>
+                @if(auth()->user()->hasRole('admin'))
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                     <!--begin::Add user-->
@@ -43,10 +52,10 @@
                 <!--begin::Modal-->
                 <livewire:user.add-user-modal></livewire:user.add-user-modal>
                 <!--end::Modal-->
+                @endif
             </div>
 
             <!--end::Card toolbar-->
-            @endif
         </div>
         <!--end::Card header-->
 
@@ -72,8 +81,15 @@
                     $('#kt_modal_add_user').modal('hide');
                     window.LaravelDataTables['users-table'].ajax.reload();
                 });
+                 document.getElementById('select_role').addEventListener('change', function() {
+                    var select_role = this.value;
+                    console.log(select_role);
+                    window.LaravelDataTables['users-table'].column('roles.name:name').search(select_role).draw();
+                });
             });
         </script>
+
+    
     @endpush
 
 </x-default-layout>

@@ -57,7 +57,6 @@ class EditUserModal extends Component
         'vendor_id' => ['required', 'string', 'max:255'],
         'county_designation' => ['required', 'string', 'max:255'],
         'role' => ['required', 'string'],
-
     ];
 
     protected $messages = [

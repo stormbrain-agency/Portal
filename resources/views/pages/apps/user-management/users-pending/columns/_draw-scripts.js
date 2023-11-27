@@ -54,7 +54,7 @@ document.querySelectorAll('[data-kt-action="approve_row"]').forEach(function (el
 document.querySelectorAll('[data-kt-action="deny_row"]').forEach(function (element) {
     element.addEventListener('click', function () {
         Swal.fire({
-            text: "This action will delete this user's data!\nAre you sure?",
+            text: "This action will reject this user!\nAre you sure?",
             icon: "warning",
             buttonsStyling: false,
             showCancelButton: true,
