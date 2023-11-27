@@ -127,5 +127,6 @@ class RolesPermissionsSeeder extends Seeder
         User::find(2)->assignRole('manager');
         User::find(3)->assignRole('view only');
         User::find(4)->assignRole('county user');
+        User::find(5)->assignRole('county user');
     }
 }
