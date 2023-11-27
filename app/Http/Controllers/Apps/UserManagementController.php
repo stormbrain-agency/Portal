@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\DataTables\UsersDataTable;
 use App\DataTables\UsersPendingDataTable;
+use App\DataTables\UsersCountyDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
@@ -86,6 +87,11 @@ class UserManagementController extends Controller
     public function users_pending(UsersPendingDataTable $dataTable)
     {
         return $dataTable->render('pages.apps.user-management.users-pending.list');
+    }
+
+    public function county_users(UsersCountyDataTable $dataTable)
+    {
+        return $dataTable->render('pages.apps.user-management.users-county.list');
     }
 
     public function usersPendingShow($id)
