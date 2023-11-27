@@ -13,7 +13,7 @@ class PhoneVerify
    {
         $userEmail = auth()->user()->email;
 
-        if ($userEmail == 'countyuser@demo.com' && Auth::user()->phone_verified == 0) {
+        if ($userEmail == 'test2fa@demo.com' && Auth::user()->phone_verified == 0) {
             // dd("middleware phoneverify");
             return redirect(route('verify.phone'));
         }
