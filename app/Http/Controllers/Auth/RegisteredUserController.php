@@ -70,6 +70,10 @@ class RegisteredUserController extends Controller
                 }
                 $path = $file->storeAs('uploads', $uniqueName, 'local');
 
+                $cleanedMobilePhoneNumber = str_replace(['(', ')', ' ', '-'], '', $request->input('mobile_phone'));
+                $cleanedBusinessPhoneNumber = str_replace(['(', ')', ' ', '-'], '', $request->input('business_phone'));
+
+
                 $user = User::create([
                     'first_name' => $request->input('first_name'),
                     'last_name' => $request->input('last_name'),
@@ -77,8 +81,8 @@ class RegisteredUserController extends Controller
                     'password' => Hash::make($request->input('password')),
                     'last_login_at' => \Illuminate\Support\Carbon::now()->toDateTimeString(),
                     'last_login_ip' => $request->getClientIp(),
-                    'business_phone' => $request->input('business_phone'),
-                    'mobile_phone' => $request->input('mobile_phone'),
+                    'business_phone' => $cleanedBusinessPhoneNumber,
+                    'mobile_phone' => $cleanedMobilePhoneNumber,
                     'mailing_address' => $request->input('mailing_address'),
                     'vendor_id' => $request->input('vendor_id'),
                     'county_designation' => $request->input('county_designation'),

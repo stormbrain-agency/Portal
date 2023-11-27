@@ -48,7 +48,7 @@ class ViewW9Provide extends Component
             $this->file_name = $w9_upload->original_name;
             $this->created_at = $w9_upload->created_at;
 
-            $this->download_history = W9DownloadHistory::where("w9_id", $id)->get();
+            $this->download_history = W9DownloadHistory::where("w9_id", $id)->orderBy('id', 'desc')->get();
         }
     }
 }

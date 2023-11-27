@@ -52,9 +52,9 @@ class UserPending extends Component
         ];
         // $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
         // $stormbrainEmail = "velado7302@eachart.com";
-        $stormbrainEmail = "development@stormbrain.com";
+        // $stormbrainEmail = "development@stormbrain.com";
 
-        Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user, $stormbrainEmail) {
+        Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
             $message->to($user->email);
             $message->subject('Confirm Your Account');
         });
