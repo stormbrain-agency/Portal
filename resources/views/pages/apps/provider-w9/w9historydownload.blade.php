@@ -1,12 +1,13 @@
 <x-default-layout>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
 
     @section('title')
         W9 List Download History
     @endsection
 
-    @section('breadcrumbs')
+    {{-- @section('breadcrumbs')
         {{ Breadcrumbs::render('user-management.users.index') }}
-    @endsection
+    @endsection --}}
 
     <div class="card">
         <!--begin::Card header-->

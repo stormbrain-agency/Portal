@@ -1,4 +1,6 @@
 <x-default-layout>
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
+
     @if(auth()->user()->hasRole('county user'))
 
     <div class="card">
@@ -36,7 +38,7 @@
                     <!--begin::Input group-->
                     <div class="fv-row mb-7">
                         <!--begin::Label-->
-                        <label class="required fw-bold fs-6 mb-2">Document Upload</label>
+                        {{-- <label class="required fw-bold fs-6 mb-2">Document Upload</label> --}}
                         <!--end::Label-->
                         <!--begin::Input-->
                          <!--begin::Dropzone-->
@@ -59,12 +61,18 @@
                                 <!--end::Info-->
                             </div>
                             <input type="file" name="file" class="drop-zone__input form-control-file" id="w9_uploadInput">
-
                         </div>
                         <!--end::Dropzone-->
                        
                         @if(session('error'))
-                            <span class="text-danger">{{ session('error') }}</span>
+                            <div class="wrap-alert error d-flex align-items-center mt-6">
+                              {!! getIcon('notification-bing','me-4') !!}
+                              <div class="content" style="width: 100%;">
+                                  <div class="title mb-2">There is Error Uploading Your File</div>
+                                  <div class="sub-title">{{ session('error') }}</div>
+                              </div>
+                              {!! getIcon('cross','fs-1 btn-alert') !!}
+                          </div> 
                         @endif
 
                     </div>
@@ -78,7 +86,15 @@
                             <textarea id="comment" placeholder="Please write a comment here" class="border border-gray-500 mb-3 mb-lg-0 form-control bg-transparent" name="comments" id="" cols="30" rows="5s"></textarea>
                             <!--end::Input-->
                             @error('comment')
-                            <span class="text-danger">{{ $message }}</span> @enderror
+                              <div class="wrap-alert error d-flex align-items-center">
+                                {!! getIcon('notification-bing','me-4') !!}
+                                <div class="content" style="width: 100%;">
+                                    <div class="title mb-2">There is Error Uploading Your File</div>
+                                    <div class="sub-title">{{ $message }}</div>
+                                </div>
+                                {!! getIcon('cross','fs-1 btn-alert') !!}
+                            </div> 
+                            @enderror
                         </div>
                         <!--end::Input group-->
                 </div>

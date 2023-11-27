@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
+
 <div class="modal fade" id="kt_modal_view_w9" tabindex="-1" aria-hidden="true" wire:ignore.self >
     <!--begin::Modal dialog-->
     <div class="modal-dialog modal-dialog-centered mw-650px">

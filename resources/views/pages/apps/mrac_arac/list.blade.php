@@ -1,5 +1,7 @@
 <x-default-layout>
 <!-- Add these lines to include DataTables buttons extension -->
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
+
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>

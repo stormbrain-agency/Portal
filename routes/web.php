@@ -34,7 +34,7 @@ Route::get('/downloads', [W9_Historydownload_Controller::class, 'showDownloads']
 
 
 Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
-    Route::get('/', [UserManagementController::class, 'profile'])->name('profile');
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
     Route::get('/profile/details', [UserManagementController::class, 'profileDetails'])->name('profileDetails');
     // Route::get('/', [DashboardController::class, 'index']);
     Route::get('/get-counties/{stateId}', 'LocationController@getCountiesByState');
