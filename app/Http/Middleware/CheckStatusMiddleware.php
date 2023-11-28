@@ -18,8 +18,11 @@ class CheckStatusMiddleware
         if ($request->user() && $request->user()->status == 0) {
             return redirect()->route('censoring');
         }
+        if ($request->user() && $request->user()->status == 2) {
+            return redirect()->route('rejected');
+        }
         if ($request->user() && !$request->user()->isEmailVerified()) {
-            return redirect()->route('confirm_email');
+            return redirect()->route('verification.notice');
         }
         return $next($request);
     }

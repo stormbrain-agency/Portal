@@ -174,6 +174,7 @@ class AddUserModal extends Component
         $cleanedMobilePhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
         $cleanedBusinessPhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
 
+        // dd($this->business_phone);
         $data = [
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
@@ -221,12 +222,14 @@ class AddUserModal extends Component
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
         $this->email = $user->email;
-        $this->business_phone = $user->business_phone;
-        $this->mobile_phone = $user->mobile_phone;
+        $this->business_phone = $user->getFormattedBusinessPhoneAttribute();
+        $this->mobile_phone = $user->getFormattedMobilePhoneAttribute();
         $this->mailing_address = $user->mailing_address;
         $this->vendor_id = $user->vendor_id;
         $this->county_designation = $user->county_designation;
         $this->role = $user->roles?->first()->name ?? '';
+
+        // dd($this->business_phone);
     }
 
     public function updateCountyDropdown()
