@@ -6,33 +6,13 @@
 		<div class="menu menu-column menu-rounded menu-sub-indention px-3 fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
 			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('dashboard') ? 'here show' : '' }}">
 				<!--begin:Menu link-->
-				<span class="menu-link">
-					<span class="menu-icon">{!! getIcon('element-11', 'fs-2') !!}</span>
+				<a class="menu-link  {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+					<span class="menu-icon">
+						{!! getIcon('element-11', 'fs-2') !!}
+					</span>
 					<span class="menu-title">Dashboards</span>
-					<span class="menu-arrow"></span>
-				</span>
+				</a>
 				<!--end:Menu link-->
-				<!--begin:Menu sub-->
-				<div class="menu-sub menu-sub-accordion">
-					<!--begin:Menu item-->
-					<div class="menu-item">
-						<!--begin:Menu link-->
-						<a class="menu-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-							<span class="menu-bullet">
-								<span class="bullet bullet-dot"></span>
-							</span>
-							<span class="menu-title">Default</span>
-						</a>
-						<!--end:Menu link-->
-					</div>
-					<!--end:Menu item-->
-				</div>
-				<!--end:Menu sub-->
-			</div>
-			<div class="menu-item pt-5">
-				<div class="menu-content">
-					<span class="menu-heading fw-bold text-uppercase fs-7">Manager</span>
-				</div>
 			</div>
 			@if(auth()->user()->hasRole('admin'))
 				{{-- Provider W-9 --}}
@@ -94,9 +74,6 @@
 						@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 						<div class="menu-item">
 							<a class="menu-link {{ request()->routeIs('user-management.county-users.*') ? 'active' : '' }}" href="{{ route('user-management.county-users.index') }}">
-								<span class="menu-bullet">
-									<span class="bullet bullet-dot"></span>
-								</span>
 								<span class="menu-title">County Users</span>
 							</a>
 						</div>
