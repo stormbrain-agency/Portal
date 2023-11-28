@@ -32,30 +32,29 @@ class VerifyEmailController extends Controller
 
     public function verify($id, $hash)
     {
-        if (!auth()->check()) {
+        $loggedInUserId = auth()->id();
+        if ($loggedInUserId == $id) {
             $user = User::find($id);
-
-            if (!is_null($user)) {
-                if (!$user->isEmailVerified()) {
-                    if ($user->email_verification_hash === $hash) {
-                        $user->email_verified_at = now();
-                        $user->email_verification_hash = null;
-                        $user->save();
-                        $this->welcome_email($user);
-
-                        return redirect()->route('login')->with('success', 'Email has been successfully verified.');
-                    } else {
-                        return redirect()->route('login')->with('error', 'The verification link is not valid.');
-                    }
+    
+            if (!$user->isEmailVerified()) {
+                if ($user->email_verification_hash === $hash) {
+                    $user->email_verified_at = now();
+                    $user->email_verification_hash = null;
+                    $user->save();
+                    $this->welcome_email($user);
+    
+                    return redirect()->route('dashboard')->with('success', 'Email has been successfully verified.');
                 } else {
-                    return redirect()->route('login')->with('error', 'Your email has been previously verified.');
+                    return redirect()->route('verification.notice')->with('error', 'The verification link is not valid.');
                 }
             } else {
-                return redirect()->route('login')->with('error', 'Invalid user.');
+                return redirect()->route('dashboard')->with('error', 'Your email has been previously verified.');
             }
-        } else {
-            return redirect()->route('dashboard')->with('error', 'You are already logged in and your email has been verified.');
+        }else{
+            return redirect()->route('verification.notice')->with('error', 'The verification link is not valid.');
         }
+       
+    
     }
 
     public function welcome_email($user){
@@ -67,10 +66,8 @@ class VerifyEmailController extends Controller
         ];
 
         $emailAdress = $data['email'];
-        // $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
-        $stormbrainEmail = "development@stormbrain.com";
 
-        Mail::send('mail.welcome-email',['data' => $data] , function ($message) use ($emailAdress, $stormbrainEmail) {
+        Mail::send('mail.welcome-email',['data' => $data] , function ($message) use ($emailAdress) {
             $message->to($emailAdress);
             $message->subject('Welcome to the Supplemental Rate Payment Program');
         });
