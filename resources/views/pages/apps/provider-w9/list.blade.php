@@ -1,6 +1,4 @@
 <x-default-layout>
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
-
     @section('title')
         Country Provider W-9
     @endsection
