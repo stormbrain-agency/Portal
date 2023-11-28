@@ -58,72 +58,78 @@ class W9_Upload_Controller extends Controller
 
     public function uploadFile(Request $request)
     {
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-    
-            if ($file->getClientOriginalExtension() === 'zip') {
-                $originalName = $file->getClientOriginalName();
-    
-                $counter = 0;
-                $uniqueName = $originalName;
-    
-                while (file_exists(storage_path('app/uploads/' . $uniqueName))) {
-                    $counter++;
-                    $pathInfo = pathinfo($originalName);
-                    $uniqueName = $pathInfo['filename'] . "($counter)." . $pathInfo['extension'];
-                }
-    
-                $path = $file->storeAs('uploads', $uniqueName, 'local');
-                $user = auth()->user();
-    
-                if ($user->county) {
-                    $county = County::join('users', 'counties.county_fips', '=', 'users.county_designation')
-                                    ->where('users.id', $user->id)
-                                    ->select('counties.county')
-                                    ->first();
-    
-                    if ($county) {
-                        $newFile = new W9Upload();
-                        $newFile->user_id = $user->id;
-                        $newFile->comments = $request->input('comments');
-                        $newFile->original_name = $uniqueName;
-                        $newFile->w9_county_fips = $user->county_designation;
-                        $newFile->save();
-
-                        $adminEmails = User::whereHas('roles', function ($query) {
-                            $query->where('name', 'admin');
-                        })->pluck('email');
-
-                        $data = [
-                            'email' => $user->email,
-                            'name' => $user->first_name .'' . $user->last_name,
-                            'county_designation' => $user->county->county ? $user->county->county : "",
-                            'time' => $newFile->created_at,
-                        ];
-
-                        foreach($adminEmails as $adminEmail){
-                                Mail::send('mail.admin.w-9', $data, function ($message) use ($adminEmail) {
-                                $message->to($adminEmail);
-                                $message->subject('Alert: W-9 Submission Received!');
-                            });
-                        }
-                        $userEmail = $user->email;
-                        Mail::send('mail.user.w-9', $data, function ($message) use ($userEmail) {
-                            $message->to($userEmail);
-                            $message->subject('Confirmation: W-9 Submission Received!');
-                        });
-
-                        return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
+        try{
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+        
+                if ($file->getClientOriginalExtension() === 'zip') {
+                    $originalName = $file->getClientOriginalName();
+        
+                    $counter = 0;
+                    $uniqueName = $originalName;
+        
+                    while (file_exists(storage_path('app/uploads/' . $uniqueName))) {
+                        $counter++;
+                        $pathInfo = pathinfo($originalName);
+                        $uniqueName = $pathInfo['filename'] . "($counter)." . $pathInfo['extension'];
                     }
-                }
+        
+                    $path = $file->storeAs('uploads', $uniqueName, 'local');
+                    $user = auth()->user();
+        
+                    if ($user->county) {
+                        $county = County::join('users', 'counties.county_fips', '=', 'users.county_designation')
+                                        ->where('users.id', $user->id)
+                                        ->select('counties.county')
+                                        ->first();
+        
+                        if ($county) {
+                            $newFile = new W9Upload();
+                            $newFile->user_id = $user->id;
+                            $newFile->comments = $request->input('comments');
+                            $newFile->original_name = $uniqueName;
+                            $newFile->w9_county_fips = $user->county_designation;
+                            $newFile->save();
     
-                return redirect('/county-w9/upload')->with('error', 'Error retrieving user county information.');
+                            $adminEmails = User::whereHas('roles', function ($query) {
+                                $query->where('name', 'admin');
+                            })->pluck('email');
+    
+                            $data = [
+                                'email' => $user->email,
+                                'name' => $user->first_name .'' . $user->last_name,
+                                'county_designation' => $user->county->county ? $user->county->county : "",
+                                'time' => $newFile->created_at,
+                            ];
+    
+                            foreach($adminEmails as $adminEmail){
+                                    Mail::send('mail.admin.w-9', $data, function ($message) use ($adminEmail) {
+                                    $message->to($adminEmail);
+                                    $message->subject('Alert: W-9 Submission Received!');
+                                });
+                            }
+                            $userEmail = $user->email;
+                            Mail::send('mail.user.w-9', $data, function ($message) use ($userEmail) {
+                                $message->to($userEmail);
+                                $message->subject('Confirmation: W-9 Submission Received!');
+                            });
+    
+                            return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
+                        }
+                    }
+        
+                    return redirect('/county-w9/upload')->with('error', 'Error retrieving user county information.');
+                } else {
+                    return redirect('/county-w9/upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
+                }
             } else {
-                return redirect('/county-w9/upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
+                return redirect('/county-w9/upload')->with('error', 'No file selected.');
             }
-        } else {
-            return redirect('/county-w9/upload')->with('error', 'No file selected.');
+        } catch (Exception $e) {
+            Log::error('Error uploading file: ' . $e->getMessage());
+            return redirect('/county-w9/upload')->with('success', 'File uploaded successfully, but there was an error sending emails.');
         }
+
     }
 
 
