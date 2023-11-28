@@ -1,6 +1,6 @@
 <x-default-layout>
     <div class="card p-15">
-        <h1>Welcome to the CDA Supplemental Payment Dashboard</h1>
+        <h1>Welcome to the CDA Supplemental Payment Dashboard Test</h1>
         <div class="mt-5">
             @if(session('error'))
                 <div class="alert bg-light-danger border-danger d-flex align-items-center p-5">
@@ -74,3 +74,4 @@
         </div>
     </div>
 </x-default-layout>
+

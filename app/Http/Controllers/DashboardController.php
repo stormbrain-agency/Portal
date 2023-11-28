@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Notifications;
 
 class DashboardController extends Controller
 {
@@ -8,6 +9,8 @@ class DashboardController extends Controller
     {
         addVendors(['amcharts', 'amcharts-maps', 'amcharts-stock']);
 
-        return view('pages.dashboards.index');
+        $notifications = Notifications::all();
+
+        return view('pages.dashboards.index', ['notifications' => $notifications]);
     }
 }

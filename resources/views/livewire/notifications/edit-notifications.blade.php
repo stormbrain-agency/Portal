@@ -46,7 +46,7 @@
                             <!-- Input Message -->
                             <div class="mb-3">
                                 <label for="message" class="form-label">Message:</label>
-                                <textarea class="form-control" id="message" name="message" value="{{ $notification->message }}" rows="3">{{ $notification->message }}</textarea>
+                                <textarea class="form-control" id="message" name="message" value="{{ $notification->message }}" rows="3" required>{{ $notification->message }}</textarea>
                             </div>
 
                             <!-- Select Where to show -->
@@ -138,7 +138,6 @@
                         success: function (data) {
                             console.log(data);
                             window.location.href = '/notification-management/';
-                            alert('Notification deleted successfully.');
                         },
                         error: function (error) {
                             console.error(error);

@@ -45,7 +45,7 @@
                             <!-- Input Message -->
                             <div class="mb-3">
                                 <label for="message" class="form-label">Message:</label>
-                                <textarea class="form-control" name="message" rows="3"></textarea>
+                                <textarea class="form-control" name="message" rows="3" required></textarea>
                             </div>
 
                             <!-- Select Where to show -->
