@@ -1,6 +1,6 @@
 <x-default-layout>
     <div class="card p-15">
-        <h1>Welcome to the CDA Supplemental Payment Dashboard Test</h1>
+        <h1>Welcome to the CDA Supplemental Payment Dashboard</h1>
         <div class="mt-5">
             @foreach ($notifications as $notification)
                 @if ($notification->type == 'Information')
