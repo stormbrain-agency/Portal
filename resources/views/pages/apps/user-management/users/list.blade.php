@@ -10,51 +10,45 @@
 
     <div class="card">
         <!--begin::Card header-->
-        <div class="card-header border-0 pt-6">
+        <div class="card-header flex-column border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                <!--begin::Search-->
+                Users
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+                <!--begin::Card title-->
                 <div class="d-flex align-items-center position-relative my-1">
                     {!! getIcon('magnifier', 'fs-3 position-absolute ms-5') !!}
                     <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search user" id="mySearchInput"/>
                 </div>
-                 {{-- @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
+                <!--begin::Card toolbar-->
+                <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
+                    <div style="width: 150px">
+                        <select id="select_role" class="form-select form-select-solid text-center">
+                            <option value="">Select Role</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Manager">Manager</option>
+                            <option value="View Only">View Only</option>
+                            <option value="County User">County User</option>
+                        </select>
                     </div>
-                @endif --}}
-                <!--end::Search-->
-            </div>
-            <!--begin::Card title-->
-
-            <!--begin::Card toolbar-->
-            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
-                <div style="width: 150px">
-                    <select id="select_role" class="form-select form-select-solid text-center">
-                        <option value="">Select Role</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Manager">Manager</option>
-                        <option value="View Only">View Only</option>
-                        <option value="County User">County User</option>
-                    </select>
+                    @if(auth()->user()->hasRole('admin'))
+                    <!--begin::Toolbar-->
+                    <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                        <!--begin::Add user-->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user" data-kt-action="create_view">
+                            {!! getIcon('plus', 'fs-2', '', 'i') !!}
+                            Add User
+                        </button>
+                        <!--end::Add user-->
+                    </div>
+                    <!--end::Toolbar-->
+                    <!--begin::Modal-->
+                    <livewire:user.add-user-modal></livewire:user.add-user-modal>
+                    <!--end::Modal-->
+                    @endif
                 </div>
-                @if(auth()->user()->hasRole('admin'))
-                <!--begin::Toolbar-->
-                <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
-                    <!--begin::Add user-->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user" data-kt-action="create_view">
-                        {!! getIcon('plus', 'fs-2', '', 'i') !!}
-                        Add User
-                    </button>
-                    <!--end::Add user-->
-                </div>
-                <!--end::Toolbar-->
-                <!--begin::Modal-->
-                <livewire:user.add-user-modal></livewire:user.add-user-modal>
-                <!--end::Modal-->
-                @endif
             </div>
-
             <!--end::Card toolbar-->
         </div>
         <!--end::Card header-->
