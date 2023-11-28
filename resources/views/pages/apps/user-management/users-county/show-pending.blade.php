@@ -140,12 +140,12 @@
                         @if ($user->status == 0)
                         <!--begin::Menu item-->
                         <div class="menu-item px-5">
-                            <a href={{ route('user-management.users-pending.approve', $user) }} id="approveUser" class="menu-link px-5">Approve User</a>
+                            <a href={{ route('user-management.county-users.approve', $user) }} id="approveUser" class="menu-link px-5">Approve User</a>
                         </div>
                         <!--end::Menu item-->
                         <!--begin::Menu item-->
                         <div class="menu-item px-5 my-1">
-                            <a href={{ route('user-management.users-pending.deny', $user) }} id="denyUser" class="menu-link px-5 text-danger">Deny User</a>
+                            <a href={{ route('user-management.county-users.deny', $user) }} id="denyUser" class="menu-link px-5 text-danger">Deny User</a>
                         </div>
                         <!--end::Menu item-->
                         @endif

@@ -4,8 +4,7 @@
 	<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
 		<!--begin::Menu-->
 		<div class="menu menu-column menu-rounded menu-sub-indention px-3 fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-			<!--begin:Menu item-->
-			{{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('dashboard') ? 'hover show' : '' }}">
+			<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('dashboard') ? 'here show' : '' }}">
 				<!--begin:Menu link-->
 				<span class="menu-link">
 					<span class="menu-icon">{!! getIcon('element-11', 'fs-2') !!}</span>
@@ -29,18 +28,12 @@
 					<!--end:Menu item-->
 				</div>
 				<!--end:Menu sub-->
-			</div> --}}
-			<!--end:Menu item-->
-			{{-- <!--begin:Menu item-->
+			</div>
 			<div class="menu-item pt-5">
-				<!--begin:Menu content-->
 				<div class="menu-content">
 					<span class="menu-heading fw-bold text-uppercase fs-7">Manager</span>
 				</div>
-				<!--end:Menu content-->
 			</div>
-			<!--end:Menu item--> --}}
-
 			@if(auth()->user()->hasRole('admin'))
 				{{-- Provider W-9 --}}
 				<div class="menu-item">
@@ -100,8 +93,11 @@
 						</div>
 						@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('user-management.users-pending.*') ? 'active' : '' }}" href="{{ route('user-management.users-pending.index') }}">
-								<span class="menu-title">Pending Users</span>
+							<a class="menu-link {{ request()->routeIs('user-management.county-users.*') ? 'active' : '' }}" href="{{ route('user-management.county-users.index') }}">
+								<span class="menu-bullet">
+									<span class="bullet bullet-dot"></span>
+								</span>
+								<span class="menu-title">County Users</span>
 							</a>
 						</div>
 						@endif

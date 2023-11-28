@@ -1,13 +1,9 @@
 <x-default-layout>
 
     @section('title')
-        Users
+        County Users
     @endsection
-
-    @section('breadcrumbs')
-        {{ Breadcrumbs::render('user-management.users.index') }}
-    @endsection
-
+  
     <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
@@ -18,24 +14,16 @@
                     {!! getIcon('magnifier', 'fs-3 position-absolute ms-5') !!}
                     <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search user" id="mySearchInput"/>
                 </div>
-                 {{-- @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif --}}
                 <!--end::Search-->
             </div>
             <!--begin::Card title-->
-
-            <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
                 <div style="width: 150px">
-                    <select id="select_role" class="form-select form-select-solid text-center">
-                        <option value="">Select Role</option>
-                        <option value="Admin">Admin</option>
-                        <option value="Manager">Manager</option>
-                        <option value="View Only">View Only</option>
-                        <option value="County User">County User</option>
+                    <select id="select_status" class="form-select form-select-solid text-center">
+                        <option value="">Select Status</option>
+                        <option value="1">Approved</option>
+                        <option value="0">Approval Needed</option>
+                        <option value="2">Declined</option>
                     </select>
                 </div>
                 @if(auth()->user()->hasRole('admin'))
@@ -54,8 +42,6 @@
                 <!--end::Modal-->
                 @endif
             </div>
-
-            <!--end::Card toolbar-->
         </div>
         <!--end::Card header-->
 
@@ -69,26 +55,32 @@
         </div>
         <!--end::Card body-->
     </div>
-
+    <!--begin::Modal-->
+    <livewire:user.user-pending></livewire:user.user-pending>
+    <!--end::Modal-->
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
-                window.LaravelDataTables['users-table'].search(this.value).draw();
+                window.LaravelDataTables['users-county-table'].search(this.value).draw();
             });
+            // document.getElementById('mySearchInput').addEventListener('keyup', function () {
+            //     window.LaravelDataTables['users-pending-table'].search(this.value).draw();
+            // });
             document.addEventListener('livewire:load', function () {
                 Livewire.on('success', function () {
                     $('#kt_modal_add_user').modal('hide');
-                    window.LaravelDataTables['users-table'].ajax.reload();
+                    window.LaravelDataTables['users-county-table'].ajax.reload();
                 });
-                 document.getElementById('select_role').addEventListener('change', function() {
-                    var select_role = this.value;
-                    window.LaravelDataTables['users-table'].column('roles.name:name').search(select_role).draw();
+            
+                document.getElementById('select_status').addEventListener('change', function() {
+                    var select_status = this.value;
+                    window.LaravelDataTables['users-county-table'].column('status:name').search(select_status).draw();
                 });
             });
-        </script>
 
-    
+
+        </script>
     @endpush
 
 </x-default-layout>

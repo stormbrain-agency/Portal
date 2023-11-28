@@ -9,7 +9,7 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
-class UsersDataTable extends DataTable
+class UsersCountyDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -21,19 +21,22 @@ class UsersDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->rawColumns(['user', 'last_login_at'])
             ->editColumn('user', function (User $user) {
-                return view('pages.apps.user-management.users.columns._user', compact('user'));
+                return view('pages.apps.user-management.users-county.columns._user', compact('user'));
             })
-            ->editColumn('role', function (User $user) {
-                return ucwords($user->roles?->first()?->name);
+            ->editColumn('status', function (User $user) {
+                return view('pages.apps.user-management.users-county.columns._status', compact('user'));
             })
-            ->editColumn('last_login_at', function (User $user) {
-                return sprintf('<div class="badge badge-light fw-bold">%s</div>', $user->last_login_at ? $user->last_login_at->diffForHumans() : $user->updated_at->diffForHumans());
+            ->editColumn('w9_file_path', function (User $user) {
+                return view('pages.apps.user-management.users-county.columns._w9-file', compact('user'));
+            })
+            ->editColumn('mobile_phone', function (User $user) {
+                return $user->getFormattedMobilePhoneAttribute();
             })
             ->editColumn('created_at', function (User $user) {
                 return $user->created_at->format('d M Y, h:i a');
             })
             ->addColumn('action', function (User $user) {
-                return view('pages.apps.user-management.users.columns._actions', compact('user'));
+                return view('pages.apps.user-management.users-county.columns._actions', compact('user'));
             })
             ->setRowId('id');
     }
@@ -49,9 +52,9 @@ class UsersDataTable extends DataTable
         $query->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
             ->select('users.*', 'roles.name as role_name')
-            ->where('users.status', 1);
-        return $query;
+            ->where('roles.name', 'county user');
 
+        return $query;
     }
 
     /**
@@ -60,14 +63,14 @@ class UsersDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('users-table')
+            ->setTableId('users-county-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('rt' . "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>",)
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(3)
-            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users/columns/_draw-scripts.js')) . "}");
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users-county/columns/_draw-scripts.js')) . "}");
     }
 
     /**
@@ -79,22 +82,22 @@ class UsersDataTable extends DataTable
             return [
                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name')->title("Full Name"),
                 Column::make('email')->addClass('align-items-center')->name('email'),
-                Column::make('role')->name("roles.name"),
-                Column::make('last_login_at')->title('Last Login'),
-                Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
+                Column::make('status')->addClass('text-nowrap')->name('status'),
+                Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
+                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
                 Column::computed('action')
-                    ->addClass('text-end text-nowrap')
+                    ->addClass('text-start text-nowrap')
                     ->exportable(false)
                     ->printable(false)
                     ->width(60)
             ];
         }else{
              return [
-                Column::make('user')->addClass('d-flex align-items-center')->name('first_name')->title("Full Name"),
+                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name')->title("Full Name"),
                 Column::make('email')->addClass('align-items-center')->name('email'),
-                Column::make('role')->name("roles.name"),
-                Column::make('last_login_at')->title('Last Login'),
-                Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
+                Column::make('status')->addClass('text-nowrap')->name('status'),
+                Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
+                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
             ];
         }
     }
@@ -107,4 +110,3 @@ class UsersDataTable extends DataTable
         return 'Users_' . date('YmdHis');
     }
 }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
