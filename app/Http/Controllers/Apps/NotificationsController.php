@@ -38,6 +38,7 @@ class NotificationsController extends Controller
     {
         $notification = new Notifications([
             'title' => $request->input('title'),
+            'message' => $request->input('message'),
             'location' => $request->input('where_to_show'),
             'type' => $request->input('type'),
             'schedule_status' => $request->input('schedule_status'),
@@ -80,6 +81,7 @@ class NotificationsController extends Controller
         $notification = Notifications::findOrFail($id);
         $notification->update([
             'title' => $request->input('title'),
+            'message' => $request->input('message'),
             'location' => $request->input('where_to_show'),
             'type' => $request->input('type'),
             'schedule_status' => $request->input('schedule_status'),

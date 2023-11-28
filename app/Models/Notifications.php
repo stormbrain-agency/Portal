@@ -13,6 +13,6 @@ class Notifications extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $fillable = [
-        'title', 'location', 'schedule_start', 'schedule_end', 'schedule_status', 'type', 'status'
+        'title', 'message' , 'location', 'schedule_start', 'schedule_end', 'schedule_status', 'type', 'status'
     ];
 }

@@ -10,6 +10,7 @@ class ViewNotifications extends Component
 {
     public $notifications_id;
     public $title;
+    public $message;
     public $location;
     public $schedule;
     public $type;
@@ -30,6 +31,7 @@ class ViewNotifications extends Component
 
         if (isset($notifications)) {
             $this->title = $notifications->title;
+            $this->message = $notifications->message;
             $this->location = $notifications->location;
             $this->schedule = $notifications->schedule_start . 'to' . $notifications->schedule_end;
             $this->type = $notifications->type;

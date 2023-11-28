@@ -13,6 +13,7 @@ class AddNotifications extends Component
 
     public $notifications_id;
     public $title;
+    public $message;
     public $location;
     public $schedule;
     public $type;
@@ -27,6 +28,7 @@ class AddNotifications extends Component
     {
         $this->validate([
             'title' => 'required',
+            'message' => 'required',
             'location' => 'required',
             'schedule' => 'required',
             'type' => 'required',
@@ -36,6 +38,7 @@ class AddNotifications extends Component
         $user = Auth::user();
         $notifications = Notifications::create([
             'title' => $this->title,
+            'message' => $this->message,
             'location' => $this->location,
             'schedule' => $this->schedule,
             'type' => $this->type,
