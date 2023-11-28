@@ -1,16 +1,23 @@
 <x-default-layout>
-
     @section('title')
         Country Provider W-9
     @endsection
       @if(session('error'))
-        <div class="card-body py-4">
+        {{-- <div class="card-body py-4">
             <div class="alert alert-danger d-flex align-items-center p-5 mb-1">
                 <i class="ki-duotone ki-shield-cross fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>                    <div class="d-flex flex-column">
                     <h4 class="mb-1 text-danger">Error</h4>
                     <span>{{ session('error') }}</span>
                 </div>
             </div>
+        </div> --}}
+        <div class="wrap-alert error d-flex align-items-center mt-6">
+            {!! getIcon('notification-bing','me-4') !!}
+            <div class="content" style="width: 100%;">
+                <div class="title mb-2">Error</div>
+                <div class="sub-title">{{ session('error') }}</div>
+            </div>
+            {!! getIcon('cross','fs-1 btn-alert') !!}
         </div>
         @endif
      <div class="card">
@@ -18,23 +25,12 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                <!--begin::Search-->
-                <div class="d-flex align-items-center position-relative my-1">
-                    {!! getIcon('magnifier', 'fs-3 position-absolute ms-5') !!}
-                    <input type="text" data-kt-user-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search user" id="mySearchInput"/>
-                </div>
-                 {{-- @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif --}}
-              
-                <!--end::Search-->
+                Provider W-9 Submission History
             </div>
             <!--begin::Card title-->
 
             <!--begin::Card toolbar-->
-            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
+            <div class="card-toolbar gx-10 d-flex justify-content-end mt-3" style="gap: 10px; width: 100%">
                 <!--begin::Toolbar-->
                 <div style="width: 150px">
                     <input class="form-control form-control-solid" placeholder="Pick a day" id="kt_daterangepicker_1"/>

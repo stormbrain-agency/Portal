@@ -14,7 +14,6 @@ class RolesPermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        
         $adminRole = Role::create(['name' => 'admin']);
         $managerRole = Role::create(['name' => 'manager']);
         $viewonlyRole = Role::create(['name' => 'view only']);
@@ -28,59 +27,18 @@ class RolesPermissionsSeeder extends Seeder
             'read provider w9',
             'download provider w9',
             'create provider payment',
+            'template provider payment',
             'read provider payment',
             'download provider payment',
             'create mrac_arac',
             'read mrac_arac',
             'download mrac_arac',
+            'template mrac_arac',
             'notification management',
             'county users management',
             'activity management',
         ];
 
-        $permissions_by_role = [
-            'admin' => [
-                'read profile',
-                'create profile',
-                'edit profile',
-                'read provider w9',
-                'download provider w9',
-                'read provider payment',
-                'download provider payment',
-                'read mrac_arac',
-                'download mrac_arac',
-                'notification management',
-                'county users management',
-                'activity management',
-            ],
-            'manager' => [
-                'read profile',
-                'read provider w9',
-                'download provider w9',
-                'read provider payment',
-                'download provider payment',
-                'read mrac_arac',
-                'download mrac_arac',
-            ],
-            'viewOnly' => [
-                'read profile',
-                'read provider w9',
-                'read provider payment',
-                'read mrac_arac',
-            ],
-            'countyUser' => [
-                'read profile',
-                'edit profile',
-                'create provider w9',
-                'read provider w9',
-                'download provider w9',
-                'create provider payment',
-                'read provider payment',
-                'download provider payment',
-                'read mrac_arac',
-                'download mrac_arac',
-            ]
-        ];
 
         foreach ($list_permissions as $permission) {
             Permission::create(['name' => $permission]);
@@ -92,9 +50,11 @@ class RolesPermissionsSeeder extends Seeder
             'edit profile',
             'read provider w9',
             'download provider w9',
+            'template provider payment',
             'read provider payment',
             'download provider payment',
             'read mrac_arac',
+            'template mrac_arac',
             'download mrac_arac',
             'notification management',
             'county users management',

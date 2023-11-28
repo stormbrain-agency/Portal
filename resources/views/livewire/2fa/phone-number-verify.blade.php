@@ -12,18 +12,21 @@
                     </div>
                 @endif
 
-                <div class="bg-gray-200 p-10">
+                <div class="form w-100">
                     <form wire:submit.prevent="verifyCode">
                         <!-- Enter Verification code-->
                         <div>
-                            <h5>Two-Factor Authentication</h5>
+                            <h1 class="text-dark fw-bolder mb-3">Two Step Verification</h1>
                             <input wire:model="code" 
                                 type="number" 
-                                class="block mt-1 w-full"  
+                                class="form-control bg-transparent"  
                                 required autofocus />
                         </div>
                         <div class="flex items-center justify-end mt-4"> 
-                            <button class="ml-3" type="submit">Submit</button>
+                            <button class="ml-3 btn btn-primary" type="submit">Submit</button>
+                        </div>
+                        <div class="flex items-center justify-end mt-4"> 
+                            <a href="/logout">back</a>
                         </div>
                     </form>
                 </div>

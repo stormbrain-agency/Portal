@@ -1,4 +1,6 @@
 <x-default-layout>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
+
 <style>
 .drop-zone--over {
   border-style: solid;
@@ -73,18 +75,26 @@ line-height: 16px;
         </div>
         @endif
         @if(session('error'))
-        <div class="card-body py-4">
+        {{-- <div class="card-body py-4">
             <div class="alert alert-danger d-flex align-items-center p-5 mb-1">
                 <i class="ki-duotone ki-shield-cross fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>                    <div class="d-flex flex-column">
                     <h4 class="mb-1 text-danger">Error</h4>
                     <span>{{ session('error') }}</span>
                 </div>
             </div>
+        </div> --}}
+        <div class="wrap-alert error d-flex align-items-center mt-6">
+            {!! getIcon('notification-bing','me-4') !!}
+            <div class="content" style="width: 100%;">
+                <div class="title mb-2">Error</div>
+                <div class="sub-title">{{ session('error') }}</div>
+            </div>
+            {!! getIcon('cross','fs-1 btn-alert') !!}
         </div>
         @endif
         <!--begin::Card body-->
-        <div class="card-body py-4">
-            <a href="{{ route('county-mrac-arac.download_template') }}" class="btn btn-bg-primary me-6 text-light mt-5">
+        <div class="card-body py-4 pt-0">
+            <a href="{{ route('county-mrac-arac.download_template') }}" class="btn btn-bg-primary me-6 text-light mt-1">
                 <i class="ki-duotone ki-arrow-down text-light">
                     <span class="path1"></span>
                     <span class="path2"></span>

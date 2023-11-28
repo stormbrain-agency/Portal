@@ -16,6 +16,11 @@
                     {{ __('A new verification link has been sent to the email address you provided during registration.') }}
                 </p>
             @endif
+             @if(session('error'))
+                <p class="font-medium text-sm text-danger-500 mt-4">
+                    {{ session('error') }}
+                </p>
+             @endif
         <!--end::Session Status-->
         </div>
 

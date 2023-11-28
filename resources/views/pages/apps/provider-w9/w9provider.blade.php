@@ -1,12 +1,13 @@
 <x-default-layout>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
 
     @section('title')
         County Provider W-9
     @endsection
 
-    @section('breadcrumbs')
+    {{-- @section('breadcrumbs')
         {{ Breadcrumbs::render('county-provider-payment-report.index') }}
-    @endsection
+    @endsection --}}
 
      <div class="card">
         <!--begin::Card header-->

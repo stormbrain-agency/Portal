@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Apps\W9_Upload_Controller ;
 use App\Http\Controllers\Apps\W9_Historydownload_Controller ;
+use App\Http\Controllers\Apps\Help_FAQController ;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
 /*
@@ -30,7 +31,6 @@ Route::get('/downloads', [W9_Historydownload_Controller::class, 'showDownloads']
 Route::middleware(['phone_verify'])->group(function () {
     Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
         Route::get('/', [UserManagementController::class, 'profile'])->name('profile');
-        // Route::get('/', [DashboardController::class, 'index']);
         Route::get('/get-counties/{stateId}', 'LocationController@getCountiesByState');
         Route::get('/profile', [UserManagementController::class, 'profile'])->name('profile');
         Route::get('/state', [LocationController::class, 'getStates'])->name('state');
@@ -52,6 +52,7 @@ Route::middleware(['phone_verify'])->group(function () {
                     Route::get('/user/{id}', [UserManagementController::class,'usersCountyShow'])->name('show');
                     Route::get('/user/approve/{id}', [UserManagementController::class,'usersPendingApprove'])->name('approve');
                     Route::get('/user/deny/{id}', [UserManagementController::class,'usersPendingDeny'])->name('deny');
+                    Route::delete('/user/{user}/destroy', [UserManagementController::class, 'destroyCounty'])->name('destroy');
                 });
             });
         });
@@ -63,12 +64,14 @@ Route::middleware(['phone_verify'])->group(function () {
                     Route::post('/create', [PaymentReportController::class,'store'])->name('store');
                     Route::get('/create', [PaymentReportController::class,'create'])->name('create');
                 });
-                Route::get('/template', [PaymentReportController::class,'template'])->name('template');
-                Route::post('/template', [PaymentReportController::class,'store_template'])->name('store_template');
+
+                Route::middleware(['permission:template provider payment'])->group(function () {
+                    Route::get('/template', [PaymentReportController::class,'template'])->name('template');
+                    Route::post('/template', [PaymentReportController::class,'store_template'])->name('store_template');
+                });
                 Route::get('/template/download', [PaymentReportController::class, 'downloadTemplateFile'])->name('download_template');
                 Route::get('/downloads/{filename}', [PaymentReportController::class, 'downloadFile'])->name('download');
                 Route::get('/downloads/{filename}/{payment_id}', [PaymentReportController::class, 'downloadFile'])->name('download2');
-                Route::get('/download-all-files/{payment_id}', [PaymentReportController::class, 'downloadAllFiles'])->name('downloadAllFiles');
             });
         });
         Route::middleware(['permission:read provider w9'])->group(function () {
@@ -90,12 +93,14 @@ Route::middleware(['phone_verify'])->group(function () {
         Route::middleware(['permission:read mrac_arac'])->group(function () {
             Route::prefix('county-mrac-arac')->name("county-mrac-arac.")->group(function () {
                 Route::get('/', [CountyMRAC_ARACController::class,'index'])->name('index');
-                Route::middleware(['permission:read mrac_arac'])->group(function () {
+                Route::middleware(['permission:create mrac_arac'])->group(function () {
                     Route::post('/create', [CountyMRAC_ARACController::class,'store'])->name('store');
                     Route::get('/create', [CountyMRAC_ARACController::class,'create'])->name('create');
                 });
-                Route::post('/template', [CountyMRAC_ARACController::class,'store_template'])->name('store_template');
-                Route::get('/template', [CountyMRAC_ARACController::class,'template'])->name('template');
+                Route::middleware(['permission:template mrac_arac'])->group(function () {
+                    Route::post('/template', [CountyMRAC_ARACController::class,'store_template'])->name('store_template');
+                    Route::get('/template', [CountyMRAC_ARACController::class,'template'])->name('template');
+                });
                 Route::get('/template/download', [CountyMRAC_ARACController::class, 'downloadTemplateFile'])->name('download_template');
                 Route::get('/downloads/{filename}', [CountyMRAC_ARACController::class, 'downloadFile'])->name('download');
                 Route::get('/downloads/{filename}/{payment_id}', [CountyMRAC_ARACController::class, 'downloadFile2'])->name('download2');
@@ -105,6 +110,12 @@ Route::middleware(['phone_verify'])->group(function () {
         Route::middleware(['permission:notification management'])->group(function () {
             Route::prefix('notification-management')->name('notification-management.')->group(function () {
                 Route::get('/', [NotificationsController::class,'index'])->name('index');
+                Route::get('/create', [NotificationsController::class, 'create'])->name('create');
+                Route::post('/store', [NotificationsController::class, 'store'])->name('store');
+                Route::get('/edit/{id}', [NotificationsController::class, 'edit'])->name('edit');
+                Route::put('/update/{id}', [NotificationsController::class, 'update'])->name('update');
+                Route::delete('/delete/{id}', [NotificationsController::class, 'delete'])->name('delete');
+                Route::post('/update-status', [NotificationsController::class, 'updateStatus'])->name('update.status');
             });
         });
         Route::middleware(['permission:activity management'])->group(function () {
@@ -114,6 +125,9 @@ Route::middleware(['phone_verify'])->group(function () {
         });
         Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
     });
+
+    Route::get('/help-faq', [Help_FAQController::class, 'index'])->name('help-faq');
+
 });
 Route::get('/error', function () {
     abort(500);

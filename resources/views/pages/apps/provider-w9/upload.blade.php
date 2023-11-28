@@ -1,4 +1,6 @@
 <x-default-layout>
+  <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
+
     @if(auth()->user()->hasRole('county user'))
 
     <div class="card">
@@ -26,11 +28,8 @@
         </div>
         @else
         <!--begin::Card body-->
-        <div class="card-body py-4">
+        <div class="card-body py-4 pt-0">
             <!-- <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our FAQs or submit a request via our contact us form.</i> </span> -->
-            <br>
-            
-
             <form action="/county-w9/upload" method="POST" id="myform" class="form" enctype="multipart/form-data">
                 @csrf
                 <!--begin::Scroll-->
@@ -39,7 +38,7 @@
                     <!--begin::Input group-->
                     <div class="fv-row mb-7">
                         <!--begin::Label-->
-                        <label class="required fw-bold fs-6 mb-2">Document Upload</label>
+                        {{-- <label class="required fw-bold fs-6 mb-2">Document Upload</label> --}}
                         <!--end::Label-->
                         <!--begin::Input-->
                          <!--begin::Dropzone-->
@@ -61,13 +60,21 @@
                                 </div>
                                 <!--end::Info-->
                             </div>
-                            <input type="file" name="file" class="drop-zone__input form-control-file" id="w9_uploadInput">
-
+                            <input type="file" name="file" style="display:none" class="drop-zone__input form-control-file" id="w9_uploadInput">
                         </div>
                         <!--end::Dropzone-->
                        
                         @if(session('error'))
-                            <span class="text-danger">{{ session('error') }}</span>
+                          <div class="alert bg-light-danger border-danger d-flex align-items-center p-5 mt-5">
+                            <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+                            <div class="d-flex flex-column">
+                                <h4 class="mb-1 text-dark">This is an alert</h4>
+                                <span>The alert component can be used to highlight certain parts of your page for higher content visibility.</span>
+                            </div>
+                            <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                                <i class="ki-duotone ki-cross fs-1 text-danger"><span class="path1"></span><span class="path2"></span></i>
+                            </button>
+                          </div> 
                         @endif
 
                     </div>
@@ -81,7 +88,15 @@
                             <textarea id="comment" placeholder="Please write a comment here" class="border border-gray-500 mb-3 mb-lg-0 form-control bg-transparent" name="comments" id="" cols="30" rows="5s"></textarea>
                             <!--end::Input-->
                             @error('comment')
-                            <span class="text-danger">{{ $message }}</span> @enderror
+                              <div class="wrap-alert error d-flex align-items-center">
+                                {!! getIcon('notification-bing','me-4') !!}
+                                <div class="content" style="width: 100%;">
+                                    <div class="title mb-2">There is Error Uploading Your File</div>
+                                    <div class="sub-title">{{ $message }}</div>
+                                </div>
+                                {!! getIcon('cross','fs-1 btn-alert') !!}
+                            </div> 
+                            @enderror
                         </div>
                         <!--end::Input group-->
                 </div>
@@ -151,9 +166,10 @@
      * @param {HTMLElement} dropZoneElement
      * @param {File} file
      */
-    function updateThumbnail(dropZoneElement, file) {
-      let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
-      if (thumbnailElement) {
+    function updateThumbnail(dropZoneElement, files) {
+    let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+    let promptElement = dropZoneElement.querySelector(".drop-zone__prompt");
+    if (thumbnailElement) {
         if (promptElement) {
             if (files.length > 0) {
                 promptElement.style.display = 'none';
@@ -165,24 +181,24 @@
         }
     }
 
-      // First time - remove the prompt
-      if (dropZoneElement.querySelector(".drop-zone__prompt")) {
-        dropZoneElement.querySelector(".drop-zone__prompt").remove();
-      }
-
-      // First time - there is no thumbnail element, so lets create it
-      if (!thumbnailElement) {
-        thumbnailElement = document.createElement("div");
-        thumbnailElement.classList.add("drop-zone__thumb");
+    const fileListElement = document.createElement('ul');
+    fileListElement.classList.add('drop-zone__file-list');
+    if (!thumbnailElement) {
+        thumbnailElement = document.createElement('div');
+        thumbnailElement.classList.add('drop-zone__thumb', 'dz-message', 'needsclick', 'justify-content-center', 'w-50', 'mx-auto');
         dropZoneElement.appendChild(thumbnailElement);
-      }
-
-      thumbnailElement.dataset.label = inputElement.files.length;
-        thumbnailElement.style.backgroundImage = null;
     }
 
-    </script>
+    thumbnailElement.innerHTML = '';
+    for (const file of files) {
+        const listItemElement = document.createElement('li');
+        listItemElement.textContent = file.name;
+        fileListElement.appendChild(listItemElement);
+    }
+    thumbnailElement.appendChild(fileListElement);
+}
 
+</script>
 
 
 

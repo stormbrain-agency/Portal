@@ -1,6 +1,8 @@
 <x-default-layout>
 <!-- Add these lines to include DataTables buttons extension -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
+
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 
@@ -13,11 +15,12 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
+                Provider Payment Report | Submission History
             </div>
             <!--begin::Card title-->
 
             <!--begin::Card toolbar-->
-            <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
+            <div class="card-toolbar gx-10 d-flex justify-content-end mt-3" style="gap: 10px; width: 100%">
                 <!--begin::Toolbar-->
                 @if(!auth()->user()->hasRole('county user'))
                 <div style="width: 150px">

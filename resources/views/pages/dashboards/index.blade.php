@@ -1,94 +1,76 @@
 <x-default-layout>
-
-    @section('title')
-        Dashboard
-    @endsection
-
-    @section('breadcrumbs')
-        {{ Breadcrumbs::render('dashboard') }}
-    @endsection
-
-    <!--begin::Row-->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-        <!--begin::Col-->
-        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-            @include('partials/widgets/cards/_widget-20')
-
-            @include('partials/widgets/cards/_widget-7')
+    <div class="card p-15">
+        <h1>Welcome to the CDA Supplemental Payment Dashboard</h1>
+        <div class="mt-5">
+            @if(session('error'))
+                <div class="alert bg-light-danger border-danger d-flex align-items-center p-5">
+                    <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+                    <div class="d-flex flex-column">
+                        <h4 class="mb-1 text-dark">Error</h4>
+                        <span>{{ session('error') }}</span>
+                    </div>
+                    <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                        <i class="ki-duotone ki-cross fs-1 text-danger"><span class="path1"></span><span class="path2"></span></i>
+                    </button>
+                </div>
+            <br>
+            @endif
+             @if(session('success'))
+                <div class="alert bg-light-success border-success d-flex align-items-center p-5">
+                    <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span class="path1"></span><span class="path2"></span></i>
+                    <div class="d-flex flex-column">
+                        <h4 class="mb-1 text-dark">Success</h4>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                    <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                        <i class="ki-duotone ki-cross fs-1 text-success"><span class="path1"></span><span class="path2"></span></i>
+                    </button>
+                </div>
+            <br>
+            @endif
+            <div class="alert bg-light-primary border-primary d-flex align-items-center p-5">
+                <i class="ki-duotone ki-shield-tick fs-2hx text-primary me-4"><span class="path1"></span><span class="path2"></span></i>
+                <div class="d-flex flex-column">
+                    <h4 class="mb-1 text-dark">This is an alert</h4>
+                    <span>The alert component can be used to highlight certain parts of your page for higher content visibility.</span>
+                </div>
+                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                    <i class="ki-duotone ki-cross fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                </button>
+            </div>
+            <br>
+            <div class="alert bg-light-success border-success d-flex align-items-center p-5">
+                <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span class="path1"></span><span class="path2"></span></i>
+                <div class="d-flex flex-column">
+                    <h4 class="mb-1 text-dark">This is an alert</h4>
+                    <span>The alert component can be used to highlight certain parts of your page for higher content visibility.</span>
+                </div>
+                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                    <i class="ki-duotone ki-cross fs-1 text-success"><span class="path1"></span><span class="path2"></span></i>
+                </button>
+            </div>
+            <br>
+            <div class="alert bg-light-danger border-danger d-flex align-items-center p-5">
+                <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+                <div class="d-flex flex-column">
+                    <h4 class="mb-1 text-dark">This is an alert</h4>
+                    <span>The alert component can be used to highlight certain parts of your page for higher content visibility.</span>
+                </div>
+                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                    <i class="ki-duotone ki-cross fs-1 text-danger"><span class="path1"></span><span class="path2"></span></i>
+                </button>
+            </div>
+            <br>
+            <div class="alert bg-light-info border-info d-flex align-items-center p-5">
+                <i class="ki-duotone ki-shield-tick fs-2hx text-info me-4"><span class="path1"></span><span class="path2"></span></i>
+                <div class="d-flex flex-column">
+                    <h4 class="mb-1 text-dark">This is an alert</h4>
+                    <span>The alert component can be used to highlight certain parts of your page for higher content visibility.</span>
+                </div>
+                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                    <i class="ki-duotone ki-cross fs-1 text-info"><span class="path1"></span><span class="path2"></span></i>
+                </button>
+            </div>
         </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-            @include('partials/widgets/cards/_widget-17')
-
-            @include('partials/widgets/lists/_widget-26')
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xxl-6">
-            @include('partials/widgets/engage/_widget-10')
-        </div>
-        <!--end::Col-->
     </div>
-    <!--end::Row-->
-
-    <!--begin::Row-->
-    <div class="row gx-5 gx-xl-10">
-        <!--begin::Col-->
-        <div class="col-xxl-6 mb-5 mb-xl-10">
-            @include('partials/widgets/charts/_widget-8')
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xl-6 mb-5 mb-xl-10">
-            @include('partials/widgets/tables/_widget-16')
-        </div>
-        <!--end::Col-->
-    </div>
-    <!--end::Row-->
-
-    <!--begin::Row-->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-        <!--begin::Col-->
-        <div class="col-xxl-6">
-            @include('partials/widgets/cards/_widget-18')
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xl-6">
-            @include('partials/widgets/charts/_widget-36')
-        </div>
-        <!--end::Col-->
-    </div>
-    <!--end::Row-->
-
-    <!--begin::Row-->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-        <!--begin::Col-->
-        <div class="col-xl-4">
-            @include('partials/widgets/charts/_widget-35')
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xl-8">
-            @include('partials/widgets/tables/_widget-14')
-        </div>
-        <!--end::Col-->
-    </div>
-    <!--end::Row-->
-
-    <!--begin::Row-->
-    <div class="row gx-5 gx-xl-10">
-        <!--begin::Col-->
-        <div class="col-xl-4">
-            @include('partials/widgets/charts/_widget-31')
-        </div>
-        <!--end::Col-->
-        <!--begin::Col-->
-        <div class="col-xl-8">
-            @include('partials/widgets/charts/_widget-24')
-        </div>
-        <!--end::Col-->
-    </div>
-    <!--end::Row-->
 </x-default-layout>

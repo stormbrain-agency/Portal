@@ -160,4 +160,8 @@ class RegisteredUserController extends Controller
     public function confirm_email(){
         return view('pages.auth.confirm-email');
     }
+
+    public function rejected(){
+        return view('pages.auth.rejected');
+    }
 }

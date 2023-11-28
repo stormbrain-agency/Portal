@@ -77,12 +77,11 @@ class User extends Authenticatable
 
     public function getFormattedBusinessPhoneAttribute()
     {
-        if ($this->attributes['business_phone'] == "") {
-            return "";
-        }
-        $formattedBusinessPhone = substr_replace($this->attributes['business_phone'], '(', 0, 0);
-        $formattedBusinessPhone = substr_replace($formattedBusinessPhone, ') ', 4, 0);
-        $formattedBusinessPhone = substr_replace($formattedBusinessPhone, '-', 9, 0);
+        $rawPhoneNumber = $this->attributes['business_phone'];
+        $hasExtension = stripos($rawPhoneNumber, 'ext.') !== false;
+        list($phoneNumber, $extension) = $hasExtension ? explode('ext.', $rawPhoneNumber, 2) : [$rawPhoneNumber, null];
+        $formattedPhoneNumber = preg_replace('/(\d{3})(\d{3})(\d{4})/', '($1) $2-$3', $phoneNumber);
+        $formattedBusinessPhone = $hasExtension ? $formattedPhoneNumber . ' ext. ' . trim($extension) : $formattedPhoneNumber;
 
         return $formattedBusinessPhone;
     }
@@ -110,5 +109,10 @@ class User extends Authenticatable
     public function paymentReport()
     {
         return $this->hasMany(PaymentReport::class, 'user_id', 'id');
+    }
+
+    public function mracArac()
+    {
+        return $this->hasMany(MracArac::class, 'user_id', 'id');
     }
 }

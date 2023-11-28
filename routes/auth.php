@@ -26,14 +26,6 @@ Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
 Route::post('reset-password', [NewPasswordController::class, 'store'])
             ->name('password.update');
 
-Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, 'verify'])
-            ->name('verification.verify');
-
-Route::get('censoring', [RegisteredUserController::class, 'censoring'])
-            ->name('censoring');
-Route::get('confirm_email', [RegisteredUserController::class, 'confirm_email'])
-            ->name('confirm_email');
-
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
@@ -45,6 +37,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('verify-email/{id}/{hash}', [VerifyEmailController::class, 'verify'])
+            ->name('verification.verify');
     Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])
                 ->name('verification.notice');
 
@@ -70,4 +64,11 @@ Route::middleware('auth')->group(function () {
             return view('pages.auth.verify-phone');
         })->name('verify.phone');
     });
+
+    Route::get('rejected', [RegisteredUserController::class, 'rejected'])
+            ->name('rejected');
+    Route::get('censoring', [RegisteredUserController::class, 'censoring'])
+            ->name('censoring');
+    Route::get('confirm_email', [RegisteredUserController::class, 'confirm_email'])
+            ->name('confirm_email');
 });
