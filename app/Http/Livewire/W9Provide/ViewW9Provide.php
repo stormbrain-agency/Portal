@@ -36,7 +36,6 @@ class ViewW9Provide extends Component
 
     public function viewW9Provide($id){
         $w9_upload = W9Upload::find($id);
-
         if (isset($w9_upload)) {
             $this->w9_id = $w9_upload->id;
             $this->month_year = $w9_upload->month_year;
