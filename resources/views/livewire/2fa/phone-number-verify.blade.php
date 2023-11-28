@@ -25,6 +25,9 @@
                         <div class="flex items-center justify-end mt-4"> 
                             <button class="ml-3 btn btn-primary" type="submit">Submit</button>
                         </div>
+                        <div class="flex items-center justify-end mt-4"> 
+                            <a href="/logout">back</a>
+                        </div>
                     </form>
                 </div>
             </div>
