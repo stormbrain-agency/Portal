@@ -91,7 +91,7 @@ Route::middleware(['phone_verify'])->group(function () {
         Route::middleware(['permission:read mrac_arac'])->group(function () {
             Route::prefix('county-mrac-arac')->name("county-mrac-arac.")->group(function () {
                 Route::get('/', [CountyMRAC_ARACController::class,'index'])->name('index');
-                Route::middleware(['permission:read mrac_arac'])->group(function () {
+                Route::middleware(['permission:create mrac_arac'])->group(function () {
                     Route::post('/create', [CountyMRAC_ARACController::class,'store'])->name('store');
                     Route::get('/create', [CountyMRAC_ARACController::class,'create'])->name('create');
                 });
