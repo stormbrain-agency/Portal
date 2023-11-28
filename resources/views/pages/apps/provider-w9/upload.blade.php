@@ -60,7 +60,7 @@
                                 </div>
                                 <!--end::Info-->
                             </div>
-                            <input type="file" name="file" class="drop-zone__input form-control-file" id="w9_uploadInput">
+                            <input type="file" name="file" style="display:none" class="drop-zone__input form-control-file" id="w9_uploadInput">
                         </div>
                         <!--end::Dropzone-->
                        
@@ -164,9 +164,10 @@
      * @param {HTMLElement} dropZoneElement
      * @param {File} file
      */
-    function updateThumbnail(dropZoneElement, file) {
-      let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
-      if (thumbnailElement) {
+    function updateThumbnail(dropZoneElement, files) {
+    let thumbnailElement = dropZoneElement.querySelector(".drop-zone__thumb");
+    let promptElement = dropZoneElement.querySelector(".drop-zone__prompt");
+    if (thumbnailElement) {
         if (promptElement) {
             if (files.length > 0) {
                 promptElement.style.display = 'none';
@@ -178,24 +179,24 @@
         }
     }
 
-      // First time - remove the prompt
-      if (dropZoneElement.querySelector(".drop-zone__prompt")) {
-        dropZoneElement.querySelector(".drop-zone__prompt").remove();
-      }
-
-      // First time - there is no thumbnail element, so lets create it
-      if (!thumbnailElement) {
-        thumbnailElement = document.createElement("div");
-        thumbnailElement.classList.add("drop-zone__thumb");
+    const fileListElement = document.createElement('ul');
+    fileListElement.classList.add('drop-zone__file-list');
+    if (!thumbnailElement) {
+        thumbnailElement = document.createElement('div');
+        thumbnailElement.classList.add('drop-zone__thumb', 'dz-message', 'needsclick', 'justify-content-center', 'w-50', 'mx-auto');
         dropZoneElement.appendChild(thumbnailElement);
-      }
-
-      thumbnailElement.dataset.label = inputElement.files.length;
-        thumbnailElement.style.backgroundImage = null;
     }
 
-    </script>
+    thumbnailElement.innerHTML = '';
+    for (const file of files) {
+        const listItemElement = document.createElement('li');
+        listItemElement.textContent = file.name;
+        fileListElement.appendChild(listItemElement);
+    }
+    thumbnailElement.appendChild(fileListElement);
+}
 
+</script>
 
 
 
