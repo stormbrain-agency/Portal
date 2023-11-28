@@ -31,7 +31,6 @@ Route::get('/downloads', [W9_Historydownload_Controller::class, 'showDownloads']
 Route::middleware(['phone_verify'])->group(function () {
     Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
         Route::get('/', [UserManagementController::class, 'profile'])->name('profile');
-        // Route::get('/', [DashboardController::class, 'index']);
         Route::get('/get-counties/{stateId}', 'LocationController@getCountiesByState');
         Route::get('/profile', [UserManagementController::class, 'profile'])->name('profile');
         Route::get('/state', [LocationController::class, 'getStates'])->name('state');
@@ -53,6 +52,7 @@ Route::middleware(['phone_verify'])->group(function () {
                     Route::get('/user/{id}', [UserManagementController::class,'usersCountyShow'])->name('show');
                     Route::get('/user/approve/{id}', [UserManagementController::class,'usersPendingApprove'])->name('approve');
                     Route::get('/user/deny/{id}', [UserManagementController::class,'usersPendingDeny'])->name('deny');
+                    Route::delete('/user/{user}/destroy', [UserManagementController::class, 'destroyCounty'])->name('destroy');
                 });
             });
         });

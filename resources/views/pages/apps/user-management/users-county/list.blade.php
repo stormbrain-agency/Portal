@@ -44,6 +44,25 @@
                     <!--end::Modal-->
                     @endif
                 </div>
+                <button id="export_csv" class="btn btn-outline btn-outline-solid">
+                    <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                    EXPORT AS CSV
+                </button>
+                @if(auth()->user()->hasRole('admin'))
+                <!--begin::Toolbar-->
+                <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                    <!--begin::Add user-->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user" data-kt-action="create_view">
+                        {!! getIcon('plus', 'fs-2', '', 'i') !!}
+                        Add User
+                    </button>
+                    <!--end::Add user-->
+                </div>
+                <!--end::Toolbar-->
+                <!--begin::Modal-->
+                <livewire:user.add-user-modal></livewire:user.add-user-modal>
+                <!--end::Modal-->
+                @endif
             </div>
         </div>
         <!--end::Card header-->
@@ -81,7 +100,16 @@
                     window.LaravelDataTables['users-county-table'].column('status:name').search(select_status).draw();
                 });
             });
+            $("#export_csv").on('click', function(e) {
+                var table = window.LaravelDataTables['users-county-table'];
+                table.column('w9_file_path:name').visible(false);
+                table.column('action:name').visible(false);
 
+                table.button('.buttons-csv').trigger();
+
+                table.column('w9_file_path:name').visible(true);
+                table.column('action:name').visible(true);
+            })
 
         </script>
     @endpush

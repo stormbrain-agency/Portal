@@ -84,6 +84,18 @@ class UserManagementController extends Controller
 
     }
 
+    public function destroyCounty(User $user)
+    {
+        if ($user->id === auth()->id()) {
+            return redirect()->back()->with('error', 'You cannot delete your own account.');
+        }
+    
+        $user->delete();
+
+        return redirect()->route('user-management.county-users.index')->with('success', 'User has been successfully deleted.');
+
+    }
+
     public function users_pending(UsersPendingDataTable $dataTable)
     {
         return $dataTable->render('pages.apps.user-management.users-pending.list');
@@ -98,12 +110,15 @@ class UserManagementController extends Controller
     {
         $user = User::find($id);
         if (isset($user)) {
-            $w9Uploads = $user->w9Upload;
+
+            $w9Uploads = $user->w9Upload()->orderBy('created_at', 'desc')->get();
+            $paymentReports = $user->paymentReport()->orderBy('created_at', 'desc')->get();
+            $mracAracs = $user->mracArac()->orderBy('created_at', 'desc')->get();
             if ($user->status == 1) {
                 if (!$user->hasRole('county user')) {
                     return redirect()->route('user-management.users.show', $user); 
                 }
-                return view('pages.apps.user-management.users-county.show', compact('user','w9Uploads'));
+                return view('pages.apps.user-management.users-county.show', compact('user','w9Uploads', 'paymentReports', 'mracAracs'));
             }else{
                 return view('pages.apps.user-management.users-county.show-pending', compact('user','w9Uploads'));
             }
@@ -165,8 +180,11 @@ class UserManagementController extends Controller
     public function profile(){
         $user = auth()->user();
         if ($user) {
-            $w9Uploads = $user->w9Upload;
-            return view('pages.apps.user-management.users.profile.profile', compact('user','w9Uploads'));
+
+            $w9Uploads = $user->w9Upload()->orderBy('created_at', 'desc')->get();
+            $paymentReports = $user->paymentReport()->orderBy('created_at', 'desc')->get();
+            $mracAracs = $user->mracArac()->orderBy('created_at', 'desc')->get();
+            return view('pages.apps.user-management.users.profile.profile', compact('user','w9Uploads', 'paymentReports', 'mracAracs'));
         } else {
             return view('errors.404');
         }
