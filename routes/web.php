@@ -106,6 +106,12 @@ Route::middleware(['phone_verify'])->group(function () {
         Route::middleware(['permission:notification management'])->group(function () {
             Route::prefix('notification-management')->name('notification-management.')->group(function () {
                 Route::get('/', [NotificationsController::class,'index'])->name('index');
+                Route::get('/create', [NotificationsController::class, 'create'])->name('create');
+                Route::post('/store', [NotificationsController::class, 'store'])->name('store');
+                Route::get('/edit/{id}', [NotificationsController::class, 'edit'])->name('edit');
+                Route::put('/update/{id}', [NotificationsController::class, 'update'])->name('update');
+                Route::delete('/delete/{id}', [NotificationsController::class, 'delete'])->name('delete');
+                Route::post('/update-status', [NotificationsController::class, 'updateStatus'])->name('update.status');
             });
         });
         Route::middleware(['permission:activity management'])->group(function () {
