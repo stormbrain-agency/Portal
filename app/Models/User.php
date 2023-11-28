@@ -111,4 +111,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PaymentReport::class, 'user_id', 'id');
     }
+
+    public function mracArac()
+    {
+        return $this->hasMany(MracArac::class, 'user_id', 'id');
+    }
 }

@@ -38,6 +38,10 @@
                         <option value="County User">County User</option>
                     </select>
                 </div>
+                <button id="export_csv" class="btn btn-outline btn-outline-solid">
+                    <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                    EXPORT AS CSV
+                </button>
                 @if(auth()->user()->hasRole('admin'))
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
@@ -86,6 +90,16 @@
                     window.LaravelDataTables['users-table'].column('roles.name:name').search(select_role).draw();
                 });
             });
+            $("#export_csv").on('click', function(e) {
+                var table = window.LaravelDataTables['users-table'];
+                table.column('last_login_at:name').visible(false);
+                table.column('action:name').visible(false);
+
+                table.button('.buttons-csv').trigger();
+
+                table.column('last_login_at:name').visible(true);
+                table.column('action:name').visible(true);
+            })
         </script>
 
     

@@ -134,12 +134,12 @@
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
                 <li class="nav-item">
-                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_w9_files">Payment Reports</a>
+                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_payment_report">Payment Reports</a>
                 </li>
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
                 <li class="nav-item">
-                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_overview_security">MRAC/ARAC</a>
+                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_mrac_arac">MRAC/ARAC</a>
                 </li>
                 <!--end:::Tab item-->
                 <!--end:::Tab item-->
@@ -160,7 +160,7 @@
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
                         <!--begin::Menu item-->
                         @if ($user->status == 1)
-                        <form method="POST" action="{{ route('user-management.users.destroy', $user) }}" class="menu-item px-5" id="deleteUserForm">
+                        <form method="POST" action="{{ route('user-management.county-users.destroy', $user) }}" class="menu-item px-5" id="deleteUserForm">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-white menu-link text-danger px-5 w-100">Delete User</button>
@@ -292,10 +292,157 @@
                                             <p href="#" class="fs-5 fw-bold text-dark text-hover-primary mb-2">No file found</p>
                                             <!--end::Title-->
                                         </div>
+                                    </div>
                                     @endif
                                 </div>
                                 <!--end::Day-->
-    
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Card-->
+                </div>
+
+                <div class="tab-pane fade" id="kt_user_view_mrac_arac" role="tabpanel">
+                    <!--begin::Card-->
+                    <div class="card card-flush mb-6 mb-xl-9">
+                        <!--begin::Card header-->
+                        <div class="card-header mt-6">
+                            <!--begin::Card title-->
+                            <div class="card-title flex-column">
+                                <h2 class="mb-1">Submission History</h2>
+                                <div class="fs-6 fw-semibold text-muted">Download to view file</div>
+                            </div>
+                            <!--end::Card title-->
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body p-9 pt-4">
+                            <!--begin::Day-->
+                                <div class="tab-pane fade show">
+                                    @if (isset($mracAracs) && count($mracAracs) > 0)
+                                        @foreach($mracAracs as $mracArac)
+                                        <!--begin::Time-->
+                                        <div class="d-flex flex-stack position-relative mt-6">
+                                            <!--begin::Bar-->
+                                            <div class="position-absolute h-100 w-4px bg-secondary rounded top-0 start-0"></div>
+                                            <!--end::Bar-->
+                                            <!--begin::Info-->
+                                            <div class="fw-semibold ms-5">
+                                                <!--begin::Time-->
+                                                <div class="fs-7 mb-1">{{$mracArac->created_at->format('d M Y, h:i a')}}
+                                                    <span class="fs-7 text-muted text-uppercase"></span>
+                                                </div>
+                                                {{-- <b>File(s):</b> --}}
+                                                <!--end::Time-->
+                                                <!--begin::Title-->
+                                                <ul class="mt-3">
+
+                                                    @php
+                                                        $mracAracFiles = $mracArac->mracAracFiles()->orderBy('created_at', 'desc')->get();
+                                                    @endphp
+                                                    @if (!auth()->user()->hasRole('view only'))
+                                                    @if (isset($mracAracFiles) && count($mracAracFiles) > 0)
+                                                        @foreach ($mracAracFiles as $file)
+                                                        <li class="fs-5 fw-bold text-dark text-hover-primary mb-2">{{$file->file_path}}</li>
+                                                        @endforeach
+                                                    @endif
+                                                    @endif
+                                                </ul>
+                                                <!--end::Title-->
+                                                <!--begin::User-->
+                                                {{-- <div class="fs-7 text-muted">Lead by
+                                                    <a href="#">David Stevenson</a>
+                                                </div> --}}
+                                                <!--end::User-->
+                                            </div>
+                                            <!--end::Info-->
+                                            <!--begin::Action-->
+                                                {{-- <a href="{{ route('w9_upload.w9_download', ['w9_id' => $mracArac->id, 'filename' => $paymentReport->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a> --}}
+                                            <!--end::Action-->
+                                        </div>
+                                        <!--end::Time-->
+                                        @endforeach
+                                    @else
+                                    <div class="d-flex flex-stack position-relative mt-6">
+                                        <div class="fw-semibold ms-5">
+                                            <!--begin::Title-->
+                                            <p href="#" class="fs-5 fw-bold text-dark text-hover-primary mb-2">No file found</p>
+                                            <!--end::Title-->
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                                <!--end::Day-->
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Card-->
+                </div>
+
+                 <div class="tab-pane fade" id="kt_user_view_payment_report" role="tabpanel">
+                    <!--begin::Card-->
+                    <div class="card card-flush mb-6 mb-xl-9">
+                        <!--begin::Card header-->
+                        <div class="card-header mt-6">
+                            <!--begin::Card title-->
+                            <div class="card-title flex-column">
+                                <h2 class="mb-1">Submission History</h2>
+                                <div class="fs-6 fw-semibold text-muted">Download to view file</div>
+                            </div>
+                            <!--end::Card title-->
+                        </div>
+                        <!--end::Card header-->
+                        <!--begin::Card body-->
+                        <div class="card-body p-9 pt-4">
+                            <!--begin::Day-->
+                                <div class="tab-pane fade show">
+
+                                    @if (isset($paymentReports) && count($paymentReports) > 0)
+                                        @foreach($paymentReports as $paymentReport)
+                                        <!--begin::Time-->
+                                        <div class="d-flex flex-stack position-relative mt-6">
+                                            <!--begin::Bar-->
+                                            <div class="position-absolute h-100 w-4px bg-secondary rounded top-0 start-0"></div>
+                                            <!--end::Bar-->
+                                            <!--begin::Info-->
+                                            <div class="fw-semibold ms-5">
+                                                <!--begin::Time-->
+                                                <div class="fs-7 mb-1">{{$paymentReport->created_at->format('d M Y, h:i a')}}
+                                                    <span class="fs-7 text-muted text-uppercase"></span>
+                                                </div>
+                                                {{-- <b>File(s):</b> --}}
+                                                <!--end::Time-->
+                                                <!--begin::Title-->
+                                                <ul class="mt-3">
+                                                    @php
+                                                        $paymentReportFiles = $paymentReport->paymentReportFiles()->orderBy('created_at', 'desc')->get();
+                                                    @endphp
+                                                    
+                                                    @if (isset($paymentReportFiles) && count($paymentReportFiles) > 0)
+                                                        @foreach ($paymentReportFiles as $file)
+                                                        <li class="fs-5 fw-bold text-dark text-hover-primary mb-2">{{$file->file_path}}</li>
+                                                        @endforeach
+                                                    @endif
+                                                </ul>
+                                            </div>
+                                            <!--end::Info-->
+                                            <!--begin::Action-->
+                                                {{-- <a href="{{ route('w9_upload.w9_download', ['w9_id' => $paymentReport->id, 'filename' => $paymentReport->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a> --}}
+                                            <!--end::Action-->
+                                        </div>
+                                        <!--end::Time-->
+                                        @endforeach
+                                    @else
+                                    <div class="d-flex flex-stack position-relative mt-6">
+                                        <div class="fw-semibold ms-5">
+                                            <!--begin::Title-->
+                                            <p href="#" class="fs-5 fw-bold text-dark text-hover-primary mb-2">No file found</p>
+                                            <!--end::Title-->
+                                        </div>
+                                    </div>
+                                    @endif
+                                </div>
+                                <!--end::Day-->
                             
                         </div>
                         <!--end::Card body-->

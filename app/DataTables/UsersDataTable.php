@@ -67,7 +67,21 @@ class UsersDataTable extends DataTable
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(3)
-            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users/columns/_draw-scripts.js')) . "}");
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users/columns/_draw-scripts.js')) . "}")
+            ->buttons([
+                [
+                    'extend' => 'csv',
+                    'text' => 'Export CSV',
+                    'filename' => 'Users',
+                    'exportOptions' => [
+                        'columns' => ':visible',
+                        'modifier' => [
+                            'page' => 'all',
+                        ],
+                    ],
+
+                ]
+            ]);
     }
 
     /**

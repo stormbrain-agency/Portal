@@ -49,11 +49,15 @@ class UsersCountyDataTable extends DataTable
     {
         $query = $model->newQuery();
 
-        $query->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-            ->select('users.*', 'roles.name as role_name')
-            ->where('roles.name', 'county user');
+        $query->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+        ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+        ->select('users.*', 'roles.name as role_name')
+        ->where(function ($query) {
+                $query->where('roles.name', 'county user')
+                ->orWhereNull('roles.name'); 
+        });
 
+            
         return $query;
     }
 
@@ -70,7 +74,21 @@ class UsersCountyDataTable extends DataTable
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy(3)
-            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users-county/columns/_draw-scripts.js')) . "}");
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users-county/columns/_draw-scripts.js')) . "}")
+            ->buttons([
+                [
+                    'extend' => 'csv',
+                    'text' => 'Export CSV',
+                    'filename' => 'County Users',
+                    'exportOptions' => [
+                        'columns' => ':visible',
+                        'modifier' => [
+                            'page' => 'all',
+                        ],
+                    ],
+
+                ]
+            ]);
     }
 
     /**
