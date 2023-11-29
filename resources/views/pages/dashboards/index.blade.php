@@ -98,6 +98,9 @@
             @endif
 
             {{-- Display Admin --}}
+            <div class="d-flex flex-column">
+                <h4 class="mb-1 text-dark">Not Notification</h4>
+            </div>
             @if (auth()->user()->hasRole('admin'))
                 @foreach ($notifications as $notification)
                     @if ($notification->status == 'Active')
