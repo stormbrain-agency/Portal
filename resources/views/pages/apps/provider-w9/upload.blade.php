@@ -7,7 +7,7 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                Monthly Payment Report Submission
+                Submit Provider W-9
             </div>
             <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex" style="gap: 20px">
@@ -65,16 +65,16 @@
                         <!--end::Dropzone-->
                        
                         @if(session('error'))
-                          <div class="alert bg-light-danger border-danger d-flex align-items-center p-5 mt-5">
-                            <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
-                            <div class="d-flex flex-column">
-                                <h4 class="mb-1 text-dark">This is an alert</h4>
-                                <span>The alert component can be used to highlight certain parts of your page for higher content visibility.</span>
-                            </div>
-                            <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
-                                <i class="ki-duotone ki-cross fs-1 text-danger"><span class="path1"></span><span class="path2"></span></i>
-                            </button>
-                          </div> 
+                            <div class="alert bg-light-danger border-danger d-flex align-items-center p-5 mt-5">
+                                <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+                                <div class="d-flex flex-column">
+                                    <h4 class="mb-1 text-dark">This is an alert</h4>
+                                    <span>The alert component can be used to highlight certain parts of your page for higher content visibility.</span>
+                                </div>
+                                <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                                    <i class="ki-duotone ki-cross fs-1 text-danger"><span class="path1"></span><span class="path2"></span></i>
+                                </button>
+                            </div> 
                         @endif
 
                     </div>
@@ -119,31 +119,31 @@
     <!-- Add this script after including the Dropzone.js library -->
     <script>
         document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
-      const dropZoneElement = inputElement.closest(".dropzone");
+        const dropZoneElement = inputElement.closest(".dropzone");
 
-      dropZoneElement.addEventListener("click", (e) => {
-        inputElement.click();
-      });
-
-      inputElement.addEventListener("change", (e) => {
-        if (inputElement.files.length) {
-          console.log(inputElement.files.length);
-          updateThumbnail(dropZoneElement, inputElement.files);
-        }
-      });
-
-      dropZoneElement.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dropZoneElement.classList.add("drop-zone--over");
-      });
-
-      ["dragleave", "dragend"].forEach((type) => {
-        dropZoneElement.addEventListener(type, (e) => {
-          dropZoneElement.classList.remove("drop-zone--over");
+        dropZoneElement.addEventListener("click", (e) => {
+            inputElement.click();
         });
-      });
 
-      dropZoneElement.addEventListener("drop", (e) => {
+        inputElement.addEventListener("change", (e) => {
+            if (inputElement.files.length) {
+            console.log(inputElement.files.length);
+            updateThumbnail(dropZoneElement, inputElement.files);
+            }
+        });
+
+        dropZoneElement.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropZoneElement.classList.add("drop-zone--over");
+        });
+
+        ["dragleave", "dragend"].forEach((type) => {
+            dropZoneElement.addEventListener(type, (e) => {
+            dropZoneElement.classList.remove("drop-zone--over");
+            });
+        });
+
+        dropZoneElement.addEventListener("drop", (e) => {
             e.preventDefault();
             
             if (e.dataTransfer.files.length > 1) {
@@ -157,7 +157,7 @@
             }
 
             dropZoneElement.classList.remove("drop-zone--over");
-          });
+        });
     });
 
     /**

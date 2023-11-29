@@ -1,7 +1,4 @@
 <x-default-layout>
-    @section('title')
-        Country Provider W-9
-    @endsection
       @if(session('error'))
         {{-- <div class="card-body py-4">
             <div class="alert alert-danger d-flex align-items-center p-5 mb-1">
@@ -25,7 +22,11 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                Provider W-9 Submission History
+                @if(!auth()->user()->hasRole('county user'))
+                County Provider W-9
+                @else
+                Provider W-9 | Submission History
+                @endif
             </div>
             <!--begin::Card title-->
 

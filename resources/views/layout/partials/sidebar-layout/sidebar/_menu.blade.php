@@ -14,11 +14,11 @@
 				</a>
 				<!--end:Menu link-->
 			</div>
-			@if(auth()->user()->hasRole('admin'))
+			@if(!auth()->user()->hasRole('county user'))
 				{{-- Provider W-9 --}}
 				<div class="menu-item">
 					<!--begin:Menu link-->
-					<a class="menu-link {{ request()->routeIs('w9_upload.index') ? 'active' : '' }}" href="{{ route('w9_upload.index') }}">
+					<a class="menu-link {{ request()->routeIs('w9_upload.*') ? 'active' : '' }}" href="{{ route('w9_upload.index') }}">
 						<span class="menu-icon">{!! getIcon('file', 'fs-1') !!}</span>
 						<span class="menu-title">County Provider W-9</span>
 					</a>
@@ -26,60 +26,52 @@
 				</div>
 				{{-- Payment Report --}}
 				<div class="menu-item">
-					<a class="menu-link {{ request()->routeIs('county-provider-payment-report.index') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
+					<a class="menu-link {{ request()->routeIs('county-provider-payment-report.*') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
 						<span class="menu-icon">{!! getIcon('dollar', 'fs-1') !!}</span>
 						<span class="menu-title">County Provider Payment Report</span>
 					</a>
 				</div>
 				<!-- MRAC/ARAC -->
-				<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('county-mrac-arac.*') ? 'hover show' : '' }}">
-					<span class="menu-link">
+				<div class="menu-item">
+					<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
 						<span class="menu-icon">{!! getIcon('graph-up', 'fs-1') !!}</span>
 						<span class="menu-title">County MRAC/ARAC</span>
-						<span class="menu-arrow"></span>
-					</span>
-					<div class="menu-sub menu-sub-accordion">
-						<div class="menu-item {{ request()->routeIs('county-mrac-arac.template') ? 'active' : '' }}">
-							<a class="menu-link {{ request()->routeIs('county-mrac-arac.template') ? 'active' : '' }}" href="{{ route('county-mrac-arac.template') }}">
-								<span class="menu-title">Submit MRAC/ARAC</span>
-							</a>
-						</div>
-						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('county-mrac-arac.index') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
-								<span class="menu-title">Submission History</span>
-							</a>
-						</div>
-					</div>
+					</a>
 				</div>
 				<!-- Notifications -->
+				@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('notification-management.*') ? 'active' : '' }}" href="{{ route('notification-management.index') }}">
 						<span class="menu-icon">{!! getIcon('notification', 'fs-2') !!}</span>
 						<span class="menu-title">Notifications</span>
 					</a>
 				</div>
+				@endif
 				{{-- User Management --}}
-				<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'hover show' : '' }}">
-					<span class="menu-link">
-						<span class="menu-icon">{!! getIcon('user', 'fs-2') !!}</span>
-						<span class="menu-title">User Management</span>
-						<span class="menu-arrow"></span>
-					</span>
-					<div class="menu-sub menu-sub-accordion">
-						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('user-management.users.*') ? 'active' : '' }}" href="{{ route('user-management.users.index') }}">
-								<span class="menu-title">Users</span>
-							</a>
+				{{-- @if(auth()->user()->hasRole('admin')) --}}
+					<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'hover show' : '' }}">
+						<span class="menu-link">
+							<span class="menu-icon">{!! getIcon('user', 'fs-2') !!}</span>
+							<span class="menu-title">User Management</span>
+							<span class="menu-arrow"></span>
+						</span>
+						<div class="menu-sub menu-sub-accordion">
+							<div class="menu-item">
+								<a class="menu-link {{ request()->routeIs('user-management.users.*') ? 'active' : '' }}" href="{{ route('user-management.users.index') }}">
+									<span class="menu-title">Users</span>
+								</a>
+							</div>
+							@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
+							<div class="menu-item">
+								<a class="menu-link {{ request()->routeIs('user-management.county-users.*') ? 'active' : '' }}" href="{{ route('user-management.county-users.index') }}">
+									<span class="menu-title">County Users</span>
+								</a>
+							</div>
+							@endif
 						</div>
-						@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
-						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('user-management.county-users.*') ? 'active' : '' }}" href="{{ route('user-management.county-users.index') }}">
-								<span class="menu-title">County Users</span>
-							</a>
-						</div>
-						@endif
 					</div>
-				</div>
+				{{-- @endif --}}
+				@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 				{{-- Activity Management --}}
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('activity-management.*') ? 'active' : '' }}" href="{{ route('activity-management.index') }}">
@@ -87,6 +79,7 @@
 						<span class="menu-title">Activity </span>
 					</a>
 				</div>
+				@endif
 				{{-- Profile --}}
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ url('/profile') }}">
@@ -121,7 +114,7 @@
 							</a>
 							<!--end:Menu link-->
 						</div>
-						
+
 						<!--end:Menu item-->
 					</div>
 					<!--end:Menu sub-->
@@ -155,7 +148,7 @@
 					</span>
 					<div class="menu-sub menu-sub-accordion">
 						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('county-mrac-arac.template') ? 'active' : '' }}" href="{{ route('county-mrac-arac.template') }}">
+							<a class="menu-link {{ request()->routeIs('county-mrac-arac.create') ? 'active' : '' }}" href="{{ route('county-mrac-arac.create') }}">
 								<span class="menu-title">Submit MRAC/ARAC</span>
 							</a>
 						</div>

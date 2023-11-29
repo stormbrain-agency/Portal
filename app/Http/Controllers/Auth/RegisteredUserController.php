@@ -107,12 +107,11 @@ class RegisteredUserController extends Controller
                     'name' => $request -> input('name'),
                     'email' => $request -> input('email'),
                     'county_designation' => $county_designation,
-                    'link' => url('/user-management/user-pending/users/'. $userID .''),
+                    'link' => url('/user-management/county-users/user/'. $userID .''),
                     'time' => Carbon::now()->format('H:i:s - m/d/Y '),
                     'list_mail' => $adminEmails,
                 ];
                 $dataMail = $data['list_mail'];
-                // $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
 
                 foreach($dataMail as $emailAdress){
                     Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {

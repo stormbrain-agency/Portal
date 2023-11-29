@@ -45,7 +45,7 @@
                             <!-- Input Message -->
                             <div class="mb-3">
                                 <label for="message" class="form-label">Message:</label>
-                                <textarea class="form-control" name="message" rows="3"></textarea>
+                                <textarea class="form-control" name="message" rows="3" required></textarea>
                             </div>
 
                             <!-- Select Where to show -->
@@ -77,10 +77,10 @@
                                 </select>
 
                                 <label for="from" class="form-label">From:</label>
-                                <input type="date" name="schedule_start" class="form-control">
+                                <input type="datetime-local" id="schedule_start" name="schedule_start" class="form-control">
 
                                 <label for="till" class="form-label">Till:</label>
-                                <input type="date" name="schedule_end" class="form-control">
+                                <input type="datetime-local" id="schedule_end" name="schedule_end" class="form-control">
                             </div>
 
                             <!-- Select Status -->
@@ -106,5 +106,20 @@
         </div>
         <!--end::Card body-->
     </div>
-
+    @push('scripts')
+        <script>
+            $(document).ready(function () {
+                $('#schedule').on('change', function () {
+                    var scheduleValue = $(this).val();
+                    if (scheduleValue === '2') {
+                        $('#schedule_start').prop('disabled', true);
+                        $('#schedule_end').prop('disabled', true);
+                    } else {
+                        $('#schedule_start').prop('disabled', false);
+                        $('#schedule_end').prop('disabled', false);
+                    }
+                });
+            });
+        </script>
+    @endpush
 </x-default-layout>

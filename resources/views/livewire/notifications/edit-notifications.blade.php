@@ -46,7 +46,7 @@
                             <!-- Input Message -->
                             <div class="mb-3">
                                 <label for="message" class="form-label">Message:</label>
-                                <textarea class="form-control" id="message" name="message" value="{{ $notification->message }}" rows="3">{{ $notification->message }}</textarea>
+                                <textarea class="form-control" id="message" name="message" value="{{ $notification->message }}" rows="3" required>{{ $notification->message }}</textarea>
                             </div>
 
                             <!-- Select Where to show -->
@@ -78,11 +78,11 @@
                                 </select>
 
                                 <label for="from" class="form-label">From:</label>
-                                <input type="datetime-local" name="schedule_start" class="form-control"
+                                <input type="datetime-local" id="schedule_start" name="schedule_start" class="form-control"
                                 value="{{ !empty($notification->schedule_start) ? \Carbon\Carbon::parse($notification->schedule_start)->format('Y-m-d\TH:i') : '' }}">
 
                                 <label for="till" class="form-label">Till:</label>
-                                <input type="datetime-local" name="schedule_end" class="form-control"
+                                <input type="datetime-local" id="schedule_end" name="schedule_end" class="form-control"
                                 value="{{ !empty($notification->schedule_end) ? \Carbon\Carbon::parse($notification->schedule_end)->format('Y-m-d\TH:i') : '' }}">
                             </div>
 
@@ -116,8 +116,27 @@
     </div>
     @push('scripts')
         <script>
-            $(document).ready(function () {
+            document.addEventListener('DOMContentLoaded', function () {
+                var scheduleSelect = document.getElementById('schedule');
+                var scheduleStartInput = document.getElementById('schedule_start');
+                var scheduleEndInput = document.getElementById('schedule_end');
 
+                scheduleSelect.addEventListener('change', function () {
+                    if (scheduleSelect.value === 'No') {
+                        scheduleStartInput.disabled = true;
+                        scheduleEndInput.disabled = true;
+                    } else {
+                        scheduleStartInput.disabled = false;
+                        scheduleEndInput.disabled = false;
+                    }
+                });
+
+                if (scheduleSelect.value === 'No') {
+                    scheduleStartInput.disabled = true;
+                    scheduleEndInput.disabled = true;
+                }
+            });
+            $(document).ready(function () {
                 $('#discard-button').on('click', function () {
                     var confirmDiscard = confirm('Are you sure you want to discard changes?');
 
@@ -138,7 +157,6 @@
                         success: function (data) {
                             console.log(data);
                             window.location.href = '/notification-management/';
-                            alert('Notification deleted successfully.');
                         },
                         error: function (error) {
                             console.error(error);
