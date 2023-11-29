@@ -1,6 +1,6 @@
 <x-default-layout>
     <div class="card p-15">
-        <h1>Welcome to the CDA Supplemental Payment Dashboard</h1>
+        <h1>Welcome to the CDA Supplemental Payment Dashboard Test</h1>
         <div class="mt-5">
             @if(session('error'))
                 <div class="alert bg-light-danger border-danger d-flex align-items-center p-5">
@@ -31,7 +31,6 @@
 
             {{-- Display Conty User --}}
             @if (auth()->user()->hasRole('county user'))
-                County User
                 @foreach ($notifications as $notification)
                     @if ($notification->status == 'Active')
                         @if ($notification->location == 'User')
@@ -88,8 +87,8 @@
                                         </button>
                                     </div>
                                 @else
-                                    <div>
-                                        <p>Not Notification</p>
+                                    <div class="d-flex flex-column">
+                                        <h4 class="mb-1 text-dark">Not Notification</h4>
                                     </div>
                                 @endif
                             @endif
@@ -100,7 +99,6 @@
 
             {{-- Display Admin --}}
             @if (auth()->user()->hasRole('admin'))
-                Admin User
                 @foreach ($notifications as $notification)
                     @if ($notification->status == 'Active')
                         @if ($notification->location == 'Sitewide' || $notification->location == 'User')
@@ -157,8 +155,8 @@
                                         </button>
                                     </div>
                                 @else
-                                    <div>
-                                        <p>Not Notification</p>
+                                    <div class="d-flex flex-column">
+                                        <h4 class="mb-1 text-dark">Not Notification</h4>
                                     </div>
                                 @endif
                             @endif
@@ -171,3 +169,4 @@
         </div>
     </div>
 </x-default-layout>
+
