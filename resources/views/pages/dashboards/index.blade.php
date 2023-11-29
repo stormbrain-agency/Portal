@@ -155,8 +155,13 @@
                                         </button>
                                     </div>
                                 @else
+<<<<<<< HEAD
                                     <div class="d-flex flex-column">
                                         <h4 class="mb-1 text-dark">Not Notification</h4>
+=======
+                                    <div>
+                                        <p>Not Notification</p>
+>>>>>>> e9b6728 (update notifications)
                                     </div>
                                 @endif
                             @endif
