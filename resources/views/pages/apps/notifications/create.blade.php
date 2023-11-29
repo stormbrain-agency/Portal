@@ -77,10 +77,10 @@
                                 </select>
 
                                 <label for="from" class="form-label">From:</label>
-                                <input type="date" name="schedule_start" class="form-control">
+                                <input type="datetime-local" name="schedule_start" class="form-control">
 
                                 <label for="till" class="form-label">Till:</label>
-                                <input type="date" name="schedule_end" class="form-control">
+                                <input type="datetime-local" name="schedule_end" class="form-control">
                             </div>
 
                             <!-- Select Status -->
