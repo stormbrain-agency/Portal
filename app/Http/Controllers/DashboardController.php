@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 use App\Models\Notifications;
 
-use App\Models\Notifications;
-use Carbon\Carbon;
-
 class DashboardController extends Controller
 {
     public function index()
