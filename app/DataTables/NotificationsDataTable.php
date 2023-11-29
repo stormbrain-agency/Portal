@@ -46,7 +46,7 @@ class NotificationsDataTable extends DataTable
                 return $notifications->type;
             })
             ->editColumn('status', function (Notifications $notifications) {
-                return view('pages.apps.notifications.columns._status', compact('notifications'));
+                return view('livewire.notifications.notification-status', ['notification' => $notifications]);
             })
             ->editColumn('edit', function (Notifications $notifications) {
                 return view('pages.apps.notifications.columns._edit-action', compact('notifications'));
