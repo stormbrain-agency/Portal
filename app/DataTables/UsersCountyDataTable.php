@@ -98,7 +98,7 @@ class UsersCountyDataTable extends DataTable
     {
         if (auth()->user()->hasRole('admin')) {
             return [
-                Column::make('user')->addClass('d-flex align-items-center')->name('first_name')->title("Full Name"),
+                Column::make('user')->addClass('align-items-center')->name('first_name')->title("Full Name"),
                 Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('status')->addClass('text-nowrap')->name('status'),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
@@ -111,7 +111,7 @@ class UsersCountyDataTable extends DataTable
             ];
         }else{
              return [
-                 Column::make('user')->addClass('d-flex align-items-center')->name('first_name')->title("Full Name"),
+                 Column::make('user')->addClass('align-items-center')->name('first_name')->title("Full Name"),
                 Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('status')->addClass('text-nowrap')->name('status'),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
