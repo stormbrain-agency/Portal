@@ -92,7 +92,7 @@ class W9_Upload_Controller extends Controller
                             $newFile->save();
     
                             $adminEmails = User::whereHas('roles', function ($query) {
-                                $query->where('name', 'admin');
+                                $query->where('name', 'admin')->orWhere('name', 'manager');
                             })->pluck('email');
     
                             $data = [
