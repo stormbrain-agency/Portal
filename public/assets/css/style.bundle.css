@@ -55535,8 +55535,8 @@ code:not([class*=language-]) {
 
 .rotate-180 {
   transition: transform 0.3s ease;
-  backface-visibility: hidden;
-  will-change: transform;
+  /* backface-visibility: hidden; */
+  /* will-change: transform; */
 }
 
 .collapsible:not(.collapsed)>.rotate-180,
@@ -60659,6 +60659,7 @@ body,
     width: var(--bs-app-sidebar-width-actual);
   }
 
+
   [data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] .app-sidebar:hover:not(.animating) {
     transition: width 0.3s ease;
     width: var(--bs-app-sidebar-width-actual);
@@ -63223,13 +63224,14 @@ body,
   border-radius: 6px;
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03) !important;
   margin-right: 20px;
+  cursor: pointer;
 }
 
-[data-kt-app-layout=light-sidebar] .app-sidebar .app-sidebar-toggle.btn-menu-header .rotate-180 {
+/* [data-kt-app-layout=light-sidebar] .app-sidebar .app-sidebar-toggle.btn-menu-header .rotate-180 {
   transform: rotate(180deg);
   backface-visibility: visible;
   will-change: auto;
-}
+} */
 
 [data-kt-app-layout=light-sidebar] .app-sidebar .app-sidebar-toggle.btn-menu-header .rotate-180::before {
   color: #596D87;
