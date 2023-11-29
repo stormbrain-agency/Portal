@@ -1,5 +1,5 @@
 <x-default-layout>
-    <div class="card p-15">
+    <div class="card m-height p-15">
         <h1>Welcome to the CDA Supplemental Payment Dashboard</h1>
         <div class="mt-5">
             @foreach ($notifications as $notification)
