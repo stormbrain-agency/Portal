@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Notifications;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -14,3 +16,4 @@ class DashboardController extends Controller
         return view('pages.dashboards.index', ['notifications' => $notifications]);
     }
 }
+
