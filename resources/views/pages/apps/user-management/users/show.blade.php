@@ -242,8 +242,8 @@
                         <div class="card-header mt-6">
                             <!--begin::Card title-->
                             <div class="card-title flex-column">
-                                <h2 class="mb-1">W-9 file of user</h2>
-                                <div class="fs-6 fw-semibold text-muted">Download to view file</div>
+                                <h2 class="mb-1">Submission History</h2>
+                                {{-- <div class="fs-6 fw-semibold text-muted">Download to view file</div> --}}
                             </div>
                             <!--end::Card title-->
                         </div>
@@ -278,9 +278,9 @@
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Action-->
-                                            @if (!auth()->user()->hasRole('view only'))
+                                            {{-- @if (!auth()->user()->hasRole('view only'))
                                             <a href="{{ route('w9_upload.w9_download', ['w9_id' => $w9Upload->id, 'filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
-                                            @endif
+                                            @endif --}}
                                             <!--end::Action-->
                                         </div>
                                         <!--end::Time-->
@@ -312,7 +312,7 @@
                             <!--begin::Card title-->
                             <div class="card-title flex-column">
                                 <h2 class="mb-1">Submission History</h2>
-                                <div class="fs-6 fw-semibold text-muted">Download to view file</div>
+                                {{-- <div class="fs-6 fw-semibold text-muted">Download to view file</div> --}}
                             </div>
                             <!--end::Card title-->
                         </div>
@@ -392,7 +392,7 @@
                             <!--begin::Card title-->
                             <div class="card-title flex-column">
                                 <h2 class="mb-1">Submission History</h2>
-                                <div class="fs-6 fw-semibold text-muted">Download to view file</div>
+                                {{-- <div class="fs-6 fw-semibold text-muted">Download to view file</div> --}}
                             </div>
                             <!--end::Card title-->
                         </div>

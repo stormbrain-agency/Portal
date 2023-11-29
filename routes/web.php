@@ -35,11 +35,10 @@ Route::middleware(['phone_verify'])->group(function () {
         Route::get('/profile', [UserManagementController::class, 'profile'])->name('profile');
         Route::get('/state', [LocationController::class, 'getStates'])->name('state');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        // Route::get('/dashboard', [W9_Upload_Controller::class, 'showUploadForm'])->name('dashboard');
         Route::name('user-management.')->group(function () {
-            // Route::middleware(['permission:county users management'])->group(function () {
+            Route::middleware(['permission:read users management'])->group(function () {
                 Route::resource('/user-management/users', UserManagementController::class);
-            // });
+            });
             Route::middleware(['permission:county users management'])->group(function () {
                 // Route::prefix('/user-management/user-pending')->name('users-pending.')->group(function () {
                 //     Route::get('/', [UserManagementController::class,'users_pending'])->name('index');
