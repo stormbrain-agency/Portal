@@ -40,6 +40,7 @@ class AddUserModal extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
+        'mobile_phone' => ['required', 'string', 'max:255', 'regex:/^\(\d{3}\) \d{3}-\d{4}$/'],
         'role' => 'required|string',
     ];
 
