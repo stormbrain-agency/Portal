@@ -30,14 +30,14 @@
             @endif
             @foreach ($notifications as $notification)
                 @if ($notification->type == 'Information')
-                    @if (
+                    {{-- @if (
                         ($notification->location == 'Sitewide' || $notification->location == 'User') &&
                         (($notification->schedule_status == 'Yes' &&
                             now() >= \Carbon\Carbon::parse($notification->schedule_start) &&
                             now() <= \Carbon\Carbon::parse($notification->schedule_end)) ||
                         ($notification->schedule_status == 'No')) &&
                         ($notification->status == 'Active')
-                    )
+                    ) --}}
                         <div class="alert bg-light-primary border-primary d-flex align-items-center p-5">
                             <i class="ki-duotone ki-shield-tick fs-2hx text-primary me-4"><span class="path1"></span><span class="path2"></span></i>
                             <div class="d-flex flex-column">
@@ -48,7 +48,7 @@
                                 <i class="ki-duotone ki-cross fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
                             </button>
                         </div>
-                    @endif
+                    {{-- @endif --}}
                 @elseif ($notification->type == 'Success')
                     <div class="alert bg-light-success border-success d-flex align-items-center p-5">
                         <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span class="path1"></span><span class="path2"></span></i>
@@ -91,4 +91,3 @@
         </div>
     </div>
 </x-default-layout>
-
