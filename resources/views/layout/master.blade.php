@@ -39,6 +39,8 @@
     <!--end::Custom Stylesheets-->
 
     @livewireStyles
+
+    <link rel="stylesheet" href="{{ asset('assets/css/style.interface.css') }}">
 </head>
 <!--end::Head-->
 
