@@ -32,14 +32,13 @@ class PhoneNumberVerify extends Component
                 // ->create("+17604520825", "sms");
             // dd($verification ,'verification');
             if ($verification->status === "pending") {
-                session()->flash('message', 'OTP sent successfully');
+                session()->flash('message', 'Enter the verification code we sent to : .... ');
                 // dd($verification->status,'pending');
             }
         } catch (\Exception $e) {
             // dd($twilio);
-            $this->error = $e->getMessage();
+            // $this->error = $e->getMessage();
             session()->flash('error',$e->getMessage());
-            // dd($e->getMessage());
         }
     }
 
@@ -55,7 +54,7 @@ class PhoneNumberVerify extends Component
                     [
                         // "to" => "+17604520825",
                         "to" => "+17604520825",
-                        "code" => "4444"
+                        "code" => $this->code
                     ]
                 );
 
