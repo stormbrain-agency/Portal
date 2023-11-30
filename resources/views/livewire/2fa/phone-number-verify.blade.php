@@ -13,18 +13,19 @@
     <form wire:submit.prevent="verifyCode">
         <label class="mb-4" for="btn-verify">Type your 6 digit security code</label>
         <div class="d-flex align-items-center justify-content-between mb-9">
-            <input style="display:none"  id="_otp" class="_notok"  wire:model="code" type="number" class="form-control bg-transparent _notok" required="" autofocus="">
+            <!-- <input  id="_otp" class="_notok" wire:model="code"  type="number" class="form-control bg-transparent" required autofocus /> -->
+            <!-- <input style="display:none"  id="_otp" class="_notok"  wire:model="code" type="number" class="form-control bg-transparent _notok" autofocus=""/> -->
         </div>
         <div class="d-flex align-items-center justify-content-between mb-9">
-            <input type="number" class="otp__digit otp__field__1">
-            <input type="number" class="otp__digit otp__field__2">
-            <input type="number" class="otp__digit otp__field__3">
-            <input type="number" class="otp__digit otp__field__4">
-            <input type="number" class="otp__digit otp__field__5">
-            <input type="number" class="otp__digit otp__field__6">
+            <input type="number" class="otp__digit number otp__field__1">
+            <input type="number" class="otp__digit number otp__field__2">
+            <input type="number" class="otp__digit number otp__field__3">
+            <input type="number" class="otp__digit number otp__field__4">
+            <input type="number" class="otp__digit number otp__field__5">
+            <input type="number" class="otp__digit number otp__field__6">
         </div>
         <input type="submit" name="btn-verify" value="Submit">
-        <!-- <div class="result"><p wire:model="code"  id="_otp" class="_notok">855412</p></div> -->
+        <a href="/logout">Back</a>
     </form>
 </div>
 
@@ -65,7 +66,7 @@
             line-height: 14px;
         }
 
-        form input{
+        form input.number{
             width: calc(16.67% - 20px);
             padding: 4px 10px;
             border-radius: 6px;
@@ -86,6 +87,12 @@
             color: var(--bs-white);
             display: block;
             font-size: 16px;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
         }
 
     </style>
@@ -113,11 +120,15 @@
         _finalKey += value
     }
     if(_finalKey.length == 6){
-        document.querySelector("#_otp").classList.replace("_notok", "_ok")
-        document.querySelector("#_otp").value = _finalKey
+        // document.querySelector("#_otp").classList.replace("_notok", "_ok")
+        // document.querySelector("#_otp").value = _finalKey
+        Livewire.emit('update_code_input', _finalKey);
     }else{
-        document.querySelector("#_otp").classList.replace("_ok", "_notok")
-        document.querySelector("#_otp").value = _finalKey
+        // document.querySelector("#_otp").classList.replace("_ok", "_notok")
+        // document.querySelector("#_otp").value = _finalKey
+        Livewire.emit('update_code_input', _finalKey);
     }
-    }  
+    }
+    
+
 </script>  
