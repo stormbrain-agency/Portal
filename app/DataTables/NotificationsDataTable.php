@@ -48,7 +48,7 @@ class NotificationsDataTable extends DataTable
             ->editColumn('status', function (Notifications $notifications) {
                 return view('livewire.notifications.notification-status', ['notification' => $notifications]);
             })
-            ->editColumn('edit', function (Notifications $notifications) {
+            ->editColumn('action', function (Notifications $notifications) {
                 return view('pages.apps.notifications.columns._edit-action', compact('notifications'));
             })
             ->setRowId('id');
@@ -140,7 +140,7 @@ class NotificationsDataTable extends DataTable
             Column::make('schedule')->title('Schedule')->orderable(true)->searchable(true)->addClass('fw-bold col-schedule'),
             Column::make('type')->title('Type')->name('type')->orderable(true)->searchable(true)->addClass('fw-bold col-type'),
             Column::make('status')->title('Status')->name('Status')->orderable(true)->searchable(true)->addClass('fw-bold col-status'),
-            Column::computed('edit')
+            Column::computed('action')
                 ->addClass('text-center text-nowrap col-edit')
                 ->exportable(false)
                 ->printable(false)
