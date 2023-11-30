@@ -39,8 +39,7 @@ return [
     'KT_THEME_ASSETS' => [
         'favicon' => 'assets/media/logos/favicon.png',
         'fonts' => [
-            // 'https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700',
-            'https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap',
+            'https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700',
         ],
         'global' => [
             'css' => [
