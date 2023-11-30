@@ -6,20 +6,16 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 
-    @section('title')
-        County MRAC/ARAC Submissions
-    @endsection
-
-    {{-- @section('breadcrumbs')
-        {{ Breadcrumbs::render('county-provider-mrac_arac.index') }}
-    @endsection --}}
-
      <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                MRAC/ARAC | Submission MRAC/ARAC 
+                @if(!auth()->user()->hasRole('county user'))
+                    County MRAC/ARAC Submissions
+                @else
+                    MRAC/ARAC | Submission History
+                @endif
             </div>
             <!--begin::Card title-->
 

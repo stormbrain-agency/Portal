@@ -66,7 +66,6 @@ line-height: 16px;
         <!--end::Card header-->
         @if(session('success'))
         <div class="card-body py-4">
-
             <div class="alert alert-success d-flex align-items-center p-5">
                 <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span class="path1"></span><span class="path2"></span></i>                    <div class="d-flex flex-column">
                     <h4 class="mb-1 text-success">Nice work!</h4>
@@ -76,21 +75,13 @@ line-height: 16px;
         </div>
         @endif
         @if(session('error'))
-        {{-- <div class="card-body py-4">
+        <div class="card-body py-4">
             <div class="alert alert-danger d-flex align-items-center p-5 mb-1">
                 <i class="ki-duotone ki-shield-cross fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>                    <div class="d-flex flex-column">
                     <h4 class="mb-1 text-danger">Error</h4>
                     <span>{{ session('error') }}</span>
                 </div>
             </div>
-        </div> --}}
-        <div class="wrap-alert error d-flex align-items-center mt-6">
-            {!! getIcon('notification-bing','me-4') !!}
-            <div class="content" style="width: 100%;">
-                <div class="title mb-2">Error</div>
-                <div class="sub-title">{{ session('error') }}</div>
-            </div>
-            {!! getIcon('cross','fs-1 btn-alert') !!}
         </div>
         @endif
         <!--begin::Card body-->

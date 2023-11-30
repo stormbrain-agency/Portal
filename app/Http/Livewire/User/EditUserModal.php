@@ -44,6 +44,7 @@ class EditUserModal extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
+        'mobile_phone' => ['required', 'string', 'max:255', 'regex:/^\(\d{3}\) \d{3}-\d{4}$/'],
         'role' => 'required|string',
     ];
 
@@ -103,11 +104,11 @@ class EditUserModal extends Component
     private function updateUserSave()
     {
         // Get the user by ID
-        if (!auth()->user()->hasRole('admin')) {
-           $this->emit('error', 'You do not have permission to edit!');
+        $id = $this->idUser;
+        if (!auth()->user()->hasRole('admin') && $id != auth()->id()) {
+            $this->emit('error', 'You do not have permission to edit!');
             return;
         }
-        $id = $this->idUser;
         $user = User::find($id);
         $checkUser = User::where('email', $this->email)
                 ->where('id', '!=', $this->idUser)
@@ -149,8 +150,8 @@ class EditUserModal extends Component
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
         $this->email = $user->email;
-        $this->business_phone = $user->business_phone;
-        $this->mobile_phone = $user->mobile_phone;
+        $this->business_phone = $user->getFormattedBusinessPhoneAttribute();
+        $this->mobile_phone = $user->getFormattedMobilePhoneAttribute();
         $this->mailing_address = $user->mailing_address;
         $this->vendor_id = $user->vendor_id;
         $this->county_designation = $user->county_designation;

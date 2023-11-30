@@ -46,7 +46,7 @@ class NotificationsDataTable extends DataTable
                 return $notifications->type;
             })
             ->editColumn('status', function (Notifications $notifications) {
-                return view('pages.apps.notifications.columns._status', compact('notifications'));
+                return view('livewire.notifications.notification-status', ['notification' => $notifications]);
             })
             ->editColumn('edit', function (Notifications $notifications) {
                 return view('pages.apps.notifications.columns._edit-action', compact('notifications'));
@@ -77,7 +77,36 @@ class NotificationsDataTable extends DataTable
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy([0, 'asc'])
-            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/notifications/columns/_draw-scripts.js')) . "}");
+            ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/notifications/columns/_draw-scripts.js')) . "}")
+            ->drawCallback("function() {
+                    $('.status-toggle').on('click', function () {
+                        var statusCheckbox = $(this);
+                        var status = statusCheckbox.prop('checked') ? 'Active' : 'Unactive';
+                        var notificationId = statusCheckbox.data('notification-id');
+
+                        console.log('Notification ID:', notificationId);
+                        console.log('Status:', status);
+
+                        $.ajax({
+                            url: '" . route("notification-management.update-status") . "',
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name=\"csrf-token\"]').attr('content')
+                            },
+                            data: {
+                                id: notificationId,
+                                status: status
+                            },
+                            success: function (response) {
+                                console.log(response);
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    });
+                }
+            ");
     }
 
     /**

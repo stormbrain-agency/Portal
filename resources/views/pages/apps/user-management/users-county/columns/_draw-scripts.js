@@ -30,6 +30,12 @@ document.querySelectorAll('[data-kt-action="update_row"]').forEach(function (ele
     });
 });
 
+document.querySelectorAll('[data-kt-action="create_view"]').forEach(function (element) {
+    element.addEventListener('click', function () {
+        Livewire.emit("create_view");
+    });
+});
+
 document.querySelectorAll('[data-kt-action="approve_row"]').forEach(function (element) {
     element.addEventListener('click', function () {
         Swal.fire({

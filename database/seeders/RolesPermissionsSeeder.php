@@ -20,9 +20,9 @@ class RolesPermissionsSeeder extends Seeder
         $countyuserRole = Role::create(['name' => 'county user']);
 
         $list_permissions = [
-            'read profile',
-            'create profile',
-            'edit profile',
+            'read users management',
+            'create users management',
+            'edit users management',
             'create provider w9',
             'read provider w9',
             'download provider w9',
@@ -45,9 +45,9 @@ class RolesPermissionsSeeder extends Seeder
         }
 
         $adminRole->givePermissionTo(
-            'read profile',
-            'create profile',
-            'edit profile',
+            'read users management',
+            'create users management',
+            'edit users management',
             'read provider w9',
             'download provider w9',
             'template provider payment',
@@ -60,7 +60,7 @@ class RolesPermissionsSeeder extends Seeder
             'county users management',
             'activity management');
         $managerRole->givePermissionTo(
-            'read profile',
+            'read users management',
             'read provider w9',
             'download provider w9',
             'read provider payment',
@@ -68,18 +68,17 @@ class RolesPermissionsSeeder extends Seeder
             'read mrac_arac',
             'download mrac_arac');
         $viewonlyRole ->givePermissionTo(
-            'read profile',
+            'read users management',
             'read provider w9',
             'read provider payment',
             'read mrac_arac',
         );
         $countyuserRole ->givePermissionTo(
-            'read profile',
-            'edit profile',
             'create provider w9',
             'read provider w9',
             'create provider payment',
             'read provider payment',
+            'create mrac_arac',
             'read mrac_arac',
             );
 

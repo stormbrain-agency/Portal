@@ -1,9 +1,4 @@
 <x-default-layout>
-
-    @section('title')
-        Users Details
-    @endsection
-
     <!--begin::Layout-->
     <div class="d-flex flex-column flex-lg-row">
         <!--begin::Sidebar-->
@@ -242,8 +237,8 @@
                         <div class="card-header mt-6">
                             <!--begin::Card title-->
                             <div class="card-title flex-column">
-                                <h2 class="mb-1">W-9 file of user</h2>
-                                <div class="fs-6 fw-semibold text-muted">Download to view file</div>
+                                <h2 class="mb-1">Submission History</h2>
+                                {{-- <div class="fs-6 fw-semibold text-muted">Download to view file</div> --}}
                             </div>
                             <!--end::Card title-->
                         </div>
@@ -310,7 +305,7 @@
                             <!--begin::Card title-->
                             <div class="card-title flex-column">
                                 <h2 class="mb-1">Submission History</h2>
-                                <div class="fs-6 fw-semibold text-muted">Download to view file</div>
+                                {{-- <div class="fs-6 fw-semibold text-muted">Download to view file</div> --}}
                             </div>
                             <!--end::Card title-->
                         </div>
@@ -387,7 +382,7 @@
                             <!--begin::Card title-->
                             <div class="card-title flex-column">
                                 <h2 class="mb-1">Submission History</h2>
-                                <div class="fs-6 fw-semibold text-muted">Download to view file</div>
+                                {{-- <div class="fs-6 fw-semibold text-muted">Download to view file</div> --}}
                             </div>
                             <!--end::Card title-->
                         </div>
