@@ -97,22 +97,30 @@ class W9_Upload_Controller extends Controller
     
                             $data = [
                                 'email' => $user->email,
-                                'name' => $user->first_name .'' . $user->last_name,
+                                'name' => $user->first_name .' ' . $user->last_name,
                                 'county_designation' => $user->county->county ? $user->county->county : "",
                                 'time' => $newFile->created_at,
                             ];
     
                             foreach($adminEmails as $adminEmail){
+                                try {
                                     Mail::send('mail.admin.w-9', $data, function ($message) use ($adminEmail) {
-                                    $message->to($adminEmail);
-                                    $message->subject('Alert: W-9 Submission Received!');
-                                });
+                                        $message->to($adminEmail);
+                                        $message->subject('Alert: W-9 Submission Received!');
+                                    });
+                                } catch (\Exception $e) {
+                                    Log::error('Error sending email to admins: ' . $e->getMessage());
+                                }
                             }
-                            $userEmail = $user->email;
-                            Mail::send('mail.user.w-9', $data, function ($message) use ($userEmail) {
-                                $message->to($userEmail);
-                                $message->subject('Confirmation: W-9 Submission Received!');
-                            });
+                            try {
+                                $userEmail = $user->email;
+                                Mail::send('mail.user.w-9', $data, function ($message) use ($userEmail) {
+                                    $message->to($userEmail);
+                                    $message->subject('Confirmation: W-9 Submission Received!');
+                                });
+                            } catch (\Throwable $th) {
+                                Log::error('Error sending email to user: ' . $e->getMessage());
+                            }
     
                             return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
                         }

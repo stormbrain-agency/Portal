@@ -37,10 +37,22 @@
                             <label class="fw-semibold mb-2"><b>User submitted :</b>
                                 <span>
                                 @if ($user_id)
-                                    <a href="{{ route('user-management.users.show', $user_id) }}" class="text-primary-800 text-hover-primary mb-1">
-                                        {{ $user_name}} 
-                                    </a>
-                                @endif</span></label>
+                                    @if (auth()->user()->hasRole('admin'))
+                                        <a href="{{ route('user-management.county-users.show', $user_id) }}" class="text-primary-800 text-hover-primary mb-1">
+                                            {{ $user_name}} 
+                                        </a>
+                                    @elseif(auth()->user()->hasRole('county user'))
+                                        <a href="{{ route('profile') }}" class="text-primary-800 text-hover-primary mb-1">
+                                            {{ $user_name}} 
+                                        </a>
+                                    @else
+                                        <span class="text-primary-800 mb-1">
+                                            {{ $user_name}} 
+                                        </span>
+                                    @endif
+                                @endif
+                                </span>
+                            </label>
                         </div>
                         <!--end::Input group-->
                         <div class="fv-row mb-7">
