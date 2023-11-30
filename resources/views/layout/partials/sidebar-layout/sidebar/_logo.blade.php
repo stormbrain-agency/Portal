@@ -15,8 +15,8 @@
 	<!--begin::Logo image-->
 	<a  href="{{ route('dashboard') }}">
 		{{-- <img alt="Logo" src="{{ asset('assets/images/logo/logo.png') }}" class="h-27px app-sidebar-logo-default" /> --}}
-		<img alt="Logo" src="{{ asset('assets/images/logo/logo.png') }}" class="app-sidebar-logo-default" />
-		<img alt="Logo" src="{{ asset('assets/images/logo/logo.png') }}" class="app-sidebar-logo-minimize" />
+		<img alt="Logo" src="{{ asset('images/logo/logo.png') }}" class="app-sidebar-logo-default" />
+		<img alt="Logo" src="{{ asset('images/logo/logo.png') }}" class="app-sidebar-logo-minimize" />
 	</a>
 	<!--end::Logo image-->
 	<script type="text/javascript">
