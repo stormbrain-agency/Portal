@@ -1,9 +1,22 @@
+:root {
+    --bs-primary: #002559;
+    --bs-btn-primary: #1973B8;
+    --bs-primary-inverse: #ffffff;
+}
+
 .body {
     font-family: 'Lato', sans-serif;
 }
 
 .card.m-height {
     min-height: 85vh;
+}
+
+
+.btn.btn-primary {
+    color: var(--bs-primary-inverse);
+    border-color: var(--bs-btn-primary);
+    background-color: var(--bs-btn-primary);
 }
 
 .btn.btn-login {
