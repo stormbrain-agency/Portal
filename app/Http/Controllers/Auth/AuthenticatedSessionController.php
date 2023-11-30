@@ -59,6 +59,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        \App\Models\User::where('id', Auth::user()->id)
+        ->update([
+            'phone_verified' => false
+        ]);
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
