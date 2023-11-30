@@ -99,11 +99,9 @@ class NotificationsDataTable extends DataTable
                             },
                             success: function (response) {
                                 console.log(response);
-                                alert('Changes');
                             },
                             error: function (error) {
                                 console.log(error);
-                                alert('No Changes');
                             }
                         });
                     });
