@@ -1,15 +1,18 @@
 
 <!--begin::User details-->
 <div class="d-flex flex-column">
-    @if($payment_report->user->id !== auth()->id())
-    <a href="{{ route('user-management.users.show', $payment_report->user->id) }}" class="text-gray-800 text-hover-primary mb-1">
-        {{ $payment_report->user->first_name}} {{ $payment_report->user->last_name}}
-    </a>
+    @if (auth()->user()->hasRole('admin'))
+        <a href="{{ route('user-management.county-users.show', $payment_report->user->id) }}" class="text-gray-800 text-hover-primary mb-1">
+            {{ $payment_report->user->first_name}} {{ $payment_report->user->last_name}}
+        </a>
+    @elseif(auth()->user()->hasRole('county user'))
+        <a href="{{ route('profile') }}" class="text-gray-800 text-hover-primary mb-1">
+            {{ $payment_report->user->first_name}} {{ $payment_report->user->last_name}}
+        </a>
     @else
-    <a href="{{ route('profile') }}" class="text-gray-800 text-hover-primary mb-1">
-        {{ $payment_report->user->first_name}} {{ $payment_report->user->last_name}}
-    </a>
+        <p class="text-gray-800 mb-1">
+            {{ $payment_report->user->first_name}} {{ $payment_report->user->last_name}}
+        </p>
     @endif
-    {{-- <span>{{ $payment_report->user->email }}</span> --}}
 </div>
 <!--begin::User details-->

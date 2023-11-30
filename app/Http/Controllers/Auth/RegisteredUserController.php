@@ -114,11 +114,15 @@ class RegisteredUserController extends Controller
                 $dataMail = $data['list_mail'];
 
                 foreach($dataMail as $emailAdress){
-                    Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {
-                        $message->to($emailAdress);
-                        $message->subject('Alert: County User Registration - Approval
-                        Needed!');
-                    });
+                    try {
+                        Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {
+                            $message->to($emailAdress);
+                            $message->subject('Alert: County User Registration - Approval
+                            Needed!');
+                        });
+                    } catch (\Exception $e) {
+                        Log::error('Error sending email to admins: ' . $e->getMessage());
+                    }
                 }
 
                 return response()->json(['status' => 'success', 'message' => 'successful']);
