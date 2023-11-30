@@ -50,14 +50,14 @@ class UserPending extends Component
             'name' => $user->name,
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
         ];
-        // $stormbrainEmail = env('STORMBRAIN', 'support@stormbrain.com');
-        // $stormbrainEmail = "velado7302@eachart.com";
-        // $stormbrainEmail = "development@stormbrain.com";
-
-        Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
-            $message->to($user->email);
-            $message->subject('Confirm Your Account');
-        });
+        try {
+            Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
+                $message->to($user->email);
+                $message->subject('Confirm Your Account');
+            });
+        } catch (\Exception $e) {
+            Log::error('Error sending email to user: ' . $e->getMessage());
+        }
 
     }
 

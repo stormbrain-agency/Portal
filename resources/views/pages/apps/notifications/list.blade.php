@@ -52,7 +52,31 @@
         </div>
         <!--end::Card body-->
     </div>
-
+    <script>
+        document.querySelectorAll('td.col-type').forEach(function (element) {
+            var test = document.querySelectorAll('td.col-type')
+            console.log(test);
+            var value = element.textContent.trim();
+            console.log(value);
+            switch (value) {
+                case 'Information':
+                    element.classList.add('text-info');
+                    break;
+                case 'Success':
+                    element.classList.add('text-success');
+                    break;
+                case 'Alert':
+                    element.classList.add('text-danger');
+                    break;
+                case 'Warning':
+                    element.classList.add('text-warning');
+                    break;
+                default:
+                    element.classList.add('text-muted');
+                    break;
+            }
+        });
+    </script>
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
@@ -68,15 +92,15 @@
 
         </script>
         <script>
-         $(document).ready(function () {
-            function clearDateFilter() {
-                window.LaravelDataTables['notifications-table'].column('created_at:name').search('').draw();
-            }
+            $(document).ready(function () {
+                function clearDateFilter() {
+                    window.LaravelDataTables['notifications-table'].column('created_at:name').search('').draw();
+                }
 
-            $('.daterangepicker .cancelBtn').on('click', function(){
-                clearDateFilter();
-            });
-        })
+                $('.daterangepicker .cancelBtn').on('click', function(){
+                    clearDateFilter();
+                });
+            })
         </script>
     @endpush
 

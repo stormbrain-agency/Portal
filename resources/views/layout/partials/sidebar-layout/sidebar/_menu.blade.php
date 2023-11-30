@@ -48,7 +48,7 @@
 				</div>
 				@endif
 				{{-- User Management --}}
-				{{-- @if(auth()->user()->hasRole('admin')) --}}
+				@if(auth()->user()->hasRole('admin'))
 					<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'hover show' : '' }}">
 						<span class="menu-link">
 							<span class="menu-icon">{!! getIcon('user', 'fs-2') !!}</span>
@@ -70,7 +70,7 @@
 							@endif
 						</div>
 					</div>
-				{{-- @endif --}}
+				@endif
 				@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 				{{-- Activity Management --}}
 				<div class="menu-item">

@@ -86,8 +86,8 @@ line-height: 16px;
         @endif
         <!--begin::Card body-->
         <div class="card-body py-4 pt-0">
-            <a href="{{ route('county-mrac-arac.download_template') }}" class="btn btn-bg-primary me-6 text-light mt-1">
-                <i class="ki-duotone ki-arrow-down text-light">
+            <a href="{{ route('county-mrac-arac.download_template') }}" class="btn btn-primary me-6 text-light mt-1">
+                <i class="ki-duotone ki-arrow-down text-light fs-2">
                     <span class="path1"></span>
                     <span class="path2"></span>
                 </i>Download Current Template</a>

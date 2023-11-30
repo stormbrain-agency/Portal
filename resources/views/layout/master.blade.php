@@ -39,6 +39,9 @@
     <!--end::Custom Stylesheets-->
 
     @livewireStyles
+
+    <link rel="stylesheet" href="{{ asset('libs/css/style.interface.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap" rel="stylesheet">
 </head>
 <!--end::Head-->
 

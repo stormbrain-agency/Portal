@@ -1,0 +1,204 @@
+.body {
+    font-family: 'Lato', sans-serif;
+}
+
+.card.m-height {
+    min-height: 85vh;
+}
+
+.btn.btn-login {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.btn:first-child:active {
+    background-color: var(--bs-primary);
+}
+
+/* Menu */
+[data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] .app-sidebar .app-sidebar-logo a {
+    opacity: 0;
+    width: 0px;
+    visibility: hidden;
+}
+
+[data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] .app-sidebar:hover .app-sidebar-logo a {
+    opacity: 1;
+    width: auto;
+    visibility: visible;
+}
+
+[data-kt-app-sidebar-minimize=on] .app-sidebar {
+    background-color: var(--bs-app-sidebar-base-toggle-btn-bg-color);
+}
+
+[data-kt-app-sidebar-minimize=on] .app-sidebar {
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
+}
+
+/* 
+.app-sidebar .menu .menu-item .menu-link:hover {
+    transition: color 0.2s ease;
+    background-color: var(--bs-white);
+    color: var(--bs-primary);
+}
+
+.app-sidebar .menu .menu-item:hover .menu-link .menu-title {
+    color: var(--bs-primary) !important;
+
+} */
+
+/* FAQ */
+.card.help-faq,
+.page-profile .card {
+    border-radius: 12px;
+}
+
+.card.help-faq .title {
+    margin-bottom: 50px;
+    color: var(--bs-text-dark-2);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.card.help-faq .box-question:not(:last-child) {
+    margin-bottom: 20px;
+    border-bottom: 1px dashed #E1E3EA;
+}
+
+.card.help-faq .box-question>span.ki-duotone {
+    margin-right: 15px;
+}
+
+.card.help-faq .box-question .title-question {
+    margin-bottom: 15px;
+}
+
+
+#kt_app_header_wrapper .app-navbar .menu-link {
+    border-radius: 50px;
+    padding: 9px 12px;
+    transition: all 300ms;
+}
+
+#kt_app_header_wrapper .app-navbar .menu-link:hover {
+    background-color: var(--bs-white);
+}
+
+.card.help-faq .box-question .content {
+    color: #7B8792;
+    font-size: 15px;
+    font-weight: 500;
+    height: 0;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    transition: all .5s ease;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.card.help-faq .box-question.active .content {
+    margin-bottom: 20px;
+    height: auto;
+    overflow: visible;
+    opacity: 1;
+}
+
+/* Page Profile */
+.page-profile {
+    width: 100%;
+}
+
+.page-profile .wrap-content:not(:last-child) {
+    margin-bottom: 18px;
+    border-bottom: 1px solid #E1E3EA;
+}
+
+.page-profile .title {
+    color: var(--bs-text-dark-2);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: -0.18px;
+    padding-bottom: 18px;
+}
+
+.page-profile .wrap-input {
+    margin-bottom: 18px;
+}
+
+.page-profile .wrap-content label {
+    color: var(--bs-text-dark-2);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 14px;
+    margin-bottom: 9px;
+}
+
+.page-profile .wrap-content input {
+    border-radius: 6px;
+    border: 1px solid #596D87;
+    padding: 10px 12px;
+}
+
+.page-profile .wrap-content input[type=submit],
+.page-profile .btn_edit-profile {
+    background-color: #1973B8;
+    color: var(--bs-white);
+    margin-right: 18px;
+    padding: 12px 16px;
+    border: 1px solid #1973B8;
+    border-radius: 6px;
+}
+
+.page-profile .wrap-content form {
+    max-width: 400px;
+}
+
+.page-profile .wrap-top {
+    border-bottom: 1px solid #E1E3EA;
+    padding: 30px 30px 20px;
+}
+
+.page-profile .wrap-top span {
+    color: var(--bs-text-dark-2);
+    font-size: 24px !important;
+    margin-right: 2px;
+}
+
+.page-profile .wrap-top span.text {
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: -0.18px;
+    font-size: 18px !important;
+}
+
+.page-profile .wrap-content {
+    padding: 30px;
+}
+
+.page-profile .wrap-content table {
+    max-width: 60%;
+}
+
+.page-profile .wrap-content table {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+}
+
+.page-profile .wrap-content table th {
+    color: #A1A5B7;
+}
+
+.page-profile .wrap-content table td.status {
+    color: #5CBDC6;
+}
+
+.page-profile .wrap-content table td.status.off {
+    color: #F1416C;
+}

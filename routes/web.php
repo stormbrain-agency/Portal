@@ -30,22 +30,16 @@ Route::get('/downloads', [W9_Historydownload_Controller::class, 'showDownloads']
 
 Route::middleware(['phone_verify'])->group(function () {
     Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
-        Route::get('/', [UserManagementController::class, 'profile'])->name('profile');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('/get-counties/{stateId}', 'LocationController@getCountiesByState');
         Route::get('/profile', [UserManagementController::class, 'profile'])->name('profile');
         Route::get('/state', [LocationController::class, 'getStates'])->name('state');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::name('user-management.')->group(function () {
-            Route::middleware(['permission:read users management'])->group(function () {
+            Route::middleware(['permission:edit users management'])->group(function () {
                 Route::resource('/user-management/users', UserManagementController::class);
             });
             Route::middleware(['permission:county users management'])->group(function () {
-                // Route::prefix('/user-management/user-pending')->name('users-pending.')->group(function () {
-                //     Route::get('/', [UserManagementController::class,'users_pending'])->name('index');
-                //     Route::get('/users/{id}', [UserManagementController::class,'usersPendingShow'])->name('show');
-                //     Route::get('/users/approve/{id}', [UserManagementController::class,'usersPendingApprove'])->name('approve');
-                //     Route::get('/users/deny/{id}', [UserManagementController::class,'usersPendingDeny'])->name('deny');
-                // });
                 Route::prefix('/user-management/county-users')->name('county-users.')->group(function () {
                     Route::get('/', [UserManagementController::class,'county_users'])->name('index');
                     Route::get('/user/{id}', [UserManagementController::class,'usersCountyShow'])->name('show');
@@ -114,7 +108,7 @@ Route::middleware(['phone_verify'])->group(function () {
                 Route::get('/edit/{id}', [NotificationsController::class, 'edit'])->name('edit');
                 Route::put('/update/{id}', [NotificationsController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [NotificationsController::class, 'delete'])->name('delete');
-                Route::post('/update-status', [NotificationsController::class, 'updateStatus'])->name('update.status');
+                Route::post('/update-status', [NotificationsController::class, 'updateStatus'])->name('update-status');
             });
         });
         Route::middleware(['permission:activity management'])->group(function () {

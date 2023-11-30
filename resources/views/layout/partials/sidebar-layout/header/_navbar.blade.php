@@ -40,7 +40,7 @@
 	<div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
 		<div class="cursor-pointer symbol symbol-35px d-flex align-item-center" >
             <div class="app-navbar-item">
-                <a class="menu-link" href="{{ url('/profile') }}">
+                <a class="menu-link" href="{{ url('/notification-management') }}">
                     <span class="menu-icon">{!! getIcon('notification-on', 'fs-2') !!}</span>
                 </a>
             </div>

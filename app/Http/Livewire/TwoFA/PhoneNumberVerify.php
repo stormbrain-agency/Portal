@@ -12,6 +12,14 @@ class PhoneNumberVerify extends Component
     public $code = null;
     public $error;
 
+    protected $listeners = [
+        'update_code_input' => 'update_code',
+    ];
+    
+    public function update_code($code_input){
+        $this->code = $code_input;
+    }
+
     public function mount()
     {
         // dd('mount');
@@ -21,50 +29,46 @@ class PhoneNumberVerify extends Component
     public function sendCode()
     {
         try {
-            // dd('$twilio before connect');
+            $mobile_phone_send = "+1".str_replace('-', '', Auth::user()->mobile_phone);
             $twilio = $this->connect();
-            // dd('$twilio after connect');
             $verification = $twilio->verify
                 ->v2
                 ->services(getenv("TWILIO_VERIFICATION_SID"))
                 ->verifications
-                ->create("+17604520825", "sms");
-                // ->create("+17604520825", "sms");
-            // dd($verification ,'verification');
+                ->create($mobile_phone_send, "sms");
             if ($verification->status === "pending") {
-                session()->flash('message', 'Enter the verification code we sent to : .... ');
-                // dd($verification->status,'pending');
+                session()->flash('message',  $mobile_phone_send );
             }
         } catch (\Exception $e) {
-            // dd($twilio);
-            // $this->error = $e->getMessage();
-            session()->flash('error',$e->getMessage());
+            session()->flash('error', $e->getMessage());
         }
     }
 
+    
+
     public function verifyCode()
     {
+        dd($this->code);
+        $mobile_phone_send = "+1".str_replace('-', '', Auth::user()->mobile_phone);
+        
         $twilio = $this->connect();
         try {
             $check_code = $twilio->verify
                 ->v2
                 ->services(getenv('TWILIO_VERIFICATION_SID'))
                 ->verificationChecks
-                ->create(
-                    [
-                        // "to" => "+17604520825",
-                        "to" => "+17604520825",
-                        "code" => $this->code
-                    ]
-                );
-
-            if ($check_code->valid === true) {
-                User::where('id', Auth::user()->id)
-                    ->update([
-                        'phone_verified' => $check_code->valid
-                    ]);
-                return redirect(route('dashboard'));
-            } else {
+                ->create([
+                    "to" => $mobile_phone_send,
+                    "code" => $this->code
+                ]);
+    
+                if ($check_code->valid === true) {
+                    User::where('id', Auth::user()->id)
+                        ->update([
+                            'phone_verified' => $check_code->valid
+                        ]);
+                    return redirect(route('dashboard'));
+                }  else {
                 session()->flash('error', 'Verification failed, Invalid code.');
             }
         } catch (\Exception $e) {
