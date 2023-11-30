@@ -78,15 +78,12 @@ class NotificationsDataTable extends DataTable
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
             ->orderBy([0, 'asc'])
             ->drawCallback("function() {" . file_get_contents(resource_path('views/pages/apps/notifications/columns/_draw-scripts.js')) . "}")
-            ->drawCallback("function() {
+            ->drawCallback("
+                function() {
                     $('.status-toggle').on('click', function () {
                         var statusCheckbox = $(this);
                         var status = statusCheckbox.prop('checked') ? 'Active' : 'Unactive';
                         var notificationId = statusCheckbox.data('notification-id');
-
-                        console.log('Notification ID:', notificationId);
-                        console.log('Status:', status);
-
                         $.ajax({
                             url: '" . route("notification-management.update-status") . "',
                             method: 'POST',
@@ -105,6 +102,27 @@ class NotificationsDataTable extends DataTable
                             }
                         });
                     });
+                    document.querySelectorAll('td.col-type').forEach(function (element) {
+                        var test = document.querySelectorAll('td.col-type')
+                        var value = element.textContent.trim();
+                        switch (value) {
+                            case 'Information':
+                                element.classList.add('text-primary');
+                                break;
+                            case 'Success':
+                                element.classList.add('text-success');
+                                break;
+                            case 'Alert':
+                                element.classList.add('text-danger');
+                                break;
+                            case 'Warning':
+                                element.classList.add('text-info');
+                                break;
+                            default:
+                                element.classList.add('text-muted');
+                                break;
+                        }
+                    });
                 }
             ");
     }
@@ -116,14 +134,14 @@ class NotificationsDataTable extends DataTable
     {
         //view layout
         return [
-            Column::make('id')->title('ID')->orderable(true)->searchable(true),
-            Column::make('title')->title('Title')->orderable(true)->searchable(true),
-            Column::make('location')->title('Where to show')->orderable(true)->searchable(true),
-            Column::make('schedule')->title('Schedule')->orderable(true)->searchable(true),
-            Column::make('type')->title('Type')->name('type')->orderable(true)->searchable(true),
-            Column::make('status')->title('Status')->name('Status')->orderable(true)->searchable(true),
+            Column::make('id')->title('ID')->orderable(true)->searchable(true)->addClass('fw-bold col-id'),
+            Column::make('title')->title('Title')->orderable(true)->searchable(true)->addClass('fw-bold col-title'),
+            Column::make('location')->title('Where to show')->orderable(true)->searchable(true)->addClass('fw-bold col-location'),
+            Column::make('schedule')->title('Schedule')->orderable(true)->searchable(true)->addClass('fw-bold col-schedule'),
+            Column::make('type')->title('Type')->name('type')->orderable(true)->searchable(true)->addClass('fw-bold col-type'),
+            Column::make('status')->title('Status')->name('Status')->orderable(true)->searchable(true)->addClass('fw-bold col-status'),
             Column::computed('edit')
-                ->addClass('text-center text-nowrap')
+                ->addClass('text-center text-nowrap col-edit')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60),

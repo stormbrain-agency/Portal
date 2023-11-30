@@ -46,25 +46,26 @@
                         <label for="message" class="form-label">Message:</label>
                         <textarea class="form-control" id="message" name="message" value="{{ $notification->message }}" rows="3" required>{{ $notification->message }}</textarea>
                     </div>
+                    <div class="input-group mb-7 justify-content-between gap-7">
+                        <!-- Select Where to show -->
+                        <div class="d-flex flex-column flex-grow-1">
+                            <label for="where_to_show" class="form-label">Where to show:</label>
+                            <select class="form-select" id="location" name="where_to_show">
+                                <option value="Sitewide" @if($notification->location == 'Sitewide') selected @endif>Sitewide</option>
+                                <option value="User" @if($notification->location == 'User') selected @endif>User</option>
+                            </select>
+                        </div>
 
-                    <!-- Select Where to show -->
-                    <div class="mb-7">
-                        <label for="where_to_show" class="form-label">Where to show:</label>
-                        <select class="form-select" id="location" name="where_to_show">
-                            <option value="Sitewide" @if($notification->location == 'Sitewide') selected @endif>Sitewide</option>
-                            <option value="User" @if($notification->location == 'User') selected @endif>User</option>
-                        </select>
-                    </div>
-
-                    <!-- Select Type of notification -->
-                    <div class="mb-7">
-                        <label for="type" class="form-label">Type of notification:</label>
-                        <select class="form-select" id="type" name="type">
-                            <option value="Information" @if($notification->type == 'Information') selected @endif>Information</option>
-                            <option value="Success" @if($notification->type == 'Success') selected @endif>Success</option>
-                            <option value="Warning" @if($notification->type == 'Warning') selected @endif>Warning</option>
-                            <option value="Alert" @if($notification->type == 'Alert') selected @endif>Alert</option>
-                        </select>
+                        <!-- Select Type of notification -->
+                        <div class="d-flex flex-column flex-grow-1">
+                            <label for="type" class="form-label">Type of notification:</label>
+                            <select class="form-select" id="type" name="type">
+                                <option value="Information" @if($notification->type == 'Information') selected @endif>Information</option>
+                                <option value="Success" @if($notification->type == 'Success') selected @endif>Success</option>
+                                <option value="Warning" @if($notification->type == 'Warning') selected @endif>Warning</option>
+                                <option value="Alert" @if($notification->type == 'Alert') selected @endif>Alert</option>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- Input Group for Schedule -->

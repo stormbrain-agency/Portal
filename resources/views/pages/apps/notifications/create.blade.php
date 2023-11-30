@@ -46,24 +46,26 @@
                         <textarea class="form-control" name="message" rows="3" required></textarea>
                     </div>
 
-                    <!-- Select Where to show -->
-                    <div class="mb-7">
-                        <label for="where_to_show" class="form-label">Where to show:</label>
-                        <select class="form-select" id="location" name="where_to_show">
-                            <option value="1">Sitewide</option>
-                            <option value="2">User</option>
-                        </select>
-                    </div>
+                    <div class="input-group mb-7 justify-content-between gap-7">
+                        <!-- Select Where to show -->
+                        <div class="d-flex flex-column flex-grow-1">
+                            <label for="where_to_show" class="form-label">Where to show:</label>
+                            <select class="form-select" id="location" name="where_to_show">
+                                <option value="1">Sitewide</option>
+                                <option value="2">User</option>
+                            </select>
+                        </div>
 
-                    <!-- Select Type of notification -->
-                    <div class="mb-7">
-                        <label for="type" class="form-label">Type of notification:</label>
-                        <select class="form-select" id="type" name="type">
-                            <option value="1">Information</option>
-                            <option value="2">Success</option>
-                            <option value="3">Warning</option>
-                            <option value="3">Alert</option>
-                        </select>
+                        <!-- Select Type of notification -->
+                        <div class="d-flex flex-column flex-grow-1">
+                            <label for="type" class="form-label">Type of notification:</label>
+                            <select class="form-select" id="type" name="type">
+                                <option value="1">Information</option>
+                                <option value="2">Success</option>
+                                <option value="3">Warning</option>
+                                <option value="3">Alert</option>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- Input Group for Schedule -->
