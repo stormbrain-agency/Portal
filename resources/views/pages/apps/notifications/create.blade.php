@@ -54,6 +54,7 @@
                             </div>
 >>>>>>> 8ac5f0e (update notifications)
 
+<<<<<<< HEAD
                     <div class="input-group mb-7 justify-content-between gap-7">
                         <!-- Select Where to show -->
                         <div class="d-flex flex-column flex-grow-1">
@@ -62,6 +63,51 @@
                                 <option value="1">Sitewide</option>
                                 <option value="2">User</option>
                             </select>
+=======
+                            <!-- Select Where to show -->
+                            <div class="mb-3">
+                                <label for="where_to_show" class="form-label">Where to show:</label>
+                                <select class="form-select" id="location" name="where_to_show">
+                                    <option value="1">Sitewide</option>
+                                    <option value="2">User</option>
+                                </select>
+                            </div>
+
+                            <!-- Select Type of notification -->
+                            <div class="mb-3">
+                                <label for="type" class="form-label">Type of notification:</label>
+                                <select class="form-select" id="type" name="type">
+                                    <option value="1">Information</option>
+                                    <option value="2">Success</option>
+                                    <option value="3">Warning</option>
+                                    <option value="3">Alert</option>
+                                </select>
+                            </div>
+
+                            <!-- Input Group for Schedule -->
+                            <div class="input-group mb-3">
+                                <label for="schedule" class="form-label">Schedule:</label>
+                                <select class="form-select" id="schedule" name="schedule_status">
+                                    <option value="1">Yes</option>
+                                    <option value="2">No</option>
+                                </select>
+
+                                <label for="from" class="form-label">From:</label>
+                                <input type="datetime-local" id="schedule_start" name="schedule_start" class="form-control">
+
+                                <label for="till" class="form-label">Till:</label>
+                                <input type="datetime-local" id="schedule_end" name="schedule_end" class="form-control">
+                            </div>
+
+                            <!-- Select Status -->
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status:</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="1">Active</option>
+                                    <option value="2">Unactive</option>
+                                </select>
+                            </div>
+>>>>>>> e9b6728 (update notifications)
                         </div>
 
                         <!-- Select Type of notification -->
