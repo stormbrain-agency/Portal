@@ -88,34 +88,34 @@ class CountyMRAC_ARACController extends Controller
             'time' => $mracArac->created_at,
         ];
 
-        // foreach($adminEmails as $adminEmail){
-        //     try {
-        //         Mail::send('mail.admin.mrac-arac', $data, function ($message) use ($adminEmail) {
-        //             $message->to($adminEmail);
-        //             $message->subject('Alert: MRAC/ARAC Submission Received');
-        //         });
-        //     } catch (\Exception $e) {
-        //         Log::error('Error sending email to admins: ' . $e->getMessage());
-        //     }
-        // }
-        try {
-            Mail::send('mail.admin.mrac-arac', $data, function ($message) use ($adminEmails) {
-                $message->to($adminEmails);
-                $message->subject('Alert: MRAC/ARAC Submission Received');
-            });
-        } catch (\Exception $e) {
-            Log::error('Error sending email to admins: ' . $e->getMessage());
+        foreach($adminEmails as $adminEmail){
+            try {
+                Mail::send('mail.admin.mrac-arac', $data, function ($message) use ($adminEmail) {
+                    $message->to($adminEmail);
+                    $message->subject('Alert: MRAC/ARAC Submission Received');
+                });
+            } catch (\Exception $e) {
+                Log::error('Error sending email to admins: ' . $e->getMessage());
+            }
         }
-
         // try {
-        //     $userEmail = $user->email;
-        //     Mail::send('mail.user.mrac-arac', $data, function ($message) use ($userEmail) {
-        //         $message->to($userEmail);
-        //         $message->subject('Confirmation: MRAC/ARAC Submission Received');
+        //     Mail::send('mail.admin.mrac-arac', $data, function ($message) use ($adminEmails) {
+        //         $message->to($adminEmails);
+        //         $message->subject('Alert: MRAC/ARAC Submission Received');
         //     });
         // } catch (\Exception $e) {
-        //     Log::error('Error sending email to user: ' . $e->getMessage());
+        //     Log::error('Error sending email to admins: ' . $e->getMessage());
         // }
+
+        try {
+            $userEmail = $user->email;
+            Mail::send('mail.user.mrac-arac', $data, function ($message) use ($userEmail) {
+                $message->to($userEmail);
+                $message->subject('Confirmation: MRAC/ARAC Submission Received');
+            });
+        } catch (\Exception $e) {
+            Log::error('Error sending email to user: ' . $e->getMessage());
+        }
 
         return redirect('/county-mrac-arac/create')->with('success', 'Files uploaded successfully.');
     }
