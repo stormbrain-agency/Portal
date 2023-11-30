@@ -6,16 +6,16 @@
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 
-    @section('title')
-        County Provider Payment Resports
-    @endsection
-
      <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
+                @if(!auth()->user()->hasRole('county user'))
+                County Provider Payment Resports
+                @else
                 Provider Payment Report | Submission History
+                @endif
             </div>
             <!--begin::Card title-->
 

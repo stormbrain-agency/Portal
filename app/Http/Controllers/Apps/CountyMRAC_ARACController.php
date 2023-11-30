@@ -77,7 +77,7 @@ class CountyMRAC_ARACController extends Controller
         }
 
         $adminEmails = User::whereHas('roles', function ($query) {
-            $query->where('name', 'admin');
+            $query->where('name', 'admin')->orWhere('name', 'manager');
         })->pluck('email');
 
         $data = [

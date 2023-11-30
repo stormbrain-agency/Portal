@@ -32,12 +32,12 @@
                             <option value="County User">County User</option>
                         </select>
                     </div>
+                    @if(auth()->user()->hasRole('admin'))
+                    <!--begin::Toolbar-->
                     <button id="export_csv" class="btn btn-outline btn-outline-solid">
                         <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
                         EXPORT AS CSV
                     </button>
-                    @if(auth()->user()->hasRole('admin'))
-                    <!--begin::Toolbar-->
                     <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
                         <!--begin::Add user-->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_user" data-kt-action="create_view">
@@ -95,8 +95,6 @@
                 table.column('action:name').visible(true);
             })
         </script>
-
-    
     @endpush
 
 </x-default-layout>

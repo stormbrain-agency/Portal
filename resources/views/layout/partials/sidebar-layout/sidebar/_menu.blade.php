@@ -39,36 +39,39 @@
 					</a>
 				</div>
 				<!-- Notifications -->
+				@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('notification-management.*') ? 'active' : '' }}" href="{{ route('notification-management.index') }}">
 						<span class="menu-icon">{!! getIcon('notification', 'fs-2') !!}</span>
 						<span class="menu-title">Notifications</span>
 					</a>
 				</div>
+				@endif
 				{{-- User Management --}}
-			@if(auth()->user()->hasRole('admin'))
-				<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'hover show' : '' }}">
-					<span class="menu-link">
-						<span class="menu-icon">{!! getIcon('user', 'fs-2') !!}</span>
-						<span class="menu-title">User Management</span>
-						<span class="menu-arrow"></span>
-					</span>
-					<div class="menu-sub menu-sub-accordion">
-						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('user-management.users.*') ? 'active' : '' }}" href="{{ route('user-management.users.index') }}">
-								<span class="menu-title">Users</span>
-							</a>
+				{{-- @if(auth()->user()->hasRole('admin')) --}}
+					<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'hover show' : '' }}">
+						<span class="menu-link">
+							<span class="menu-icon">{!! getIcon('user', 'fs-2') !!}</span>
+							<span class="menu-title">User Management</span>
+							<span class="menu-arrow"></span>
+						</span>
+						<div class="menu-sub menu-sub-accordion">
+							<div class="menu-item">
+								<a class="menu-link {{ request()->routeIs('user-management.users.*') ? 'active' : '' }}" href="{{ route('user-management.users.index') }}">
+									<span class="menu-title">Users</span>
+								</a>
+							</div>
+							@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
+							<div class="menu-item">
+								<a class="menu-link {{ request()->routeIs('user-management.county-users.*') ? 'active' : '' }}" href="{{ route('user-management.county-users.index') }}">
+									<span class="menu-title">County Users</span>
+								</a>
+							</div>
+							@endif
 						</div>
-						@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
-						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('user-management.county-users.*') ? 'active' : '' }}" href="{{ route('user-management.county-users.index') }}">
-								<span class="menu-title">County Users</span>
-							</a>
-						</div>
-						@endif
 					</div>
-				</div>
-			@endif
+				{{-- @endif --}}
+				@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 				{{-- Activity Management --}}
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('activity-management.*') ? 'active' : '' }}" href="{{ route('activity-management.index') }}">
@@ -76,6 +79,7 @@
 						<span class="menu-title">Activity </span>
 					</a>
 				</div>
+				@endif
 				{{-- Profile --}}
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ url('/profile') }}">
@@ -110,7 +114,7 @@
 							</a>
 							<!--end:Menu link-->
 						</div>
-						
+
 						<!--end:Menu item-->
 					</div>
 					<!--end:Menu sub-->
@@ -144,7 +148,7 @@
 					</span>
 					<div class="menu-sub menu-sub-accordion">
 						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('county-mrac-arac.create') ? 'active' : '' }}" href="{{ route('county-mrac-arac.template') }}">
+							<a class="menu-link {{ request()->routeIs('county-mrac-arac.create') ? 'active' : '' }}" href="{{ route('county-mrac-arac.create') }}">
 								<span class="menu-title">Submit MRAC/ARAC</span>
 							</a>
 						</div>

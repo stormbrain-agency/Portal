@@ -77,10 +77,10 @@
                                 </select>
 
                                 <label for="from" class="form-label">From:</label>
-                                <input type="datetime-local" name="schedule_start" class="form-control">
+                                <input type="datetime-local" id="schedule_start" name="schedule_start" class="form-control">
 
                                 <label for="till" class="form-label">Till:</label>
-                                <input type="datetime-local" name="schedule_end" class="form-control">
+                                <input type="datetime-local" id="schedule_end" name="schedule_end" class="form-control">
                             </div>
 
                             <!-- Select Status -->
@@ -106,5 +106,20 @@
         </div>
         <!--end::Card body-->
     </div>
-
+    @push('scripts')
+        <script>
+            $(document).ready(function () {
+                $('#schedule').on('change', function () {
+                    var scheduleValue = $(this).val();
+                    if (scheduleValue === '2') {
+                        $('#schedule_start').prop('disabled', true);
+                        $('#schedule_end').prop('disabled', true);
+                    } else {
+                        $('#schedule_start').prop('disabled', false);
+                        $('#schedule_end').prop('disabled', false);
+                    }
+                });
+            });
+        </script>
+    @endpush
 </x-default-layout>

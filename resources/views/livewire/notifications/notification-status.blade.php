@@ -5,6 +5,7 @@
             data-kt-action="view_rows"
             class="form-check-input status-toggle"
             type="checkbox"
+            data-notification-id="{{ $notification->id }}"
             {{ $notification->status === 'Active' ? 'checked' : '' }}
         >
     </div>

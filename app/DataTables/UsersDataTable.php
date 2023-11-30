@@ -91,7 +91,7 @@ class UsersDataTable extends DataTable
     {
         if (auth()->user()->hasRole('admin')) {
             return [
-                Column::make('user')->addClass('d-flex align-items-center')->name('first_name')->title("Full Name"),
+                Column::make('user')->addClass('align-items-center')->name('first_name')->title("Full Name"),
                 Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('role')->name("roles.name"),
                 Column::make('last_login_at')->title('Last Login'),
@@ -104,7 +104,7 @@ class UsersDataTable extends DataTable
             ];
         }else{
              return [
-                Column::make('user')->addClass('d-flex align-items-center')->name('first_name')->title("Full Name"),
+                Column::make('user')->addClass('align-items-center')->name('first_name')->title("Full Name"),
                 Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('role')->name("roles.name"),
                 Column::make('last_login_at')->title('Last Login'),
