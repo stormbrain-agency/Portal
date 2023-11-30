@@ -85,10 +85,12 @@ line-height: 16px;
             <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our FAQs or submit a request via our contact us form.</i> </span>
             <br>
             <a href="{{ route('county-provider-payment-report.download_template') }}" class="btn btn-bg-primary me-6 text-light mt-5">
-                <i class="ki-duotone ki-arrow-down text-light">
+                <i class="ki-duotone ki-arrow-down text-light fs-1">
                     <span class="path1"></span>
                     <span class="path2"></span>
-                </i>Download Template</a>
+                </i>
+                Download Template
+            </a>
             <hr>
 
             <form action="{{ route('county-provider-payment-report.store') }}" method="POST" id="myform" class="form" enctype="multipart/form-data">
