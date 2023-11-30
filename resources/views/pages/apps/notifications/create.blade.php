@@ -40,11 +40,19 @@
                         <input type="text" name="title" class="form-control" required>
                     </div>
 
+<<<<<<< HEAD
                     <!-- Input Message -->
                     <div class="mb-7">
                         <label for="message" class="form-label">Message:</label>
                         <textarea class="form-control" name="message" rows="3" required></textarea>
                     </div>
+=======
+                            <!-- Input Message -->
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message:</label>
+                                <textarea class="form-control" name="message" rows="3" required></textarea>
+                            </div>
+>>>>>>> 8ac5f0e (update notifications)
 
                     <div class="input-group mb-7 justify-content-between gap-7">
                         <!-- Select Where to show -->
