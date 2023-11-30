@@ -91,11 +91,11 @@
                                 </select>
 
                                 <label for="from" class="form-label">From:</label>
-                                <input type="datetime-local" name="schedule_start" class="form-control"
+                                <input type="datetime-local" id="schedule_start" name="schedule_start" class="form-control"
                                 value="{{ !empty($notification->schedule_start) ? \Carbon\Carbon::parse($notification->schedule_start)->format('Y-m-d\TH:i') : '' }}">
 
                                 <label for="till" class="form-label">Till:</label>
-                                <input type="datetime-local" name="schedule_end" class="form-control"
+                                <input type="datetime-local" id="schedule_end" name="schedule_end" class="form-control"
                                 value="{{ !empty($notification->schedule_end) ? \Carbon\Carbon::parse($notification->schedule_end)->format('Y-m-d\TH:i') : '' }}">
                             </div>
 
