@@ -87,23 +87,31 @@ class PaymentReportController extends Controller
 
         $data = [
             'email' => $user->email,
-            'name' => $user->first_name .'' . $user->last_name,
+            'name' => $user->first_name .' ' . $user->last_name,
             'county_designation' => $user->county->county ? $user->county->county : "",
             'time' => $paymentReport->created_at,
         ];
 
         foreach($adminEmails as $adminEmail){
+            try {
                 Mail::send('mail.admin.payment-report', $data, function ($message) use ($adminEmail) {
-                $message->to($adminEmail);
-                $message->subject('Alert: Payment Report Submission Received!');
-            });
-        }
-        $userEmail = $user->email;
-        Mail::send('mail.user.payment-report', $data, function ($message) use ($userEmail) {
-            $message->to($userEmail);
-            $message->subject('Confirmation: Payment Report Submission Received!!');
-        });
+                    $message->to($adminEmail);
+                    $message->subject('Alert: Payment Report Submission Received!');
+                });
+            } catch (\Exception $e) {
+                Log::error('Error sending email to admins: ' . $e->getMessage());
+            }
 
+        }
+        try {
+            $userEmail = $user->email;
+            Mail::send('mail.user.payment-report', $data, function ($message) use ($userEmail) {
+                $message->to($userEmail);
+                $message->subject('Confirmation: Payment Report Submission Received!!');
+            });
+        } catch (\Exception $e){
+            Log::error('Error sending email to user: ' . $e->getMessage());
+        }
 
         return redirect('/county-provider-payment-report/create')->with('success', 'Files uploaded successfully.');
     }

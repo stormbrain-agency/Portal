@@ -36,16 +36,10 @@ Route::middleware(['phone_verify'])->group(function () {
         Route::get('/state', [LocationController::class, 'getStates'])->name('state');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::name('user-management.')->group(function () {
-            Route::middleware(['permission:read users management'])->group(function () {
+            Route::middleware(['permission:edit users management'])->group(function () {
                 Route::resource('/user-management/users', UserManagementController::class);
             });
             Route::middleware(['permission:county users management'])->group(function () {
-                // Route::prefix('/user-management/user-pending')->name('users-pending.')->group(function () {
-                //     Route::get('/', [UserManagementController::class,'users_pending'])->name('index');
-                //     Route::get('/users/{id}', [UserManagementController::class,'usersPendingShow'])->name('show');
-                //     Route::get('/users/approve/{id}', [UserManagementController::class,'usersPendingApprove'])->name('approve');
-                //     Route::get('/users/deny/{id}', [UserManagementController::class,'usersPendingDeny'])->name('deny');
-                // });
                 Route::prefix('/user-management/county-users')->name('county-users.')->group(function () {
                     Route::get('/', [UserManagementController::class,'county_users'])->name('index');
                     Route::get('/user/{id}', [UserManagementController::class,'usersCountyShow'])->name('show');

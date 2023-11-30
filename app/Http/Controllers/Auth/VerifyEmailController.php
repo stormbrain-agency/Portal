@@ -66,11 +66,14 @@ class VerifyEmailController extends Controller
         ];
 
         $emailAdress = $data['email'];
-
-        Mail::send('mail.welcome-email',['data' => $data] , function ($message) use ($emailAdress) {
-            $message->to($emailAdress);
-            $message->subject('Welcome to the Supplemental Rate Payment Program');
-        });
+        try {
+            Mail::send('mail.welcome-email',['data' => $data] , function ($message) use ($emailAdress) {
+                $message->to($emailAdress);
+                $message->subject('Welcome to the Supplemental Rate Payment Program');
+            });
+        }catch (\Exception $e) {
+            Log::error('Error sending email to user: ' . $e->getMessage());
+        }
     }
 
 }
