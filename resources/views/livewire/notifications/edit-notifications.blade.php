@@ -41,7 +41,6 @@
                         <input type="text" id="title" name="title" class="form-control" value="{{ $notification->title }}" required>
                     </div>
 
-<<<<<<< HEAD
                     <!-- Input Message -->
                     <div class="mb-7">
                         <label for="message" class="form-label">Message:</label>
@@ -55,59 +54,6 @@
                                 <option value="Sitewide" @if($notification->location == 'Sitewide') selected @endif>Sitewide</option>
                                 <option value="User" @if($notification->location == 'User') selected @endif>User</option>
                             </select>
-=======
-                            <!-- Input Message -->
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message:</label>
-                                <textarea class="form-control" id="message" name="message" value="{{ $notification->message }}" rows="3" required>{{ $notification->message }}</textarea>
-                            </div>
-
-                            <!-- Select Where to show -->
-                            <div class="mb-3">
-                                <label for="where_to_show" class="form-label">Where to show:</label>
-                                <select class="form-select" id="location" name="where_to_show">
-                                    <option value="Sitewide" @if($notification->location == 'Sitewide') selected @endif>Sitewide</option>
-                                    <option value="User" @if($notification->location == 'User') selected @endif>User</option>
-                                </select>
-                            </div>
-
-                            <!-- Select Type of notification -->
-                            <div class="mb-3">
-                                <label for="type" class="form-label">Type of notification:</label>
-                                <select class="form-select" id="type" name="type">
-                                    <option value="Information" @if($notification->type == 'Information') selected @endif>Information</option>
-                                    <option value="Success" @if($notification->type == 'Success') selected @endif>Success</option>
-                                    <option value="Warning" @if($notification->type == 'Warning') selected @endif>Warning</option>
-                                    <option value="Alert" @if($notification->type == 'Alert') selected @endif>Alert</option>
-                                </select>
-                            </div>
-
-                            <!-- Input Group for Schedule -->
-                            <div class="input-group mb-3">
-                                <label for="schedule" class="form-label">Schedule:</label>
-                                <select class="form-select" id="schedule" name="schedule_status">
-                                    <option value="Yes" @if($notification->schedule_status == 'Yes') selected @endif>Yes</option>
-                                    <option value="No" @if($notification->schedule_status == 'No') selected @endif>No</option>
-                                </select>
-
-                                <label for="from" class="form-label">From:</label>
-                                <input type="datetime-local" id="schedule_start" name="schedule_start" class="form-control"
-                                value="{{ !empty($notification->schedule_start) ? \Carbon\Carbon::parse($notification->schedule_start)->format('Y-m-d\TH:i') : '' }}">
-
-                                <label for="till" class="form-label">Till:</label>
-                                <input type="datetime-local" id="schedule_end" name="schedule_end" class="form-control"
-                                value="{{ !empty($notification->schedule_end) ? \Carbon\Carbon::parse($notification->schedule_end)->format('Y-m-d\TH:i') : '' }}">
-                            </div>
-
-                            <!-- Select Status -->
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Status:</label>
-                                <select class="form-select" id="status" name="status">
-                                    <option value="Active" @if($notification->status == 'Active') selected @endif>Active</option>
-                                    <option value="Unactive" @if($notification->status == 'Unactive') selected @endif>Unactive</option>
-                                </select>
-                            </div>
->>>>>>> e9b6728 (update notifications)
                         </div>
 
                         <!-- Select Type of notification -->
