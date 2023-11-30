@@ -12,6 +12,14 @@ class PhoneNumberVerify extends Component
     public $code = null;
     public $error;
 
+    protected $listeners = [
+        'update_code_input' => 'update_code',
+    ];
+    
+    public function update_code($code_input){
+        $this->code = $code_input;
+    }
+
     public function mount()
     {
         // dd('mount');
@@ -36,8 +44,11 @@ class PhoneNumberVerify extends Component
         }
     }
 
+    
+
     public function verifyCode()
     {
+        dd($this->code);
         $mobile_phone_send = "+1".str_replace('-', '', Auth::user()->mobile_phone);
         
         $twilio = $this->connect();
