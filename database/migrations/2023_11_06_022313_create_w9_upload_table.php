@@ -11,9 +11,10 @@ class CreateW9UploadTable extends Migration
             $table->string('comments', 150)->nullable();
             $table->string('w9_county_fips');
             $table->unsignedBigInteger('user_id'); 
-            // $table->foreign('')->references('id')->on('users'); 
             $table->string('original_name');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
     public function down()

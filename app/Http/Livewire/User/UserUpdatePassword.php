@@ -14,7 +14,7 @@ class UserUpdatePassword extends Component
 
     protected $rules = [
         'currentPassword' => 'required',
-        'newPassword' => 'required|min:8|regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/',
+        'newPassword' => ['required', 'string', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'],
         'confirmPassword' => 'required|same:newPassword',
     ];
 
