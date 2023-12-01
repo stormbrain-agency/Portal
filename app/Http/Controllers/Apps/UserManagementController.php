@@ -8,6 +8,7 @@ use App\DataTables\UsersDataTable;
 use App\DataTables\UsersPendingDataTable;
 use App\DataTables\UsersCountyDataTable;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class UserManagementController extends Controller

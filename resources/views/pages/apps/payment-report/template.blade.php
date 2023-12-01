@@ -130,7 +130,11 @@ line-height: 16px;
                         @if($errors->has('payment_report_file'))
                             <span class="text-danger">{{ $errors->first('payment_report_file') }}</span>
                         @endif
-
+                        @if ($errors->has('payment_report_file'))
+                            <div class="alert alert-danger">
+                                <strong>{{ $errors->first('payment_report_file') }}</strong>
+                            </div>
+                        @endif
                     </div>
                     <!--end::Input group-->
                 </div>

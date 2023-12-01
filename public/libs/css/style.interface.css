@@ -1,3 +1,8 @@
+
+:root{
+    --bs-btn-primary: #1973B8;
+}
+
 .body {
     font-family: 'Lato', sans-serif;
 }
