@@ -46,8 +46,10 @@ class UserManagementController extends Controller
             if ($user->status != 1) {
                 return redirect()->route('user-management.county-users.show', $user);
             }
+            $paymentReports = $user->paymentReport()->orderBy('created_at', 'desc')->get();
+            $mracAracs = $user->mracArac()->orderBy('created_at', 'desc')->get();
             $w9Uploads = $user->w9Upload()->orderBy('created_at', 'desc')->get();
-            return view('pages.apps.user-management.users.show', compact('user','w9Uploads'));
+            return view('pages.apps.user-management.users.show', compact('user','w9Uploads', 'mracAracs', 'paymentReports'));
         } else {
             return view('errors.404');
         }
