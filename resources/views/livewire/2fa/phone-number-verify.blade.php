@@ -10,21 +10,18 @@
             {{ session('error') }}
         </div>
     @endif
-    <form wire:submit.prevent="verifyCode">
+    <form>
         <label class="mb-4" for="btn-verify">Type your 6 digit security code</label>
-        <div class="d-flex align-items-center justify-content-between mb-9">
-            <!-- <input  id="_otp" class="_notok" wire:model="code"  type="number" class="form-control bg-transparent" required autofocus /> -->
-            <!-- <input style="display:none"  id="_otp" class="_notok"  wire:model="code" type="number" class="form-control bg-transparent _notok" autofocus=""/> -->
+
+        <div class="otp-input-fields d-flex align-items-center justify-content-between mb-9">
+            <input type="number" class="otp__digit otp__field__1">
+            <input type="number" class="otp__digit  otp__field__2">
+            <input type="number" class="otp__digit  otp__field__3">
+            <input type="number" class="otp__digit otp__field__4">
+            <input type="number" class="otp__digit  otp__field__5">
+            <input type="number" class="otp__digit otp__field__6">
         </div>
-        <div class="d-flex align-items-center justify-content-between mb-9">
-            <input type="number" class="otp__digit number otp__field__1">
-            <input type="number" class="otp__digit number otp__field__2">
-            <input type="number" class="otp__digit number otp__field__3">
-            <input type="number" class="otp__digit number otp__field__4">
-            <input type="number" class="otp__digit number otp__field__5">
-            <input type="number" class="otp__digit number otp__field__6">
-        </div>
-        <input type="submit" name="btn-verify" value="Submit">
+        <input type="submit" name="btn-verify" value="Submit" id="submitBtn">
         <a href="/logout">Back</a>
     </form>
 </div>
@@ -66,7 +63,7 @@
             line-height: 14px;
         }
 
-        form input.number{
+        form input{
             width: calc(16.67% - 20px);
             padding: 4px 10px;
             border-radius: 6px;
@@ -119,15 +116,18 @@
     for(let {value} of otp_inputs){
         _finalKey += value
     }
-    if(_finalKey.length == 6){
-        // document.querySelector("#_otp").classList.replace("_notok", "_ok")
-        // document.querySelector("#_otp").value = _finalKey
-        Livewire.emit('update_code_input', _finalKey);
-    }else{
-        // document.querySelector("#_otp").classList.replace("_ok", "_notok")
-        // document.querySelector("#_otp").value = _finalKey
-        Livewire.emit('update_code_input', _finalKey);
-    }
+    console.log(_finalKey);
+
+    document.getElementById("submitBtn").addEventListener("click", function(event) {
+        event.preventDefault();
+
+        var _finalKey = "";
+        for (let { value } of otp_inputs) {
+            _finalKey += value;
+        }
+        console.log(_finalKey , 'click');
+        Livewire.emit('submit_code', _finalKey);
+    });
     }
     
 
