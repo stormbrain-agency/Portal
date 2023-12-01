@@ -18,11 +18,13 @@ class UsersSeeder extends Seeder
     {
         $admin_email = env('ADMIN_EMAIL', 'development@stormbrain.com');
         $admin_password = env('ADMIN_PASSWORD', 'W%JdE7EhM)TC!pS(imuAzEgw');
+        $admin_mobile_phone = env('ADMIN_MOBILE_PHONE', '5555555555');
         $demoUser = User::create([
             'first_name'              => "CDA",
             'last_name'              => "Admin",
             'email'             => $admin_email,
             'password'          => Hash::make($admin_password),
+            'mobile_phone'          => $admin_mobile_phone,
             'status'          => 1,
             'email_verified_at' => now(),
         ]);
@@ -47,7 +49,7 @@ class UsersSeeder extends Seeder
             'first_name'              => "Alex",
             'last_name'              => "Sandro",
             'business_phone'              => "1234567899",
-            'mobile_phone'              => "033-561188",
+            'mobile_phone'              => "1234567890",
             'mailing_address'              => "mail@gmail.com",
             'vendor_id'              => "9855-6665",
             'county_designation'              => "06037",
@@ -62,7 +64,7 @@ class UsersSeeder extends Seeder
             'first_name'              => "Demo",
             'last_name'              => "2FA",
             'business_phone'              => "1234567899",
-            'mobile_phone'              => "0338561188",
+            'mobile_phone'              => "7604520825",
             'mailing_address'              => "mail@gmail.com",
             'vendor_id'              => "9855-6665",
             'county_designation'              => "06037",

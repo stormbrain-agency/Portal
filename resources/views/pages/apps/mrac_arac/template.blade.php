@@ -127,9 +127,9 @@ line-height: 16px;
                         </div>
                         <!--end::Dropzone-->
                        
-                        @if($errors->has('payment_report_file'))
+                        {{-- @if($errors->has('payment_report_file'))
                             <span class="text-danger">{{ $errors->first('payment_report_file') }}</span>
-                        @endif
+                        @endif --}}
                         @if ($errors->has('payment_report_file'))
                             <div class="alert alert-danger">
                                 <strong>{{ $errors->first('payment_report_file') }}</strong>

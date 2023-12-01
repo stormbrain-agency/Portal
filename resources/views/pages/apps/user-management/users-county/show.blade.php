@@ -270,17 +270,12 @@
                                                 <!--begin::Title-->
                                                 <p class="fs-5 fw-bold text-dark text-hover-primary mb-2">{{$w9Upload->original_name}}</p>
                                                 <!--end::Title-->
-                                                <!--begin::User-->
-                                                {{-- <div class="fs-7 text-muted">Lead by
-                                                    <a href="#">David Stevenson</a>
-                                                </div> --}}
-                                                <!--end::User-->
                                             </div>
                                             <!--end::Info-->
                                             <!--begin::Action-->
-                                            @if (!auth()->user()->hasRole('view only'))
+                                            {{-- @if (!auth()->user()->hasRole('view only'))
                                             <a href="{{ route('w9_upload.w9_download', ['w9_id' => $w9Upload->id, 'filename' => $w9Upload->original_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
-                                            @endif
+                                            @endif --}}
                                             <!--end::Action-->
                                         </div>
                                         <!--end::Time-->

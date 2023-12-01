@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Apps;
 
+use App\DataTables\UsersActivityDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -10,10 +11,17 @@ class ActivityController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index(UsersActivityDataTable $dataTable)
+    // {
+    //     // return $dataTable->render('pages.apps.activity-management.list');
+    //     return $dataTable->render('pages.apps.activity-management.list');
+    // }
+
     public function index()
     {
         return view("pages.apps.activity-management.list");
     }
+
 
     /**
      * Show the form for creating a new resource.

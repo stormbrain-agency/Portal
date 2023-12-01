@@ -44,7 +44,7 @@
                             @if ($isWithinSchedule || $notification->schedule_status == 'No' || $isEqual)
                                 @if ($notification->type == 'Information')
                                     <div class="alert bg-light-primary border-primary d-flex align-items-center p-5">
-                                        <i class="ki-duotone ki-shield-tick fs-2hx text-primary me-4"><span class="path1"></span><span class="path2"></span></i>
+                                        <i class="ki-duotone ki-security-user fs-2hx text-primary me-4"><span class="path1"></span><span class="path2"></span></i>
                                         <div class="d-flex flex-column">
                                             <h4 class="mb-1 text-dark">{{ $notification->title }}</h4>
                                             <span>{{ $notification->message }}</span>
@@ -66,7 +66,7 @@
                                     </div>
                                 @elseif ($notification->type == 'Warning')
                                     <div class="alert bg-light-info border-info d-flex align-items-center p-5">
-                                        <i class="ki-duotone ki-shield-tick fs-2hx text-info me-4"><span class="path1"></span><span class="path2"></span></i>
+                                        <i class="ki-duotone ki-information-3 fs-2hx text-info me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></i>
                                         <div class="d-flex flex-column">
                                             <h4 class="mb-1 text-dark">{{ $notification->title }}</h4>
                                             <span>{{ $notification->message }}</span>
@@ -77,7 +77,7 @@
                                     </div>
                                 @elseif ($notification->type == 'Alert')
                                     <div class="alert bg-light-danger border-danger d-flex align-items-center p-5">
-                                        <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+                                        <i class="ki-duotone ki-shield-cross fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"><span class="path3"></span></i>
                                         <div class="d-flex flex-column">
                                             <h4 class="mb-1 text-dark">{{ $notification->title }}</h4>
                                             <span>{{ $notification->message }}</span>
@@ -111,16 +111,16 @@
                             @endphp
                             @if ($isWithinSchedule || $notification->schedule_status == 'No' || $isEqual)
                                 @if ($notification->type == 'Information')
-                                    <div class="alert bg-light-primary border-primary d-flex align-items-center p-5">
-                                        <i class="ki-duotone ki-shield-tick fs-2hx text-primary me-4"><span class="path1"></span><span class="path2"></span></i>
-                                        <div class="d-flex flex-column">
-                                            <h4 class="mb-1 text-dark">{{ $notification->title }}</h4>
-                                            <span>{{ $notification->message }}</span>
-                                        </div>
-                                        <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
-                                            <i class="ki-duotone ki-cross fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
-                                        </button>
+                                <div class="alert bg-light-primary border-primary d-flex align-items-center p-5">
+                                    <i class="ki-duotone ki-security-user fs-2hx text-primary me-4"><span class="path1"></span><span class="path2"></span></i>
+                                    <div class="d-flex flex-column">
+                                        <h4 class="mb-1 text-dark">{{ $notification->title }}</h4>
+                                        <span>{{ $notification->message }}</span>
                                     </div>
+                                    <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+                                        <i class="ki-duotone ki-cross fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                    </button>
+                                </div>
                                 @elseif ($notification->type == 'Success')
                                     <div class="alert bg-light-success border-success d-flex align-items-center p-5">
                                         <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span class="path1"></span><span class="path2"></span></i>
@@ -134,7 +134,7 @@
                                     </div>
                                 @elseif ($notification->type == 'Warning')
                                     <div class="alert bg-light-info border-info d-flex align-items-center p-5">
-                                        <i class="ki-duotone ki-shield-tick fs-2hx text-info me-4"><span class="path1"></span><span class="path2"></span></i>
+                                        <i class="ki-duotone ki-information-3 fs-2hx text-info me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></i>
                                         <div class="d-flex flex-column">
                                             <h4 class="mb-1 text-dark">{{ $notification->title }}</h4>
                                             <span>{{ $notification->message }}</span>
@@ -145,7 +145,7 @@
                                     </div>
                                 @elseif ($notification->type == 'Alert')
                                     <div class="alert bg-light-danger border-danger d-flex align-items-center p-5">
-                                        <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+                                        <i class="ki-duotone ki-shield-cross fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"><span class="path3"></span></i>
                                         <div class="d-flex flex-column">
                                             <h4 class="mb-1 text-dark">{{ $notification->title }}</h4>
                                             <span>{{ $notification->message }}</span>
