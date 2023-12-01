@@ -149,7 +149,12 @@ line-height: 16px;
 
                         </div>
                         <!--end::Dropzone-->
-                       
+                       @foreach ($errors->get('mrac_arac_files.*') as $error)
+                            @foreach ($error as $message)
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                            @endforeach
+                        @endforeach
+
                         @if($errors->has('mrac_arac_files'))
                             <span class="text-danger">{{ $errors->first('mrac_arac_files') }}</span>
                         @endif

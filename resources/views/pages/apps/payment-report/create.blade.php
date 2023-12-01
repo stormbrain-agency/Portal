@@ -156,6 +156,13 @@ line-height: 16px;
                             <span class="text-danger">{{ $errors->first('payment_report_files') }}</span>
                         @endif
 
+                        @foreach ($errors->get('payment_report_files.*') as $error)
+                            @foreach ($error as $message)
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                            @endforeach
+                        @endforeach
+
+
                     </div>
                     <!--end::Input group-->
                     <!--begin::Input group-->
