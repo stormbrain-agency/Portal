@@ -48,7 +48,7 @@ class PhoneNumberVerify extends Component
 
     public function verifyCode()
     {
-        dd($this->code);
+        // dd($this->code);
         $mobile_phone_send = "+1".str_replace('-', '', Auth::user()->mobile_phone);
         
         $twilio = $this->connect();
