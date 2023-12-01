@@ -9,14 +9,14 @@
                 4. Add "active" class to to sidebar toggle element with "kt_app_sidebar_toggle" id.
             }
         -->
-	<div id="kt_app_sidebar_toggle" class="app-sidebar-toggle h-30px w-30px btn-menu-header" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
+	<div id="kt_app_sidebar_toggle" class="app-sidebar-toggle h-30px w-30px btn-menu-header d-flex justify-content-center align-items-center" data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body" data-kt-toggle-name="app-sidebar-minimize">
 		{!! getIcon('burger-menu-4', 'fs-3 rotate-180') !!}
 	</div>
 	<!--begin::Logo image-->
 	<a  href="{{ route('dashboard') }}">
 		{{-- <img alt="Logo" src="{{ asset('assets/images/logo/logo.png') }}" class="h-27px app-sidebar-logo-default" /> --}}
-		<img alt="Logo" src="{{ asset('images/logo/logo.png') }}" class="app-sidebar-logo-default" />
-		<img alt="Logo" src="{{ asset('images/logo/logo.png') }}" class="app-sidebar-logo-minimize" />
+		<img alt="Logo" src="{{ asset('libs/images/logo.png') }}" class="app-sidebar-logo-default" />
+		<img alt="Logo" src="{{ asset('libs/images/logo.png') }}" class="app-sidebar-logo-minimize" />
 	</a>
 	<!--end::Logo image-->
 	<script type="text/javascript">

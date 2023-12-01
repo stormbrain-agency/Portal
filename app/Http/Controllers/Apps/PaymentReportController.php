@@ -15,6 +15,9 @@ use Illuminate\Http\Request;
 use League\Csv\Writer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 
 class PaymentReportController extends Controller
@@ -44,13 +47,18 @@ class PaymentReportController extends Controller
     {
         $request->validate([
             'month_year' => 'required',
-            'payment_report_files' => 'required',
+            'payment_report_files' => 'required|array',
+            'payment_report_files.*' => 'file|mimes:zip,doc,docx,xls,xlsx,csv,pdf|max:20480',
             'comment' => 'nullable|max:150',
         ], [
             'month_year.required' => 'The month and year field is required.',
-            'payment_report_files.required' => 'The payment report file field is required.',
+            'payment_report_files.required' => 'The payment report files field is required.',
+            'payment_report_files.*.file' => 'Each payment report file must be a file.',
+            'payment_report_files.*.mimes' => 'Each payment report file must be of type: zip, doc, docx, xls, xlsx, csv, pdf.',
+            'payment_report_files.*.max' => 'Each payment report file may not be greater than 20MB.',
             'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);
+
 
 
         $user = Auth::user();
@@ -123,12 +131,22 @@ class PaymentReportController extends Controller
 
     public function store_template(Request $request)
     {
+        // Validator::validate($request->all(), [
+        //     'payment_report_file' => [
+        //         'required',
+        //         File::types(['csv', 'mp4'])
+        //             ->max(12 * 1024),
+        //     ]
+        // ]);
         $request->validate([
-            'payment_report_file' => 'required|file',
+            'payment_report_file' => 'required|file|mimes:zip,doc,docx,xls,xlsx,csv,pdf|max:20480',
         ], [
             'payment_report_file.required' => 'Please choose a file.',
             'payment_report_file.file' => 'The file must be a valid file.',
+            'payment_report_file.mimes' => 'The file must be of type: zip, doc, docx, xls, xlsx, csv, pdf.',
+            'payment_report_file.max' => 'The file may not be greater than 20MB.',
         ]);
+
 
 
         $uploadedFile = $request->file('payment_report_file');
