@@ -1,6 +1,6 @@
 <div class="wrap-content d-flex flex-column align-items-center">
     <div class="ic-phone mb-9">
-        <img src="{{ image('auth/smartphone.svg') }}" alt="">
+        <img src="{{ asset('libs/images/smartphone.svg') }}" alt="">
     </div>
     <div class="title mb-9">Two Step Verification</div>
     <div class="sub-title mb-2">Enter the verification code we sent to </div>
