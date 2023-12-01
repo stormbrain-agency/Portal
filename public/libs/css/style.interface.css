@@ -2,6 +2,7 @@
     --bs-primary: #002559;
     --bs-btn-primary: #1973B8;
     --bs-primary-inverse: #ffffff;
+    --bs-primary-active: #0095e8;
 }
 
 .body {
@@ -12,11 +13,17 @@
     min-height: 85vh;
 }
 
-
-.btn.btn-primary {
+.btn.btn-primary,
+.btn.btn-bg-primary {
     color: var(--bs-primary-inverse);
     border-color: var(--bs-btn-primary);
     background-color: var(--bs-btn-primary);
+}
+
+.btn.btn-bg-primary:hover {
+    color: var(--bs-primary-inverse);
+    border-color: var(--bs-primary-active);
+    background-color: var(--bs-primary-active) !important;
 }
 
 .btn.btn-login {
@@ -49,17 +56,16 @@
     box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
 }
 
-/* 
+
 .app-sidebar .menu .menu-item .menu-link:hover {
     transition: color 0.2s ease;
     background-color: var(--bs-white);
-    color: var(--bs-primary);
 }
 
-.app-sidebar .menu .menu-item:hover .menu-link .menu-title {
-    color: var(--bs-primary) !important;
+.app-sidebar .menu .menu-item .menu-link:hover .menu-title {
+    color: #1973B8 !important;
 
-} */
+}
 
 /* FAQ */
 .card.help-faq,
@@ -118,6 +124,11 @@
     height: auto;
     overflow: visible;
     opacity: 1;
+}
+
+[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-sub .menu-item .menu-link {
+    padding-left: 45px;
+    margin: 0px;
 }
 
 /* Page Profile */
