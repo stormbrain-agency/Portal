@@ -64,7 +64,7 @@ class UsersSeeder extends Seeder
             'first_name'              => "Demo",
             'last_name'              => "2FA",
             'business_phone'              => "1234567899",
-            'mobile_phone'              => "0338561188",
+            'mobile_phone'              => "7604520825",
             'mailing_address'              => "mail@gmail.com",
             'vendor_id'              => "9855-6665",
             'county_designation'              => "06037",
