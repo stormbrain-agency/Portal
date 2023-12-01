@@ -10,18 +10,13 @@
             {{ session('error') }}
         </div>
     @endif
-    <form>
+    <form wire:submit.prevent="verifyCode">
         <label class="mb-4" for="btn-verify">Type your 6 digit security code</label>
-
-        <div class="otp-input-fields d-flex align-items-center justify-content-between mb-9">
-            <input type="number" class="otp__digit otp__field__1">
-            <input type="number" class="otp__digit  otp__field__2">
-            <input type="number" class="otp__digit  otp__field__3">
-            <input type="number" class="otp__digit otp__field__4">
-            <input type="number" class="otp__digit  otp__field__5">
-            <input type="number" class="otp__digit otp__field__6">
-        </div>
-        <input type="submit" name="btn-verify" value="Submit" id="submitBtn">
+        <input wire:model="code" 
+                                type="number" 
+                                class="form-control bg-transparent"  
+                                required autofocus />
+        <input style="margin-top:30px;" type="submit" name="btn-verify" value="Submit">
         <a href="/logout">Back</a>
     </form>
 </div>
@@ -94,7 +89,7 @@
 
     </style>
 
-<script>  
+<!-- <script>  
     var otp_inputs = document.querySelectorAll(".otp__digit")
     var mykey = "0123456789".split("")
     otp_inputs.forEach((_)=>{
@@ -131,4 +126,4 @@
     }
     
 
-</script>  
+</script>   -->
