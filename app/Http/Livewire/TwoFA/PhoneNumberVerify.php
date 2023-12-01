@@ -9,17 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class PhoneNumberVerify extends Component
 {
-    public $code = null;
     public $error;
 
     protected $listeners = [
-        'update_code_input' => 'update_code',
+        'submit_code' => 'verifyCode',
     ];
     
-    public function update_code($code_input){
-        $this->code = $code_input;
-    }
-
     public function mount()
     {
         // dd('mount');
@@ -46,9 +41,9 @@ class PhoneNumberVerify extends Component
 
     
 
-    public function verifyCode()
+    public function verifyCode($code)
     {
-        // dd($this->code);
+        // dd($code);
         $mobile_phone_send = "+1".str_replace('-', '', Auth::user()->mobile_phone);
         
         $twilio = $this->connect();
@@ -59,7 +54,7 @@ class PhoneNumberVerify extends Component
                 ->verificationChecks
                 ->create([
                     "to" => $mobile_phone_send,
-                    "code" => $this->code
+                    "code" => $code
                 ]);
     
                 if ($check_code->valid === true) {
