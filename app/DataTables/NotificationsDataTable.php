@@ -36,6 +36,10 @@ class NotificationsDataTable extends DataTable
 
                 if ($scheduleStart === null && $scheduleEnd === null) {
                     return "All time";
+                } elseif ($scheduleStart !== null && $scheduleEnd === null) {
+                    return $scheduleStart->format('M d Y');
+                } elseif ($scheduleStart === null && $scheduleEnd !== null) {
+                    return $scheduleEnd->format('M d Y');
                 } elseif ($scheduleStart->equalTo($scheduleEnd)) {
                     return $scheduleStart->format('M d Y');
                 } else {
