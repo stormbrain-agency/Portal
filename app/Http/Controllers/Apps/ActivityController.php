@@ -14,7 +14,7 @@ class ActivityController extends Controller
     // public function index(UsersActivityDataTable $dataTable)
     // {
     //     // return $dataTable->render('pages.apps.activity-management.list');
-    //     return $dataTable->render('pages.apps.activity-management.list');
+    //     return $dataTable->render('pages.apps.activity-management.list2');
     // }
 
     public function index()
