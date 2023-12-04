@@ -109,6 +109,7 @@ Route::middleware(['phone_verify'])->group(function () {
                 Route::put('/update/{id}', [NotificationsController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [NotificationsController::class, 'delete'])->name('delete');
                 Route::post('/update-status', [NotificationsController::class, 'updateStatus'])->name('update-status');
+                Route::get('/view-mails', [NotificationsController::class, 'viewMails'])->name('view-mails');
             });
         });
         Route::middleware(['permission:activity management'])->group(function () {
