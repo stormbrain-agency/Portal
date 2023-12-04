@@ -114,6 +114,9 @@ Route::middleware(['phone_verify'])->group(function () {
         Route::middleware(['permission:activity management'])->group(function () {
             Route::prefix('activity-management')->name("activity-management.")->group(function () {
                 Route::get('/', [ActivityController::class,'index'])->name('index');
+
+                // Route::get('/users/{user_id}', [ActivityController::class, 'index']);
+                Route::get('/users/{user_id}', [ActivityController::class, 'show'])->name('show');
             });
         });
         Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
