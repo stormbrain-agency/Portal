@@ -131,7 +131,7 @@ line-height: 16px;
                             <span class="text-danger">{{ $errors->first('payment_report_file') }}</span>
                         @endif --}}
                         @if ($errors->has('payment_report_file'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger mt-2">
                                 <strong>{{ $errors->first('payment_report_file') }}</strong>
                             </div>
                         @endif

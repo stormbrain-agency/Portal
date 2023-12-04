@@ -91,7 +91,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" id="mobile_phone" placeholder="Mobile Phone Number." name="mobile_phone" autocomplete="off" class="form-control bg-transparent"/>
+            <input type="text" id="mobile_phone" placeholder="Mobile Phone Number" name="mobile_phone" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->
@@ -112,7 +112,7 @@
         </div>
         <!--end::Input group--->
 
-        <div class="fv-row mb-8">
+        <div class="fv-row mb-6">
             <div class="row">
                 <div class="col-6">
                     <select id="state_option" class="form-control bg-transparent">
@@ -136,9 +136,12 @@
         <!--end::Input group--->
 
         <!--begin::Input group--->
+        <div class="text-muted mb-2 required">
+           Upload Provider W9
+        </div>
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="file" placeholder="W-9 File Upload" name="w9_file_path" autocomplete="off" class="form-control bg-transparent" accept=".zip"/>
+            <input type="file" placeholder="Upload Provider W9" name="w9_file_path" autocomplete="off" class="form-control bg-transparent" accept=".zip" title="Upload Provider W9"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->

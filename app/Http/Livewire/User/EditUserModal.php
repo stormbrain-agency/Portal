@@ -44,7 +44,7 @@ class EditUserModal extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
-        'mobile_phone' => ['required', 'string', 'max:255', 'regex:/^\(\d{3}\) \d{3}-\d{4}$/'],
+        'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
         'role' => 'required|string',
     ];
 
@@ -52,8 +52,8 @@ class EditUserModal extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
-        'business_phone' => ['required', 'string', 'max:255', 'regex:/^\(\d{3}\) \d{3}-\d{4} ext\. \d{4}$/'],
-        'mobile_phone' => ['required', 'string', 'max:255', 'regex:/^\(\d{3}\) \d{3}-\d{4}$/'],
+        'business_phone' => ['required', 'string', 'regex:/^\d{10}.*/'],
+        'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
         'mailing_address' => ['required', 'string', 'max:255'],
         'vendor_id' => ['required', 'string', 'max:255'],
         'county_designation' => ['required', 'string', 'max:255'],
@@ -86,6 +86,8 @@ class EditUserModal extends Component
 
     public function submit()
     {
+        $this->mobile_phone = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
+        $this->business_phone = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
         $checkRules = $this->role === 'county user' ? $this->rules_for_county_user : $this->rules;
 
         $this->validate($checkRules);
@@ -170,8 +172,8 @@ class EditUserModal extends Component
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
-            'business_phone' => $cleanedBusinessPhoneNumber,
-            'mobile_phone' => $cleanedMobilePhoneNumber,
+            'business_phone' => $this->business_phone,
+            'mobile_phone' => $this->mobile_phone,
             'mailing_address' => $this->mailing_address,
             'vendor_id' => $this->vendor_id,
             'county_designation' => $this->county_designation,

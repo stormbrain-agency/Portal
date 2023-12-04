@@ -186,7 +186,7 @@
                         <div class="card-header border-0">
                             <!--begin::Card title-->
                             <div class="card-title">
-                                <h2>Profile</h2>
+                                <h2>Security/2FA</h2>
                             </div>
                             <!--end::Card title-->
                         </div>

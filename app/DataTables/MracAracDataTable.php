@@ -68,7 +68,6 @@ class MracAracDataTable extends DataTable
         }
 
         if (request()->has('county_fips')) {
-            dd(request('county_fips'));
             $query->where('county_fips', request('county_fips'));
         }
 
@@ -103,9 +102,6 @@ class MracAracDataTable extends DataTable
                 [
                     'extend' => 'csv',
                     'text' => 'Export CSV',
-                    // 'action' => 'function(e, dt, button, config) {
-                    //     window.location = "'.route('county-provider-mrac_arac.csv').'";
-                    // }',
                     'filename' => 'Submit Provider Payment Report',
                     'exportOptions' => [
                         'columns' => ':visible:not(:nth-child(8))',
@@ -115,7 +111,7 @@ class MracAracDataTable extends DataTable
                     ],
 
                 ]
-                ]);
+            ]);
     }
 
 
@@ -174,22 +170,37 @@ public function csv()
     public function getColumns(): array
     {
         //view layout
-        return [
-            Column::make('id')->title('ID'),
-            Column::make('created_at')->title('Date'),
-            Column::make('updated_at')->title('Time'),
-            Column::make('county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
-            Column::make('user')->title('User')->name('users.first_name')->orderable(true),
-            Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
-            Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->exportable(false)->width(200),
-            Column::computed('view')
-                ->addClass('text-center text-nowrap')
-                ->exportable(false)
-                ->printable(false)
-                ->width(60),
-            Column::make('email')->name("users.email")->visible(false),
+        if (!auth()->user()->hasRole('county user')) {
+            return [
+                Column::make('id')->title('ID'),
+                Column::make('created_at')->title('Date'),
+                Column::make('updated_at')->title('Time'),
+                Column::make('county_fips')->title('County Designation')->name('counties.county')->orderable(true)->searchable(true),
+                Column::make('user')->title('User')->name('users.first_name')->orderable(true),
+                Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
+                Column::make('comment')->title('Comments')->searchable(false)->orderable(false)->exportable(false)->width(200),
+                Column::computed('view')
+                    ->addClass('text-center text-nowrap')
+                    ->exportable(false)
+                    ->printable(false)
+                    ->width(60),
+                Column::make('email')->name("users.email")->visible(false),
 
-        ];
+            ];
+        }else{
+            return [
+                Column::make('id')->title('ID'),
+                Column::make('created_at')->title('Date'),
+                Column::make('updated_at')->title('Time'),
+                Column::make('county_fips')->title('County Designation')->name('counties.county')->orderable(true)->searchable(true),
+                Column::make('user')->title('User')->name('users.first_name')->orderable(true),
+                Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
+                Column::make('comment')->title('Comments')->searchable(false)->orderable(false)->exportable(false)->width(200),
+                Column::computed('view')->visible(false),
+                Column::make('email')->name("users.email")->visible(false),
+
+            ];
+        }
         
     }
 
