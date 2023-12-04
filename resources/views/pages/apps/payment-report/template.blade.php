@@ -100,7 +100,7 @@ line-height: 16px;
                     <!--begin::Input group-->
                     <div class="fv-row mb-7">
                         <!--begin::Label-->
-                        <label class="required fw-bold fs-6 mb-2">Template Upload</label>
+                        <label class="required fw-bold fs-6 mb-2">Template Upload:</label>
                         <!--end::Label-->
                         <!--begin::Input-->
                          <!--begin::Dropzone-->
