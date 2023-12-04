@@ -11,17 +11,15 @@ class ActivityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index(UsersActivityDataTable $dataTable)
+    // public function index(Request $request,UsersActivityDataTable $dataTable)
     // {
-    //     // return $dataTable->render('pages.apps.activity-management.list');
-    //     return $dataTable->render('pages.apps.activity-management.list2');
+    //     return $dataTable->render('pages.apps.activity-management.list');
     // }
 
     public function index()
     {
-        return view("pages.apps.activity-management.list");
+        return view("pages.apps.activity-management.list3");
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -42,9 +40,13 @@ class ActivityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $user_id,UsersActivityDataTable $dataTable)
     {
-        //
+        
+       
+        return $dataTable->with([
+            'user_id' => $user_id,
+        ])->render('pages.apps.activity-management.list');
     }
 
     /**
