@@ -82,7 +82,7 @@ line-height: 16px;
         @else
         <!--begin::Card body-->
         <div class="card-body py-4 pt-0">
-            <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our FAQs or submit a request via our contact us form.</i> </span>
+            <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our <a class="text-gray-700 fs-6 text-decoration-underline" href="{{route('help-faq')}}">FAQs</a> or submit a request via our <a class="text-gray-700 fs-6 text-decoration-underline" target="_blank" href="https://supplementalratepayment.org/contact-us/">contact us</a> form.</i> </span>
             <br>
             <a href="{{ route('county-mrac-arac.download_template') }}" class="btn btn-bg-primary me-6 text-light mt-5">
                 <i class="ki-duotone ki-arrow-down text-light">
@@ -135,8 +135,8 @@ line-height: 16px;
                             <div class="dz-message needsclick text-center justify-content-center w-50 mx-auto">
                                 <!--begin::Info-->
                                 <div class="ms-4">
-                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload File of provider MRAC/ARAC Submission (files).</h3>
-                                    <p class="fs-7 fw-semibold text-gray-500 drop-zone__prompt">Drag & Drop or choose files from computer</p>
+                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload MRAC/ARAC Files</h3>
+                                    <p class="fs-7 fw-semibold text-gray-500 drop-zone__prompt">Drag & Drop or <span class="text-decoration-underline">choose files</span> from computer</p>
                                     <p class="fs-7 fw-semibold text-gray-500 font-italic">
                                         <i>
                                             This portal site is not a storage system, but rather a secure site for transferring documents.
