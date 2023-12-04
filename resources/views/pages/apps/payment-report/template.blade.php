@@ -100,7 +100,7 @@ line-height: 16px;
                     <!--begin::Input group-->
                     <div class="fv-row mb-7">
                         <!--begin::Label-->
-                        <label class="required fw-bold fs-6 mb-2">Template Upload</label>
+                        <label class="required fw-bold fs-6 mb-2">Template Upload:</label>
                         <!--end::Label-->
                         <!--begin::Input-->
                          <!--begin::Dropzone-->
@@ -131,7 +131,7 @@ line-height: 16px;
                             <span class="text-danger">{{ $errors->first('payment_report_file') }}</span>
                         @endif --}}
                         @if ($errors->has('payment_report_file'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger mt-2">
                                 <strong>{{ $errors->first('payment_report_file') }}</strong>
                             </div>
                         @endif

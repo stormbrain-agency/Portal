@@ -211,9 +211,6 @@ var KTSignupGeneral = function () {
                     },
                     'password_confirmation': {
                         validators: {
-                            notEmpty: {
-                                message: 'The password confirmation is required'
-                            },
                             identical: {
                                 compare: function () {
                                     return form.querySelector('[name="password"]').value;
@@ -223,20 +220,21 @@ var KTSignupGeneral = function () {
                         }
                     },'business_phone': {
                         validators: {
-                            notEmpty: {
-                                message: 'Business Phone Number + Ext. is required'
-                            },callback: {
-                                message: 'Please enter a valid Business Phone Number + Ext.',
+                            callback: {
+                                message: 'Please enter a valid Business Phone Number',
                                 callback: function (input) {
-                                    return validateBusinessPhone(input.value);
+                                    var phoneNumber = input.value.match(/\(\d{3}\) \d{3}-\d{4}/);
+                                    if (phoneNumber == null) {
+                                        return false;
+                                    }
+                                    var isValid = phoneNumber && /^\(\d{3}\) \d{3}-\d{4}$/.test(phoneNumber[0]);
+                                    return isValid;
                                 }
                             }
                         }
                     },'mobile_phone': {
                         validators: {
-                            notEmpty: {
-                                message: 'Mobile Phone Number is required'
-                            },callback: {
+                           callback: {
                                 message: 'Please enter a valid Mobile Phone Number',
                                 callback: function (input) {
                                     return validateMobilePhone(input.value);

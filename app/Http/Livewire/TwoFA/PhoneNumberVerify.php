@@ -25,6 +25,8 @@ class PhoneNumberVerify extends Component
     {
         try {
             $mobile_phone_send = "+1".str_replace('-', '', Auth::user()->mobile_phone);
+            $mobile_phone_hide = substr_replace($mobile_phone_send, str_repeat('*', strlen($mobile_phone_send) - 4), 0, -4);
+            // dd($mobile_phone_hide);
             $twilio = $this->connect();
             $verification = $twilio->verify
                 ->v2
@@ -32,7 +34,7 @@ class PhoneNumberVerify extends Component
                 ->verifications
                 ->create($mobile_phone_send, "sms");
             if ($verification->status === "pending") {
-                session()->flash('message',  $mobile_phone_send );
+                session()->flash('message',  $mobile_phone_hide );
             }
         } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());

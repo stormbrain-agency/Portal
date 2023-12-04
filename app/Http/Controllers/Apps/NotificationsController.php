@@ -129,4 +129,9 @@ class NotificationsController extends Controller
         return response()->json(['success' => false, 'message' => 'Notification not found.']);
     }
 
+    // Mails
+    public function viewMails()
+    {
+        return view("pages.apps.notifications.mail.view_mail");
+    }
 }

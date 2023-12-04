@@ -52,13 +52,13 @@
                 @if(auth()->user()->hasRole('county user'))
                 <a href="{{route("county-mrac-arac.create")}}" class="btn btn-primary">
                     {!! getIcon('file', 'fs-2', '', 'i') !!}
-                    Submit File
+                    UPLOAD NEW MRAC/ARAC
                 </a>
                 @endif
                 @if(auth()->user()->hasRole('admin'))
                     <a href="{{route("county-mrac-arac.template")}}" class="btn btn-primary">
                         {!! getIcon('file', 'fs-2', '', 'i') !!}
-                        Template
+                        TEMPLATE
                     </a>
                 @endif
                 <!--end::Add user-->

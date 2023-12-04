@@ -40,19 +40,33 @@
 				</div>
 				<!-- Notifications -->
 				@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
-				<div class="menu-item">
-					<a class="menu-link {{ request()->routeIs('notification-management.*') ? 'active' : '' }}" href="{{ route('notification-management.index') }}">
-						<span class="menu-icon">{!! getIcon('notification', 'fs-2') !!}</span>
-						<span class="menu-title">Notifications</span>
-					</a>
+				<div class="menu-item menu-accordion {{ request()->routeIs('notification-management.*') ? 'hover show' : '' }}">
+						<span class="menu-link {{ request()->routeIs('notification-management.*') ? 'active' : '' }}">
+							<span class="menu-icon">{!! getIcon('notification', 'fs-2') !!}</span>
+							<a href="{{ route('notification-management.index') }}" class="menu-title">Notifications</a>
+							<span class="menu-arrow"></span>
+						</span>
+					<div class="menu-sub menu-sub-accordion">
+						<div class="menu-item">
+							<a class="menu-link {{ request()->routeIs('notification-management.index') ? 'active' : '' }}" href="{{ route('notification-management.index') }}">
+								<span class="menu-title">Notifications</span>
+							</a>
+						</div>
+						<div class="menu-item">
+							<a class="menu-link {{ request()->routeIs('notification-management.view-mails') ? 'active' : '' }}" href="{{ route('notification-management.view-mails') }}" style="padding-right: 0px">
+								<span class="menu-title">Notification Mail</span>
+							</a>
+						</div>
+					</div>
 				</div>
+				
 				@endif
 				{{-- User Management --}}
 				@if(auth()->user()->hasRole('admin'))
-					<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'hover show' : '' }}">
+					<div class="menu-item menu-accordion {{ request()->routeIs('user-management.*') ? 'hover show' : '' }}">
 						<span class="menu-link">
 							<span class="menu-icon">{!! getIcon('user', 'fs-2') !!}</span>
-							<span class="menu-title">User Management</span>
+							<a href="{{ route('user-management.users.index') }}" class="menu-title">User Management</a>
 							<span class="menu-arrow"></span>
 						</span>
 						<div class="menu-sub menu-sub-accordion">
@@ -89,13 +103,14 @@
 				</div>
 			@else
 				{{-- Provider W-9 --}}
-				<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('w9_upload.*') ? 'hover show' : '' }}">
+				<div class="menu-item menu-accordion {{ request()->routeIs('w9_upload.*') ? 'hover show' : '' }}">
 					<!--begin:Menu link-->
 					<span class="menu-link ">
 						<span class="menu-icon">{!! getIcon('file', 'fs-1') !!}</span>
-						<span class="menu-title">Submit Provider W-9</span>
+						<a href="{{ route('w9_upload.create') }}" class="menu-title">Submit Provider W-9</a>
 						<span class="menu-arrow"></span>
 					</span>
+					{{-- <a href="{{ route('w9_upload.create') }}"></a> --}}
 					<!--end:Menu link-->
 					<!--begin:Menu sub-->
 					<div class="menu-sub menu-sub-accordion">
@@ -114,16 +129,15 @@
 							</a>
 							<!--end:Menu link-->
 						</div>
-
 						<!--end:Menu item-->
 					</div>
 					<!--end:Menu sub-->
 				</div>
 				{{-- Payment Report --}}
-				<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('county-provider-payment-report.*') ? 'hover show' : '' }}">
-					<span class="menu-link }">
+				<div class="menu-item menu-accordion {{ request()->routeIs('county-provider-payment-report.*') ? 'hover show' : '' }}">
+					<span class="menu-link">
 						<span class="menu-icon">{!! getIcon('dollar', 'fs-1') !!}</span>
-						<span class="menu-title ">Submit Provider Payment Report</span>
+						<a href="{{ route('w9_upload.create') }}" class="menu-title ">Submit Provider Payment Report</a>
 						<span class="menu-arrow"></span>
 					</span>
 					<div class="menu-sub menu-sub-accordion">
@@ -140,10 +154,10 @@
 					</div>
 				</div>
 				{{-- MRAC/ARAC --}}
-				<div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ request()->routeIs('county-mrac-arac.*') ? 'hover show' : '' }}">
+				<div class="menu-item menu-accordion {{ request()->routeIs('county-mrac-arac.*') ? 'hover show' : '' }}">
 					<span class="menu-link">
 						<span class="menu-icon">{!! getIcon('graph-up', 'fs-1') !!}</span>
-						<span class="menu-title">MRAC/ARAC</span>
+						<a href="{{ route('county-mrac-arac.create') }}" class="menu-title">MRAC/ARAC</a>
 						<span class="menu-arrow"></span>
 					</span>
 					<div class="menu-sub menu-sub-accordion">
@@ -183,3 +197,15 @@
 	<!--end::Menu wrapper-->
 </div>
 <!--end::sidebar menu-->
+
+<script>
+	// Menu
+	const menuItems = document.querySelectorAll('.menu-accordion');
+	for (const menuItem of menuItems) {
+		const btnDropDown = menuItem.querySelector('.menu-link .menu-arrow');
+		btnDropDown.addEventListener('click', function () {
+			menuItem.classList.toggle('show');
+			console.log('click');
+		});
+	}
+</script>

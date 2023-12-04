@@ -28,9 +28,10 @@
                 <div style="width: 150px">
                     <input class="form-control form-control-solid" placeholder="Pick a day" id="kt_daterangepicker_1"/>
                 </div>
-                <livewire:filters.user-list/>
-                <livewire:filters.county-list/>
-               
+                @if(!auth()->user()->hasRole('county user'))
+                    <livewire:filters.user-list/>
+                    <livewire:filters.county-list/>
+                @endif
                 <!--begin::Add user-->
                 <button id="export_csv" class="btn btn-outline btn-outline-solid">
                     <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
@@ -110,14 +111,16 @@
                 }
                 window.LaravelDataTables['w9-upload-table'].column('users.email:name').search(value).draw();
             });
+
             $("#export_csv").on('click', function(e) {
                 var table = window.LaravelDataTables['w9-upload-table'];
-                table.column('w9_file_path:name').visible(false);
+                // table.column('w9_file_path:name').visible(false);
                 table.button('.buttons-csv').trigger();
-                table.column('w9_file_path:name').visible(true);
-               
+                // table.column('w9_file_path:displaydownload').visible(true);
+                // table.column('w9_file_path:hidedownload').visible(false);
             })
         })
+
     </script>
     @endpush
 

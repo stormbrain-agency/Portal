@@ -109,11 +109,15 @@ Route::middleware(['phone_verify'])->group(function () {
                 Route::put('/update/{id}', [NotificationsController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [NotificationsController::class, 'delete'])->name('delete');
                 Route::post('/update-status', [NotificationsController::class, 'updateStatus'])->name('update-status');
+                Route::get('/view-mails', [NotificationsController::class, 'viewMails'])->name('view-mails');
             });
         });
         Route::middleware(['permission:activity management'])->group(function () {
             Route::prefix('activity-management')->name("activity-management.")->group(function () {
                 Route::get('/', [ActivityController::class,'index'])->name('index');
+
+                // Route::get('/users/{user_id}', [ActivityController::class, 'index']);
+                Route::get('/users/{user_id}', [ActivityController::class, 'show'])->name('show');
             });
         });
         Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
