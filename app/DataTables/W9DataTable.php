@@ -30,7 +30,7 @@ class W9DataTable extends DataTable
             })
 
             ->editColumn('created_at', function (W9Upload $upload) {
-                return $upload->created_at->toDateString();;
+                return $upload->created_at->toDateString();
             })
             ->editColumn('updated_at', function (W9Upload $upload) {
                 return $upload->created_at->toTimeString();
@@ -97,7 +97,7 @@ class W9DataTable extends DataTable
                     'text' => 'Export CSV',
                     'filename' => 'County Provide W-9',
                     'exportOptions' => [
-                        'columns' => ':visible:not(:last-child)',
+                        'columns' => ':visible:not(.export-hidden)',
                         'page' => 'all',
                     ],
                 ]
@@ -116,28 +116,41 @@ class W9DataTable extends DataTable
                 Column::make('created_at')->name("w9_upload.created_at")->title('Date'),
                 Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true),
                 Column::make('w9_county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
-                Column::make('user')->title('User of submission')->name('users.first_name')->orderable(true),
+                Column::make('user')->title('USER WHO SUBMITTED')->name('users.first_name')->orderable(true),
                 Column::make('email')->name("users.email")->visible(false),
                 Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->width(200),
-                Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false)->exportable(false),
+                // Column::make('w9_file_path')->name("hideexport")->title('Download')->searchable(false)->orderable(false)->visible(false),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
                     ->exportable(false)
                     ->printable(false)
                     ->width(60),
             ];
-        } else {
+        } 
+        if (auth()->user()->hasRole('county user')) {
             return [
                 Column::make('id')->name("w9_upload.id")->title('ID'),
                 Column::make('created_at')->name("w9_upload.created_at")->title('Date'),
                 Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true),
                 Column::make('w9_county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
-                Column::make('user')->title('User of submission')->name('users.first_name')->orderable(true),
+                Column::make('user')->title('USER WHO SUBMITTED')->name('users.first_name')->orderable(true),
                 Column::make('email')->name("users.email")->visible(false),
                 Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->width(200),
-                Column::make('w9_file_path')->title('Download')->searchable(false)->orderable(false)->exportable(false),
+                // Column::make('w9_file_path')->name("hidedownload")->title('Download')->searchable(false)->orderable(false)->visible(false),
+            ];
+        }else {
+            return [
+                Column::make('id')->name("w9_upload.id")->title('ID'),
+                Column::make('created_at')->name("w9_upload.created_at")->title('Date'),
+                Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true),
+                Column::make('w9_county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
+                Column::make('user')->title('USER WHO SUBMITTED')->name('users.first_name')->orderable(true),
+                Column::make('email')->name("users.email")->visible(false),
+                Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->width(200),
+                Column::make('w9_file_path')->addClass('export-hidden')->title('Download')->searchable(false)->orderable(false)->visible(true)->exportable(false),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
+                    ->addClass('export-hidden')
                     ->exportable(false)
                     ->printable(false)
                     ->width(60),
