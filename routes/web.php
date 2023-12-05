@@ -101,19 +101,27 @@ Route::middleware(['phone_verify'])->group(function () {
                 Route::get('/download-all-files/{payment_id}', [CountyMRAC_ARACController::class, 'downloadAllFiles'])->name('downloadAllFiles');
             });
         });
-        Route::middleware(['permission:notification management'])->group(function () {
-            Route::prefix('notification-management')->name('notification-management.')->group(function () {
-                Route::get('/', [NotificationsController::class,'index'])->name('index');
-                Route::get('/create', [NotificationsController::class, 'create'])->name('create');
-                Route::post('/store', [NotificationsController::class, 'store'])->name('store');
-                Route::get('/edit/{id}', [NotificationsController::class, 'edit'])->name('edit');
-                Route::put('/update/{id}', [NotificationsController::class, 'update'])->name('update');
-                Route::delete('/delete/{id}', [NotificationsController::class, 'delete'])->name('delete');
-                Route::post('/update-status', [NotificationsController::class, 'updateStatus'])->name('update-status');
+        Route::name('notification-management.')->group(function () {
+            Route::middleware(['permission:notification management'])->group(function () {
+                Route::prefix('/notification-management/dashboard')->name('dashboard.')->group(function () {
+                    Route::get('/', [NotificationsController::class,'index'])->name('index');
+                    Route::get('/create', [NotificationsController::class, 'create'])->name('create');
+                    Route::post('/store', [NotificationsController::class, 'store'])->name('store');
+                    Route::get('/edit/{id}', [NotificationsController::class, 'edit'])->name('edit');
+                    Route::put('/update/{id}', [NotificationsController::class, 'update'])->name('update');
+                    Route::delete('/delete/{id}', [NotificationsController::class, 'delete'])->name('delete');
+                    Route::post('/update-status', [NotificationsController::class, 'updateStatus'])->name('update-status');
+                });
             });
-            Route::prefix('notification-email')->name('notification-email.')->group(function () {
-                Route::get('/', [NotificationMailController::class,'index'])->name('index');
-                
+            Route::middleware(['permission:notification management'])->group(function () {
+                Route::prefix('/notification-management/email')->name('email.')->group(function () {
+                    Route::get('/', [NotificationMailController::class,'index'])->name('index');
+                    Route::get('/create', [NotificationMailController::class, 'create'])->name('create');
+                    Route::post('/store', [NotificationMailController::class, 'store'])->name('store');
+                    Route::get('/edit/{id}', [NotificationMailController::class, 'edit'])->name('edit');
+                    Route::put('/update/{id}', [NotificationMailController::class, 'update'])->name('update');
+                    Route::delete('/delete/{id}', [NotificationMailController::class, 'delete'])->name('delete');
+                });
             });
         });
         Route::middleware(['permission:activity management'])->group(function () {

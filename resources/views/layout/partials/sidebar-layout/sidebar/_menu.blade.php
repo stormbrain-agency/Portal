@@ -41,25 +41,26 @@
 				<!-- Notifications -->
 				@if(auth()->user()->hasRole('admin') && count(auth()->user()->roles) != 0)
 				<div class="menu-item menu-accordion {{ request()->routeIs('notification-management.*') ? 'hover show' : '' }}">
-						<span class="menu-link ">
-							<span class="menu-icon">{!! getIcon('notification', 'fs-2') !!}</span>
-							<a href="{{ route('notification-management.index') }}" class="menu-title">Notifications Management</a>
-							<span class="menu-arrow"></span>
-						</span>
-					<div class="menu-sub menu-sub-accordion">
-						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('notification-management.index') ? 'active' : '' }}" href="{{ route('notification-management.index') }}">
-								<span class="menu-title">Notifications</span>
-							</a>
-						</div>
-						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('notification-email.index') ? 'active' : '' }}" href="{{ route('notification-email.index') }}" style="padding-right: 0px">
-								<span class="menu-title">Notification Mail</span>
-							</a>
-						</div>
-					</div>
-				</div>
-				
+                    <span class="menu-link">
+                        <span class="menu-icon">{!! getIcon('notification', 'fs-2') !!}</span>
+                        <a href="{{ route('notification-management.dashboard.index') }}" class="menu-title">Notifications Management</a>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('notification-management.dashboard.*') ? 'active' : '' }}" href="{{ route('notification-management.dashboard.index') }}">
+                                <span class="menu-title">Notifications Dashboard</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('notification-management.email.*') ? 'active' : '' }}" href="{{ route('notification-management.email.index') }}" style="padding-right: 0px">
+                                <span class="menu-title">Notification Mail</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
 				@endif
 				{{-- User Management --}}
 				@if(auth()->user()->hasRole('admin'))

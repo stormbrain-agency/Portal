@@ -11,13 +11,7 @@ class NotificationMail extends Model
     protected $table = 'notification_mails';
     protected $primaryKey = 'id';
     public $timestamps = true;
-
     protected $fillable = [
-        'title',
-        'body',
+        'name_form', 'subject' , 'body', 'button_title'
     ];
-
-    public function save(){
-
-    }
 }
