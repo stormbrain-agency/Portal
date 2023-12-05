@@ -87,11 +87,12 @@
                     placeholder: 'Pick a day'
                 }
                 }, function(start, end) {
-                    window.LaravelDataTables['w9-upload-table'].column('created_at:name').search(start.format('YYYY-MM-DD')).draw();            
+                    window.LaravelDataTables['w9-upload-table'].column('w9_upload.created_at:name').search(start.format('YYYY-MM-DD')).draw();    
+                    console.log(start.format('YYYY-MM-DD'));
             });
 
             function clearDateFilter() {
-                window.LaravelDataTables['w9-upload-table'].column('created_at:name').search('').draw();
+                window.LaravelDataTables['w9-upload-table'].column('w9_upload.created_at:name').search('').draw();
             }
 
             $('.daterangepicker .cancelBtn').on('click', function(){
