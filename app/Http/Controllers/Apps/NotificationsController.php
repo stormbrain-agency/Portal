@@ -51,7 +51,7 @@ class NotificationsController extends Controller
         $notification->save();
         // Notifications::create($request->all());
 
-        return redirect()->route('notification-management.create')->with('success', 'Notification added successfully.');
+        return redirect()->route('notification-management.dashboard.create')->with('success', 'Notification added successfully.');
     }
 
     /**

@@ -12,7 +12,7 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                <a href="{{ route('notification-management.dashboard.index') }}" class="d-flex text-center">
+                <a href="{{ route('notification-management.email.index') }}" class="d-flex text-center">
                     {!! getIcon('arrow-left', 'fs-2', '', 'i') !!}
                 </a>
                 <div class="ms-1">Edit Notification</div>
@@ -40,78 +40,41 @@
                     </div>
                 @endif
             @endif
-            <form method="POST" action="{{ route('notification-management.dashboard.update', ['id' => $notification->id]) }}" class="form form-edit-notification w-50">
+            <form method="POST" action="{{ route('notification-management.email.update', ['id' => $notification->id]) }}" class="form form-edit-notification w-50">
                 @csrf
                 @method('PUT')
                 <div class="mt-10">
-                    <!-- Input Title -->
-                    <div class="mb-7">
-                        <label for="title" class="form-label">Notification Title:</label>
-                        <input type="text" id="title" name="title" class="form-control" value="{{ $notification->title }}" required>
-                    </div>
-
-                    <!-- Input Message -->
-                    <div class="mb-7">
-                        <label for="message" class="form-label">Message:</label>
-                        <textarea class="form-control" id="message" name="message" value="{{ $notification->message }}" rows="3" required>{{ $notification->message }}</textarea>
-                    </div>
-                    <div class="input-group mb-7 justify-content-between gap-7">
-                        <!-- Select Where to show -->
-                        <div class="d-flex flex-column flex-grow-1">
-                            <label for="where_to_show" class="form-label">Where to show:</label>
-                            <select class="form-select" id="location" name="where_to_show">
-                                <option value="Sitewide" @if($notification->location == 'Sitewide') selected @endif>Sitewide</option>
-                                <option value="User" @if($notification->location == 'User') selected @endif>User</option>
-                            </select>
+                    <div class="mt-10">
+                        <!-- Input Name Form -->
+                        <div class="mb-7">
+                            <label for="name_form" class="form-label">Name Form:</label>
+                            <input type="text" name="name_form" class="form-control" value="{{ $notification->name_form }}" required>
                         </div>
 
-                        <!-- Select Type of notification -->
-                        <div class="d-flex flex-column flex-grow-1">
-                            <label for="type" class="form-label">Type of notification:</label>
-                            <select class="form-select" id="type" name="type">
-                                <option value="Information" @if($notification->type == 'Information') selected @endif>Information</option>
-                                <option value="Success" @if($notification->type == 'Success') selected @endif>Success</option>
-                                <option value="Warning" @if($notification->type == 'Warning') selected @endif>Warning</option>
-                                <option value="Alert" @if($notification->type == 'Alert') selected @endif>Alert</option>
-                            </select>
+                        <!-- Input Body -->
+                        <div class="mb-7">
+                            <label for="body" class="form-label">Body:</label>
+                            <textarea class="form-control" name="body" rows="3" value="{{ $notification->body }}" required>{{ $notification->body }}</textarea>
                         </div>
-                    </div>
 
-                    <!-- Input Group for Schedule -->
-                    <div class="input-group mb-7 justify-content-between gap-7">
-                        <div class="d-flex flex-column flex-grow-1">
-                            <label for="schedule" class="form-label">Schedule:</label>
-                            <select class="form-select" id="schedule" name="schedule_status">
-                                <option value="Yes" @if($notification->schedule_status == 'Yes') selected @endif>Yes</option>
-                                <option value="No" @if($notification->schedule_status == 'No') selected @endif>No</option>
-                            </select>
+                        <!-- Input Subject -->
+                        <div class="mb-7">
+                            <label for="subject" class="form-label">Subject:</label>
+                            <textarea class="form-control" name="subject" rows="3" value="{{ $notification->subject }}" required>{{ $notification->subject }}</textarea>
                         </div>
-                        <div class="d-flex flex-column flex-grow-1">
-                            <label for="from" class="form-label">From:</label>
-                            <input type="datetime-local" id="schedule_start" name="schedule_start" class="form-control"
-                            value="{{ !empty($notification->schedule_start) ? \Carbon\Carbon::parse($notification->schedule_start)->format('Y-m-d\TH:i') : '' }}">
-                        </div>
-                        <div class="d-flex flex-column flex-grow-1">
-                            <label for="till" class="form-label">Till:</label>
-                            <input type="datetime-local" id="schedule_end" name="schedule_end" class="form-control"
-                            value="{{ !empty($notification->schedule_end) ? \Carbon\Carbon::parse($notification->schedule_end)->format('Y-m-d\TH:i') : '' }}">
-                        </div>
-                    </div>
 
-                    <!-- Select Status -->
-                    <div class="mb-7">
-                        <label for="status" class="form-label">Status:</label>
-                        <select class="form-select" id="status" name="status">
-                            <option value="Active" @if($notification->status == 'Active') selected @endif>Active</option>
-                            <option value="Unactive" @if($notification->status == 'Unactive') selected @endif>Unactive</option>
-                        </select>
+                        <!-- Input Button Title -->
+                        <div class="mb-7">
+                            <label for="button_title" class="form-label">Button Title:</label>
+                            <input type="text" name="button_title" class="form-control" value="{{ $notification->button_title }}" required>
+                        </div>
                     </div>
                 </div>
                 <hr>
                 <div class="d-flex justify-content-between">
                     <!-- DELETE Button -->
                     <button type="submit" id="delete-button" class="alert alert-danger mt-3 mb-8" data-notification-id="{{ $notification->id }}">
-                        <span class="fs-5 fw-bold indicator-label text-danger">Delete Notification</span>
+                        <span class="fs-5 fw-bold indicator-label text-danger">Delete Notification Email</span>
                     </button>
                     <div class="d-flex">
                         <!-- DISCARD Button -->
@@ -155,7 +118,7 @@
                     var confirmDiscard = confirm('Are you sure you want to discard changes?');
 
                     if (confirmDiscard) {
-                        window.location.href = '/notification-management/';
+                        window.location.href = '/notification-management/email';
                     }
                 });
 
@@ -163,14 +126,14 @@
                     var notificationId = $(this).data('notification-id');
 
                     $.ajax({
-                        url: '/notification-management/delete/' + notificationId,
+                        url: '/notification-management/email/delete/' + notificationId,
                         type: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (data) {
                             console.log(data);
-                            window.location.href = '/notification-management/';
+                            window.location.href = '/notification-management/email';
                         },
                         error: function (error) {
                             console.error(error);

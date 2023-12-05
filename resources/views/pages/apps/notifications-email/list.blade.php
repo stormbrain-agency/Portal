@@ -1,11 +1,11 @@
 <x-default-layout>
 
     @section('title')
-        Notification Management
+        Notification Email Management
     @endsection
 
     @section('breadcrumbs')
-        {{ Breadcrumbs::render('notification-management.dashboard.index') }}
+        {{ Breadcrumbs::render('notification-management.email.index') }}
     @endsection
 
     <div class="card">
@@ -25,15 +25,15 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 20px">
                 <!--begin::Toolbar-->
-                <a href="{{route("notification-management.dashboard.create")}}" class="btn btn-primary me-2 mb-2">
+                <a href="{{route("notification-management.email.create")}}" class="btn btn-primary me-2 mb-2">
                     {{-- {!! getIcon('file', 'fs-2', '', 'i') !!} --}}
                     {!! getIcon('plus-circle', 'fs-2', '', 'i') !!}
-                    ADD NEW NOTIFICATION
+                    ADD NEW NOTIFICATION EMAIL
                 </a>
             </div>
                 <!--end::Toolbar-->
                 <!--begin::Modal-->
-                <livewire:notifications.add-notifications></livewire:notifications.add-notifications>
+                <livewire:notifications-email.add-notifications></livewire:notifications-email.add-notifications>
                 <!--end::Modal-->
             {{-- </div> --}}
 
@@ -42,7 +42,7 @@
         <!--end::Card header-->
 
         <!--begin::Card body-->
-        <livewire:notifications.view-notifications></livewire:notifications.view-notifications>
+        <livewire:notifications-email.view-notifications></livewire:notifications-email.view-notifications>
         <div class="card-body py-4">
             <!--begin::Table-->
             <div class="table-responsive">
@@ -52,31 +52,6 @@
         </div>
         <!--end::Card body-->
     </div>
-    <script>
-        document.querySelectorAll('td.col-type').forEach(function (element) {
-            var test = document.querySelectorAll('td.col-type')
-            console.log(test);
-            var value = element.textContent.trim();
-            console.log(value);
-            switch (value) {
-                case 'Information':
-                    element.classList.add('text-info');
-                    break;
-                case 'Success':
-                    element.classList.add('text-success');
-                    break;
-                case 'Alert':
-                    element.classList.add('text-danger');
-                    break;
-                case 'Warning':
-                    element.classList.add('text-warning');
-                    break;
-                default:
-                    element.classList.add('text-muted');
-                    break;
-            }
-        });
-    </script>
     @push('scripts')
         {{ $dataTable->scripts() }}
         <script>
@@ -90,17 +65,6 @@
                 window.LaravelDataTables['notifications-table'].search(this.value).draw();
             });
 
-        </script>
-        <script>
-            $(document).ready(function () {
-                function clearDateFilter() {
-                    window.LaravelDataTables['notifications-table'].column('created_at:name').search('').draw();
-                }
-
-                $('.daterangepicker .cancelBtn').on('click', function(){
-                    clearDateFilter();
-                });
-            })
         </script>
     @endpush
 

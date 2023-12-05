@@ -89,7 +89,7 @@ class NotificationsDataTable extends DataTable
                         var status = statusCheckbox.prop('checked') ? 'Active' : 'Unactive';
                         var notificationId = statusCheckbox.data('notification-id');
                         $.ajax({
-                            url: '" . route("notification-management.update-status") . "',
+                            url: '" . route("notification-management.dashboard.update-status") . "',
                             method: 'POST',
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name=\"csrf-token\"]').attr('content')
