@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Apps;
 
 use App\DataTables\NotificationsDataTable;
 use App\Models\Notifications;
+use App\Models\notification_mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -130,8 +131,9 @@ class NotificationsController extends Controller
     }
 
     // Mails
-    public function viewMails()
+    public function viewMails(Request $request)
     {
+
         return view("pages.apps.notifications.mail.view_mail");
     }
 }

@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notification_mail', function (Blueprint $table) {
+        Schema::create('notification_mails', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('body');
-            $table->timestamps();
+            $table->text('name');
+            $table->text('subject');
+            $table->string('body');
+            $table->text('button');
           });
     }
 
