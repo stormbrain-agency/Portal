@@ -8,7 +8,7 @@
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             {{-- @include(config('settings.KT_THEME_LAYOUT_DIR').'/partials/header-layout/_header') --}}
             <!--begin::Wrapper-->
-            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+            <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper ">
                 <!--begin::Main-->
                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                     <!--begin::Content wrapper-->

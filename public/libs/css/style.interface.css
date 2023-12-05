@@ -73,6 +73,15 @@
     padding: 4px;
 }
 
+[data-kt-app-sidebar-fixed=true] .app-wrapper {
+    margin-left: 300px;
+}
+
+[data-kt-app-sidebar-hoverable=true] .app-sidebar .app-sidebar-wrapper,
+#kt_app_sidebar .flex-column-fluid {
+    width: 300px;
+}
+
 /* FAQ */
 .card.help-faq,
 .page-profile .card {
