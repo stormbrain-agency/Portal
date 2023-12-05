@@ -53,7 +53,7 @@
 							</a>
 						</div>
 						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('notification-management.view-mails') ? 'active' : '' }}" href="{{ route('notification-management.view-mails') }}" style="padding-right: 0px">
+							<a class="menu-link {{ request()->routeIs('notification-email.index') ? 'active' : '' }}" href="{{ route('notification-email.index') }}" style="padding-right: 0px">
 								<span class="menu-title">Notification Mail</span>
 							</a>
 						</div>

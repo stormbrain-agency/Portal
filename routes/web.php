@@ -5,6 +5,7 @@ use App\Http\Controllers\Apps\UserManagementController;
 use App\Http\Controllers\Apps\PaymentReportController;
 use App\Http\Controllers\Apps\CountyProviderW9Controller;
 use App\Http\Controllers\Apps\NotificationsController;
+use App\Http\Controllers\Apps\NotificationMailController;
 use App\Http\Controllers\Apps\CountyUsersController;
 use App\Http\Controllers\Apps\CountyMRAC_ARACController;
 use App\Http\Controllers\Apps\LocationController;
@@ -109,7 +110,10 @@ Route::middleware(['phone_verify'])->group(function () {
                 Route::put('/update/{id}', [NotificationsController::class, 'update'])->name('update');
                 Route::delete('/delete/{id}', [NotificationsController::class, 'delete'])->name('delete');
                 Route::post('/update-status', [NotificationsController::class, 'updateStatus'])->name('update-status');
-                Route::get('/view-mails', [NotificationsController::class, 'viewMails'])->name('view-mails');
+            });
+            Route::prefix('notification-email')->name('notification-email.')->group(function () {
+                Route::get('/', [NotificationMailController::class,'index'])->name('index');
+                
             });
         });
         Route::middleware(['permission:activity management'])->group(function () {
