@@ -72,11 +72,12 @@ class W9DataTable extends DataTable
         $query->join('users', 'w9_upload.user_id', '=', 'users.id')
               ->join('counties', 'w9_upload.w9_county_fips', '=', 'counties.county_fips') 
               ->where('users.status', 1)
-              ->select('w9_upload.*', 'counties.*','w9_upload.id','w9_upload.created_at'); 
+              ->select('w9_upload.*','w9_upload.created_at', 'counties.county','w9_upload.id'); 
         
         if (auth()->user()->hasRole('county user')) {
             $query->where('users.id', auth()->user()->id);
         }
+        
         return $query;
     }
 
@@ -113,8 +114,8 @@ class W9DataTable extends DataTable
         if (auth()->user()->hasRole('view only')) {
             return [
                 Column::make('id')->name("w9_upload.id")->title('ID'),
-                Column::make('created_at')->name("w9_upload.created_at")->title('Date'),
-                Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true),
+                Column::make('created_at')->name("w9_upload.created_at")->title('Date')->orderable(true)->searchable(true),
+                Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true)->searchable(true),
                 Column::make('w9_county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
                 Column::make('user')->title('USER WHO SUBMITTED')->name('users.first_name')->orderable(true),
                 Column::make('email')->name("users.email")->visible(false),
@@ -130,7 +131,7 @@ class W9DataTable extends DataTable
         if (auth()->user()->hasRole('county user')) {
             return [
                 Column::make('id')->name("w9_upload.id")->title('ID'),
-                Column::make('created_at')->name("w9_upload.created_at")->title('Date'),
+                Column::make('created_at')->name("w9_upload.created_at")->title('Date')->orderable(true)->searchable(true),
                 Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true),
                 Column::make('w9_county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
                 Column::make('user')->title('USER WHO SUBMITTED')->name('users.first_name')->orderable(true),
@@ -141,7 +142,7 @@ class W9DataTable extends DataTable
         }else {
             return [
                 Column::make('id')->name("w9_upload.id")->title('ID'),
-                Column::make('created_at')->name("w9_upload.created_at")->title('Date'),
+                Column::make('created_at')->name("w9_upload.created_at")->title('Date')->orderable(true)->searchable(true),
                 Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true),
                 Column::make('w9_county_fips')->title('Country Designation')->name('counties.county')->orderable(true)->searchable(true),
                 Column::make('user')->title('USER WHO SUBMITTED')->name('users.first_name')->orderable(true),
