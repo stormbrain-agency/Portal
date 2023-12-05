@@ -58,9 +58,9 @@
     </div>
     <!--end::User menu-->
     <!--begin::Header menu toggle-->
-	<div class="app-navbar-item d-lg-none ms-2 me-n2" title="Show header menu">
+	{{-- <div class="app-navbar-item d-lg-none ms-2 me-n2" title="Show header menu">
 		<div class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px" id="kt_app_header_menu_toggle">{!! getIcon('element-4', 'fs-1') !!}</div>
-    </div>
+    </div> --}}
     <!--end::Header menu toggle-->
 	<!--begin::Aside toggle-->
 	<!--end::Header menu toggle-->
