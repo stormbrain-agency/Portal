@@ -84,6 +84,7 @@
                 minYear: 2022,
                 maxYear: 2026,
                 locale: {
+                    format: 'YYYY-MM-DD',
                     placeholder: 'Pick a day'
                 }
                 }, function(start, end) {
