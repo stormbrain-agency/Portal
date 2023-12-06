@@ -16,10 +16,10 @@
         .btn-confirm {
             display: inline-block;
             cursor: pointer;
-            padding: 10px 20px;
+            padding: 8px 16px;
             background-color: #002559;
             color: #FFFFFF !important;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
             text-decoration: none;
             border-radius: 3px;
@@ -28,15 +28,19 @@
 </head>
 <body>
     <div class="wrap-content" style="color: #000000;">
-      <p>This alert is to notify you that a MRAC/ARAC submission has ben received. The details of the submission are as follows:</p>
-      <p>Details of the submission:</p>
+      <div class="mb-2">
+            <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
+        </div>
+      <br>
+      <p>{{ $emailContent['subject'] }}</p>
+      <p>{{ $emailContent['body'] }}</p>
       <ul>
-          <li>Date/Time of Submission: {{ $time }}</li>
-          <li>Submitted by: {{ $name }}</li>
-          <li>User Email Address: {{ $email }}</li>
-          <li>County Designation: {{ $county_designation }}</li>
+          <li>Date/Time of Submission: {{ $data['time'] }}</li>
+          <li>Submitted by: {{ $data['name'] }}</li>
+          <li>User Email Address: {{ $data['email'] }}</li>
+          <li>County Designation: {{ $data['county_designation'] }}</li>
       </ul>
-        <p><a href="{{ url('/county-mrac-arac')}}" target="_blank" class="btn-confirm">View Submission History</a></p>
+        <p><a href="{{ url('/county-mrac-arac')}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a></p>
     </div>
 </body>
 </html>

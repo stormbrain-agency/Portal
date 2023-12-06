@@ -45,11 +45,11 @@
                     {{-- @if(auth()->user()->hasRole('county user')) --}}
                     {{-- <button type="button" class="btn btn-primary me-2 mb-2" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment_report">
                         {!! getIcon('plus', 'fs-2', '', 'i') !!}
-                        Submit File
+                        UPLOAD NEW PROVIDER W9
                     </button> --}}
                     <a href="/county-w9/upload" class="btn btn-primary me-2 mb-2">
                         {!! getIcon('file', 'fs-2', '', 'i') !!}
-                        Submit File
+                        UPLOAD NEW PROVIDER W9
                     </a>
                     {{-- @endif --}}
                     <!--end::Add user-->

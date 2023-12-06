@@ -90,7 +90,6 @@ line-height: 16px;
                     <span class="path2"></span>
                 </i>Download Template</a>
             <hr>
-
             <form action="{{ route('county-mrac-arac.store') }}" method="POST" id="myform" class="form" enctype="multipart/form-data">
                 @csrf
                 <!--begin::Scroll-->
@@ -123,7 +122,7 @@ line-height: 16px;
                     <!--begin::Input group-->
                     <div class="fv-row mb-7">
                         <!--begin::Label-->
-                        <label class="required fw-bold fs-6 mb-2">Document Upload</label>
+                        <label class="required fw-bold fs-6 mb-2">Document Upload:</label>
                         <!--end::Label-->
                         <!--begin::Input-->
                          <!--begin::Dropzone-->

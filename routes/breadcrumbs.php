@@ -82,9 +82,13 @@ Breadcrumbs::for('county-mrac-arac.index', function (BreadcrumbTrail $trail) {
 
 // ---------------------------------------------
 // Home > Dashboard > Notification Management
-Breadcrumbs::for('notification-management.index', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('notification-management.dashboard.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('Notification Management', route('notification-management.index'));
+    $trail->push('Notification Management', route('notification-management.dashboard.index'));
+});
+Breadcrumbs::for('notification-management.email.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push('Notification Email Management', route('notification-management.email.index'));
 });
 
 // ---------------------------------------------

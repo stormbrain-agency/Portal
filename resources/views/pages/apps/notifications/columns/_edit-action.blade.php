@@ -1,3 +1,3 @@
-<a href="{{ route('notification-management.edit', ['id' => $notifications->id]) }}" class="btn btn-secondary text-center">
+<a href="{{ route('notification-management.dashboard.edit', ['id' => $notifications->id]) }}" class="btn btn-secondary text-center">
     <span>Edit</span>
 </a>

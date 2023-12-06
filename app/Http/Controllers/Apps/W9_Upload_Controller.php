@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\W9MailAdmin;
+use App\Mail\W9MailUser;
 
 // use League\Csv\Writer;
 // use Illuminate\Support\Facades\Response;
@@ -105,20 +107,14 @@ class W9_Upload_Controller extends Controller
     
                             foreach($adminEmails as $adminEmail){
                                 try {
-                                    Mail::send('mail.admin.w-9', $data, function ($message) use ($adminEmail) {
-                                        $message->to($adminEmail);
-                                        $message->subject('Alert: W-9 Submission Received!');
-                                    });
+                                    Mail::to($adminEmail)->send(new W9MailAdmin($data));
                                 } catch (\Exception $e) {
                                     Log::error('Error sending email to admins: ' . $e->getMessage());
                                 }
                             }
                             try {
                                 $userEmail = $user->email;
-                                Mail::send('mail.user.w-9', $data, function ($message) use ($userEmail) {
-                                    $message->to($userEmail);
-                                    $message->subject('Confirmation: W-9 Submission Received!');
-                                });
+                                Mail::to($userEmail)->send(new W9MailUser($data));
                             } catch (\Throwable $th) {
                                 Log::error('Error sending email to user: ' . $e->getMessage());
                             }

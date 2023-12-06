@@ -6,7 +6,14 @@
             <!--begin::Modal header-->
             <div class="modal-header" id="kt_modal_edit_user_header">
                 <!--begin::Modal title-->
-                <h2 class="fw-bold">Edit User</h2>
+                
+                <h2 class="fw-bold">Edit 
+                    @if ($idUser == auth()->id())
+                    Profile
+                    @else
+                    User
+                    @endif
+                </h2>
                 <!--end::Modal title-->
                 <!--begin::Close-->
                 <div class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
@@ -202,7 +209,7 @@
                     <div class="text-center pt-5">
                         <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close" wire:loading.attr="disabled">Discard</button>
                         <button type="submit" class="btn btn-primary" data-kt-users-modal-action="submit">
-                            <span class="indicator-label" wire:loading.remove>Submit</span>
+                            <span class="indicator-label" wire:loading.remove>Update</span>
                             <span class="indicator-progress" wire:loading wire:target="submit">
                                 Please wait...
                                 <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

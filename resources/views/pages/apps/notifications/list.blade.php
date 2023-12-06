@@ -5,7 +5,7 @@
     @endsection
 
     @section('breadcrumbs')
-        {{ Breadcrumbs::render('notification-management.index') }}
+        {{ Breadcrumbs::render('notification-management.dashboard.index') }}
     @endsection
 
     <div class="card">
@@ -25,7 +25,7 @@
             <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 20px">
                 <!--begin::Toolbar-->
-                <a href="{{route("notification-management.create")}}" class="btn btn-primary me-2 mb-2">
+                <a href="{{route("notification-management.dashboard.create")}}" class="btn btn-primary me-2 mb-2">
                     {{-- {!! getIcon('file', 'fs-2', '', 'i') !!} --}}
                     {!! getIcon('plus-circle', 'fs-2', '', 'i') !!}
                     ADD NEW NOTIFICATION

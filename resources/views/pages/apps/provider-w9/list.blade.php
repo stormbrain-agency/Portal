@@ -40,7 +40,7 @@
                 @if(auth()->user()->hasRole('county user'))
                 <a href="/county-w9/upload" class="btn btn-primary">
                     {!! getIcon('file', 'fs-2', '', 'i') !!}
-                    Submit File
+                    UPLOAD NEW PROVIDER W9
                 </a>
                 @endif
                     <!--end::Add user-->
@@ -84,14 +84,16 @@
                 minYear: 2022,
                 maxYear: 2026,
                 locale: {
+                    format: 'YYYY-MM-DD',
                     placeholder: 'Pick a day'
                 }
                 }, function(start, end) {
-                    window.LaravelDataTables['w9-upload-table'].column('created_at:name').search(start.format('YYYY-MM-DD')).draw();            
+                    window.LaravelDataTables['w9-upload-table'].column('w9_upload.created_at:name').search(start.format('YYYY-MM-DD')).draw();    
+                    console.log(start.format('YYYY-MM-DD'));
             });
 
             function clearDateFilter() {
-                window.LaravelDataTables['w9-upload-table'].column('created_at:name').search('').draw();
+                window.LaravelDataTables['w9-upload-table'].column('w9_upload.created_at:name').search('').draw();
             }
 
             $('.daterangepicker .cancelBtn').on('click', function(){

@@ -9,20 +9,22 @@ use App\Models\MracAracFiles;
 use App\Models\TemplateFiles;
 use App\Models\MracAracDownloadHistory;
 use Illuminate\Support\Facades\Auth;
-use App\Models\County; 
-use App\Models\User; 
+use App\Models\County;
+use App\Models\User;
 use Illuminate\Http\Request;
 use League\Csv\Writer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use App\Mail\MracAracMailAdmin;
+use App\Mail\MracAracMailUser;
 
 class CountyMRAC_ARACController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(MracAracDataTable $dataTable)
+    public function index(Request $request, MracAracDataTable $dataTable)
     {
         return $dataTable->with([
             'user' => auth()->user(),
@@ -68,7 +70,7 @@ class CountyMRAC_ARACController extends Controller
                 $extension = $uploadedFile->getClientOriginalExtension();
                 $currentDateTime = date('Ymd_His');
                 $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
-                
+
                 $path_name = $uploadedFile->storeAs('uploads/mrac_arac', $uniqueFileName);
 
                 MracAracFiles::create([
@@ -94,10 +96,7 @@ class CountyMRAC_ARACController extends Controller
 
         foreach($adminEmails as $adminEmail){
             try {
-                Mail::send('mail.admin.mrac-arac', $data, function ($message) use ($adminEmail) {
-                    $message->to($adminEmail);
-                    $message->subject('Alert: MRAC/ARAC Submission Received');
-                });
+                Mail::to($adminEmail)->send(new MracAracMailAdmin($data));
             } catch (\Exception $e) {
                 Log::error('Error sending email to admins: ' . $e->getMessage());
             }
@@ -113,10 +112,8 @@ class CountyMRAC_ARACController extends Controller
 
         try {
             $userEmail = $user->email;
-            Mail::send('mail.user.mrac-arac', $data, function ($message) use ($userEmail) {
-                $message->to($userEmail);
-                $message->subject('Confirmation: MRAC/ARAC Submission Received');
-            });
+            Mail::to($userEmail)->send(new MracAracMailUser($data));
+
         } catch (\Exception $e) {
             Log::error('Error sending email to user: ' . $e->getMessage());
         }
@@ -152,7 +149,7 @@ class CountyMRAC_ARACController extends Controller
             $extension = $uploadedFile->getClientOriginalExtension();
             $currentDateTime = date('Ymd_His');
             $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
-            
+
             $path_name = $uploadedFile->storeAs('uploads/templates', $uniqueFileName);
             TemplateFiles::where('type', 'mrac_arac')->delete();
             TemplateFiles::create([
@@ -170,7 +167,7 @@ class CountyMRAC_ARACController extends Controller
      */
     public function show(string $id)
     {
-        
+
     }
 
 
@@ -203,7 +200,7 @@ class CountyMRAC_ARACController extends Controller
      public function downloadTemplateFile()
     {
         $latestTemplateFile = TemplateFiles::where('type', 'mrac_arac')->latest()->first();
-        if (isset($latestTemplateFile) && !empty($latestTemplateFile)) {  
+        if (isset($latestTemplateFile) && !empty($latestTemplateFile)) {
             $filename = $latestTemplateFile->file_path;
             $file = storage_path('app/uploads/templates/'. $filename);
             if (file_exists($file)) {
@@ -214,5 +211,17 @@ class CountyMRAC_ARACController extends Controller
         }else {
                 return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
             }
+    }
+
+    public function downloadTemplate()
+    {
+        $filename = "MracAracTemplate.xlsx";
+        $path = public_path("libs/templates/{$filename}");
+
+        if (file_exists($path)) {
+            return response()->download($path);
+        }else {
+            return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
+        }
     }
 }

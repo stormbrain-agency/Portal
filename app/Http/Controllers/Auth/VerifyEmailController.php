@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-
+use App\Mail\WelcomeCountyEmail;
 class VerifyEmailController extends Controller
 {
     /**
@@ -68,10 +68,7 @@ class VerifyEmailController extends Controller
 
         $emailAdress = $data['email'];
         try {
-            Mail::send('mail.welcome-email',['data' => $data] , function ($message) use ($emailAdress) {
-                $message->to($emailAdress);
-                $message->subject('Welcome to the Supplemental Rate Payment Program');
-            });
+            Mail::to($emailAdress)->send(new WelcomeCountyEmail($data));  
         }catch (\Exception $e) {
             Log::error('Error sending email to user: ' . $e->getMessage());
         }

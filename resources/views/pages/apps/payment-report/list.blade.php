@@ -43,31 +43,29 @@
                 <livewire:filters.user-list/>
                 <livewire:filters.county-list/>
                 @endif
-                {{-- <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base"> --}}
-                    <!--begin::Add user-->
-                    <button id="export_csv" class="btn btn-outline btn-outline-solid">
-                        <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
-                        EXPORT AS CSV
-                    </button>
-                    @if(auth()->user()->hasRole('county user'))
-                    <a href="{{route("county-provider-payment-report.create")}}" class="btn btn-primary">
+                <!--begin::Add user-->
+                <button id="export_csv" class="btn btn-outline btn-outline-solid">
+                    <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                    EXPORT AS CSV
+                </button>
+                @if(auth()->user()->hasRole('county user'))
+                <a href="{{route("county-provider-payment-report.create")}}" class="btn btn-primary">
+                    {!! getIcon('file', 'fs-2', '', 'i') !!}
+                    UPLOAD NEW PAYMENT REPORT
+                </a>
+                @endif
+                {{-- @if(auth()->user()->hasRole('admin'))
+                    <a href="{{route("county-provider-payment-report.template")}}" class="btn btn-primary">
                         {!! getIcon('file', 'fs-2', '', 'i') !!}
-                        UPLOAD NEW PAYMENT REPORT
+                        TEMPLATE
                     </a>
-                    @endif
-                    @if(auth()->user()->hasRole('admin'))
-                        <a href="{{route("county-provider-payment-report.template")}}" class="btn btn-primary">
-                            {!! getIcon('file', 'fs-2', '', 'i') !!}
-                            TEMPLATE
-                        </a>
-                    @endif
-                    <!--end::Add user-->
-                </div>
-                <!--end::Toolbar-->
-                <!--begin::Modal-->
-                <livewire:payment-report.add-payment-report></livewire:payment-report.add-payment-report>
-                <!--end::Modal-->
-            {{-- </div> --}}
+                @endif --}}
+                <!--end::Add user-->
+            </div>
+            <!--end::Toolbar-->
+            <!--begin::Modal-->
+            <livewire:payment-report.add-payment-report></livewire:payment-report.add-payment-report>
+            <!--end::Modal-->
 
             <!--end::Card toolbar-->
         </div>
@@ -104,20 +102,62 @@
         </script>
         <script>
          $(document).ready(function () {
+            var startDateParam = getParameterByName('startDate');
+            var endDateParam = getParameterByName('endDate');
+
+            var startDate = startDateParam ? moment(startDateParam) : moment();
+            var endDate = endDateParam ? moment(endDateParam) : moment();
             $("#kt_daterangepicker_1").daterangepicker({
-                singleDatePicker: true,
+                startDate: startDate,
+                endDate: endDate,
                 showDropdowns: true,
                 minYear: 2022,
                 maxYear: 2026,
                 locale: {
+                    format: 'YYYY-MM-DD', 
                     placeholder: 'Pick a day'
                 }
-                }, function(start, end) {
-                    window.LaravelDataTables['payment_report-table'].column('created_at:name').search(start.format('YYYY-MM-DD')).draw();            
+            });
+            $('#kt_daterangepicker_1').on('apply.daterangepicker', function(ev, picker) {
+                var startDate = picker.startDate.format('YYYY-MM-DD');
+                var endDate = picker.endDate.format('YYYY-MM-DD');
+
+                window.location.href = '/county-provider-payment-report/?startDate=' + startDate + '&endDate=' + endDate;
+                //  $.ajax({
+                //     url: '/county-mrac-arac/',
+                //     method: 'GET',
+                //     data: {
+                //         startDate: startDate,
+                //         endDate: endDate
+                //     },
+                //     success: function (response) {
+                //         window.LaravelDataTables['mrac_arac-table'].draw();
+                //     },
+                //     error: function (error) {
+                //         console.error(error);
+                //     }
+                // });
             });
 
+            function getParameterByName(name, url = window.location.href) {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+
+            function updateUrlParams(startDate, endDate) {
+                var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname +
+                    '?startDate=' + startDate +
+                    '&endDate=' + endDate;
+
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
+
             function clearDateFilter() {
-                window.LaravelDataTables['payment_report-table'].column('created_at:name').search('').draw();
+                window.location.href = '/county-provider-payment-report/';
             }
 
             $('.daterangepicker .cancelBtn').on('click', function(){

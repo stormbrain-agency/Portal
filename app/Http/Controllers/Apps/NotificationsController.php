@@ -51,7 +51,7 @@ class NotificationsController extends Controller
         $notification->save();
         // Notifications::create($request->all());
 
-        return redirect()->route('notification-management.create')->with('success', 'Notification added successfully.');
+        return redirect()->route('notification-management.dashboard.create')->with('success', 'Notification added successfully.');
     }
 
     /**
@@ -129,9 +129,5 @@ class NotificationsController extends Controller
         return response()->json(['success' => false, 'message' => 'Notification not found.']);
     }
 
-    // Mails
-    public function viewMails()
-    {
-        return view("pages.apps.notifications.mail.view_mail");
-    }
+
 }

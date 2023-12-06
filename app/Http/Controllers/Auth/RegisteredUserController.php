@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use App\Mail\RegisterEmail;
 
 
 class RegisteredUserController extends Controller
@@ -116,11 +117,7 @@ class RegisteredUserController extends Controller
 
                 foreach($dataMail as $emailAdress){
                     try {
-                        Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {
-                            $message->to($emailAdress);
-                            $message->subject('Alert: County User Registration - Approval
-                            Needed!');
-                        });
+                        Mail::to($emailAdress)->send(new RegisterEmail($data));
                     } catch (\Exception $e) {
                         Log::error('Error sending email to admins: ' . $e->getMessage());
                     }
@@ -133,28 +130,6 @@ class RegisteredUserController extends Controller
 
 
         }
-    }
-
-    private function sendRegisterMailToAdmin($id){
-            $adminEmails = User::whereHas('roles', function ($query) {
-                $query->where('name', 'admin');
-            })->pluck('email');
-            $data = [
-                'name' => $request -> input('name'),
-                'email' => $request -> input('email'),
-                'county_designation' => $request -> input('county_designation'),
-                'link' => url('/user-management/users/'. $id .''),
-                'time' => Carbon::now()->format('H:i:s - m/d/Y '),
-                'list_mail' => $adminEmails,
-            ];
-            $dataMail = $data['list_mail'];
-            foreach($dataMail as $emailAdress){
-                Mail::send('mail.emailRegister', $data, function ($message) use ($emailAdress) {
-                    $message->to($emailAdress);
-                    $message->subject('Alert: County User Registration - Approval
-                    Needed!');
-                });
-            }
     }
 
     public function censoring(){

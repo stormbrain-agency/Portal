@@ -12,7 +12,7 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                <a href="{{ route('notification-management.index') }}" class="d-flex text-center">
+                <a href="{{ route('notification-management.dashboard.index') }}" class="d-flex text-center">
                     {!! getIcon('arrow-left', 'fs-2', '', 'i') !!}
                 </a>
                 <div class="ms-1">Add Notification</div>
@@ -40,7 +40,7 @@
                     </div>
                 @endif
             @endif
-            <form method="POST" action="{{ route('notification-management.store') }}" class="form w-50">
+            <form method="POST" action="{{ route('notification-management.dashboard.store') }}" class="form w-50">
                 @csrf
                 <div class="mt-10">
                     <!-- Input Title -->

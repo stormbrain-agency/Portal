@@ -71,17 +71,15 @@ class MracAracDataTable extends DataTable
             $query->where('county_fips', request('county_fips'));
         }
 
-        $startDate = request()->get('startDate');
-        $endDate = request()->get('endDate');
-
+        $startDate = request()->query('startDate');
+        $endDate = request()->query('endDate');
+        
         if ($startDate && $endDate) {
-            $query->whereBetween('created_at', [
+            $query->whereBetween('mrac_arac.created_at', [
                 $startDate,
                 $endDate,
             ]);
         }
-
-    
         return $query;
     }
 
