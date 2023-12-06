@@ -40,7 +40,7 @@
                 @if(auth()->user()->hasRole('county user'))
                 <a href="/county-w9/upload" class="btn btn-primary">
                     {!! getIcon('file', 'fs-2', '', 'i') !!}
-                    Submit File
+                    UPLOAD NEW PROVIDER W9
                 </a>
                 @endif
                     <!--end::Add user-->
