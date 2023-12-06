@@ -9,8 +9,8 @@ use App\Models\MracAracFiles;
 use App\Models\TemplateFiles;
 use App\Models\MracAracDownloadHistory;
 use Illuminate\Support\Facades\Auth;
-use App\Models\County; 
-use App\Models\User; 
+use App\Models\County;
+use App\Models\User;
 use Illuminate\Http\Request;
 use League\Csv\Writer;
 use Illuminate\Http\UploadedFile;
@@ -70,7 +70,7 @@ class CountyMRAC_ARACController extends Controller
                 $extension = $uploadedFile->getClientOriginalExtension();
                 $currentDateTime = date('Ymd_His');
                 $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
-                
+
                 $path_name = $uploadedFile->storeAs('uploads/mrac_arac', $uniqueFileName);
 
                 MracAracFiles::create([
@@ -149,7 +149,7 @@ class CountyMRAC_ARACController extends Controller
             $extension = $uploadedFile->getClientOriginalExtension();
             $currentDateTime = date('Ymd_His');
             $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
-            
+
             $path_name = $uploadedFile->storeAs('uploads/templates', $uniqueFileName);
             TemplateFiles::where('type', 'mrac_arac')->delete();
             TemplateFiles::create([
@@ -167,7 +167,7 @@ class CountyMRAC_ARACController extends Controller
      */
     public function show(string $id)
     {
-        
+
     }
 
 
@@ -200,7 +200,7 @@ class CountyMRAC_ARACController extends Controller
      public function downloadTemplateFile()
     {
         $latestTemplateFile = TemplateFiles::where('type', 'mrac_arac')->latest()->first();
-        if (isset($latestTemplateFile) && !empty($latestTemplateFile)) {  
+        if (isset($latestTemplateFile) && !empty($latestTemplateFile)) {
             $filename = $latestTemplateFile->file_path;
             $file = storage_path('app/uploads/templates/'. $filename);
             if (file_exists($file)) {
