@@ -75,13 +75,14 @@ class PaymentReportDataTable extends DataTable
         $startDate = request()->get('startDate');
         $endDate = request()->get('endDate');
 
+        info("startDate: " . $startDate);
+        info("endDate: " . $endDate);
         if ($startDate && $endDate) {
-            $query->whereBetween('created_at', [
+            $query->whereBetween('payment_report.created_at', [
                 $startDate,
                 $endDate,
             ]);
         }
-
     
         return $query;
     }

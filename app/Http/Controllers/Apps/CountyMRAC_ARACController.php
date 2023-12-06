@@ -24,7 +24,7 @@ class CountyMRAC_ARACController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(MracAracDataTable $dataTable)
+    public function index(Request $request, MracAracDataTable $dataTable)
     {
         return $dataTable->with([
             'user' => auth()->user(),
