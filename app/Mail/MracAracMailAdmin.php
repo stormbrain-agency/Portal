@@ -39,26 +39,30 @@ class MracAracMailAdmin extends Mailable
      */
     protected function getEmailContent(): array
     {
-        $nameForm = $this->data['name_form'] ?? null;
+        $nameForms = NotificationMail::pluck('name_form')->all();
 
-        if ($nameForm) {
-            $notificationMail = NotificationMail::where('name_form', $nameForm)->first();
+        if (in_array('MARC Admin', $nameForms)) {
+            foreach ($nameForms as $nameForm) {
+                if ($nameForm === 'MARC Admin') {
+                    $notificationMail = NotificationMail::where('name_form', $nameForm)->get();
 
-            if ($notificationMail) {
-                return [
-                    'subject' => $notificationMail->subject,
-                    'body' => $notificationMail->body,
-                    'button_title' => $notificationMail->button_title,
-                ];
+                    if ($notificationMail->isNotEmpty()) {
+                        return [
+                            'subject' => $notificationMail->pluck('subject')->first(),
+                            'body' => $notificationMail->pluck('body')->first(),
+                            'button_title' => $notificationMail->pluck('button_title')->first(),
+                        ];
+                    }
+                }
             }
         }
-        // Default values if no matching record is found
         return [
-            'subject' => 'Default Subject',
-            'body' => 'Default Body',
-            'button_title' => 'Default Button Title',
+            'subject' => 'Subject',
+            'body' => 'Body',
+            'button_title' => 'Button Title',
         ];
     }
+
 
     /**
      * Get the message content definition.

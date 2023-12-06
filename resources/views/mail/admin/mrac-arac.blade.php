@@ -32,15 +32,15 @@
             <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
         </div>
       <br>
-      <p>This alert is to notify you that a MRAC/ARAC submission has ben received. The details of the submission are as follows:</p>
-      <p>Details of the submission:</p>
+      <p>{{ $emailContent['subject'] }}</p>
+      <p>{{ $emailContent['body'] }}</p>
       <ul>
           <li>Date/Time of Submission: {{ $data['time'] }}</li>
           <li>Submitted by: {{ $data['name'] }}</li>
           <li>User Email Address: {{ $data['email'] }}</li>
           <li>County Designation: {{ $data['county_designation'] }}</li>
       </ul>
-        <p><a href="{{ url('/county-mrac-arac')}}" target="_blank" class="btn-confirm">View Submission History</a></p>
+        <p><a href="{{ url('/county-mrac-arac')}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a></p>
     </div>
 </body>
 </html>
