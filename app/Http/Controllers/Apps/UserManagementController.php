@@ -10,6 +10,8 @@ use App\DataTables\UsersCountyDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyEmail;
+
 
 class UserManagementController extends Controller
 {
@@ -205,14 +207,15 @@ class UserManagementController extends Controller
     protected function sendVerificationEmail(User $user)
     {
         $data = [
-            'name' => $user->name,
+            'name' => $user->first_name,
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
         ];
         try {
-            Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
-                $message->to($user->email);
-                $message->subject('Confirm Your Account');
-            });
+            Mail::to($user->email)->send(new VerifyEmail($data));
+            // Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
+            //     $message->to($user->email);
+            //     $message->subject('Confirm Your Account');
+            // });
         } catch (\Exception $e) {
             Log::error('Error sending email to user: ' . $e->getMessage());
         }

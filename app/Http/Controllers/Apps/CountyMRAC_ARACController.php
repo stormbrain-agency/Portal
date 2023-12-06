@@ -16,6 +16,8 @@ use League\Csv\Writer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use App\Mail\MracAracMailAdmin;
+use App\Mail\MracAracMailUser;
 
 class CountyMRAC_ARACController extends Controller
 {
@@ -94,10 +96,7 @@ class CountyMRAC_ARACController extends Controller
 
         foreach($adminEmails as $adminEmail){
             try {
-                Mail::send('mail.admin.mrac-arac', $data, function ($message) use ($adminEmail) {
-                    $message->to($adminEmail);
-                    $message->subject('Alert: MRAC/ARAC Submission Received');
-                });
+                Mail::to($adminEmail)->send(new MracAracMailAdmin($data));
             } catch (\Exception $e) {
                 Log::error('Error sending email to admins: ' . $e->getMessage());
             }
@@ -113,10 +112,8 @@ class CountyMRAC_ARACController extends Controller
 
         try {
             $userEmail = $user->email;
-            Mail::send('mail.user.mrac-arac', $data, function ($message) use ($userEmail) {
-                $message->to($userEmail);
-                $message->subject('Confirmation: MRAC/ARAC Submission Received');
-            });
+            Mail::to($userEmail)->send(new MracAracMailUser($data));
+
         } catch (\Exception $e) {
             Log::error('Error sending email to user: ' . $e->getMessage());
         }

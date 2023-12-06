@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-
+use App\Mail\PaymentReportMailAdmin;
+use App\Mail\PaymentReportMailUser;
 
 class PaymentReportController extends Controller
 {
@@ -102,10 +103,7 @@ class PaymentReportController extends Controller
 
         foreach($adminEmails as $adminEmail){
             try {
-                Mail::send('mail.admin.payment-report', $data, function ($message) use ($adminEmail) {
-                    $message->to($adminEmail);
-                    $message->subject('Alert: Payment Report Submission Received!');
-                });
+                Mail::to($adminEmail)->send(new PaymentReportMailAdmin($data));
             } catch (\Exception $e) {
                 Log::error('Error sending email to admins: ' . $e->getMessage());
             }
@@ -113,10 +111,7 @@ class PaymentReportController extends Controller
         }
         try {
             $userEmail = $user->email;
-            Mail::send('mail.user.payment-report', $data, function ($message) use ($userEmail) {
-                $message->to($userEmail);
-                $message->subject('Confirmation: Payment Report Submission Received!!');
-            });
+            Mail::to($userEmail)->send(new PaymentReportMailUser($data));   
         } catch (\Exception $e){
             Log::error('Error sending email to user: ' . $e->getMessage());
         }
