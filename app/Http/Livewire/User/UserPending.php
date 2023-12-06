@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use App\Mail\VerifyEmail;
 
 class UserPending extends Component
 {
@@ -48,18 +49,14 @@ class UserPending extends Component
     protected function sendVerificationEmail(User $user)
     {
         $data = [
-            'name' => $user->name,
+            'name' => $user->first_name,
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
         ];
         try {
-            Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
-                $message->to($user->email);
-                $message->subject('Confirm Your Account');
-            });
+            Mail::to($user->email)->send(new VerifyEmail($data));
         } catch (\Exception $e) {
             Log::error('Error sending email to user: ' . $e->getMessage());
         }
-
     }
 
     public function denyUser($id)

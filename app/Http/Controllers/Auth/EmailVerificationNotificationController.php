@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
+use App\Mail\VerifyEmail;
 
 class EmailVerificationNotificationController extends Controller
 {
@@ -22,23 +23,17 @@ class EmailVerificationNotificationController extends Controller
             return redirect()->intended(RouteServiceProvider::HOME);
         }
 
-        // $request->user()->sendEmailVerificationNotification();
-
         $user = $request->user();
 
-        // dd($user);
 
         $user->email_verification_hash = md5(uniqid());
         $user->save();
         $data = [
-            'name' => $user->name,
+            'name' => $user->first_name,
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
         ];
         try {
-            Mail::send('mail.confirm-account', ['data' => $data], function ($message) use ($user) {
-                $message->to($user->email);
-                $message->subject('Confirm Your Account');
-            });
+            Mail::to($user->email)->send(new VerifyEmail($data));
         } catch (\Exception $e) {
             Log::error('Error sending email to user: ' . $e->getMessage());
         }
