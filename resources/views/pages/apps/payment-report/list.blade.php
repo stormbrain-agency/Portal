@@ -55,12 +55,12 @@
                         UPLOAD NEW PAYMENT REPORT
                     </a>
                     @endif
-                    @if(auth()->user()->hasRole('admin'))
+                    {{-- @if(auth()->user()->hasRole('admin'))
                         <a href="{{route("county-provider-payment-report.template")}}" class="btn btn-primary">
                             {!! getIcon('file', 'fs-2', '', 'i') !!}
                             TEMPLATE
                         </a>
-                    @endif
+                    @endif --}}
                     <!--end::Add user-->
                 </div>
                 <!--end::Toolbar-->

@@ -90,7 +90,6 @@ line-height: 16px;
                     <span class="path2"></span>
                 </i>Download Template</a>
             <hr>
-
             <form action="{{ route('county-mrac-arac.store') }}" method="POST" id="myform" class="form" enctype="multipart/form-data">
                 @csrf
                 <!--begin::Scroll-->

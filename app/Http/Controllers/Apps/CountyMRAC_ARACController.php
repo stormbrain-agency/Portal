@@ -212,4 +212,16 @@ class CountyMRAC_ARACController extends Controller
                 return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
             }
     }
+
+    public function downloadTemplate()
+    {
+        $filename = "MracAracTemplate.xlsx";
+        $path = public_path("libs/templates/{$filename}");
+
+        if (file_exists($path)) {
+            return response()->download($path);
+        }else {
+            return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
+        }
+    }
 }

@@ -11,15 +11,15 @@ class ActivityController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index(Request $request,UsersActivityDataTable $dataTable)
-    // {
-    //     return $dataTable->render('pages.apps.activity-management.list');
-    // }
-
-    public function index()
+    public function index(Request $request,UsersActivityDataTable $dataTable)
     {
-        return view("pages.apps.activity-management.list3");
+        return $dataTable->render('pages.apps.activity-management.list');
     }
+
+    // public function index()
+    // {
+    //     return view("pages.apps.activity-management.list3");
+    // }
 
     /**
      * Show the form for creating a new resource.

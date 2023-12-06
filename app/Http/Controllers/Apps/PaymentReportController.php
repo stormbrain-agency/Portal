@@ -222,21 +222,17 @@ class PaymentReportController extends Controller
         }
     }
 
-     public function downloadFile2($filename,$payment_id)
+    public function downloadTemplate()
     {
-        $user_id = Auth::id();
-        PaymentReportDownloadHistory::create([
-            'payment_report_id'=>$payment_id,
-            'user_id'=>$user_id
-        ]);
-        $file = storage_path('app/uploads/payment_reports/'. $filename);
-        if (file_exists($file)) {
-            return response()->download($file);
-        } else {
-            return redirect('/county-provider-payment-report')->with('error', 'File not found.');
+        $filename = "PaymentReportTemplate.xlsx";
+        $path = public_path("libs/templates/{$filename}");
+
+        if (file_exists($path)) {
+            return response()->download($path);
+        }else {
+            return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
         }
     }
-
     public function downloadAllFiles($payment_id)
     {
         $user_id = Auth::id();
