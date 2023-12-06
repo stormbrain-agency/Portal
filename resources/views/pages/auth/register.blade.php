@@ -19,12 +19,12 @@
             <div class="row">
                 <div class="col-6">
                     <!--begin::Name-->
-                    <input type="text" placeholder="First Name" name="first_name" autocomplete="off" class="form-control bg-transparent"/> 
+                    <input type="text" placeholder="First Name *" name="first_name" autocomplete="off" class="form-control bg-transparent"/> 
                 <!--end::Name-->
                 </div>
                 <div class="col-6">
                     <!--begin::Name-->
-                    <input type="text" placeholder="Last Name" name="last_name" autocomplete="off" class="form-control bg-transparent"/> 
+                    <input type="text" placeholder="Last Name *" name="last_name" autocomplete="off" class="form-control bg-transparent"/> 
                 <!--end::Name-->
                 </div>
             </div>
@@ -34,7 +34,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent"/>
+            <input type="text" placeholder="Email *" name="email" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Email-->
         </div>
 
@@ -44,7 +44,7 @@
             <div class="mb-1">
                 <!--begin::Input wrapper-->
                 <div class="position-relative mb-3">
-                    <input class="form-control bg-transparent" type="password" placeholder="Password" name="password" autocomplete="off"/>
+                    <input class="form-control bg-transparent" type="password" placeholder="Password *" name="password" autocomplete="off"/>
 
                     <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
                         <i class="bi bi-eye-slash fs-2"></i>
@@ -75,7 +75,7 @@
         <!--end::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Repeat Password-->
-            <input placeholder="Repeat Password" name="password_confirmation" type="password" autocomplete="off" class="form-control bg-transparent"/>
+            <input placeholder="Repeat Password *" name="password_confirmation" type="password" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Repeat Password-->
         </div>
         <!--end::Input group--->
@@ -83,7 +83,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" id="business_phone" placeholder="Business Phone Number + Ext." name="business_phone" autocomplete="off" class="form-control bg-transparent"/>
+            <input type="text" id="business_phone" placeholder="Business Phone Number + Ext. *" name="business_phone" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->
@@ -91,7 +91,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" id="mobile_phone" placeholder="Mobile Phone Number" name="mobile_phone" autocomplete="off" class="form-control bg-transparent"/>
+            <input type="text" id="mobile_phone" placeholder="Mobile Phone Number *" name="mobile_phone" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->
@@ -99,7 +99,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" placeholder="Agency Mailing Address" name="mailing_address" autocomplete="off" class="form-control bg-transparent"/>
+            <input type="text" placeholder="Agency Mailing Address *" name="mailing_address" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->
@@ -107,7 +107,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" placeholder="Vendor ID Number" name="vendor_id" autocomplete="off" class="form-control bg-transparent"/>
+            <input type="text" placeholder="Vendor ID Number *" name="vendor_id" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->

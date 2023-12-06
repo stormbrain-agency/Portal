@@ -10,7 +10,7 @@
 					<span class="menu-icon">
 						{!! getIcon('element-11', 'fs-2') !!}
 					</span>
-					<span class="menu-title">Dashboards</span>
+					<span class="menu-title">Dashboard</span>
 				</a>
 				<!--end:Menu link-->
 			</div>

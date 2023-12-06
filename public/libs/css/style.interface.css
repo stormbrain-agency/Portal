@@ -79,7 +79,7 @@
 }
 
 [data-kt-app-sidebar-fixed=true] .app-wrapper {
-    margin-left: 300px;
+    margin-left: 330px;
 }
 
 [data-kt-app-sidebar-minimize=on] .app-wrapper {
@@ -87,8 +87,41 @@
 }
 
 [data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] .app-sidebar:hover:not(.animating),
-[data-kt-app-sidebar-hoverable=true] .app-sidebar .app-sidebar-wrapper {
+[data-kt-app-sidebar-hoverable=true] .app-sidebar .app-sidebar-wrapper,
+body:not([data-kt-app-sidebar-minimize=on]) .app-sidebar {
     width: max-content;
+}
+
+[data-kt-app-layout=light-sidebar] .app-sidebar .app-sidebar-toggle.btn-menu-header {
+    padding: 0px 12px;
+}
+
+[data-kt-app-sidebar-minimize=on][data-kt-app-sidebar-hoverable=true] .app-sidebar:not(:hover) .app-sidebar-menu .menu-title,
+[data-kt-app-sidebar-minimize=on][data-kt-app-sidebar-hoverable=true] .app-sidebar:not(:hover) .app-sidebar-menu .menu-arrow {
+    display: none;
+}
+
+.status {
+    background-color: #48AE64;
+    padding: 9px 12px;
+    align-items: center;
+    border-radius: 6px;
+    color: var(--bs-primary-inverse);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 12px;
+}
+
+.status.manager {
+    background-color: #004482;
+}
+
+.status.view-only {
+    background-color: #1387DE;
+}
+
+.status.county-user {
+    background-color: #1A5569;
 }
 
 @media (max-width: 991.98px) {

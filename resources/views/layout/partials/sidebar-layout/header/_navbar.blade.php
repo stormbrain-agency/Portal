@@ -39,7 +39,18 @@
     <!--begin::User menu-->
 	<div class="app-navbar-item ms-1 ms-md-4" id="kt_header_user_menu_toggle">
 		<div class="cursor-pointer symbol symbol-35px d-flex align-item-center" >
-            <div class="app-navbar-item">
+            <div class="app-navbar-item ">
+                @if(auth()->user()->hasRole('admin'))
+                    <div class="status admin">admin</div>
+                @elseif (auth()->user()->hasRole('manager'))
+                    <div class="status manager">Manager / Support</div>
+                @elseif (auth()->user()->hasRole('view only'))
+                    <div class="status view-only">View Only</div>
+                @elseif (auth()->user()->hasRole('county user'))
+                    <div class="status county-user">County User</div>
+                @endif
+            </div>
+            <div class="app-navbar-item ">
                 <a class="menu-link" href="{{ url('/notification-management') }}">
                     <span class="menu-icon">{!! getIcon('notification-on', 'fs-2') !!}</span>
                 </a>
