@@ -35,6 +35,7 @@ class AddUserModal extends Component
     public $county;
     public $countyDropdown;
     public $edit_mode = false;
+    public $county_require = true;
 
     protected $rules = [
         'first_name' => ['required', 'string', 'max:255'],
@@ -48,7 +49,7 @@ class AddUserModal extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
-        'business_phone' => ['required', 'string', 'regex:/^\d{10}.*/'],
+        'business_phone' => ['required', 'string', 'max:255'],
         'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
         'mailing_address' => ['required', 'string', 'max:255'],
         'vendor_id' => ['required', 'string', 'max:255'],
@@ -58,7 +59,6 @@ class AddUserModal extends Component
     ];
 
     protected $messages = [
-        'business_phone.regex' => 'Please use the format (XXX) XXX-XXXX ext. XXXX.',
         'mobile_phone.regex' => 'Please use the format (XXX) XXX-XXXX.',
     ];
 
@@ -90,8 +90,6 @@ class AddUserModal extends Component
     public function submit()
     {
         $this->mobile_phone = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
-        $this->business_phone = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
-
         $checkRules = $this->role === 'county user' ? $this->rules_for_county_user : $this->rules;
 
         $this->validate($checkRules);
@@ -224,14 +222,14 @@ class AddUserModal extends Component
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
         $this->email = $user->email;
-        $this->business_phone = $user->getFormattedBusinessPhoneAttribute();
+        $this->business_phone = $user->business_phone;
         $this->mobile_phone = $user->getFormattedMobilePhoneAttribute();
         $this->mailing_address = $user->mailing_address;
         $this->vendor_id = $user->vendor_id;
         $this->county_designation = $user->county_designation;
         $this->role = $user->roles?->first()->name ?? '';
 
-        // dd($this->business_phone);
+        $this->updateRole();
     }
 
     public function updateCountyDropdown()
@@ -239,12 +237,18 @@ class AddUserModal extends Component
         $this->countyDropdown = County::where('state_id', $this->stateChose)->get();
     }
 
-        public function resetData()
+    public function resetData()
     {
         $this->reset();
     }
 
-
+    public function updateRole(){
+        if($this->role !== "county user"){
+            $this->county_require = false;
+        }else{
+            $this->county_require = true;
+        }
+    }
 
     public function hydrate()
     {

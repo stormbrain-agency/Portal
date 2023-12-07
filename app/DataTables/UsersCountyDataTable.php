@@ -102,7 +102,6 @@ class UsersCountyDataTable extends DataTable
                 Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('status')->addClass('text-nowrap')->name('status'),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
-                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
                 Column::computed('action')
                     ->addClass('text-start text-nowrap')
                     ->exportable(false)
@@ -115,7 +114,6 @@ class UsersCountyDataTable extends DataTable
                 Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('status')->addClass('text-nowrap')->name('status'),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),
-                Column::make('w9_file_path')->title('W-9 File')->searchable(false)->orderable(false),
             ];
         }
     }
