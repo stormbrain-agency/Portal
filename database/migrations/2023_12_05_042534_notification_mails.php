@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('notification_mails', function (Blueprint $table) {
             $table->id();
             $table->enum('name_form', ['MARC Admin', 'MARC User', 'Payment Report Admin', 'Payment Report User', 'Register Email', 'Reset Password Mail', 'Verify Email', 'W9 Email Admin', 'W9 Email User', 'Welcome County Email'])->default('MARC Admin');
-            $table->string('subject');
-            $table->string('body');
+            $table->text('subject');
+            $table->text('body');
             $table->string('button_title');
             $table->timestamps();
           });

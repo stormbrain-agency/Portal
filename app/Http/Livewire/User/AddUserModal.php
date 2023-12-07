@@ -120,7 +120,7 @@ class AddUserModal extends Component
         $data['password'] = Hash::make($this->email);
         $data['status'] = 1;
         $user = User::create($data);
-        
+
         $user->assignRole($this->role);
         $user->email_verification_hash = md5(uniqid());
         // $user->email_verified_at = now();
@@ -183,7 +183,7 @@ class AddUserModal extends Component
         $cleanedMobilePhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
         $cleanedBusinessPhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
         $data = [];
-        if ($this->county_require = true) {
+        if ($this->county_require == true) {
             $data = [
                 'first_name' => $this->first_name,
                 'last_name' => $this->last_name,
