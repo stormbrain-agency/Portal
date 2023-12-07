@@ -45,7 +45,7 @@
                 <div class="mt-10">
                     <!-- Input Name Form -->
                     <div class="mb-7">
-                        <label for="name_form" class="form-label">Status:</label>
+                        <label for="name_form" class="form-label">Name of notifications:</label>
                         <select class="form-select" id="name_form" name="name_form">
                             <option value="1">MARC Admin</option>
                             <option value="2">MARC User</option>
