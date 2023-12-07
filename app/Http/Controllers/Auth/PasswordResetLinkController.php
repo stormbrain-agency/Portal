@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\ResetPasswordMail;
 
 class PasswordResetLinkController extends Controller
 {
@@ -36,12 +37,17 @@ class PasswordResetLinkController extends Controller
 
         $request->validate(['email' => 'required|email']);
  
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-    
-        return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['status' => __($status)])
-                    : back()->withErrors(['email' => __($status)]);
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            $token = Password::createToken($user);
+            $actionUrl = url(config('app.url').route('password.reset', ['token' => $token, 'email' => $request->email], false));
+
+            Mail::to($request->email)->send(new ResetPasswordMail($actionUrl));
+
+            return back()->with(['status' => __('Password reset email sent.')]);
+        } else {
+            return back()->withErrors(['email' => __('User not found.')]);
+        }
     }
 }
