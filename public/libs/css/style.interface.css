@@ -41,6 +41,16 @@
     object-fit: cover;
 }
 
+[data-kt-app-layout=light-sidebar] .app-sidebar .app-sidebar-toggle.btn-menu-header {
+    border-radius: 4px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active {
+    background-color: var(--bs-primary-inverse);
+}
+
 [data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] .app-sidebar .app-sidebar-logo a {
     opacity: 0;
     width: 0px;
@@ -89,7 +99,7 @@
 [data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] .app-sidebar:hover:not(.animating),
 [data-kt-app-sidebar-hoverable=true] .app-sidebar .app-sidebar-wrapper,
 body:not([data-kt-app-sidebar-minimize=on]) .app-sidebar {
-    width: max-content;
+    width: 300px;
 }
 
 [data-kt-app-layout=light-sidebar] .app-sidebar .app-sidebar-toggle.btn-menu-header {

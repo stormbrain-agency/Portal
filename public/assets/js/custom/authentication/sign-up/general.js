@@ -234,7 +234,7 @@ var KTSignupGeneral = function () {
                         }
                     },'mobile_phone': {
                         validators: {
-                            callback: {
+                           callback: {
                                 message: 'Please enter a valid Mobile Phone Number',
                                 callback: function (input) {
                                     return validateMobilePhone(input.value);
