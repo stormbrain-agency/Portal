@@ -42,9 +42,9 @@ class PaymentReportMailAdmin extends Mailable
     {
         $nameForms = NotificationMail::pluck('name_form')->all();
 
-        if (in_array('PaymentReport Admin', $nameForms)) {
+        if (in_array('Payment Report Admin', $nameForms)) {
             foreach ($nameForms as $nameForm) {
-                if ($nameForm === 'PaymentReport Admin') {
+                if ($nameForm === 'Payment Report Admin') {
                     $notificationMail = NotificationMail::where('name_form', $nameForm)->get();
 
                     if ($notificationMail->isNotEmpty()) {

@@ -45,8 +45,19 @@
                 <div class="mt-10">
                     <!-- Input Name Form -->
                     <div class="mb-7">
-                        <label for="name_form" class="form-label">Name Form:</label>
-                        <input type="text" name="name_form" class="form-control" required>
+                        <label for="name_form" class="form-label">Status:</label>
+                        <select class="form-select" id="name_form" name="name_form">
+                            <option value="1">MARC Admin</option>
+                            <option value="2">MARC User</option>
+                            <option value="3">Payment Report Admin</option>
+                            <option value="4">Payment Report User</option>
+                            <option value="5">Register Email</option>
+                            <option value="6">Reset Password Mail</option>
+                            <option value="7">Verify Email</option>
+                            <option value="8">W9 Email Admin</option>
+                            <option value="9">W9 Email User</option>
+                            <option value="10">Welcome County Email</option>
+                        </select>
                     </div>
 
                     <!-- Input Body -->

@@ -42,9 +42,9 @@ class PaymentReportMailUser extends Mailable
     {
         $nameForms = NotificationMail::pluck('name_form')->all();
 
-        if (in_array('PaymentReport User', $nameForms)) {
+        if (in_array('Payment Report User', $nameForms)) {
             foreach ($nameForms as $nameForm) {
-                if ($nameForm === 'PaymentReport User') {
+                if ($nameForm === 'Payment Report User') {
                     $notificationMail = NotificationMail::where('name_form', $nameForm)->get();
 
                     if ($notificationMail->isNotEmpty()) {
