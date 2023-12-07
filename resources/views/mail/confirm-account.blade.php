@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $emailContent['subject'] }}</title>
     <style>
         .wrap-content {
             color: #000000;
@@ -30,14 +34,9 @@
         <p>
             <b>Hi, {{$data['name']}}!</b>
         </p>
-        <p>
-            <b>Please confirm your account.</b>
-        </p>
-        <p>
-            Thank you for registering. To complete your registration, please click the button below:
-        </p>
+        <p>{{ $emailContent['body'] }}</p>
         <br>
-        <a href="{{ $data['link'] }}" target="_blank" class="btn-confirm">CONFIRM ACCOUNT</a>
+        <a href="{{ $data['link'] }}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
         {{-- <p>
             If you didn't create an account, you can safely ignore this email.
         </p> --}}

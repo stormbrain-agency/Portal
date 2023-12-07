@@ -27,8 +27,9 @@ class MracAracMailAdmin extends Mailable
      */
     public function envelope(): Envelope
     {
+        $emailContent = $this->getEmailContent();
         return new Envelope(
-            subject: 'Alert: MRAC/ARAC Submission Received',
+            subject: $emailContent['subject'],
         );
     }
 
@@ -57,9 +58,9 @@ class MracAracMailAdmin extends Mailable
             }
         }
         return [
-            'subject' => 'Subject',
-            'body' => 'Body',
-            'button_title' => 'Button Title',
+            'subject' => 'Alert: MRAC/ARAC Submission Received',
+            'body' => 'This alert is to notify you that a MRAC/ARAC submission has ben received. The details of the submission are as follows:',
+            'button_title' => 'View Submission History',
         ];
     }
 
