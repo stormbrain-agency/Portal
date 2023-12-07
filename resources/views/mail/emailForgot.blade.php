@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $emailContent['subject'] }}</title>
     <style>
         .wrap-content {
             color: #000000;
@@ -27,8 +31,8 @@
         </div>
         <br>
         <p>You have requested to reset your password for your {{ config('app.name') }} account.</p>
-        <p>To reset your password, please click on the following link:</p>
-        <a href="{{$actionUrl}}" target="_blank" class="btn-confirm">RESET PASSWORD</a>
+        <p>{{ $emailContent['body'] }}</p>
+        <a href="{{$actionUrl}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
     </div>
 </body>
 </html>
