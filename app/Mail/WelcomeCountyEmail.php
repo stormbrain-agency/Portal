@@ -59,21 +59,16 @@ class WelcomeCountyEmail extends Mailable
         }
         return [
             'subject' => 'Welcome to the Supplemental Rate Payment Program',
-            'body' => '<p>Congratulations! You are now part of the Supplemental Rate Payment Program.</p>
+            'body' => 'Congratulations! You are now part of the Supplemental Rate Payment Program.
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                1.Proin eu metus eu est tincidunt auctor.
+                2.Integer vitae elit nec justo bibendum fermentum.
+                3.Curabitur sit amet libero in urna tristique laoreet.
 
-            <ul style="color: #002559;">
-                <li>Proin eu metus eu est tincidunt auctor.</li>
-                <li>Integer vitae elit nec justo bibendum fermentum.</li>
-                <li>Curabitur sit amet libero in urna tristique laoreet.</li>
-            </ul>
-
-            <ol style="color: #002559;">
-                <li>Duis condimentum urna in lacus sagittis, vitae fringilla odio fermentum.</li>
-                <li>Vivamus eu nisi ac justo congue pulvinar.</li>
-                <li>Fusce auctor justo eu metus vehicula, vitae laoreet purus imperdiet.</li>
-            </ol>',
+                4.Duis condimentum urna in lacus sagittis, vitae fringilla odio fermentum.
+                5.Vivamus eu nisi ac justo congue pulvinar.</li>
+                6.Fusce auctor justo eu metus vehicula, vitae laoreet purus imperdiet.',
             'button_title' => 'Login Now',
         ];
     }
