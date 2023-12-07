@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use App\Mail\VerifyEmail;
+use App\Mail\WelcomeCountyEmail;
 
 class UserPending extends Component
 {
@@ -53,7 +53,7 @@ class UserPending extends Component
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
         ];
         try {
-            Mail::to($user->email)->send(new VerifyEmail($data));
+            Mail::to($user->email)->send(new WelcomeCountyEmail($data));
         } catch (\Exception $e) {
             Log::error('Error sending email to user: ' . $e->getMessage());
         }
