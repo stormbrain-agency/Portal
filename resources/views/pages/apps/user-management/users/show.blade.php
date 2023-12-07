@@ -44,8 +44,8 @@
                     <!--end::User Info-->
                     <!--end::Summary-->
                     <!--begin::Details toggle-->
-                    <div class="d-flex flex-stack fs-4 py-3">
-                        <div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">Details
+                    <div class="d-flex flex-stack py-3">
+                        <div class="fw-bold rotate collapsible fs-4" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">Details
                             <span class="ms-2 rotate-180">
                                 <i class="ki-duotone ki-down fs-3"></i>
                             </span>

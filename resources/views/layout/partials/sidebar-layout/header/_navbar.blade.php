@@ -51,7 +51,7 @@
                 @endif
             </div>
             <div class="app-navbar-item ">
-                <a class="menu-link" href="{{ url('/notification-management') }}">
+                <a class="menu-link" href="{{ url('/dashboard') }}">
                     <span class="menu-icon">{!! getIcon('notification-on', 'fs-2') !!}</span>
                 </a>
             </div>
