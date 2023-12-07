@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation: Payment Report Submission Received</title>
+    <title>{{ $emailContent['subject'] }}</title>
     <style>
         .wrap-content {
             color: #000000;
@@ -31,7 +31,7 @@
         <div class="mb-2">
             <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
         </div>
-        <p>We have received your “Provider Payment Report” submission. The details of the submission are as follows: </p>
+        <p>{{ $emailContent['body'] }}</p>
         <p>Details of the submission:</p>
         <ul>
             <li>Date/Time of Submission: {{ $data['time'] }}</li>

@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\NotificationMail;
 
 class PaymentReportMailUser extends Mailable
 {
@@ -26,9 +27,41 @@ class PaymentReportMailUser extends Mailable
      */
     public function envelope(): Envelope
     {
+        $emailContent = $this->getEmailContent();
         return new Envelope(
-            subject: 'Confirmation: Payment Report Submission Received!',
+            subject: $emailContent['subject'],
         );
+    }
+
+    /**
+     * Get email content from the database based on the name_form.
+     *
+     * @return array
+     */
+    protected function getEmailContent(): array
+    {
+        $nameForms = NotificationMail::pluck('name_form')->all();
+
+        if (in_array('PaymentReport User', $nameForms)) {
+            foreach ($nameForms as $nameForm) {
+                if ($nameForm === 'PaymentReport User') {
+                    $notificationMail = NotificationMail::where('name_form', $nameForm)->get();
+
+                    if ($notificationMail->isNotEmpty()) {
+                        return [
+                            'subject' => $notificationMail->pluck('subject')->first(),
+                            'body' => $notificationMail->pluck('body')->first(),
+                            'button_title' => $notificationMail->pluck('button_title')->first(),
+                        ];
+                    }
+                }
+            }
+        }
+        return [
+            'subject' => 'Confirmation: Payment Report Submission Received',
+            'body' => 'We have received your “Provider Payment Report” submission. The details of the submission are as follows:',
+            'button_title' => 'View Submission History',
+        ];
     }
 
     /**
@@ -36,10 +69,12 @@ class PaymentReportMailUser extends Mailable
      */
     public function content(): Content
     {
+        $emailContent = $this->getEmailContent();
         return new Content(
             view: 'mail.user.payment-report',
             with: [
                 'data' => $this->data,
+                'emailContent' => $emailContent,
             ]
         );
     }
