@@ -78,7 +78,7 @@
                             @if ($user->business_phone)
                             <div class="fw-bold mt-5">Business Phone</div>
                             <div class="text-gray-600">
-                                {{$user->getFormattedBusinessPhoneAttribute()}}
+                                {{$user->business_phone}}
                             </div>
                             @endif
                             <!--begin::Details item-->

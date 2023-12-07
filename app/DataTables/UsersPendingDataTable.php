@@ -30,7 +30,7 @@ class UsersPendingDataTable extends DataTable
                 return view('pages.apps.user-management.users-pending.columns._w9-file', compact('user'));
             })
             ->editColumn('business_phone', function (User $user) {
-                return $user->getFormattedBusinessPhoneAttribute();
+                return $user->business_phone;
             })
             ->editColumn('created_at', function (User $user) {
                 return $user->created_at->format('d M Y, h:i a');
