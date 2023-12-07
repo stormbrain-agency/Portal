@@ -244,28 +244,7 @@
     <!--begin::Modals-->
     @push('scripts')
         <script>
-             document.getElementById('deleteUserForm').addEventListener('submit', function (event) {
-                event.preventDefault();
-
-                Swal.fire({
-                    text: "This action will delete this user's data!\nAre you sure?",
-                    icon: "warning",
-                    buttonsStyling: false,
-                    showCancelButton: true,
-                    confirmButtonText: "Yes",
-                    cancelButtonText: "No",
-                    customClass: {
-                        confirmButton: "btn btn-danger",
-                        cancelButton: "btn btn-secondary",
-                    },
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById('deleteUserForm').submit();
-                    }
-                });
-            });
-            
-            document.getElementById('approveUser').addEventListener('click', function (event) {
+             document.getElementById('approveUser').addEventListener('click', function (event) {
                 event.preventDefault(); 
                 Swal.fire({
                     text: "Approve this User ?",
@@ -284,6 +263,7 @@
                     }
                 });
             });
+            
             document.getElementById('denyUser').addEventListener('click', function (event) {
                 event.preventDefault(); 
                 Swal.fire({
@@ -305,6 +285,28 @@
             });
             
            
+        </script>
+        <script>
+             document.getElementById('deleteUserForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    text: "This action will delete this user's data!\nAre you sure?",
+                    icon: "warning",
+                    buttonsStyling: false,
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    customClass: {
+                        confirmButton: "btn btn-danger",
+                        cancelButton: "btn btn-secondary",
+                    },
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('deleteUserForm').submit();
+                    }
+                });
+            });
         </script>
     @endpush
 </x-default-layout>
