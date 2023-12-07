@@ -76,7 +76,7 @@ class NotificationsEmailDataTable extends DataTable
         //view layout
         return [
             Column::make('id')->title('ID')->orderable(true)->searchable(true)->addClass('fw-bold col-id'),
-            Column::make('name_form')->title('Name Form')->orderable(true)->searchable(true)->addClass('fw-bold col-name-form'),
+            Column::make('name_form')->title('Name of Notifications')->orderable(true)->searchable(true)->addClass('fw-bold col-name-form'),
             Column::make('subject')->title('Subject')->orderable(true)->searchable(true)->addClass('fw-bold col-subject'),
             Column::make('body')->title('Body')->orderable(true)->searchable(true)->addClass('fw-bold col-body'),
             Column::make('button_title')->title('Button Title')->name('type')->orderable(true)->searchable(true)->addClass('fw-bold col-button-title'),
