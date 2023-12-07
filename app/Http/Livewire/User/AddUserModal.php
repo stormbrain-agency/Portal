@@ -118,7 +118,7 @@ class AddUserModal extends Component
         $data['password'] = Hash::make($this->email);
         $data['status'] = 1;
         $user = User::create($data);
-        
+
         $user->assignRole($this->role);
         $user->email_verified_at = now();
         $user->save();
