@@ -46,9 +46,23 @@
                 <div class="mt-10">
                     <div class="mt-10">
                         <!-- Input Name Form -->
-                        <div class="mb-7">
-                            <label for="name_form" class="form-label">Name Form:</label>
-                            <input type="text" name="name_form" class="form-control" value="{{ $notification->name_form }}" required>
+                        <div class="input-group mb-7 justify-content-between gap-7">
+                            <!-- Select Name of Notification -->
+                            <div class="d-flex flex-column flex-grow-1">
+                                <label for="name_form" class="form-label">Name of notification:</label>
+                                <select class="form-select" id="name_form" name="name_form">
+                                    <option value="MARC Admin" @if($notification->type == 'MARC Admin') selected @endif>MARC Admin</option>
+                                    <option value="MARC User" @if($notification->type == 'MARC User') selected @endif>MARC User</option>
+                                    <option value="Payment Report Admin" @if($notification->type == 'Payment Report Admin') selected @endif>Payment Report Admin</option>
+                                    <option value="Payment Report User" @if($notification->type == 'Payment Report User') selected @endif>Payment Report User</option>
+                                    <option value="Register Email" @if($notification->type == 'Register Email') selected @endif>Register Email</option>
+                                    <option value="Reset Password Mail" @if($notification->type == 'Reset Password Mail') selected @endif>Reset Password Mail</option>
+                                    <option value="Verify Email" @if($notification->type == 'Verify Email') selected @endif>Verify Email</option>
+                                    <option value="W9 Email Admin" @if($notification->type == 'W9 Email Admin') selected @endif>W9 Email Admin</option>
+                                    <option value="W9 Email User" @if($notification->type == 'W9 Email User') selected @endif>W9 Email User</option>
+                                    <option value="Welcome County Email" @if($notification->type == 'Welcome County Email') selected @endif>Welcome County Email</option>
+                                </select>
+                            </div>
                         </div>
 
                         <!-- Input Body -->
@@ -93,26 +107,6 @@
     </div>
     @push('scripts')
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var scheduleSelect = document.getElementById('schedule');
-                var scheduleStartInput = document.getElementById('schedule_start');
-                var scheduleEndInput = document.getElementById('schedule_end');
-
-                scheduleSelect.addEventListener('change', function () {
-                    if (scheduleSelect.value === 'No') {
-                        scheduleStartInput.disabled = true;
-                        scheduleEndInput.disabled = true;
-                    } else {
-                        scheduleStartInput.disabled = false;
-                        scheduleEndInput.disabled = false;
-                    }
-                });
-
-                if (scheduleSelect.value === 'No') {
-                    scheduleStartInput.disabled = true;
-                    scheduleEndInput.disabled = true;
-                }
-            });
             $(document).ready(function () {
                 $('#discard-button').on('click', function () {
                     var confirmDiscard = confirm('Are you sure you want to discard changes?');
