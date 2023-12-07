@@ -34,6 +34,7 @@ class EditUserModal extends Component
     public $county;
     public $countyDropdown;
     public $edit_mode = true;
+    public $county_require = true;
 
     protected $listeners = [
         'update_user' => 'updateUser',
@@ -52,7 +53,7 @@ class EditUserModal extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
-        'business_phone' => ['required', 'string', 'regex:/^\d{10}.*/'],
+        'business_phone' => ['required', 'string', 'max:255'],
         'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
         'mailing_address' => ['required', 'string', 'max:255'],
         'vendor_id' => ['required', 'string', 'max:255'],
@@ -61,7 +62,6 @@ class EditUserModal extends Component
     ];
 
     protected $messages = [
-        'business_phone.regex' => 'Please use the format (XXX) XXX-XXXX ext. XXXX.',
         'mobile_phone.regex' => 'Please use the format (XXX) XXX-XXXX.',
     ];
 
@@ -152,15 +152,15 @@ class EditUserModal extends Component
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
         $this->email = $user->email;
-        $this->business_phone = $user->getFormattedBusinessPhoneAttribute();
+        $this->business_phone = $user->business_phone;
         $this->mobile_phone = $user->getFormattedMobilePhoneAttribute();
         $this->mailing_address = $user->mailing_address;
         $this->vendor_id = $user->vendor_id;
         $this->county_designation = $user->county_designation;
         $this->role = $user->roles?->first()->name ?? '';
-    }
 
-    
+        $this->updateRole();
+    }
 
     private function prepareUserData()
     {
@@ -189,6 +189,14 @@ class EditUserModal extends Component
     public function updateCountyDropdown()
     {
         $this->countyDropdown = County::where('state_id', $this->stateChose)->get();
+    }
+
+    public function updateRole(){
+        if($this->role !== "county user"){
+            $this->county_require = false;
+        }else{
+            $this->county_require = true;
+        }
     }
 
 }

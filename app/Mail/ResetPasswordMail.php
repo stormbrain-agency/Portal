@@ -10,16 +10,16 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\NotificationMail;
 
-class VerifyEmail extends Mailable
+class ResetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
+    public $actionUrl;
     /**
      * Create a new message instance.
      */
-    public function __construct($data)
+    public function __construct($actionUrl)
     {
-        $this->data = $data;
+        $this->actionUrl = $actionUrl;
     }
 
     /**
@@ -42,9 +42,9 @@ class VerifyEmail extends Mailable
     {
         $nameForms = NotificationMail::pluck('name_form')->all();
 
-        if (in_array('Verify Email', $nameForms)) {
+        if (in_array('Reset Password Mail', $nameForms)) {
             foreach ($nameForms as $nameForm) {
-                if ($nameForm === 'Verify Email') {
+                if ($nameForm === 'Reset Password Mail') {
                     $notificationMail = NotificationMail::where('name_form', $nameForm)->get();
 
                     if ($notificationMail->isNotEmpty()) {
@@ -58,10 +58,9 @@ class VerifyEmail extends Mailable
             }
         }
         return [
-            'subject' => 'Confirm Your Account',
-            'body' => 'Please confirm your account.
-            Thank you for registering. To complete your registration, please click the button below:',
-            'button_title' => 'CONFIRM ACCOUNT',
+            'subject' => 'Password Reset Request | Supplemental Rate Payment Program',
+            'body' => 'To reset your password, please click on the following link:',
+            'button_title' => 'RESET PASSWORD',
         ];
     }
 
@@ -72,9 +71,9 @@ class VerifyEmail extends Mailable
     {
         $emailContent = $this->getEmailContent();
         return new Content(
-            view: 'mail.confirm-account',
+            view: 'mail.emailForgot',
             with: [
-                'data' => $this->data,
+                'actionUrl' => $this->actionUrl,
                 'emailContent' => $emailContent,
             ]
         );

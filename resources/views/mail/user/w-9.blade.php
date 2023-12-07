@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation: W-9 Submission Received</title>
+    <title>{{ $emailContent['subject'] }}</title>
     <style>
         .wrap-content {
             color: #000000;
@@ -32,7 +32,7 @@
             <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
         </div>
         <br>
-        <p>We have received your W-9 submission. The details of the submission are as follows:</p>
+        <p>{{ $emailContent['body'] }}</p>
         <p>Details of the submission:</p>
         <ul>
             <li>Date/Time of Submission: {{ $data['time'] }}</li>
@@ -40,7 +40,7 @@
             <li>User Email Address: {{ $data['email'] }}</li>
             <li>County Designation: {{ $data['county_designation'] }}</li>
         </ul>
-            <p><a href="{{ url('/county-w9')}}" target="_blank" class="btn-confirm">View Submission History</a></p>
+            <p><a href="{{ url('/county-w9')}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a></p>
     </div>
 </body>
 </html>

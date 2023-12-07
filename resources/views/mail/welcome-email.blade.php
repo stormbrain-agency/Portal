@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $emailContent['subject'] }}</title>
     <style>
         .wrap-content {
             color: #000000;
@@ -34,8 +35,9 @@
         <p>
             <b>Welcome, {{$data['name']}}!</b>
         </p>
-        <p>Congratulations! You are now part of the Supplemental Rate Payment Program.</p>
-        
+        {{ $emailContent['body'] }}
+        {{-- <p>Congratulations! You are now part of the Supplemental Rate Payment Program.</p>
+
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
         <ul style="color: #002559;">
@@ -48,9 +50,9 @@
             <li>Duis condimentum urna in lacus sagittis, vitae fringilla odio fermentum.</li>
             <li>Vivamus eu nisi ac justo congue pulvinar.</li>
             <li>Fusce auctor justo eu metus vehicula, vitae laoreet purus imperdiet.</li>
-        </ol>
+        </ol> --}}
 
-        <a href="{{$data['link']}}" target="_blank" class="btn-confirm">Login Now</a>
+        <a href="{{$data['link']}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
     </div>
 </body>
 </html>

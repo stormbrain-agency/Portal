@@ -12,6 +12,8 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyEmail;
 
 class AddUserModal extends Component
 {
@@ -35,6 +37,7 @@ class AddUserModal extends Component
     public $county;
     public $countyDropdown;
     public $edit_mode = false;
+    public $county_require = true;
 
     protected $rules = [
         'first_name' => ['required', 'string', 'max:255'],
@@ -48,7 +51,7 @@ class AddUserModal extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
-        'business_phone' => ['required', 'string', 'regex:/^\d{10}.*/'],
+        'business_phone' => ['required', 'string', 'max:255'],
         'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
         'mailing_address' => ['required', 'string', 'max:255'],
         'vendor_id' => ['required', 'string', 'max:255'],
@@ -58,7 +61,6 @@ class AddUserModal extends Component
     ];
 
     protected $messages = [
-        'business_phone.regex' => 'Please use the format (XXX) XXX-XXXX ext. XXXX.',
         'mobile_phone.regex' => 'Please use the format (XXX) XXX-XXXX.',
     ];
 
@@ -90,8 +92,6 @@ class AddUserModal extends Component
     public function submit()
     {
         $this->mobile_phone = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
-        $this->business_phone = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
-
         $checkRules = $this->role === 'county user' ? $this->rules_for_county_user : $this->rules;
 
         $this->validate($checkRules);
@@ -120,16 +120,22 @@ class AddUserModal extends Component
         $data['password'] = Hash::make($this->email);
         $data['status'] = 1;
         $user = User::create($data);
-        
+
         $user->assignRole($this->role);
-        $user->email_verified_at = now();
+        $user->email_verification_hash = md5(uniqid());
+        // $user->email_verified_at = now();
         $user->save();
 
+        $data_send_mail = [
+            'name' => $user->first_name,
+            'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
+        ];
+
         try {
-            Password::sendResetLink($user->only('email'));
+            Mail::to($user->email)->send(new VerifyEmail($data_send_mail));
             $this->emit('success', __('User created successfully'));
         } catch (\Exception $e) {
-            $this->emit('error', 'Failed to send the password reset email. Please check your email address.');
+            $this->emit('error', 'User created successfully. However, an error occurred while sending the email verification!');
         }
     }
 
@@ -176,17 +182,27 @@ class AddUserModal extends Component
         // Prepare the data for creating or updating a user
         $cleanedMobilePhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
         $cleanedBusinessPhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
+        $data = [];
+        if ($this->county_require == true) {
+            $data = [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'business_phone' => $this->business_phone,
+                'mobile_phone' => $this->mobile_phone,
+                'mailing_address' => $this->mailing_address,
+                'vendor_id' => $this->vendor_id,
+                'county_designation' => $this->county_designation,
+            ];
+        }else{
+            $data = [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'mobile_phone' => $this->mobile_phone,
+            ];
+        }
 
-        $data = [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'business_phone' => $this->business_phone,
-            'mobile_phone' => $this->mobile_phone,
-            'mailing_address' => $this->mailing_address,
-            'vendor_id' => $this->vendor_id,
-            'county_designation' => $this->county_designation,
-        ];
 
         if (!$this->edit_mode) {
             $data['password'] = Hash::make($this->email);
@@ -224,14 +240,14 @@ class AddUserModal extends Component
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;
         $this->email = $user->email;
-        $this->business_phone = $user->getFormattedBusinessPhoneAttribute();
+        $this->business_phone = $user->business_phone;
         $this->mobile_phone = $user->getFormattedMobilePhoneAttribute();
         $this->mailing_address = $user->mailing_address;
         $this->vendor_id = $user->vendor_id;
         $this->county_designation = $user->county_designation;
         $this->role = $user->roles?->first()->name ?? '';
 
-        // dd($this->business_phone);
+        $this->updateRole();
     }
 
     public function updateCountyDropdown()
@@ -239,12 +255,18 @@ class AddUserModal extends Component
         $this->countyDropdown = County::where('state_id', $this->stateChose)->get();
     }
 
-        public function resetData()
+    public function resetData()
     {
         $this->reset();
     }
 
-
+    public function updateRole(){
+        if($this->role !== "county user"){
+            $this->county_require = false;
+        }else{
+            $this->county_require = true;
+        }
+    }
 
     public function hydrate()
     {

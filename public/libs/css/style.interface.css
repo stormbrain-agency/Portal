@@ -41,6 +41,16 @@
     object-fit: cover;
 }
 
+[data-kt-app-layout=light-sidebar] .app-sidebar .app-sidebar-toggle.btn-menu-header {
+    border-radius: 4px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+[data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-item .menu-link.active {
+    background-color: var(--bs-primary-inverse);
+}
+
 [data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] .app-sidebar .app-sidebar-logo a {
     opacity: 0;
     width: 0px;
@@ -89,7 +99,7 @@
 [data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] .app-sidebar:hover:not(.animating),
 [data-kt-app-sidebar-hoverable=true] .app-sidebar .app-sidebar-wrapper,
 body:not([data-kt-app-sidebar-minimize=on]) .app-sidebar {
-    width: max-content;
+    width: 300px;
 }
 
 [data-kt-app-layout=light-sidebar] .app-sidebar .app-sidebar-toggle.btn-menu-header {
@@ -99,6 +109,16 @@ body:not([data-kt-app-sidebar-minimize=on]) .app-sidebar {
 [data-kt-app-sidebar-minimize=on][data-kt-app-sidebar-hoverable=true] .app-sidebar:not(:hover) .app-sidebar-menu .menu-title,
 [data-kt-app-sidebar-minimize=on][data-kt-app-sidebar-hoverable=true] .app-sidebar:not(:hover) .app-sidebar-menu .menu-arrow {
     display: none;
+}
+
+[data-kt-app-layout=light-sidebar] .app-sidebar .app-sidebar-toggle.btn-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03) !important;
+    margin-right: 20px;
+    cursor: pointer;
 }
 
 .status {
@@ -307,4 +327,10 @@ body:not([data-kt-app-sidebar-minimize=on]) .app-sidebar {
 
 .page-profile .wrap-content table td.status.off {
     color: #F1416C;
+}
+
+.drop-zone__thumb ul li{
+    font-weight: 600;
+    font-size: 18px;
+    color: #48AE64;
 }

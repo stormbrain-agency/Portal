@@ -6,7 +6,6 @@
             <!--begin::Modal header-->
             <div class="modal-header" id="kt_modal_edit_user_header">
                 <!--begin::Modal title-->
-                
                 <h2 class="fw-bold">Edit 
                     @if ($idUser == auth()->id())
                     Profile
@@ -28,6 +27,46 @@
                 <form id="kt_modal_edit_user_form" class="form" action="#" wire:submit.prevent="submit" enctype="multipart/form-data">
                     <!--begin::Scroll-->
                     <div class="d-flex flex-column scroll-y px-5 px-lg-10" id="kt_modal_edit_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_edit_user_header" data-kt-scroll-wrappers="#kt_modal_edit_user_scroll" data-kt-scroll-offset="300px">
+                        <!--begin::Input group-->
+                        @if (auth()->check() && auth()->user()->id != $idUser)
+                        <div class="mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-5">Role</label>
+                            <!--end::Label-->
+                            @error('role')
+                            <span class="text-danger">{{ $message }}</span> @enderror
+                            <!--begin::Roles-->
+                            @foreach($roles as $role)
+                                <!--begin::Input row-->
+                                <div class="d-flex fv-row">
+                                    <!--begin::Radio-->
+                                    <div class="form-check form-check-custom form-check-solid">
+                                        <!--begin::Input-->
+                                        <input class="form-check-input me-3" id="kt_modal_update_role_option_{{ $role->id }}" wire:model.defer="role" name="role" type="radio" value="{{ $role->name }}"  wire:click="updateRole" checked="checked"/>
+                                        <!--end::Input-->
+                                        <!--begin::Label-->
+                                        <label class="form-check-label" for="kt_modal_update_role_option_{{ $role->id }}">
+                                            <div class="fw-bold text-gray-800">
+                                                {{ ucwords($role->name) }}
+                                            </div>
+                                            <div class="text-gray-600">
+                                                {{ $role->description }}
+                                            </div>
+                                        </label>
+                                        <!--end::Label-->
+                                    </div>
+                                    <!--end::Radio-->
+                                </div>
+                                <!--end::Input row-->
+                                @if(!$loop->last)
+                                    <div class='separator separator-dashed my-5'></div>
+                                @endif
+                            @endforeach
+                            <!--end::Roles-->
+                            <div class='separator separator-dashed my-5'></div>
+                        </div>
+                        @endif
+                        <!--end::Input group-->
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <div class="row">
@@ -67,6 +106,7 @@
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->
+                        @if ($county_require == true)
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -79,6 +119,7 @@
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->
+                        @endif
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -90,6 +131,7 @@
                             @error('mobile_phone')
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
+                        @if ($county_require == true)
                         <!--end::Input group-->
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
@@ -116,93 +158,40 @@
                         </div>
                         <!--end::Input group-->
                         <!--begin::Input group-->
-                       <div class="fv-row mb-7">
-                        <!--begin::Label-->
-                        <label class="required fw-semibold fs-6 mb-2">County Designation</label>
-                        <!--end::Label-->
-                        <!--begin::Select-->
-                        <div class="row">
-                            <div class="col-6">
-                                <select wire:model="stateChose" wire:change="updateCountyDropdown" id="stateDropdown" name="stateChose" class="form-select form-select-solid mb-3 mb-lg-0">
-                                    <option value="">Select State</option>
-                                    @if ($states && count($states) > 0)
-                                        @foreach($states as $state)
-                                            <option @if ($county_designation == $state->state_id) selected @endif value="{{ $state->state_id }}">{{ $state->state_name }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <select wire:model.defer="county_designation" name="county_designation" class="form-select form-select-solid mb-3 mb-lg-0">
-                                    <option value="">Select County</option>
-                                    @if ($countyDropdown && count($countyDropdown) > 0)  
-                                        @foreach($countyDropdown as $countyItem)
-                                            {{ $countyItem->county_full }} - {{ $countyItem->county_fips }}<br>
-                                            <option @if ($county_designation == $countyItem->county_fips) selected @endif value="{{ $countyItem->county_fips }}">{{ $countyItem->county_full }}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-                        <!--end::Select-->
-                        @error('county_designation')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                        <!--end::Input group-->
-
-                        <!--begin::Input group-->
-                        {{-- <div class="fv-row mb-7">
+                        <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">W-9 File Upload</label>
+                            <label class="required fw-semibold fs-6 mb-2">County Designation</label>
                             <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="file" wire:model.defer="w9_file_path" name="w9_file_path" class="form-control form-control-solid mb-3 mb-lg-0" accept=".zip"/>
-                            <!--end::Input-->
-                            @error('w9_file_path')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                        </div> --}}
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        @if (auth()->check() && auth()->user()->id != $idUser)
-                        <div class="mb-7">
-                            <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-5">Role</label>
-                            <!--end::Label-->
-                            @error('role')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                            <!--begin::Roles-->
-                            @foreach($roles as $role)
-                                <!--begin::Input row-->
-                                <div class="d-flex fv-row">
-                                    <!--begin::Radio-->
-                                    <div class="form-check form-check-custom form-check-solid">
-                                        <!--begin::Input-->
-                                        <input class="form-check-input me-3" id="kt_modal_update_role_option_{{ $role->id }}" wire:model.defer="role" name="role" type="radio" value="{{ $role->name }}" checked="checked"/>
-                                        <!--end::Input-->
-                                        <!--begin::Label-->
-                                        <label class="form-check-label" for="kt_modal_update_role_option_{{ $role->id }}">
-                                            <div class="fw-bold text-gray-800">
-                                                {{ ucwords($role->name) }}
-                                            </div>
-                                            <div class="text-gray-600">
-                                                {{ $role->description }}
-                                            </div>
-                                        </label>
-                                        <!--end::Label-->
-                                    </div>
-                                    <!--end::Radio-->
+                            <!--begin::Select-->
+                            <div class="row">
+                                <div class="col-6">
+                                    <select wire:model="stateChose" wire:change="updateCountyDropdown" id="stateDropdown" name="stateChose" class="form-select form-select-solid mb-3 mb-lg-0">
+                                        <option value="">Select State</option>
+                                        @if ($states && count($states) > 0)
+                                            @foreach($states as $state)
+                                                <option @if ($county_designation == $state->state_id) selected @endif value="{{ $state->state_id }}">{{ $state->state_name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
-                                <!--end::Input row-->
-                                @if(!$loop->last)
-                                    <div class='separator separator-dashed my-5'></div>
-                                @endif
-                            @endforeach
-                            <!--end::Roles-->
+                                <div class="col-6">
+                                    <select wire:model.defer="county_designation" name="county_designation" class="form-select form-select-solid mb-3 mb-lg-0">
+                                        <option value="">Select County</option>
+                                        @if ($countyDropdown && count($countyDropdown) > 0)  
+                                            @foreach($countyDropdown as $countyItem)
+                                                {{ $countyItem->county_full }} - {{ $countyItem->county_fips }}<br>
+                                                <option @if ($county_designation == $countyItem->county_fips) selected @endif value="{{ $countyItem->county_fips }}">{{ $countyItem->county_full }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <!--end::Select-->
+                            @error('county_designation')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         @endif
-                        <!--end::Input group-->
                     </div>
                     <!--end::Scroll-->
                     <!--begin::Actions-->
@@ -232,8 +221,5 @@
         Inputmask({
             "mask" : "(999) 999-9999",
         }).mask("#mobile_phone");
-        Inputmask({
-            mask: "(999) 999-9999 ext. 9999",
-        }).mask("#business_phone");
     </script>
 @endpush

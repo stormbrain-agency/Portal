@@ -220,21 +220,13 @@ var KTSignupGeneral = function () {
                         }
                     },'business_phone': {
                         validators: {
-                            callback: {
-                                message: 'Please enter a valid Business Phone Number',
-                                callback: function (input) {
-                                    var phoneNumber = input.value.match(/\(\d{3}\) \d{3}-\d{4}/);
-                                    if (phoneNumber == null) {
-                                        return false;
-                                    }
-                                    var isValid = phoneNumber && /^\(\d{3}\) \d{3}-\d{4}$/.test(phoneNumber[0]);
-                                    return isValid;
-                                }
-                            }
+                            notEmpty: {
+                                message: 'Business Phone Number is required'
+                            },
                         }
                     },'mobile_phone': {
                         validators: {
-                            callback: {
+                           callback: {
                                 message: 'Please enter a valid Mobile Phone Number',
                                 callback: function (input) {
                                     return validateMobilePhone(input.value);
@@ -421,10 +413,6 @@ var KTSignupGeneral = function () {
             Inputmask({
                 "mask" : "(999) 999-9999",
             }).mask("#mobile_phone");
-
-            Inputmask({
-                mask: "(999) 999-9999 ext. 9999",
-            }).mask("#business_phone");
             
             if (isValidUrl(submitButton.closest('form').getAttribute('action'))) {
                 handleFormAjax();
