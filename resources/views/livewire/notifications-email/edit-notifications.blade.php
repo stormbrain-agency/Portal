@@ -65,16 +65,16 @@
                             </div>
                         </div>
 
-                        <!-- Input Body -->
-                        <div class="mb-7">
-                            <label for="body" class="form-label">Body:</label>
-                            <textarea class="form-control" name="body" rows="3" value="{{ $notification->body }}" required>{{ $notification->body }}</textarea>
-                        </div>
-
                         <!-- Input Subject -->
                         <div class="mb-7">
                             <label for="subject" class="form-label">Subject:</label>
                             <textarea class="form-control" name="subject" rows="3" value="{{ $notification->subject }}" required>{{ $notification->subject }}</textarea>
+                        </div>
+
+                        <!-- Input Body -->
+                        <div class="mb-7">
+                            <label for="body" class="form-label">Body:</label>
+                            <textarea class="form-control" name="body" rows="3" value="{{ $notification->body }}" required>{{ $notification->body }}</textarea>
                         </div>
 
                         <!-- Input Button Title -->
