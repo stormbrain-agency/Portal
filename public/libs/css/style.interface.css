@@ -328,3 +328,9 @@ body:not([data-kt-app-sidebar-minimize=on]) .app-sidebar {
 .page-profile .wrap-content table td.status.off {
     color: #F1416C;
 }
+
+.drop-zone__thumb ul li{
+    font-weight: 600;
+    font-size: 18px;
+    color: #48AE64;
+}
