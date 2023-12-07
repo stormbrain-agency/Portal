@@ -42,7 +42,7 @@ class VerifyEmailController extends Controller
                     $user->email_verified_at = now();
                     $user->email_verification_hash = null;
                     $user->save();
-                    $this->welcome_email($user);
+                    // $this->welcome_email($user);
     
                     return redirect()->route('dashboard')->with('success', 'Email has been successfully verified.');
                 } else {
