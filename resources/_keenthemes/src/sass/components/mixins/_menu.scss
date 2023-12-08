@@ -322,3 +322,23 @@
 		@content;
 	}
 }
+
+// menu
+[data-kt-app-sidebar-fixed=true] {
+	.app-wrapper {
+		margin-left: 280px;
+	}
+}
+
+[data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] .app-sidebar:hover:not(.animating),
+[data-kt-app-sidebar-hoverable=true] .app-sidebar .app-sidebar-wrapper,
+body:not([data-kt-app-sidebar-minimize=on]) .app-sidebar {
+	width: 300px;
+}
+
+[data-kt-app-sidebar-minimize=on] {
+	.app-sidebar {
+		background-color: var(--bs-app-sidebar-base-toggle-btn-bg-color);
+		box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.03);
+	}
+}
