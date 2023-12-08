@@ -58,11 +58,6 @@ Route::middleware(['phone_verify'])->group(function () {
                     Route::post('/create', [PaymentReportController::class,'store'])->name('store');
                     Route::get('/create', [PaymentReportController::class,'create'])->name('create');
                 });
-
-                Route::middleware(['permission:template provider payment'])->group(function () {
-                    // Route::get('/template', [PaymentReportController::class,'template'])->name('template');
-                    // Route::post('/template', [PaymentReportController::class,'store_template'])->name('store_template');
-                });
                 Route::get('/template/download', [PaymentReportController::class, 'downloadTemplate'])->name('download_template');
                 Route::get('/downloads/{filename}', [PaymentReportController::class, 'downloadFile'])->name('download');
                 Route::get('/downloads/{filename}/{payment_id}', [PaymentReportController::class, 'downloadFile'])->name('download2');
@@ -90,10 +85,6 @@ Route::middleware(['phone_verify'])->group(function () {
                 Route::middleware(['permission:create mrac_arac'])->group(function () {
                     Route::post('/create', [CountyMRAC_ARACController::class,'store'])->name('store');
                     Route::get('/create', [CountyMRAC_ARACController::class,'create'])->name('create');
-                });
-                Route::middleware(['permission:template mrac_arac'])->group(function () {
-                    // Route::post('/template', [CountyMRAC_ARACController::class,'store_template'])->name('store_template');
-                    // Route::get('/template', [CountyMRAC_ARACController::class,'template'])->name('template');
                 });
                 Route::get('/template/download', [CountyMRAC_ARACController::class, 'downloadTemplate'])->name('download_template');
                 Route::get('/downloads/{filename}', [CountyMRAC_ARACController::class, 'downloadFile'])->name('download');
@@ -127,8 +118,6 @@ Route::middleware(['phone_verify'])->group(function () {
         Route::middleware(['permission:activity management'])->group(function () {
             Route::prefix('activity-management')->name("activity-management.")->group(function () {
                 Route::get('/', [ActivityController::class,'index'])->name('index');
-
-                // Route::get('/users/{user_id}', [ActivityController::class, 'index']);
                 Route::get('/users/{user_id}', [ActivityController::class, 'show'])->name('show');
             });
         });
