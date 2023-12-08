@@ -55,8 +55,8 @@ class UsersSeeder extends Seeder
             'county_designation'              => "06037",
             'status'              => 1,
             'w9_file_path'              => "download.com",
-            'email'             => 'countyuser@demo.com',
-            'password'          => Hash::make('demo'),
+            'email'             => 'countyuser@stormbrain.com',
+            'password'          => Hash::make('Ws@@x5&M8JvTeBi'),
             'status'          => 1,
             'email_verified_at' => now(),
         ]);
