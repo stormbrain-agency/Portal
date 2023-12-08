@@ -3,7 +3,7 @@
 //
 
 // General mode
-.app-sidebar {    
+.app-sidebar {
     transition: $app-sidebar-base-transition;
     background-color: var(--#{$prefix}app-sidebar-base-bg-color);
     box-shadow: var(--#{$prefix}app-sidebar-base-box-shadow);
@@ -17,23 +17,24 @@
 .app-sidebar-collapse-d-flex,
 .app-sidebar-minimize-mobile-d-flex,
 .app-sidebar-collapse-mobile-d-flex {
-    display: none;    
+    display: none;
 }
 
 // Desktop mode
 @include media-breakpoint-up(lg) {
-    // Base
-    .app-sidebar {        
-        display: flex;    
-        flex-shrink: 0;
-        width: var(--#{$prefix}app-sidebar-width);      
 
-        @include property( z-index, $app-sidebar-base-z-index);
-        @include property( margin-left, $app-sidebar-base-gap-start);
-        @include property( margin-right, $app-sidebar-base-gap-end);
-        @include property( margin-top, $app-sidebar-base-gap-top);
-        @include property( margin-bottom, $app-sidebar-base-gap-bottom);
-    }    
+    // Base
+    .app-sidebar {
+        display: flex;
+        flex-shrink: 0;
+        width: var(--#{$prefix}app-sidebar-width);
+
+        @include property(z-index, $app-sidebar-base-z-index);
+        @include property(margin-left, $app-sidebar-base-gap-start);
+        @include property(margin-right, $app-sidebar-base-gap-end);
+        @include property(margin-top, $app-sidebar-base-gap-top);
+        @include property(margin-bottom, $app-sidebar-base-gap-bottom);
+    }
 
     // Vars
     :root {
@@ -66,10 +67,10 @@
         --#{$prefix}app-sidebar-gap-end: #{$app-sidebar-sticky-gap-end};
         --#{$prefix}app-sidebar-gap-top: #{$app-sidebar-sticky-gap-top};
         --#{$prefix}app-sidebar-gap-bottom: #{$app-sidebar-sticky-gap-bottom};
-    }    
+    }
 
     [data-kt-app-sidebar-collapse="on"] {
-        --#{$prefix}app-sidebar-width: 0px;  
+        --#{$prefix}app-sidebar-width: 0px;
     }
 
     // States
@@ -84,95 +85,96 @@
 
         [data-kt-app-sidebar-fixed="true"] & {
             position: fixed;
-            @include property( z-index, $app-sidebar-fixed-z-index);
-            @include property( top, $app-sidebar-fixed-top);
-            @include property( bottom, $app-sidebar-fixed-bottom);
-            @include property( left, $app-sidebar-fixed-left);
-        }  
+            @include property(z-index, $app-sidebar-fixed-z-index);
+            @include property(top, $app-sidebar-fixed-top);
+            @include property(bottom, $app-sidebar-fixed-bottom);
+            @include property(left, $app-sidebar-fixed-left);
+        }
 
         [data-kt-app-sidebar-stacked="true"] & {
-            align-items: stretch; 
+            align-items: stretch;
         }
 
         [data-kt-app-sidebar-sticky="on"] & {
             position: fixed;
             transition: $app-sidebar-base-transition;
-            @include property( top, $app-sidebar-sticky-top);
-            @include property( bottom, $app-sidebar-sticky-bottom);
-            @include property( left, $app-sidebar-sticky-left);
-            @include property( z-index, $app-sidebar-sticky-z-index);
+            @include property(top, $app-sidebar-sticky-top);
+            @include property(bottom, $app-sidebar-sticky-bottom);
+            @include property(left, $app-sidebar-sticky-left);
+            @include property(z-index, $app-sidebar-sticky-z-index);
 
             box-shadow: var(--#{$prefix}app-sidebar-sticky-box-shadow);
             border-left: var(--#{$prefix}app-sidebar-sticky-border-start);
             border-right: var(--#{$prefix}app-sidebar-sticky-border-end);
 
-            @include property( margin-left, $app-sidebar-sticky-gap-start);
-            @include property( margin-right, $app-sidebar-sticky-gap-end);
-            @include property( margin-top, $app-sidebar-sticky-gap-top);
-            @include property( margin-bottom, $app-sidebar-sticky-gap-bottom);
+            @include property(margin-left, $app-sidebar-sticky-gap-start);
+            @include property(margin-right, $app-sidebar-sticky-gap-end);
+            @include property(margin-top, $app-sidebar-sticky-gap-top);
+            @include property(margin-bottom, $app-sidebar-sticky-gap-bottom);
         }
 
         [data-kt-app-sidebar-minimize="on"] & {
             transition: $app-sidebar-base-transition;
 
-            @include property( margin-left, $app-sidebar-minimize-gap-start);
-            @include property( margin-right, $app-sidebar-minimize-gap-end);
-            @include property( margin-top, $app-sidebar-minimize-gap-top);
-            @include property( margin-bottom, $app-sidebar-minimize-gap-bottom);
+            @include property(margin-left, $app-sidebar-minimize-gap-start);
+            @include property(margin-right, $app-sidebar-minimize-gap-end);
+            @include property(margin-top, $app-sidebar-minimize-gap-top);
+            @include property(margin-bottom, $app-sidebar-minimize-gap-bottom);
         }
 
-        [data-kt-app-sidebar-hoverable="true"] & {
-            .app-sidebar-wrapper {
-                width: var(--#{$prefix}app-sidebar-width-actual); 
-            }
-        }
+        // [data-kt-app-sidebar-hoverable="true"] & {
+        //     .app-sidebar-wrapper {
+        //         width: var(--#{$prefix}app-sidebar-width-actual); 
+        //     }
+        // }
 
         [data-kt-app-sidebar-hoverable="true"][data-kt-app-sidebar-minimize="on"] &:hover:not(.animating) {
             transition: $app-sidebar-base-transition;
-			width: var(--#{$prefix}app-sidebar-width-actual);
-            @include property( box-shadow, $app-sidebar-minimize-hover-box-shadow);
+            width: var(--#{$prefix}app-sidebar-width-actual);
+            @include property(box-shadow, $app-sidebar-minimize-hover-box-shadow);
         }
 
         [data-kt-app-sidebar-collapse="on"] & {
             transition: $app-sidebar-base-transition;
             width: var(--#{$prefix}app-sidebar-width-actual);
-            margin-left: calc( -1 * var(--#{$prefix}app-sidebar-width-actual));
+            margin-left: calc(-1 * var(--#{$prefix}app-sidebar-width-actual));
         }
     }
 
     // Utilities
     [data-kt-app-sidebar-minimize="on"] {
         .app-sidebar-minimize-d-none {
-            display: none !important;    
+            display: none !important;
         }
 
         .app-sidebar-minimize-d-flex {
-            display: flex !important;    
+            display: flex !important;
         }
     }
 
     [data-kt-app-sidebar-sticky="on"] {
         .app-sidebar-sticky-d-none {
-            display: none !important;    
+            display: none !important;
         }
 
         .app-sidebar-sticky-d-flex {
-            display: flex !important;    
+            display: flex !important;
         }
-    } 
+    }
 
     [data-kt-app-sidebar-collapse="on"] {
         .app-sidebar-collapse-d-none {
-            display: none !important;    
+            display: none !important;
         }
 
         .app-sidebar-collapse-d-flex {
-            display: flex !important;    
+            display: flex !important;
         }
     }
 
     // Integration
     .app-sidebar {
+
         // Header
         [data-kt-app-sidebar-fixed="true"][data-kt-app-header-fixed="true"]:not([data-kt-app-sidebar-push-header="true"]) & {
             top: var(--#{$prefix}app-header-height);
@@ -187,16 +189,17 @@
 
 // Tablet & mobile modes
 @include media-breakpoint-down(lg) {
+
     // Base
     .app-sidebar {
         display: none;
         width: var(--#{$prefix}app-sidebar-width);
 
-        @include property( z-index, $app-sidebar-base-z-index-mobile);
-        @include property( margin-left, $app-sidebar-base-gap-start-mobile);
-        @include property( margin-right, $app-sidebar-base-gap-end-mobile);
-        @include property( margin-top, $app-sidebar-base-gap-top-mobile);
-        @include property( margin-bottom, $app-sidebar-base-gap-bottom-mobile);
+        @include property(z-index, $app-sidebar-base-z-index-mobile);
+        @include property(margin-left, $app-sidebar-base-gap-start-mobile);
+        @include property(margin-right, $app-sidebar-base-gap-end-mobile);
+        @include property(margin-top, $app-sidebar-base-gap-top-mobile);
+        @include property(margin-bottom, $app-sidebar-base-gap-bottom-mobile);
     }
 
     // Vars
@@ -230,55 +233,385 @@
     // States
     .app-sidebar {
         [data-kt-app-sidebar-stacked="true"] & {
-            align-items: stretch; 
+            align-items: stretch;
         }
-            
+
         [data-kt-app-sidebar-minimize-mobile="on"] & {
             transition: $app-sidebar-base-transition;
 
-            @include property( margin-left, $app-sidebar-minimize-gap-start-mobile);
-            @include property( margin-right, $app-sidebar-minimize-gap-end-mobile);
-            @include property( margin-top, $app-sidebar-minimize-gap-top-mobile);
-            @include property( margin-bottom, $app-sidebar-minimize-gap-bottom-mobile);
+            @include property(margin-left, $app-sidebar-minimize-gap-start-mobile);
+            @include property(margin-right, $app-sidebar-minimize-gap-end-mobile);
+            @include property(margin-top, $app-sidebar-minimize-gap-top-mobile);
+            @include property(margin-bottom, $app-sidebar-minimize-gap-bottom-mobile);
         }
 
         [data-kt-app-sidebar-hoverable-mobile="true"] & {
             .app-sidebar-wrapper {
-                width: var(--#{$prefix}app-sidebar-width-actual); 
+                width: var(--#{$prefix}app-sidebar-width-actual);
             }
         }
 
         [data-kt-app-sidebar-hoverable-mobile="true"][data-kt-app-sidebar-minimize-mobile="on"] &:hover:not(.animating) {
             transition: $app-sidebar-base-transition;
-			width: var(--#{$prefix}app-sidebar-width-actual);
-            box-shadow: var(--#{$prefix}app-sidebar-minimize-hover-box-shadow-mobile); 
+            width: var(--#{$prefix}app-sidebar-width-actual);
+            box-shadow: var(--#{$prefix}app-sidebar-minimize-hover-box-shadow-mobile);
         }
 
         [data-kt-app-sidebar-collapse-mobile="on"] & {
             transition: $app-sidebar-base-transition;
             width: var(--#{$prefix}app-sidebar-width-actual);
-            margin-left: calc( -1 * var(--#{$prefix}app-sidebar-width-actual));
+            margin-left: calc(-1 * var(--#{$prefix}app-sidebar-width-actual));
         }
     }
 
     // Utilities
     [data-kt-app-sidebar-minimize-mobile="on"] {
         .app-sidebar-minimize-mobile-d-none {
-            display: none !important;    
+            display: none !important;
         }
 
         .app-sidebar-minimize-mobile-d-flex {
-            display: flex !important;    
+            display: flex !important;
         }
     }
 
     [data-kt-app-sidebar-collapse-mobile="on"] {
         .app-sidebar-collapse-mobile-d-none {
-            display: none !important;    
+            display: none !important;
         }
 
         .app-sidebar-collapse-mobile-d-flex {
-            display: flex !important;    
+            display: flex !important;
         }
     }
+}
+
+// 
+.card.m-height {
+    min-height: 85vh;
+}
+
+.btn.btn-primary,
+.btn.btn-bg-primary {
+    color: var(--bs-primary-inverse);
+    border-color: var(--bs-btn-primary);
+    background-color: var(--bs-btn-primary);
+}
+
+.btn.btn-bg-primary:hover {
+    color: var(--bs-primary-inverse);
+    border-color: var(--bs-primary-active);
+    background-color: var(--bs-primary-active) !important;
+}
+
+.btn.btn-login {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+.btn:first-child:active {
+    background-color: var(--bs-primary);
+}
+
+[data-kt-app-layout=light-sidebar] {
+    .app-sidebar {
+        .menu-item {
+            .menu-link.active {
+                background-color: var(--bs-primary-inverse);
+            }
+
+            .menu-sub .menu-item .menu-link {
+                padding-left: 45px;
+                margin: 0px;
+            }
+        }
+
+        .app-sidebar-toggle.btn-menu-header {
+            padding: 0px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03) !important;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+    }
+}
+
+[data-kt-app-sidebar-minimize=on][data-kt-app-sidebar-hoverable=true] {
+    .app-sidebar:not(:hover) {
+        .app-sidebar-menu {
+            .menu-title {
+                display: none;
+            }
+
+            .menu-arrow {
+                display: none;
+            }
+        }
+
+    }
+
+}
+
+[data-kt-app-sidebar-hoverable=true][data-kt-app-sidebar-minimize=on] {
+    .app-sidebar {
+        .app-sidebar-logo {
+            a {
+                opacity: 0;
+                width: 0px;
+                visibility: hidden;
+            }
+        }
+    }
+
+    .app-sidebar:hover {
+        .app-sidebar-logo {
+            a {
+                opacity: 1;
+                width: auto;
+                visibility: visible;
+            }
+        }
+    }
+}
+
+.app-sidebar {
+    .menu-link:hover {
+        transition: color 0.2s ease;
+        background-color: var(--bs-white);
+
+        .menu-title {
+            color: #1973B8 !important;
+        }
+    }
+}
+
+.menu-item {
+    .menu-link {
+        .menu-arrow {
+            width: 20px;
+            height: 20px;
+            padding: 4px;
+        }
+    }
+}
+
+
+[data-kt-app-sidebar-minimize=on] {
+    .app-wrapper {
+        margin-left: 80px;
+    }
+}
+
+.status {
+    background-color: #48AE64;
+    padding: 9px 12px;
+    align-items: center;
+    border-radius: 6px;
+    color: var(--bs-primary-inverse);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 12px;
+}
+
+.status.manager {
+    background-color: #004482;
+}
+
+.status.view-only {
+    background-color: #1387DE;
+}
+
+.status.county-user {
+    background-color: #1A5569;
+}
+
+@media (max-width: 991.98px) {
+    [data-kt-app-sidebar-fixed=true] .app-wrapper {
+        margin-left: 0px;
+    }
+
+    .card {
+        margin-top: 24px;
+    }
+
+    .card .card-header .card-toolbar {
+        gap: 6px !important;
+    }
+
+    #kt_app_root #kt_app_sidebar {
+        background-color: var(--bs-border-color);
+    }
+
+}
+
+@media (max-width: 425.89px) {
+    #kt_app_header img[alt="Logo"] {
+        display: none !important;
+    }
+}
+
+
+/* FAQ */
+.card.help-faq,
+.page-profile .card {
+    border-radius: 12px;
+}
+
+.card.help-faq {
+    .title {
+        margin-bottom: 50px;
+        color: var(--bs-text-dark-2);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px;
+    }
+
+    .box-question:not(:last-child) {
+        margin-bottom: 20px;
+        border-bottom: 1px dashed #E1E3EA;
+    }
+
+    .box-question>span.ki-duotone {
+        margin-right: 15px;
+    }
+
+    .box-question {
+        .title-question {
+            margin-bottom: 15px;
+        }
+
+        .content {
+            color: #7B8792;
+            font-size: 15px;
+            font-weight: 500;
+            height: 0;
+            -webkit-transition: all .5s ease;
+            -moz-transition: all .5s ease;
+            -o-transition: all .5s ease;
+            transition: all .5s ease;
+            overflow: hidden;
+            opacity: 0;
+        }
+    }
+
+    .box-question.active .content {
+        margin-bottom: 20px;
+        height: auto;
+        overflow: visible;
+        opacity: 1;
+    }
+}
+
+#kt_app_header_wrapper {
+    .app-navbar {
+        .menu-link {
+            border-radius: 50px;
+            padding: 9px 12px;
+            transition: all 300ms;
+        }
+
+        .menu-link:hover {
+            background-color: var(--bs-white);
+        }
+    }
+}
+
+/* Page Profile */
+.page-profile {
+    width: 100%;
+}
+
+.page-profile .wrap-content:not(:last-child) {
+    margin-bottom: 18px;
+    border-bottom: 1px solid #E1E3EA;
+}
+
+.page-profile .title {
+    color: var(--bs-text-dark-2);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: -0.18px;
+    padding-bottom: 18px;
+}
+
+.page-profile .wrap-input {
+    margin-bottom: 18px;
+}
+
+.page-profile .wrap-content label {
+    color: var(--bs-text-dark-2);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 14px;
+    margin-bottom: 9px;
+}
+
+.page-profile .wrap-content input {
+    border-radius: 6px;
+    border: 1px solid #596D87;
+    padding: 10px 12px;
+}
+
+.page-profile .wrap-content input[type=submit],
+.page-profile .btn_edit-profile {
+    background-color: #1973B8;
+    color: var(--bs-white);
+    margin-right: 18px;
+    padding: 12px 16px;
+    border: 1px solid #1973B8;
+    border-radius: 6px;
+}
+
+.page-profile .wrap-content form {
+    max-width: 400px;
+}
+
+.page-profile .wrap-top {
+    border-bottom: 1px solid #E1E3EA;
+    padding: 30px 30px 20px;
+}
+
+.page-profile .wrap-top span {
+    color: var(--bs-text-dark-2);
+    font-size: 24px !important;
+    margin-right: 2px;
+}
+
+.page-profile .wrap-top span.text {
+    font-weight: 600;
+    line-height: 18px;
+    letter-spacing: -0.18px;
+    font-size: 18px !important;
+}
+
+.page-profile .wrap-content {
+    padding: 30px;
+}
+
+.page-profile .wrap-content table {
+    max-width: 60%;
+}
+
+.page-profile .wrap-content table {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+}
+
+.page-profile .wrap-content table th {
+    color: #A1A5B7;
+}
+
+.page-profile .wrap-content table td.status {
+    color: #5CBDC6;
+}
+
+.page-profile .wrap-content table td.status.off {
+    color: #F1416C;
 }
