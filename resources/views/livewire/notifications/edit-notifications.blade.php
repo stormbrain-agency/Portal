@@ -40,7 +40,7 @@
                     </div>
                 @endif
             @endif
-            <form method="POST" action="{{ route('notification-management.dashboard.update', ['id' => $notification->id]) }}" class="form form-edit-notification w-50">
+            <form method="POST" action="{{ route('notification-management.dashboard.update', ['id' => $notification->id]) }}" class="form form-edit-notification w-100" style="max-width: 800px;">
                 @csrf
                 @method('PUT')
                 <div class="mt-10">
@@ -155,7 +155,7 @@
                     var confirmDiscard = confirm('Are you sure you want to discard changes?');
 
                     if (confirmDiscard) {
-                        window.location.href = '/notification-management/';
+                        window.location.href = '/notification-management/dashboard';
                     }
                 });
 
@@ -163,14 +163,14 @@
                     var notificationId = $(this).data('notification-id');
 
                     $.ajax({
-                        url: '/notification-management/delete/' + notificationId,
+                        url: '/notification-management/dashboard/delete/' + notificationId,
                         type: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
                         success: function (data) {
                             console.log(data);
-                            window.location.href = '/notification-management/';
+                            window.location.href = '/notification-management/dashboard';
                         },
                         error: function (error) {
                             console.error(error);

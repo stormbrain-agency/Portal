@@ -36,5 +36,7 @@
         <p>{{ $emailContent['body'] }}</p>
         <a href="{{$actionUrl}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
     </div>
+    <br>
+    <div class="copyright">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
 </body>
 </html>

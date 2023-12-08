@@ -40,7 +40,7 @@
                     </div>
                 @endif
             @endif
-            <form method="POST" action="{{ route('notification-management.dashboard.store') }}" class="form w-50">
+            <form method="POST" action="{{ route('notification-management.dashboard.store') }}" class="form w-100" style="max-width: 800px;">
                 @csrf
                 <div class="mt-10">
                     <!-- Input Title -->

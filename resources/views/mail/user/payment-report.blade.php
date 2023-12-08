@@ -37,11 +37,14 @@
         <p>Details of the submission:</p>
         <ul>
             <li>Date/Time of Submission: {{ $data['time'] }}</li>
+            <li>Month/Year of documents Submitted: {{ $data['month_year'] }}</li>
             <li>Submitted by: {{ $data['name'] }}</li>
             <li>User Email Address: {{ $data['email'] }}</li>
             <li>County Designation: {{ $data['county_designation'] }}</li>
         </ul>
-            <p><a href="{{ url('/county-provider-payment-report')}}" target="_blank" class="btn-confirm">View Submission History</a></p>
+        <p><a href="{{ url('/county-provider-payment-report')}}" target="_blank" class="btn-confirm">View Submission History</a></p>
         </div>
+        <br>
+        <div class="copyright">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
 </body>
 </html>

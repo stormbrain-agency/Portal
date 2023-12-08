@@ -79,7 +79,7 @@ class NotificationsEmailDataTable extends DataTable
             Column::make('name_form')->title('Name of Notifications')->orderable(true)->searchable(true)->addClass('fw-bold col-name-form'),
             Column::make('subject')->title('Subject')->orderable(true)->searchable(true)->addClass('fw-bold col-subject'),
             Column::make('body')->title('Body')->orderable(true)->searchable(true)->addClass('fw-bold col-body'),
-            Column::make('button_title')->title('Button Title')->name('type')->orderable(true)->searchable(true)->addClass('fw-bold col-button-title'),
+            Column::make('button_title')->title('Button Title')->orderable(true)->searchable(true)->addClass('fw-bold col-button-title'),
             Column::computed('action')
                 ->addClass('text-center text-nowrap col-edit')
                 ->exportable(false)

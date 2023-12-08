@@ -1,13 +1,4 @@
 <x-default-layout>
-
-    @section('title')
-        Users
-    @endsection
-
-    @section('breadcrumbs')
-        {{ Breadcrumbs::render('user-management.users.index') }}
-    @endsection
-
     <div class="card">
         <!--begin::Card header-->
         <div class="card-header flex-column border-0 pt-6">
@@ -56,7 +47,7 @@
             <!--end::Card toolbar-->
         </div>
         <!--end::Card header-->
-
+        
         <!--begin::Card body-->
         <div class="card-body py-4">
             <!--begin::Table-->
