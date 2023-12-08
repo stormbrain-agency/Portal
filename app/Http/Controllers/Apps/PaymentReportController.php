@@ -10,7 +10,7 @@ use App\Models\TemplateFiles;
 use App\Models\PaymentReportDownloadHistory;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\County; 
+use App\Models\County;
 use Illuminate\Http\Request;
 use League\Csv\Writer;
 use Illuminate\Http\UploadedFile;
@@ -40,7 +40,7 @@ class PaymentReportController extends Controller
     {
         return view("pages.apps.payment-report.create");
     }
-    
+
     /**
      * Store a newly created resource in storage.
      */
@@ -77,7 +77,7 @@ class PaymentReportController extends Controller
                 $extension = $uploadedFile->getClientOriginalExtension();
                 $currentDateTime = date('Ymd_His');
                 $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
-                
+
                 $path_name = $uploadedFile->storeAs('uploads/payment_reports', $uniqueFileName);
 
                 PaymentReportFiles::create([
@@ -99,6 +99,7 @@ class PaymentReportController extends Controller
             'name' => $user->first_name .' ' . $user->last_name,
             'county_designation' => $user->county->county ? $user->county->county : "",
             'time' => $paymentReport->created_at,
+            'month_year' => $paymentReport->month_year,
         ];
 
         foreach($adminEmails as $adminEmail){
@@ -111,7 +112,7 @@ class PaymentReportController extends Controller
         }
         try {
             $userEmail = $user->email;
-            Mail::to($userEmail)->send(new PaymentReportMailUser($data));   
+            Mail::to($userEmail)->send(new PaymentReportMailUser($data));
         } catch (\Exception $e){
             Log::error('Error sending email to user: ' . $e->getMessage());
         }
@@ -150,7 +151,7 @@ class PaymentReportController extends Controller
             $extension = $uploadedFile->getClientOriginalExtension();
             $currentDateTime = date('Ymd_His');
             $uniqueFileName = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME) . "_$currentDateTime.$extension";
-            
+
             $path_name = $uploadedFile->storeAs('uploads/templates', $uniqueFileName);
             TemplateFiles::where('type', 'payment_report')->delete();
             TemplateFiles::create([
@@ -209,7 +210,7 @@ class PaymentReportController extends Controller
      public function downloadTemplateFile()
     {
         $latestTemplateFile = TemplateFiles::where('type', 'payment_report')->latest()->first();
-        if (isset($latestTemplateFile) && !empty($latestTemplateFile)) {  
+        if (isset($latestTemplateFile) && !empty($latestTemplateFile)) {
             $filename = $latestTemplateFile->file_path;
             $file = storage_path('app/uploads/templates/'. $filename);
             if (file_exists($file)) {
@@ -241,14 +242,14 @@ class PaymentReportController extends Controller
             'user_id'=>$user_id
         ]);
         $payment_report_files = PaymentReportFiles::where("payment_report_id", $payment_id)->get();
-        
+
         if ($payment_report_files && count($payment_report_files) > 0) {
             foreach($payment_report_files as $payment_report_file){
                 $filename = $payment_report_file->file_path;
                 $file = storage_path('app/uploads/templates/'. $filename);
                 if (file_exists($file)) {
                     $download =  response()->download($file);
-                } 
+                }
             }
         }else {
             return redirect('/county-provider-payment-report')->with('error', 'File not found.');
