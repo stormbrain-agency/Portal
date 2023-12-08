@@ -40,7 +40,7 @@
                     </div>
                 @endif
             @endif
-            <form method="POST" action="{{ route('notification-management.email.update', ['id' => $notification->id]) }}" class="form form-edit-notification w-50">
+            <form method="POST" action="{{ route('notification-management.email.update', ['id' => $notification->id]) }}" class="form form-edit-notification w-100" style="max-width: 800px;">
                 @csrf
                 @method('PUT')
                 <div class="mt-10">

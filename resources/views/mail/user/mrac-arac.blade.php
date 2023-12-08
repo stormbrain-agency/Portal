@@ -41,7 +41,9 @@
             <li>User Email Address: {{ $data['email'] }}</li>
             <li>County Designation: {{ $data['county_designation'] }}</li>
         </ul>
-            <p><a href="{{ url('/county-mrac-arac')}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a></p>
+        <p><a href="{{ url('/county-mrac-arac')}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a></p>
         </div>
+        <br>
+        <div class="copyright">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
 </body>
 </html>

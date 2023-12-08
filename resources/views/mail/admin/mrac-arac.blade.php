@@ -44,5 +44,7 @@
       </ul>
         <p><a href="{{ url('/county-mrac-arac')}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a></p>
     </div>
+    <br>
+    <div class="copyright">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
 </body>
 </html>
