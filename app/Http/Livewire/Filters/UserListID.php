@@ -12,6 +12,10 @@ class UserListID extends Component
     public $users_filter;
     public $selectedUserId;
 
+    protected $listeners = [
+        'dropdown_search' => 'dropdownSearch'
+    ];
+
     public function mount(Request $request)
     {
         $this->users_filter = User::where("status", 1)->get();
@@ -33,5 +37,16 @@ class UserListID extends Component
             return $User->first_name->toLowerCase().includes($this->searchTerm.toLowerCase());
         });
         $this->emit('users_filter-updated');
+    }
+
+    public function dropdownSearch($search_item)
+    {
+        $this->users_filter = User::where('status', 1)
+            ->where(function ($query) use ($search_item) {
+                $query->where('first_name', 'like', '%' . $search_item . '%')
+                    ->orWhere('last_name', 'like', '%' . $search_item . '%');
+            })
+            ->take(10)
+            ->get();
     }
 }

@@ -10,10 +10,13 @@ class UserList extends Component
 {
     public $users_filter;
 
+    protected $listeners = [
+        'dropdown_search' => 'dropdownSearch'
+    ];
+
     public function mount()
     {
         $this->users_filter = User::where("status", 1)->get();
-        // $this->users_filter = User::take(4)->get();
     }
 
     public function render()
@@ -30,4 +33,16 @@ class UserList extends Component
         });
         $this->emit('users_filter-updated');
     }
+
+    public function dropdownSearch($search_item)
+    {
+        $this->users_filter = User::where('status', 1)
+            ->where(function ($query) use ($search_item) {
+                $query->where('first_name', 'like', '%' . $search_item . '%')
+                    ->orWhere('last_name', 'like', '%' . $search_item . '%');
+            })
+            ->take(10)
+            ->get();
+    }
+
 }

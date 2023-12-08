@@ -1,9 +1,4 @@
 <x-default-layout>
-
-    @section('title')
-        Users Details
-    @endsection
-
     <!--begin::Layout-->
     <div class="d-flex flex-column flex-lg-row">
         <!--begin::Sidebar-->
@@ -33,12 +28,15 @@
                         <div class="mb-9">
                             @foreach($user->roles as $role)
                                 <!--begin::Badge-->
-                                <div class="badge badge-lg badge-light-primary d-inline">{{ ucwords($role->name) }}</div>
+                                @if ($role->name == "manager")
+                                    <div class="badge badge-lg badge-light-primary d-inline">Manager / Support</div>
+                                @else
+                                    <div class="badge badge-lg badge-light-primary d-inline">{{ ucwords($role->name) }}</div>
+                                @endif
                                 <!--begin::Badge-->
                             @endforeach
                         </div>
                         <!--end::Position-->
-                    
                         <!--end::Info-->
                     </div>
                     <!--end::User Info-->
@@ -531,8 +529,6 @@
                     }
                 });
             });
-
-
         </script>
     @endpush
 </x-default-layout>
