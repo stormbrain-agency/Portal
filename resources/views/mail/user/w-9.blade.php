@@ -43,8 +43,8 @@
             <li>County Designation: {{ $data['county_designation'] }}</li>
         </ul>
         <p><a href="{{ url('/county-w9')}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a></p>
+        <br>
+        <div class="copyright mt-7">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
     </div>
-    <br>
-    <div class="copyright">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
 </body>
 </html>

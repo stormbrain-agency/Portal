@@ -35,8 +35,8 @@
         <p>You have requested to reset your password for your {{ config('app.name') }} account.</p>
         <p>{{ $emailContent['body'] }}</p>
         <a href="{{$actionUrl}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
+        <br>
+        <div class="copyright mt-7">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
     </div>
-    <br>
-    <div class="copyright">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
 </body>
 </html>

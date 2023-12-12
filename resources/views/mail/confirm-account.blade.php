@@ -26,7 +26,7 @@ a<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <div class="wrap-content">
+    <div class="wrap-content mail">
         <div class="mb-2">
             <a href="https://supplementalratepayment.org/" target="_blank">
                 <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
@@ -42,8 +42,8 @@ a<!DOCTYPE html>
         {{-- <p>
             If you didn't create an account, you can safely ignore this email.
         </p> --}}
+        <br>
+        <div class="copyright mt-5">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
     </div>
-    <br>
-    <div class="copyright">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
 </body>
 </html>
