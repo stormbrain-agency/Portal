@@ -1,4 +1,4 @@
-a<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,6 +23,9 @@ a<!DOCTYPE html>
             text-decoration: none;
             border-radius: 3px;
         }
+        .note{
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -38,7 +41,7 @@ a<!DOCTYPE html>
         </p>
         <p>{{ $emailContent['body'] }}</p>
         <br>
-        <a href="{{ $data['link'] }}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
+                <a href="{{ $data['link'] }}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
         {{-- <p>
             If you didn't create an account, you can safely ignore this email.
         </p> --}}

@@ -36,7 +36,7 @@
         <p>{{ $emailContent['body'] }}</p>
         <p>Details of the submission:</p>
         <ul>
-            li>Date/Time of Submission: {{ $data['time'] }}</li>
+            <li>Date/Time of Submission: {{ $data['time'] }}</li>
             <li>Submitted by: {{ $data['name'] }}</li>
             <li>User Email Address: {{ $data['email'] }}</li>
             <li>County Designation: {{ $data['county_designation'] }}</li>

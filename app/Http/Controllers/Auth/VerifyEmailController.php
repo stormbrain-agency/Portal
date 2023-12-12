@@ -54,8 +54,6 @@ class VerifyEmailController extends Controller
         }else{
             return redirect()->route('verification.notice')->with('error', 'The verification link is not valid.');
         }
-       
-    
     }
 
     public function welcome_email($user){
@@ -73,5 +71,4 @@ class VerifyEmailController extends Controller
             Log::error('Error sending email to user: ' . $e->getMessage());
         }
     }
-
 }

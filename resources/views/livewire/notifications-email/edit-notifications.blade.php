@@ -15,7 +15,7 @@
                 <a href="{{ route('notification-management.email.index') }}" class="d-flex text-center">
                     {!! getIcon('arrow-left', 'fs-2', '', 'i') !!}
                 </a>
-                <div class="ms-1">Edit Notification</div>
+                <div class="ms-1">Edit Notification Mail</div>
             </div>
             <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex" style="gap: 20px">
@@ -51,17 +51,20 @@
                             <div class="d-flex flex-column flex-grow-1">
                                 <label for="name_form" class="form-label">Name of notification:</label>
                                 <select class="form-select" id="name_form" name="name_form">
-                                    <option value="MARC Admin" @if($notification->type == 'MARC Admin') selected @endif>MARC Admin</option>
-                                    <option value="MARC User" @if($notification->type == 'MARC User') selected @endif>MARC User</option>
-                                    <option value="Payment Report Admin" @if($notification->type == 'Payment Report Admin') selected @endif>Payment Report Admin</option>
-                                    <option value="Payment Report User" @if($notification->type == 'Payment Report User') selected @endif>Payment Report User</option>
-                                    <option value="Register Email" @if($notification->type == 'Register Email') selected @endif>Register Email</option>
-                                    <option value="Reset Password Mail" @if($notification->type == 'Reset Password Mail') selected @endif>Reset Password Mail</option>
-                                    <option value="Verify Email" @if($notification->type == 'Verify Email') selected @endif>Verify Email</option>
-                                    <option value="W9 Email Admin" @if($notification->type == 'W9 Email Admin') selected @endif>W9 Email Admin</option>
-                                    <option value="W9 Email User" @if($notification->type == 'W9 Email User') selected @endif>W9 Email User</option>
-                                    <option value="Welcome County Email" @if($notification->type == 'Welcome County Email') selected @endif>Welcome County Email</option>
+                                    <option value="MARC Admin" @if($notification->name_form == 'MARC Admin') selected @endif>MARC Admin</option>
+                                    <option value="MARC User" @if($notification->name_form == 'MARC User') selected @endif>MARC User</option>
+                                    <option value="Payment Report Admin" @if($notification->name_form == 'Payment Report Admin') selected @endif>Payment Report Admin</option>
+                                    <option value="Payment Report User" @if($notification->name_form == 'Payment Report User') selected @endif>Payment Report User</option>
+                                    <option value="Register Email" @if($notification->name_form == 'Register Email') selected @endif>Register Email</option>
+                                    <option value="Reset Password Mail" @if($notification->name_form == 'Reset Password Mail') selected @endif>Reset Password Mail</option>
+                                    <option value="Verify Email" @if($notification->name_form == 'Verify Email') selected @endif>Verify Email</option>
+                                    <option value="W9 Email Admin" @if($notification->name_form == 'W9 Email Admin') selected @endif>W9 Email Admin</option>
+                                    <option value="W9 Email User" @if($notification->name_form == 'W9 Email User') selected @endif>W9 Email User</option>
+                                    <option value="Welcome County Email" @if($notification->name_form == 'Welcome County Email') selected @endif>Welcome County Email</option>
                                 </select>
+                                @error('name_form')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
 
@@ -69,18 +72,27 @@
                         <div class="mb-7">
                             <label for="subject" class="form-label">Subject:</label>
                             <textarea class="form-control" name="subject" rows="3" value="{{ $notification->subject }}" required>{{ $notification->subject }}</textarea>
+                            @error('subject')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Input Body -->
                         <div class="mb-7">
                             <label for="body" class="form-label">Body:</label>
                             <textarea class="form-control" name="body" rows="3" value="{{ $notification->body }}" required>{{ $notification->body }}</textarea>
+                            @error('body')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Input Button Title -->
                         <div class="mb-7">
                             <label for="button_title" class="form-label">Button Title:</label>
                             <input type="text" name="button_title" class="form-control" value="{{ $notification->button_title }}" required>
+                            @error('button_title')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>

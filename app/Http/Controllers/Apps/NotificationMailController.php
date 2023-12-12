@@ -35,6 +35,14 @@ class NotificationMailController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name_form' => 'required|string|unique:notification_mails,name_form|max:255',
+            'subject' => 'required|string|max:255',
+            'body' => 'required|string',
+            'button_title' => 'required|string|max:100',
+        ], [
+            'name_form.unique' => 'This form has been used.',
+        ]);
         $notification = new NotificationMail([
             'name_form' => $request->input('name_form'),
             'subject' => $request->input('subject'),
@@ -73,6 +81,14 @@ class NotificationMailController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'name_form' => 'required|string|max:255|unique:notification_mails,name_form,' . $id,
+            'subject' => 'required|string|max:255',
+            'body' => 'required|string',
+            'button_title' => 'required|string|max:100',
+        ], [
+            'name_form.unique' => 'This form has been used.',
+        ]);
         $notification = NotificationMail::findOrFail($id);
         $notification->update([
             'name_form' => $request->input('name_form'),
