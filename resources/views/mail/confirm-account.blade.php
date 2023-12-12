@@ -43,7 +43,7 @@ a<!DOCTYPE html>
             If you didn't create an account, you can safely ignore this email.
         </p> --}}
         <br>
-        <div class="copyright mt-5">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
+        <div class="copyright mt-7">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
     </div>
 </body>
 </html>
