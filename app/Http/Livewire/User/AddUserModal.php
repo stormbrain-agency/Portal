@@ -129,6 +129,7 @@ class AddUserModal extends Component
         $data_send_mail = [
             'name' => $user->first_name,
             'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
+            'first_login' => true
         ];
 
         try {
