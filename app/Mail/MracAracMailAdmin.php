@@ -42,9 +42,9 @@ class MracAracMailAdmin extends Mailable
     {
         $nameForms = NotificationMail::pluck('name_form')->all();
 
-        if (in_array('MARC Admin', $nameForms)) {
+        if (in_array('MRAC ARAC Admin', $nameForms)) {
             foreach ($nameForms as $nameForm) {
-                if ($nameForm === 'MARC Admin') {
+                if ($nameForm === 'MRAC ARAC Admin') {
                     $notificationMail = NotificationMail::where('name_form', $nameForm)->get();
 
                     if ($notificationMail->isNotEmpty()) {
