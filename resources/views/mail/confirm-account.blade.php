@@ -41,10 +41,12 @@
         </p>
         <p>{{ $emailContent['body'] }}</p>
         <br>
-                <a href="{{ $data['link'] }}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
-        {{-- <p>
-            If you didn't create an account, you can safely ignore this email.
-        </p> --}}
+        @if (isset($data['first_login']) && $data['first_login'] == true)
+        <p class="note">
+            <i>"NOTE: please use your email address as the username and password on your first login. You may reset your password in Settings once logged in."</i>
+        </p>
+        @endif
+        <a href="{{ $data['link'] }}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
         <br>
         <div class="copyright mt-7">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
     </div>
