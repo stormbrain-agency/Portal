@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-    <div class="wrap-content mail">
+    <div class="wrap-content">
         <div class="mb-2">
             <a href="https://supplementalratepayment.org/" target="_blank">
                 <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
