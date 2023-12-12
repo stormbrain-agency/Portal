@@ -1,12 +1,5 @@
 <x-default-layout>
-    {{-- @section('title')
-    Monthly Payment notifications_ Submission
-    @endsection --}}
-    {{-- @if(session('success'))
-       <div class="alert alert-success">
-           {{ session('success') }}
-       </div>
-   @endif --}}
+
     <div class="card">
         <!--begin::Card header-->
         <div class="card-header border-0 pt-6">
@@ -47,35 +40,47 @@
                     <div class="mb-7">
                         <label for="name_form" class="form-label">Name of notifications:</label>
                         <select class="form-select" id="name_form" name="name_form">
-                            <option value="1">MARC Admin</option>
-                            <option value="2">MARC User</option>
-                            <option value="3">Payment Report Admin</option>
-                            <option value="4">Payment Report User</option>
-                            <option value="5">Register Email</option>
-                            <option value="6">Reset Password Mail</option>
-                            <option value="7">Verify Email</option>
-                            <option value="8">W9 Email Admin</option>
-                            <option value="9">W9 Email User</option>
-                            <option value="10">Welcome County Email</option>
+                            <option value="MRAC ARAC Admin">MRAC ARAC Admin</option>
+                            <option value="MRAC ARAC User">MRAC ARAC User</option>
+                            <option value="Payment Report Admin">Payment Report Admin</option>
+                            <option value="Payment Report User">Payment Report User</option>
+                            <option value="Register Email">Register Email</option>
+                            <option value="Reset Password Mail">Reset Password Mail</option>
+                            <option value="Verify Email">Verify Email</option>
+                            <option value="W9 Email Admin">W9 Email Admin</option>
+                            <option value="W9 Email User">W9 Email User</option>
+                            <option value="Welcome County Email">Welcome County Email</option>
                         </select>
+                        @error('name_form')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Input Subject -->
                     <div class="mb-7">
                         <label for="subject" class="form-label">Subject:</label>
                         <textarea class="form-control" name="subject" rows="3" required></textarea>
+                        @error('subject')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Input Body -->
                     <div class="mb-7">
                         <label for="body" class="form-label">Body:</label>
                         <textarea class="form-control" name="body" rows="3" required></textarea>
+                        @error('body')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Input Button Title -->
                     <div class="mb-7">
                         <label for="button_title" class="form-label">Button Title:</label>
                         <input type="text" name="button_title" class="form-control" required>
+                        @error('button_title')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <hr>

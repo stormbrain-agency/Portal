@@ -21,9 +21,9 @@ class NotificationsEmailDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('id', function (NotificationMail $notifications) {
-                return '#'.$notifications->id.'';
-            })
+            // ->editColumn('id', function (NotificationMail $notifications) {
+            //     return '#'.$notifications->id.'';
+            // })
             ->editColumn('name_form', function (NotificationMail $notifications) {
                 return $notifications->name_form;
             })
@@ -75,7 +75,7 @@ class NotificationsEmailDataTable extends DataTable
     {
         //view layout
         return [
-            Column::make('id')->title('ID')->orderable(true)->searchable(true)->addClass('fw-bold col-id'),
+            // Column::make('id')->title('ID')->orderable(true)->searchable(true)->addClass('fw-bold col-id'),
             Column::make('name_form')->title('Name of Notifications')->orderable(true)->searchable(true)->addClass('fw-bold col-name-form'),
             Column::make('subject')->title('Subject')->orderable(true)->searchable(true)->addClass('fw-bold col-subject'),
             Column::make('body')->title('Body')->orderable(true)->searchable(true)->addClass('fw-bold col-body'),

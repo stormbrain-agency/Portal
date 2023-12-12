@@ -38,10 +38,10 @@ class PasswordResetLinkController extends Controller
         $request->validate(['email' => 'required|email']);
  
         $user = User::where('email', $request->email)->first();
-
+        
         if ($user) {
             $token = Password::createToken($user);
-            $actionUrl = url(config('app.url').route('password.reset', ['token' => $token, 'email' => $request->email], false));
+            $actionUrl = url(route('password.reset', ['token' => $token, 'email' => $request->email], false));
 
             Mail::to($request->email)->send(new ResetPasswordMail($actionUrl));
 
