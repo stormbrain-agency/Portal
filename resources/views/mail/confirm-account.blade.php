@@ -29,7 +29,7 @@
     </style>
 </head>
 <body>
-    <div class="wrap-content mail">
+    <div class="wrap-content">
         <div class="mb-2">
             <a href="https://supplementalratepayment.org/" target="_blank">
                 <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
@@ -41,12 +41,14 @@
         </p>
         <p>{{ $emailContent['body'] }}</p>
         <br>
-                <a href="{{ $data['link'] }}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
-        {{-- <p>
-            If you didn't create an account, you can safely ignore this email.
-        </p> --}}
-        <br>
-        <div class="copyright mt-7">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
+        @if (isset($data['first_login']) && $data['first_login'] == true)
+        <p class="note">
+            <i>"NOTE: please use your email address as the username and password on your first login. You may reset your password in Settings once logged in."</i>
+        </p>
+        @endif
+        <a href="{{ $data['link'] }}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
     </div>
+    <br>
+    <div class="copyright">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
 </body>
 </html>
