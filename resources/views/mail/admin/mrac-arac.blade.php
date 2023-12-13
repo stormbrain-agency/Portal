@@ -27,7 +27,7 @@
     </style>
 </head>
 <body>
-    <div class="wrap-content" style="color: #000000;">
+    <div class="wrap-content mail" style="color: #000000;">
         <div class="mb-2">
             <a href="https://supplementalratepayment.org/" target="_blank">
                 <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
@@ -45,6 +45,6 @@
         <p><a href="{{ url('/county-mrac-arac')}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a></p>
     </div>
     <br>
-    <div class="copyright">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
+    <div class="copyright mt-7">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</div>
 </body>
 </html>
