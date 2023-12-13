@@ -43,7 +43,7 @@
         text-decoration: none;
         border-radius: 3px;
     }
-    /* .note{
-        margin-bottom: 20px;
-    } */
+    .note{
+        margin-top: 10px;
+    }
 </style>

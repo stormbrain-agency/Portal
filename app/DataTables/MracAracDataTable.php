@@ -74,12 +74,14 @@ class MracAracDataTable extends DataTable
         $startDate = request()->query('startDate');
         $endDate = request()->query('endDate');
         
-        if ($startDate && $endDate) {
-            $query->whereBetween('mrac_arac.created_at', [
-                $startDate,
-                $endDate,
-            ]);
+        if ($startDate) {
+            $query->where('mrac_arac.created_at', '>=', $startDate);
         }
+
+        if ($endDate) {
+            $query->where('mrac_arac.created_at', '<=', $endDate);
+        }
+
         return $query;
     }
 
@@ -156,10 +158,6 @@ public function csv()
         ->header('Content-type', 'text/csv')
         ->header('Content-Disposition', "attachment; filename=$csvFileName");
 }
-
-
-
-
 
 
     /**

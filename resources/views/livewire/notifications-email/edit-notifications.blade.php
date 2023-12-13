@@ -51,8 +51,8 @@
                             <div class="d-flex flex-column flex-grow-1">
                                 <label for="name_form" class="form-label">Name of notification:</label>
                                 <select class="form-select" id="name_form" name="name_form">
-                                    <option value="MRAC ARAC Admin" @if($notification->name_form == 'MRAC ARAC Admin') selected @endif>MRAC ARAC Admin</option>
-                                    <option value="MRAC ARAC User" @if($notification->name_form == 'MRAC ARAC User') selected @endif>MRAC ARAC User</option>
+                                    <option value="MRAC/ARAC Admin" @if($notification->name_form == 'MRAC/ARAC Admin') selected @endif>MRAC/ARAC Admin</option>
+                                    <option value="MRAC/ARAC User" @if($notification->name_form == 'MRAC/ARAC User') selected @endif>MRAC/ARAC User</option>
                                     <option value="Payment Report Admin" @if($notification->name_form == 'Payment Report Admin') selected @endif>Payment Report Admin</option>
                                     <option value="Payment Report User" @if($notification->name_form == 'Payment Report User') selected @endif>Payment Report User</option>
                                     <option value="Register Email" @if($notification->name_form == 'Register Email') selected @endif>Register Email</option>
