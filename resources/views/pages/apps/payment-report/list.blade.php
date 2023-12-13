@@ -54,12 +54,6 @@
                     UPLOAD NEW PAYMENT REPORT
                 </a>
                 @endif
-                {{-- @if(auth()->user()->hasRole('admin'))
-                    <a href="{{route("county-provider-payment-report.template")}}" class="btn btn-primary">
-                        {!! getIcon('file', 'fs-2', '', 'i') !!}
-                        TEMPLATE
-                    </a>
-                @endif --}}
                 <!--end::Add user-->
             </div>
             <!--end::Toolbar-->
@@ -123,20 +117,6 @@
                 var endDate = picker.endDate.format('YYYY-MM-DD');
 
                 window.location.href = '/county-provider-payment-report/?startDate=' + startDate + '&endDate=' + endDate;
-                //  $.ajax({
-                //     url: '/county-mrac-arac/',
-                //     method: 'GET',
-                //     data: {
-                //         startDate: startDate,
-                //         endDate: endDate
-                //     },
-                //     success: function (response) {
-                //         window.LaravelDataTables['mrac_arac-table'].draw();
-                //     },
-                //     error: function (error) {
-                //         console.error(error);
-                //     }
-                // });
             });
 
             function getParameterByName(name, url = window.location.href) {

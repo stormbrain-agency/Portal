@@ -100,21 +100,48 @@
         </script>
         <script>
          $(document).ready(function () {
+            var startDateParam = getParameterByName('startDate');
+            var endDateParam = getParameterByName('endDate');
+
+            var startDate = startDateParam ? moment(startDateParam) : moment();
+            var endDate = endDateParam ? moment(endDateParam) : moment();
             $("#kt_daterangepicker_1").daterangepicker({
-                singleDatePicker: true,
+                startDate: startDate,
+                endDate: endDate,
                 showDropdowns: true,
                 minYear: 2022,
                 maxYear: 2026,
                 locale: {
-                    format: 'YYYY-MM-DD',
+                    format: 'YYYY-MM-DD', 
                     placeholder: 'Pick a day'
                 }
-                }, function(start, end) {
-                    window.LaravelDataTables['mrac_arac-table'].column('created_at:name').search(start.format('YYYY-MM-DD')).draw();            
+            });
+            $('#kt_daterangepicker_1').on('apply.daterangepicker', function(ev, picker) {
+                var startDate = picker.startDate.format('YYYY-MM-DD');
+                var endDate = picker.endDate.format('YYYY-MM-DD');
+
+                window.location.href = '/county-mrac-arac/?startDate=' + startDate + '&endDate=' + endDate;
             });
 
+            function getParameterByName(name, url = window.location.href) {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+
+            function updateUrlParams(startDate, endDate) {
+                var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname +
+                    '?startDate=' + startDate +
+                    '&endDate=' + endDate;
+
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
+
             function clearDateFilter() {
-                window.LaravelDataTables['mrac_arac-table'].column('created_at:name').search('').draw();
+                window.location.href = '/county-mrac-arac/';
             }
 
             $('.daterangepicker .cancelBtn').on('click', function(){
