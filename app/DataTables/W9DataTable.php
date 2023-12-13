@@ -77,6 +77,17 @@ class W9DataTable extends DataTable
         if (auth()->user()->hasRole('county user')) {
             $query->where('users.id', auth()->user()->id);
         }
+
+        $startDate = request()->get('startDate');
+        $endDate = request()->get('endDate');
+
+        if ($startDate) {
+            $query->where('w9_upload.created_at', '>=', $startDate);
+        }
+
+        if ($endDate) {
+            $query->where('w9_upload.created_at', '<=', $endDate);
+        }
         
         return $query;
     }
