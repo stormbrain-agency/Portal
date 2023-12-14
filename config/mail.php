@@ -35,11 +35,11 @@ return [
 
     'mailers' => [
         'smtp' => [
-            'transport' => 'smtp',
-            'host' => 'smtp.sendgrid.net',
-            'port' => 587,
+            'transport' => env('MAIL_MAILER'),
+            'host' => env('MAIL_HOST'),
+            'port' => env('REDIS_PORT'),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => 'apikey',
+            'username' => env('MAIL_USERNAME'),
             'password' => env('SENDGRID_API_KEY'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
