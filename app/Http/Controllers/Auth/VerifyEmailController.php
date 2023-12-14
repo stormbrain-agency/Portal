@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Mail\WelcomeCountyEmail;
+use Illuminate\Support\Facades\Password;
 class VerifyEmailController extends Controller
 {
     /**
@@ -42,8 +43,12 @@ class VerifyEmailController extends Controller
                     $user->email_verified_at = now();
                     $user->email_verification_hash = null;
                     $user->save();
-                    // $this->welcome_email($user);
-    
+                    if($user->first_login == true || $user->first_login == 1){
+                        $token = Password::createToken($user);
+                        $user->first_login = false;
+                        $user->save();
+                        return redirect()->route('password.reset', ['token' => $token, 'email' => $user->email]);
+                    }
                     return redirect()->route('dashboard')->with('success', 'Email has been successfully verified.');
                 } else {
                     return redirect()->route('verification.notice')->with('error', 'The verification link is not valid.');

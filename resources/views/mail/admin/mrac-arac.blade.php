@@ -10,8 +10,13 @@
     @include('mail.styles.style')
 </head>
 <body>
+<<<<<<< HEAD
+    <div class="wrap-content mail" style="color: #000000;">
+        <div class="mb-2">
+=======
     <div class="body">
         <div class="mb-2 logo-wrapper">
+>>>>>>> b68979b72277fa54f3835d7bf0e3e0641db723a7
             <a href="https://supplementalratepayment.org/" target="_blank">
                 <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
             </a>
