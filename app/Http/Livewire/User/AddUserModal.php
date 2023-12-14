@@ -119,6 +119,7 @@ class AddUserModal extends Component
         $data = $this->prepareUserData();
         $data['password'] = Hash::make($this->email);
         $data['status'] = 1;
+        $data['first_login'] = true;
         $user = User::create($data);
 
         $user->assignRole($this->role);

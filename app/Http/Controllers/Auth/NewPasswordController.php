@@ -61,6 +61,10 @@ class NewPasswordController extends Controller
                     'remember_token' => Str::random(60),
                 ])->save();
 
+                if ($user->first_login == true || $user->first_login == 1) {
+                    $user->update(['first_login' => false]);
+                }
+
                 event(new PasswordReset($user));
             }
         );
