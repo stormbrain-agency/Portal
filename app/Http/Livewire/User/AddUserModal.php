@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 use App\Mail\VerifyEmail;
 
 class AddUserModal extends Component
@@ -137,6 +139,7 @@ class AddUserModal extends Component
             Mail::to($user->email)->send(new VerifyEmail($data_send_mail));
             $this->emit('success', __('User created successfully'));
         } catch (\Exception $e) {
+            Log::error('Error sending email to user: ' . $e->getMessage());
             $this->emit('error', 'User created successfully. However, an error occurred while sending the email verification!');
         }
     }

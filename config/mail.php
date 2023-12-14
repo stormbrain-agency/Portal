@@ -93,7 +93,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'noreply@supplementalratepayment.org'),
-        'name' => env('MAIL_FROM_NAME', 'CDA'),
+        'name' => env('MAIL_FROM_NAME', 'Supplemental Rate Payment Program'),
     ],
 
     /*

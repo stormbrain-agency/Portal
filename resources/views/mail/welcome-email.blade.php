@@ -5,46 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $emailContent['subject'] }}</title>
-    @include('mail.styles.style')
 </head>
-<body>
-    <div class="body">
-        <div class="mb-2 logo-wrapper">
-            <a href="https://supplementalratepayment.org/" target="_blank">
-                <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo">
-            </a>
-        </div>
-        <div class="wrap-content mail" style="color: #000000;">
-            <p>
-                <b>Welcome, {{$data['name']}}!</b>
-            </p>
-            {{ $emailContent['body'] }}
-            {{-- <p>Congratulations! You are now part of the Supplemental Rate Payment Program.</p>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-            <ul style="color: #002559;">
-                <li>Proin eu metus eu est tincidunt auctor.</li>
-                <li>Integer vitae elit nec justo bibendum fermentum.</li>
-                <li>Curabitur sit amet libero in urna tristique laoreet.</li>
-            </ul>
-
-            <ol style="color: #002559;">
-                <li>Duis condimentum urna in lacus sagittis, vitae fringilla odio fermentum.</li>
-                <li>Vivamus eu nisi ac justo congue pulvinar.</li>
-                <li>Fusce auctor justo eu metus vehicula, vitae laoreet purus imperdiet.</li>
-            </ol> --}}
-
-            <p>
-                <a href="{{$data['link']}}" target="_blank" class="btn-confirm">{{ $emailContent['button_title'] }}</a>
-            </p>
-        </div> 
-        <div class="copyright">
-            <p>
-                ©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.
-            </p>
-        </div>
-    </div>
-   
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #F1F3F8;">
+    <table role="presentation" align="center" cellspacing="0" cellpadding="0" width="100%" style="border-collapse: collapse; max-width: 600px; margin: auto; background-color: #F1F3F8;">
+        <tr>
+            <td style="padding: 40px; margin-top:40px;">
+                <div style="text-align: center;">
+                    <a href="https://supplementalratepayment.org/" target="_blank">
+                        <img width="186px" src="{{ $message->embedData(file_get_contents(public_path('libs/images/logo.png')), 'logo.png', 'image/png') }}" alt="Logo" style="max-width: 100%; height: auto;">
+                    </a>
+                </div>
+                <div style="border-radius: 5px; color: #000000; line-height: 1.6; background-color: #FFFFFF; border: 1px solid #f1f1f1; padding: 20px; box-shadow: 1px 1px 5px 1px #f1f1f1; margin-top: 20px; text-align: left; width: 100%;">
+                    <p style="color: #000000;">
+                        <b>Welcome, {{$data['name']}}!</b>
+                    </p>
+                    <p style="color: #000000;">{{ $emailContent['body'] }}</p>
+                  
+                    <p><a href="{{$data['link']}}" style="display: inline-block; cursor: pointer; padding: 7px 12px; background-color: #002559; color: #FFFFFF; font-size: 14px; font-weight: 500; text-decoration: none; border-radius: 3px; margin-top: 15px;" target="_blank" >{{ $emailContent['button_title'] }}</a></p>
+                </div>
+                <p style="color: #b7b7b7; font-size: 12px; margin-top: 20px; text-align: center;">©️ 2023 Supplemental Rate Payment Program | CDA. All rights reserved.</p>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
