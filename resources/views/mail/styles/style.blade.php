@@ -4,6 +4,7 @@
         padding: 40px;
         display: flex;
         flex-direction: column;
+        flex-flow: column;
         align-items: center;
     }
     .logo-wrapper{
