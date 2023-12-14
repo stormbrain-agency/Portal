@@ -37,7 +37,7 @@ return [
         'smtp' => [
             'transport' => env('MAIL_MAILER'),
             'host' => env('MAIL_HOST'),
-            'port' => env('REDIS_PORT'),
+            'port' => env('MAIL_PORT'),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('SENDGRID_API_KEY'),
