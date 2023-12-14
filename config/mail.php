@@ -43,7 +43,6 @@ return [
             'password' => env('SENDGRID_API_KEY'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
-            
         ],
 
         'ses' => [
