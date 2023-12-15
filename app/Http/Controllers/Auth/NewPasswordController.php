@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Auth;
 
 class NewPasswordController extends Controller
 {
@@ -21,7 +22,19 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request)
     {
-        // addJavascriptFile('assets/js/custom/authentication/reset-password/new-password.js');
+        if ($request->has('first_login')) {
+            $firstLogin = $request->input('first_login');
+
+            if ($request->has('email')) {
+                $user = User::where('email', $request->input('email'))->first();
+                if ($user) {
+                    if ($user->first_login != $firstLogin) {
+                        return redirect()->route('dashboard')->with('error', 'Your email has been previously verified.');
+                    }
+                }
+            }
+        }
+       
         return view('pages.auth.reset-password', ['request' => $request]);
     }
 
@@ -62,7 +75,11 @@ class NewPasswordController extends Controller
                 ])->save();
 
                 if ($user->first_login == true || $user->first_login == 1) {
-                    $user->update(['first_login' => false]);
+                    $user->first_login = false;
+                    $user->email_verified_at = now();
+                    $user->email_verification_hash = null;
+                    $user->save();
+                    Auth::login($user);
                 }
 
                 event(new PasswordReset($user));
