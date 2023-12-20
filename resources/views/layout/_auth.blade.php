@@ -52,8 +52,8 @@
 
                     <!--begin::Title-->
                     <h1 class="d-none d-lg-block text-white fs-1 fw-medium text-center mb-7">
-                        Subsidy Payments for<br>
-                        Child Care Providers
+                        Supplemental Payments for<br>
+                        Subsidy Providers
                     </h1>
                     <!--end::Title-->
 
