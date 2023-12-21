@@ -31,7 +31,7 @@
 						<span class="menu-title">County Provider Payment Report</span>
 					</a>
 				</div>
-				<!-- MRAC/ARAC -->
+				<!-- mRec/aRec -->
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
 						<span class="menu-icon">{!! getIcon('graph-up', 'fs-1') !!}</span>
@@ -154,7 +154,7 @@
 						</div>
 					</div>
 				</div>
-				{{-- MRAC/ARAC --}}
+				{{-- mRec/aRec --}}
 				<div class="menu-item menu-accordion {{ request()->routeIs('county-mrac-arac.*') ? 'hover show' : '' }}">
 					<span class="menu-link">
 						<span class="menu-icon">{!! getIcon('graph-up', 'fs-1') !!}</span>
