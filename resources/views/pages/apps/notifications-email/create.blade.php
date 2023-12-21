@@ -40,8 +40,8 @@
                     <div class="mb-7">
                         <label for="name_form" class="form-label">Name of notifications:</label>
                         <select class="form-select" id="name_form" name="name_form">
-                            <option value="MRAC/ARAC Admin">MRec/ARec Admin</option>
-                            <option value="MRAC/ARAC User">MRec/ARec User</option>
+                            <option value="MRAC/ARAC Admin">mRec/aRec Admin</option>
+                            <option value="MRAC/ARAC User">mRec/aRec User</option>
                             <option value="Payment Report Admin">Payment Report Admin</option>
                             <option value="Payment Report User">Payment Report User</option>
                             <option value="Register Email">Register Email</option>

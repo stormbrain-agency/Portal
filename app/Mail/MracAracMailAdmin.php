@@ -58,8 +58,8 @@ class MracAracMailAdmin extends Mailable
             }
         }
         return [
-            'subject' => 'Alert: MRAC/ARAC Submission Received',
-            'body' => 'This alert is to notify you that a MRAC/ARAC submission has ben received. The details of the submission are as follows:',
+            'subject' => 'Alert: mRec/aRec Submission Received',
+            'body' => 'This alert is to notify you that a mRec/aRec submission has ben received. The details of the submission are as follows:',
             'button_title' => 'View Submission History',
         ];
     }

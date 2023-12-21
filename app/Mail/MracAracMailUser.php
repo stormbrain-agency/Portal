@@ -58,8 +58,8 @@ class MracAracMailUser extends Mailable
             }
         }
         return [
-            'subject' => 'Confirmation: MRAC/ARAC Submission Received',
-            'body' => 'We have received your MRAC/ARAC submission. The details of the submission are as follows:',
+            'subject' => 'Confirmation: mRec/aRec Submission Received',
+            'body' => 'We have received your mRec/aRec submission. The details of the submission are as follows:',
             'button_title' => 'View Submission History',
         ];
     }
