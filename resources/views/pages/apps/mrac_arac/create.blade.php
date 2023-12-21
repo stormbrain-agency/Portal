@@ -60,7 +60,7 @@ line-height: 16px;
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                Submit MRAC/ARAC
+                Submit MRec/ARec
             </div>
             <!--begin::Card toolbar-->
             <div class="card-toolbar gx-10 d-flex" style="gap: 20px">
@@ -134,7 +134,7 @@ line-height: 16px;
                             <div class="dz-message needsclick text-center justify-content-center w-50 mx-auto">
                                 <!--begin::Info-->
                                 <div class="ms-4">
-                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload MRAC/ARAC Files</h3>
+                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload MRec/ARec Files</h3>
                                     <p class="fs-7 fw-semibold text-gray-500 drop-zone__prompt">Drag & Drop or <span class="text-decoration-underline">choose files</span> from computer</p>
                                     <p class="fs-7 fw-semibold text-gray-500 font-italic">
                                         <i>

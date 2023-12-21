@@ -12,9 +12,9 @@
             <!--begin::Card title-->
             <div class="card-title">
                 @if(!auth()->user()->hasRole('county user'))
-                    County MRAC/ARAC Submissions
+                    County MRec/ARec Submissions
                 @else
-                    MRAC/ARAC | Submission History
+                    MRec/ARec | Submission History
                 @endif
             </div>
             <!--begin::Card title-->
@@ -52,7 +52,7 @@
                 @if(auth()->user()->hasRole('county user'))
                 <a href="{{route("county-mrac-arac.create")}}" class="btn btn-primary">
                     {!! getIcon('file', 'fs-2', '', 'i') !!}
-                    UPLOAD NEW MRAC/ARAC
+                    UPLOAD NEW MRec/ARec
                 </a>
                 @endif
                 {{-- @if(auth()->user()->hasRole('admin'))

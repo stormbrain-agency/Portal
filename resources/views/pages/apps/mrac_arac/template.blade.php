@@ -60,7 +60,7 @@ line-height: 16px;
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                MRAC/ARAC Submission Template
+                MRec/ARec Submission Template
             </div>
         </div>
         <!--end::Card header-->
@@ -112,7 +112,7 @@ line-height: 16px;
                             <div class="dz-message needsclick text-center justify-content-center w-50 mx-auto">
                                 <!--begin::Info-->
                                 <div class="ms-4">
-                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload Template File of MRAC/ARAC Submission (file).</h3>
+                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload Template File of MRec/ARec Submission (file).</h3>
                                     <p class="fs-7 fw-semibold text-gray-500 drop-zone__prompt">Drag & Drop or choose files from computer</p>
                                     <p class="fs-7 fw-semibold text-gray-500 font-italic">
                                         {{-- <i>

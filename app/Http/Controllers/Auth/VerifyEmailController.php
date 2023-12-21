@@ -61,6 +61,37 @@ class VerifyEmailController extends Controller
         }
     }
 
+    public function verify_first_login($id, $hash, $first_login)
+    {
+        if (isset($first_login) && $first_login == true) {
+            $user = User::find($id);
+            if (isset($user)) {
+                if (!$user->isEmailVerified()) {
+                    if ($user->email_verification_hash === $hash) {
+                        if($user->first_login == true || $user->first_login == 1){
+                            $token = Password::createToken($user);
+                            return redirect()->route('password.reset', ['token' => $token, 'email' => $user->email]);
+                        }else{
+                            return redirect()->route('login')->with('error', 'Your email has been previously verified.');
+                        }
+                    } else {
+                        return redirect()->route('verification.notice')->with('error', 'The verification link is not valid.');
+                    }
+                }else {
+                    if (auth()->check()) {
+                        return redirect()->route('dashboard')->with('error', 'Your email has been previously verified.');
+                    } else {
+                        return redirect()->route('login')->with('error', 'Your email has been previously verified.');
+                    }
+                }
+            }else{
+                return redirect()->route('login')->with('error', 'User not found.');
+            }
+        }else{
+            return redirect()->route('login')->with('error', 'Link is incorrect.');
+        }
+    
+    }
     public function welcome_email($user){
         $data = [
             "id" => $user->id,

@@ -25,6 +25,8 @@ Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
 
 Route::post('reset-password', [NewPasswordController::class, 'store'])
             ->name('password.update');
+Route::get('verify-email-first-user/{id}/{hash}/{first_login}', [VerifyEmailController::class, 'verify_first_login'])
+            ->name('verification.verify_first');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
