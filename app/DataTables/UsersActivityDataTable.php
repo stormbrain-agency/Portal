@@ -57,7 +57,7 @@ class UsersActivityDataTable extends DataTable
         'users.id as user_id',
         'users.email',
         DB::raw("'submit' AS action"),
-        DB::raw('CASE WHEN w9_upload.id IS NOT NULL THEN "County W9" WHEN payment_report.id IS NOT NULL THEN "Payment Report" WHEN mrac_arac.id IS NOT NULL THEN "Mrac Arac" END AS fc'),
+        DB::raw('CASE WHEN w9_upload.id IS NOT NULL THEN "County W9" WHEN payment_report.id IS NOT NULL THEN "Payment Report" WHEN mrac_arac.id IS NOT NULL THEN "mRec/aRec" END AS fc'),
         'users.first_name',
         'users.last_name',
         'w9_upload.created_at AS time'
@@ -82,7 +82,7 @@ class UsersActivityDataTable extends DataTable
             'users.id as user_id',
             'users.email',
             DB::raw("'submit'"),
-            DB::raw("'Mrac Arac'"),
+            DB::raw("'mRec/aRec'"),
             'users.first_name',
             'users.last_name',
             'mrac_arac.created_at AS time'
@@ -120,7 +120,7 @@ class UsersActivityDataTable extends DataTable
             'users.id as user_id',
             'users.email',
             DB::raw("'download'"),
-            DB::raw("'Mrac Arac'"),
+            DB::raw("'mRec/aRec'"),
             'users.first_name',
             'users.last_name',
             'mrac_arac_download_history.created_at AS time'
@@ -134,7 +134,7 @@ class UsersActivityDataTable extends DataTable
             'users.id as user_id',
             'users.email',
             DB::raw("'submit' AS action"),
-            DB::raw('CASE WHEN w9_upload.id IS NOT NULL THEN "County W9" WHEN payment_report.id IS NOT NULL THEN "Payment Report" WHEN mrac_arac.id IS NOT NULL THEN "Mrac Arac" END AS fc'),
+            DB::raw('CASE WHEN w9_upload.id IS NOT NULL THEN "County W9" WHEN payment_report.id IS NOT NULL THEN "Payment Report" WHEN mrac_arac.id IS NOT NULL THEN "mRec/aRec" END AS fc'),
             'users.first_name',
             'users.last_name',
             'w9_upload.created_at AS time'
@@ -161,7 +161,7 @@ class UsersActivityDataTable extends DataTable
             'users.id as user_id',
             'users.email',
             DB::raw("'submit'"),
-            DB::raw("'Mrac Arac'"),
+            DB::raw("'mRec/aRec'"),
             'users.first_name',
             'users.last_name',
             'mrac_arac.created_at AS time'
@@ -202,7 +202,7 @@ class UsersActivityDataTable extends DataTable
             'users.id as user_id',
             'users.email',
             DB::raw("'download'"),
-            DB::raw("'Mrac Arac'"),
+            DB::raw("'mRec/aRec'"),
             'users.first_name',
             'users.last_name',
             'mrac_arac_download_history.created_at AS time'
