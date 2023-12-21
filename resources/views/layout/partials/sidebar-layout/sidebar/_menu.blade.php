@@ -35,7 +35,7 @@
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
 						<span class="menu-icon">{!! getIcon('graph-up', 'fs-1') !!}</span>
-						<span class="menu-title">County MRec/ARec</span>
+						<span class="menu-title">County mRec/aRec</span>
 					</a>
 				</div>
 				<!-- Notifications -->
@@ -158,13 +158,13 @@
 				<div class="menu-item menu-accordion {{ request()->routeIs('county-mrac-arac.*') ? 'hover show' : '' }}">
 					<span class="menu-link">
 						<span class="menu-icon">{!! getIcon('graph-up', 'fs-1') !!}</span>
-						<a href="{{ route('county-mrac-arac.create') }}" class="menu-title">MRec/ARec</a>
+						<a href="{{ route('county-mrac-arac.create') }}" class="menu-title">mRec/aRec</a>
 						<span class="menu-arrow"></span>
 					</span>
 					<div class="menu-sub menu-sub-accordion">
 						<div class="menu-item">
 							<a class="menu-link {{ request()->routeIs('county-mrac-arac.create') ? 'active' : '' }}" href="{{ route('county-mrac-arac.create') }}">
-								<span class="menu-title">Submit MRec/ARec</span>
+								<span class="menu-title">Submit mRec/aRec</span>
 							</a>
 						</div>
 						<div class="menu-item">
