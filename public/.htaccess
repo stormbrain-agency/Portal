@@ -1,7 +1,3 @@
-AuthType Basic
-AuthName "Protected 'cdaportal.stormbra.in'"
-AuthUserFile "/home/master/applications/zhyxzyvwfq/public_html/public/passwd"
-Require valid-user
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes

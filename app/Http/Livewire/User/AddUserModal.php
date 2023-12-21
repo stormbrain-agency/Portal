@@ -126,12 +126,14 @@ class AddUserModal extends Component
 
         $user->assignRole($this->role);
         $user->email_verification_hash = md5(uniqid());
-        // $user->email_verified_at = now();
         $user->save();
+
+        $token = Password::createToken($user);
+        $actionUrl = url(route('password.reset', ['token' => $token, 'email' => $user->email, 'first_login' => true], false));
 
         $data_send_mail = [
             'name' => $user->first_name,
-            'link' => route('verification.verify', ['id' => $user->id, 'hash' => $user->email_verification_hash]),
+            'link' => $actionUrl,
             'first_login' => true
         ];
 
