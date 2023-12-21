@@ -137,7 +137,7 @@
                 <!--end:::Tab item-->
                 <!--begin:::Tab item-->
                 <li class="nav-item">
-                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_mrac_arac">MRAC/ARAC</a>
+                    <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_user_view_mrac_arac">mRec/aRec</a>
                 </li>
                 <!--end:::Tab item-->
                 <!--end:::Tab item-->
