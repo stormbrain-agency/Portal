@@ -128,9 +128,10 @@ class AddUserModal extends Component
         $user->email_verification_hash = md5(uniqid());
         $user->save();
 
-        $token = Password::createToken($user);
-        $actionUrl = url(route('password.reset', ['token' => $token, 'email' => $user->email, 'first_login' => true], false));
-
+        // $tokenExpiration = 60 * 24 * 365 * 3;
+        // $token = Password::createToken($user, ['expires' => now()->addMinutes($tokenExpiration)]);
+        // $actionUrl = url(route('password.reset', ['token' => $token, 'email' => $user->email, 'first_login' => true], false));
+        $actionUrl = url(route('verification.verify_first', ['id' => $user->id, 'hash' => $user->email_verification_hash, 'first_login' => true]));
         $data_send_mail = [
             'name' => $user->first_name,
             'link' => $actionUrl,
