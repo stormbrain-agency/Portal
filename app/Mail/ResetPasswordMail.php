@@ -9,17 +9,20 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\NotificationMail;
+use Illuminate\Support\Facades\Config;
 
 class ResetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
     public $actionUrl;
+    public $expirationTime;
     /**
      * Create a new message instance.
      */
     public function __construct($actionUrl)
     {
         $this->actionUrl = $actionUrl;
+        $this->expirationTime = Config::get('auth.passwords.users.expire');
     }
 
     /**
@@ -75,6 +78,7 @@ class ResetPasswordMail extends Mailable
             with: [
                 'actionUrl' => $this->actionUrl,
                 'emailContent' => $emailContent,
+                'expirationTime' => $this->expirationTime
             ]
         );
     }
