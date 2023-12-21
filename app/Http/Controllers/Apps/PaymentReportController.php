@@ -231,7 +231,7 @@ class PaymentReportController extends Controller
         if (file_exists($path)) {
             return response()->download($path);
         }else {
-            return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
+            return redirect()->back()->with('error', 'mRec/aRec Template File not found.');
         }
     }
     public function downloadAllFiles($payment_id)

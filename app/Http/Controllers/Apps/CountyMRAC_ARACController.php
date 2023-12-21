@@ -104,7 +104,7 @@ class CountyMRAC_ARACController extends Controller
         // try {
         //     Mail::send('mail.admin.mrac-arac', $data, function ($message) use ($adminEmails) {
         //         $message->to($adminEmails);
-        //         $message->subject('Alert: MRAC/ARAC Submission Received');
+        //         $message->subject('Alert: mRec/aRec Submission Received');
         //     });
         // } catch (\Exception $e) {
         //     Log::error('Error sending email to admins: ' . $e->getMessage());
@@ -206,10 +206,10 @@ class CountyMRAC_ARACController extends Controller
             if (file_exists($file)) {
                 return response()->download($file);
             } else {
-                return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
+                return redirect()->back()->with('error', 'mRec/aRec Template File not found.');
             }
         }else {
-                return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
+                return redirect()->back()->with('error', 'mRec/aRec Template File not found.');
             }
     }
 
@@ -221,7 +221,7 @@ class CountyMRAC_ARACController extends Controller
         if (file_exists($path)) {
             return response()->download($path);
         }else {
-            return redirect()->back()->with('error', 'MRAC/ARAC Template File not found.');
+            return redirect()->back()->with('error', 'mRec/aRec Template File not found.');
         }
     }
 }

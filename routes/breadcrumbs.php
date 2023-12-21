@@ -77,7 +77,7 @@ Breadcrumbs::for('county-provider-payment-report.index', function (BreadcrumbTra
 // Home > Dashboard > County MRAC/ARAC Submissions
 Breadcrumbs::for('county-mrac-arac.index', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push('County MRAC/ARAC Submissions', route('county-mrac-arac.index'));
+    $trail->push('County mRec/aRec Submissions', route('county-mrac-arac.index'));
 });
 
 // ---------------------------------------------
