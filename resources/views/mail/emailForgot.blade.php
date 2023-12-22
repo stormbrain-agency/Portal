@@ -18,9 +18,6 @@
                 <div style="border-radius: 5px; color: #000000; line-height: 1.6; background-color: #FFFFFF; border: 1px solid #f1f1f1; padding: 20px; box-shadow: 1px 1px 5px 1px #f1f1f1; margin-top: 20px; text-align: left; width: 100%;">
                     <p style="color: #000000;">You have requested to reset your password for your {{ config('app.name') }} account.</p>
                     <p style="color: #000000;">{{ $emailContent['body'] }}</p>
-                    @if (isset($expirationTime) && !empty($expirationTime))
-                        <p style="color: #000000; font-size: 12px; margin: 0 0 15px;"><i>This password reset link will expire in {{$expirationTime}} minutes.</i></p>
-                    @endif
                     <p>
                         <a style="display: inline-block; cursor: pointer; padding: 7px 12px; background-color: #002559; color: #FFFFFF; font-size: 14px; font-weight: 500; text-decoration: none; border-radius: 3px; margin-top: 15px;" href="{{$actionUrl}}" target="_blank">{{ $emailContent['button_title'] }}</a>
                     </p>
