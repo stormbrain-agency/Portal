@@ -116,8 +116,6 @@
             <div class="row">
                 <div class="col-6">
                     <input type="text" readonly placeholder="California" class="form-control bg-transparent"/>
-
-                    
                 </div>
                 <div class="col-6">
                     <select id="county_option" name="county_designation" class="form-control bg-transparent">
@@ -179,28 +177,4 @@
         <!--end::Sign up-->
     </form>
     <!--end::Form-->
-   @push('scripts')
-    <script>
-        document.getElementById('state_option').addEventListener('change', function() {
-        var stateId = this.value;
-        var countyDropdown = document.getElementById('county_option');
-
-        countyDropdown.innerHTML = '<option value="">Select County</option>';
-
-        if (stateId) {
-            fetch('/get-counties/' + stateId)
-                .then(response => response.json())
-                .then(counties => {
-                    counties.forEach(county => {
-                        var option = document.createElement('option');
-                        option.value = county.county_fips; 
-                        option.text = county.county_full; 
-                        countyDropdown.add(option);
-                    });
-                });
-        }
-    });
-   
-    </script>
-@endpush
 </x-auth-layout>
