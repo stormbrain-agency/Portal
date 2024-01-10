@@ -75,7 +75,7 @@ class AddUserModal extends Component
     public function render()
     {
         $roles = Role::all();
-        $this->states = State::all();
+        $this->countyDropdown = County::where("state_id", "=", "CA")->orderBy('county')->get();
         $roles_description = [
             'admin2' => 'Best for business owners and company administrators',
             'developer' => 'Best for developers or people primarily using the API',
@@ -239,11 +239,11 @@ class AddUserModal extends Component
         $this->edit_mode = true;
 
         $user = User::find($id);
-        $this->county = County::where("county_fips", $user->county_designation)->first();
-        if ($this->county) {
-            $this->stateChose = $this->county->state_id;
-            $this->updateCountyDropdown();
-        }
+        // $this->county = County::where("county_fips", $user->county_designation)->first();
+        // if ($this->county) {
+        //     $this->stateChose = $this->county->state_id;
+        //     $this->updateCountyDropdown();
+        // }
         $this->idUser = $user->id;
         $this->first_name = $user->first_name;
         $this->last_name = $user->last_name;

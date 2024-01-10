@@ -115,18 +115,18 @@
         <div class="fv-row mb-6">
             <div class="row">
                 <div class="col-6">
-                    <select id="state_option" class="form-control bg-transparent">
-                        <option value="">Select State</option>
-                        @if ($states && count($states) > 0)
-                        @foreach($states as $state)
-                            <option value="{{ $state->state_id }}">{{ $state->state_name }}</option>
-                        @endforeach
-                        @endif
-                    </select>
+                    <input type="text" readonly placeholder="California" class="form-control bg-transparent"/>
+
+                    
                 </div>
                 <div class="col-6">
                     <select id="county_option" name="county_designation" class="form-control bg-transparent">
                         <option value="">Select County *</option>
+                        @if ($counties && count($counties) > 0)
+                        @foreach($counties as $county)
+                            <option value="{{ $county->county_fips }}">{{ $county->county }}</option>
+                        @endforeach
+                        @endif
                     </select>
                 </div>
             </div>

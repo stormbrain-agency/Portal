@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use App\Models\State;
+use App\Models\County;
 use App\Models\W9Upload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -28,9 +29,9 @@ class RegisteredUserController extends Controller
     public function create()
     {
         addJavascriptFile('assets/js/custom/authentication/sign-up/general.js');
-        $states = State::all();
+        $counties = County::where("state_id", "=", "CA")->orderBy('county')->get();
 
-        return view('pages.auth.register', compact('states'));
+        return view('pages.auth.register', compact('counties'));
     }
 
     /**
