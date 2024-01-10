@@ -165,22 +165,14 @@
                             <!--begin::Select-->
                             <div class="row">
                                 <div class="col-6">
-                                    <select wire:model="stateChose" wire:change="updateCountyDropdown" id="stateDropdown" name="stateChose" class="form-select form-select-solid mb-3 mb-lg-0">
-                                        <option value="">Select State</option>
-                                        @if ($states && count($states) > 0)
-                                            @foreach($states as $state)
-                                                <option @if ($county_designation == $state->state_id) selected @endif value="{{ $state->state_id }}">{{ $state->state_name }}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
+                                    <input type="text" readonly class="form-control form-control-solid mb-3 mb-lg-0" placeholder="California"/>
                                 </div>
                                 <div class="col-6">
                                     <select wire:model.defer="county_designation" name="county_designation" class="form-select form-select-solid mb-3 mb-lg-0">
                                         <option value="">Select County</option>
                                         @if ($countyDropdown && count($countyDropdown) > 0)  
                                             @foreach($countyDropdown as $countyItem)
-                                                {{ $countyItem->county_full }} - {{ $countyItem->county_fips }}<br>
-                                                <option @if ($county_designation == $countyItem->county_fips) selected @endif value="{{ $countyItem->county_fips }}">{{ $countyItem->county_full }}</option>
+                                                <option @if ($county_designation == $countyItem->county_fips) selected @endif value="{{ $countyItem->county_fips }}">{{ $countyItem->county }}</option>
                                             @endforeach
                                         @endif
                                     </select>

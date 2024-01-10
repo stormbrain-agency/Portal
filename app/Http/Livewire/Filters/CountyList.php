@@ -21,7 +21,7 @@ class CountyList extends Component
 
     public function mount()
     {
-        $this->counties = County::all();
+        $this->counties = County::where("state_id", "=", "CA")->orderBy('county')->get();
     }
 
     public function render()
