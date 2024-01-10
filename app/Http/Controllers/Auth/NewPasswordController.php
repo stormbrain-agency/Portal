@@ -85,7 +85,7 @@ class NewPasswordController extends Controller
                 event(new PasswordReset($user));
             }
         );
-
+        $request->session()->forget('url.intended');
         // redirect them back to where they came from with their error message.
         return $status == Password::PASSWORD_RESET
                     ? redirect()->route('login')->with('status', __($status))
