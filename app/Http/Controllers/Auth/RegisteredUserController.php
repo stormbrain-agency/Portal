@@ -29,9 +29,10 @@ class RegisteredUserController extends Controller
     public function create()
     {
         addJavascriptFile('assets/js/custom/authentication/sign-up/general.js');
+        $states = State::all();
         $counties = County::where("state_id", "=", "CA")->orderBy('county')->get();
 
-        return view('pages.auth.register', compact('counties'));
+        return view('pages.auth.register', compact('counties', 'states'));
     }
 
     /**
