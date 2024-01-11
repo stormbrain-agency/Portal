@@ -63,7 +63,7 @@ class MracAracDataTable extends DataTable
               ->where('users.status', 1)
               ->select('mrac_arac.*', 'counties.county_full', 'users.email'); 
     
-        if (auth()->user()->hasRole('county user')) {
+        if (auth()->user()->hasRole('county user') || auth()->user()->hasRole('CDSS')) {
             $query->where('users.id', auth()->user()->id);
         }
 

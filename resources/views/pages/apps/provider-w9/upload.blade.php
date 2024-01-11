@@ -1,7 +1,7 @@
 <x-default-layout>
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.alert.css') }}">
 
-    @if(auth()->user()->hasRole('county user'))
+    @can('create provider w9')
 
     <div class="card">
         <div class="card-header border-0 pt-6">
@@ -113,7 +113,7 @@
         <!--end::Card body-->
         @endif
     </div>
-    @endif
+    @endcan
     @push('scripts')
 
     <!-- Add this script after including the Dropzone.js library -->

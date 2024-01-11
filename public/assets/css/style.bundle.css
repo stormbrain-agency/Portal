@@ -48808,6 +48808,10 @@ body,
   background-color: #1A5569;
 }
 
+.status.cdss {
+  background-color: #f5ab2f !important;
+}
+
 @media (max-width: 991.98px) {
   [data-kt-app-sidebar-fixed=true] .app-wrapper {
     margin-left: 0px;

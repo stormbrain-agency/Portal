@@ -14,7 +14,7 @@
 				</a>
 				<!--end:Menu link-->
 			</div>
-			@if(!auth()->user()->hasRole('county user'))
+			@if(!auth()->user()->hasRole('county user') && !auth()->user()->hasRole('CDSS'))
 				{{-- Provider W-9 --}}
 				<div class="menu-item">
 					<!--begin:Menu link-->

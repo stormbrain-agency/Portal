@@ -14,11 +14,11 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                @if(!auth()->user()->hasRole('county user'))
+                @cannot('create provider w9')
                 County Provider W-9
                 @else
                 Provider W-9 | Submission History
-                @endif
+                @endcannot
             </div>
             <!--begin::Card title-->
 
@@ -28,21 +28,21 @@
                 <div style="width: 150px">
                     <input class="form-control form-control-solid" placeholder="Pick a day" id="kt_daterangepicker_1"/>
                 </div>
-                @if(!auth()->user()->hasRole('county user'))
+                @cannot('create provider w9')
                     <livewire:filters.user-list/>
                     <livewire:filters.county-list/>
-                @endif
+                @endcannot
                 <!--begin::Add user-->
                 <button id="export_csv" class="btn btn-outline btn-outline-solid">
                     <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
                     EXPORT AS CSV
                 </button>
-                @if(auth()->user()->hasRole('county user'))
+                @can('create provider w9')
                 <a href="/county-w9/upload" class="btn btn-primary">
                     {!! getIcon('file', 'fs-2', '', 'i') !!}
                     UPLOAD NEW PROVIDER W9
                 </a>
-                @endif
+                @endcan
                     <!--end::Add user-->
                 </div>
                 <!--end::Toolbar-->

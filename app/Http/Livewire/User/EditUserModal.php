@@ -89,7 +89,11 @@ class EditUserModal extends Component
     {
         $this->mobile_phone = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
         $this->business_phone = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
-        $checkRules = $this->role === 'county user' ? $this->rules_for_county_user : $this->rules;
+        if ($this->role === 'county user' || $this->role === 'CDSS') {
+            $checkRules = $this->rules_for_county_user;
+        }else{
+            $checkRules = $this->rules;
+        }
 
         $this->validate($checkRules);
 
@@ -193,10 +197,10 @@ class EditUserModal extends Component
     }
 
     public function updateRole(){
-        if($this->role !== "county user"){
-            $this->county_require = false;
-        }else{
+        if($this->role == "county user" || $this->role == "CDSS"){
             $this->county_require = true;
+        }else{
+            $this->county_require = false;
         }
     }
 

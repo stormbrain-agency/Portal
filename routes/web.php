@@ -49,6 +49,8 @@ Route::middleware(['phone_verify'])->group(function () {
                     Route::delete('/user/{user}/destroy', [UserManagementController::class, 'destroyCounty'])->name('destroy');
                 });
             });
+            Route::resource('/user-management/roles', RoleManagementController::class);
+        Route::resource('/user-management/permissions', PermissionManagementController::class);
         });
         Route::middleware(['permission:read provider payment'])->group(function () {
             Route::prefix('county-provider-payment-report')->name('county-provider-payment-report.')->group(function () {
