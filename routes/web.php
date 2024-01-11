@@ -121,7 +121,7 @@ Route::middleware(['phone_verify'])->group(function () {
                 Route::get('/users/{user_id}', [ActivityController::class, 'show'])->name('show');
             });
         });
-        Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
+        Route::get('/help-faq', [Help_FAQController::class, 'index'])->name('help-faq');
     });
 
 });

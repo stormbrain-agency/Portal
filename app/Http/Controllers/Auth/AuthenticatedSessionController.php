@@ -63,10 +63,9 @@ class AuthenticatedSessionController extends Controller
         ->update([
             'phone_verified' => false
         ]);
+        $request->session()->forget('url.intended');
 
         Auth::guard('web')->logout();
-
-        $request->session()->forget('url.intended');
 
         $request->session()->invalidate();
 
