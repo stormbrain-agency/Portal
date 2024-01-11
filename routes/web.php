@@ -124,8 +124,6 @@ Route::middleware(['phone_verify'])->group(function () {
         Route::get('/help-faq', [DashboardController::class, 'index'])->name('help-faq');
     });
 
-    Route::get('/help-faq', [Help_FAQController::class, 'index'])->name('help-faq');
-
 });
 Route::get('/error', function () {
     abort(500);
