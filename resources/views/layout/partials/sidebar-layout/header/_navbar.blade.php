@@ -13,6 +13,8 @@
                     <div class="status view-only">View Only</div>
                 @elseif (auth()->user()->hasRole('county user'))
                     <div class="status county-user">County User</div>
+                @elseif (auth()->user()->hasRole('CDSS'))
+                    <div class="status cdss">CDSS</div>
                 @endif
             </div>
             <div class="app-navbar-item ">

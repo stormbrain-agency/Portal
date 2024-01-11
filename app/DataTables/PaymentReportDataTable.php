@@ -64,7 +64,7 @@ class PaymentReportDataTable extends DataTable
               ->where('users.status', 1)
               ->select('payment_report.*', 'counties.county_full', 'users.email'); 
     
-        if (auth()->user()->hasRole('county user')) {
+        if (auth()->user()->hasRole('county user') || auth()->user()->hasRole('CDSS')) {
             $query->where('users.id', auth()->user()->id);
         }
 

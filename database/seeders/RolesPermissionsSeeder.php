@@ -18,6 +18,7 @@ class RolesPermissionsSeeder extends Seeder
         $managerRole = Role::create(['name' => 'manager']);
         $viewonlyRole = Role::create(['name' => 'view only']);
         $countyuserRole = Role::create(['name' => 'county user']);
+        $CDSSuserRole = Role::create(['name' => 'CDSS']);
 
         $list_permissions = [
             'read users management',
@@ -80,7 +81,16 @@ class RolesPermissionsSeeder extends Seeder
             'read provider payment',
             'create mrac_arac',
             'read mrac_arac',
-            );
+        );
+
+        $CDSSuserRole ->givePermissionTo(
+            'create provider w9',
+            'read provider w9',
+            'create provider payment',
+            'read provider payment',
+            'create mrac_arac',
+            'read mrac_arac',
+        );
 
         User::find(1)->assignRole('admin');
         User::find(2)->assignRole('manager');

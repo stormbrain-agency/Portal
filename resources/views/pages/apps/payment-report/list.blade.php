@@ -11,11 +11,11 @@
         <div class="card-header border-0 pt-6">
             <!--begin::Card title-->
             <div class="card-title">
-                @if(!auth()->user()->hasRole('county user'))
+                @cannot('create provider payment')
                 County Provider Payment Resports
                 @else
                 Provider Payment Report | Submission History
-                @endif
+                @endcannot
             </div>
             <!--begin::Card title-->
 
@@ -39,21 +39,21 @@
                             @endfor
                     </select>
                 </div>
-                @if(!auth()->user()->hasRole('county user'))
+                @cannot('create provider payment')
                 <livewire:filters.user-list/>
                 <livewire:filters.county-list/>
-                @endif
+                @endcannot
                 <!--begin::Add user-->
                 <button id="export_csv" class="btn btn-outline btn-outline-solid">
                     <i class="ki-duotone ki-exit-down fs-2"><span class="path1"></span><span class="path2"></span></i>
                     EXPORT AS CSV
                 </button>
-                @if(auth()->user()->hasRole('county user'))
+                @can('create provider payment')
                 <a href="{{route("county-provider-payment-report.create")}}" class="btn btn-primary">
                     {!! getIcon('file', 'fs-2', '', 'i') !!}
                     UPLOAD NEW PAYMENT REPORT
                 </a>
-                @endif
+                @endcan
                 <!--end::Add user-->
             </div>
             <!--end::Toolbar-->

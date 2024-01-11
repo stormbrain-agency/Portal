@@ -49,8 +49,9 @@
                                 <i class="ki-duotone ki-down fs-3"></i>
                             </span>
                         </div>
-
-                        @if((auth()->id() == $user->id && !$user->hasRole('county user')) || auth()->user()->hasRole('admin') )
+                        @php
+                        @endphp
+                        @if((auth()->id() == $user->id && !$user->hasRole('county user') && !$user->hasRole('CDSS')) || auth()->user()->hasRole('admin') )
                         <span data-bs-toggle="tooltip" data-bs-trigger="hover" title="Edit customer details">
                             <a href="#" class="btn btn-sm btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_edit_user" data-kt-action="update_row" data-kt-user-id="{{$user->id}}">Edit</a>
                         </span>
