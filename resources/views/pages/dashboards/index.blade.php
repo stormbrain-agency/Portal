@@ -30,7 +30,7 @@
             @endif
 
             {{-- Display Conty User --}}
-            @if (auth()->user()->hasRole('county user'))
+            @if (auth()->user()->hasRole('county user') || auth()->user()->hasRole('CDSS'))
                 @foreach ($notifications as $notification)
                     @if ($notification->status == 'Active')
                         @if ($notification->location == 'User')
