@@ -33,7 +33,7 @@
             @if (auth()->user()->hasRole('county user') || auth()->user()->hasRole('CDSS'))
                 @foreach ($notifications as $notification)
                     @if ($notification->status == 'Active')
-                        @if ($notification->location == 'User')
+                        @if ($notification->location == 'User' || $notification->location == 'Sitewide')
                             @php
                                 $now = now();
                                 $start = now()->parse($notification->schedule_start);
@@ -101,7 +101,7 @@
             @if (auth()->user()->hasRole('admin'))
                 @foreach ($notifications as $notification)
                     @if ($notification->status == 'Active')
-                        @if ($notification->location == 'Sitewide' || $notification->location == 'User')
+                        @if ($notification->location == 'Sitewide')
                             @php
                                 $now = now();
                                 $start = now()->parse($notification->schedule_start);
