@@ -98,7 +98,7 @@
             @endif
 
             {{-- Display Admin --}}
-            @if (auth()->user()->hasRole('admin'))
+            @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager') || auth()->user()->hasRole('view only'))
                 @foreach ($notifications as $notification)
                     @if ($notification->status == 'Active')
                         @if ($notification->location == 'Sitewide')
