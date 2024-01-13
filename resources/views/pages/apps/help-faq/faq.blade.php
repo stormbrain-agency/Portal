@@ -6,22 +6,21 @@
             {!! getIcon('plus-square', 'fs-2') !!}
             <div class="wrap-content">
                 <h3 class="title-question">
-                    Are there any other eligibility requirements to receive the one-time Transitional Subsidy Payment?
+                    When does CDSS need to submit payment report to CDA?
                 </h3>
-                <div class="content">However, in order for CDA to issue payment, eligible child care providers will receive an email requesting to submit a valid W-9 Form.</div>
+                <div class="content">
+                    The report must be submitted by the 5th business day of each month through CDA’s secured website portal
+                </div>
             </div>                     
         </div>
         <div class="box-question bg-state-body d-flex align-items-start " onclick="toggleAnswer(this)">
             {!! getIcon('plus-square', 'fs-2') !!}     
             <div class="wrap-content">
                 <h3 class="title-question ">
-                    How does CDA know which Stage One or Bridge Program providers to pay?            
+                    When do counties need to submit the mRec or aRec reconciliation report to CDA?           
                 </h3>
                 <div class="content ">
-                    CDSS has provided CDA with the information for those providers eligible to be paid the one-time payment. These are providers whose local County Human Services Department is unable to provide those payments. Counties include:
-                    <br>
-                    <br>
-                    Colusa, San Diego, Yolo, El Dorado, Imperial, Madera, Mendocino, Monterey, Riverside, San Bernardino, Stanislaus, Sutter, Tehama, Glenn, Mono, Sierra, Contra Costa, Fresno, Orange, San Mateo, Santa Barbara, Santa Clara, Santa Cruz, Sonoma, Sacramento, and Tulare.
+                    The report must be submitted by the 5th business day of each month through CDA’s secured website portal.
                 </div>
             </div>
         </div>
@@ -29,10 +28,22 @@
             {!! getIcon('plus-square', 'fs-2') !!}     
             <div class="wrap-content">
                 <h3 class="title-question ">
-                    How will child care providers receive the one-time Transitional Subsidy payments?           
+                    I am having trouble submitting the report, who can I contact?
                 </h3>
                 <div class="content ">
-                    CDA will issue a check for the one-time payment directly to eligible Stage One or Bridge Program child care providers whose valid W-9 Form has been received.
+                    Please contact our team at:
+                    <br><br>
+                    <strong>Daja Cayetano,</strong> <i>Project Coordinator</i>
+                    <br>
+                    <strong>Phone Number </strong>| (619) 205-6250 x1920
+                    <br>
+                    <strong>Email Address </strong>| <a href="mailto:dcayetano@cdasd.org">dcayetano@cdasd.org</a>
+                    <br><br>
+                    <strong>Liz Valadez,</strong> <i>Project Coordinator</i>
+                    <br>
+                    <strong>Phone Number </strong> | (619) 205-6250 x1923
+                    <br>
+                    <strong>Email Address </strong>| <a href="mailto:lvaladez@cdasd.org">lvaladez@cdasd.org</a>
                 </div>
             </div>
         </div>
@@ -40,10 +51,85 @@
             {!! getIcon('plus-square', 'fs-2') !!}     
             <div class="wrap-content">
                 <h3 class="title-question ">
-                    When will child care providers receive the one-time Transitional Provider Subsidy payments?                </h3>
-                <div class="content ">CDA will issue payments no later than <strong>November 30, 2023</strong> to eligible providers whose valid W-9 Form has been received.</div>
+                    How do I know the report I submitted was received by CDA?
+                </h3>
+                <div class="content ">
+                    CDA’s secured portal is a one - way upload to CDA. Once you have submitted the report, you will not be able to access or download the report from the portal.
+                    The user who submitted the report for your county will receive a confirmation email with details about the upload. You are also able to see the activity of
+                    all users in your county under the  activity log.
+                </div>
             </div>
         </div>
+        <div class="box-question bg-state-body d-flex align-items-start" onclick="toggleAnswer(this)">
+            {!! getIcon('plus-square', 'fs-2') !!}     
+            <div class="wrap-content">
+                <h3 class="title-question ">
+                    I would like another user for my county, what can I do?        
+                </h3>
+                <div class="content ">
+                    The portal has a limit of two (2) users per county. If you would like to update or disable a user account, please contact:
+                    <br><br>
+                    <strong>Daja Cayetano,</strong> <i>Project Coordinator</i>
+                    <br>
+                    <strong>Phone Number </strong>| (619) 205-6250 x1920
+                    <br>
+                    <strong>Email Address </strong>| <a href="mailto:dcayetano@cdasd.org">dcayetano@cdasd.org</a>
+                    <br><br>
+                    <strong>Liz Valadez,</strong> <i>Project Coordinator</i>
+                    <br>
+                    <strong>Phone Number </strong>| (619) 205-6250 x1923
+                    <br>
+                    <strong>Email Address </strong>| <a href="mailto:lvaladez@cdasd.org">lvaladez@cdasd.org</a>
+                </div>
+            </div>
+        </div>
+        <div class="box-question bg-state-body d-flex align-items-start" onclick="toggleAnswer(this)">
+            {!! getIcon('plus-square', 'fs-2') !!}     
+            <div class="wrap-content">
+                <h3 class="title-question ">
+                    How can a child care provider submit a W-9 Form to CDA?      
+                </h3>
+                <div class="content ">
+                    Eligible child care providers can submit a W-9 Form to CDA electronically using the link below:
+                    <br>
+                    <br>
+                    <ul>
+                        <li>English: <a target="_blank" href="https://forms.cdasd.org/232275453406151">https://forms.cdasd.org/232275453406151</a></li>
+                        <li>Spanish: <a target="_blank" href="https://forms.cdasd.org/232985402065154">https://forms.cdasd.org/232985402065154</a></li>
+                    </ul>
+                    <strong>Note: </strong><i>Even though it is not a requirement, CDA would appreciate counties supply a copy of the provider’s W-9 Form that they have collected to help ensure timely payment to the childcare provider.</i>
+                </div>
+            </div>
+        </div>
+        <div class="box-question bg-state-body d-flex align-items-start" onclick="toggleAnswer(this)">
+            {!! getIcon('plus-square', 'fs-2') !!}     
+            <div class="wrap-content">
+                <h3 class="title-question ">
+                    How can a child care provider get the status of their Cost of Care Plus Rate Payment?          
+                </h3>
+                <div class="content">
+                    CDA is unable to issue payment without complete data and a valid W-9 Form. Once CDA has received all the information required, CDA will calculate and issue payment to the provider within 25 calendar days of complete information being received
+                    <br>
+                    <br>
+                    CDA Project Specialists are available to assist providers with any questions they may have about the process. Providers may reach a CDA representative at (619) 205-6250.
+                </div>
+            </div>
+        </div>
+        <div class="box-question bg-state-body d-flex align-items-start" onclick="toggleAnswer(this)">
+            {!! getIcon('plus-square', 'fs-2') !!}     
+            <div class="wrap-content">
+                <h3 class="title-question ">
+                    How will child care providers receive payment? Will a receipt be included?           
+                </h3>
+                <div class="content ">
+                    CDA will calculate and issue payment via check to eligible providers within 25 calendar days of complete information being received. An Explanation of Payment (EOP) letter will be included.
+                    The EOP will show the payment month, child count, and applicable reduction of union due fees not to exceed $90.00
+                    <br><br>
+                    CDA Project Specialists are available to assist providers at (619) 205-6250 .
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <script>
