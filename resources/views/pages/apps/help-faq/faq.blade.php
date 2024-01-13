@@ -35,15 +35,15 @@
                     <br><br>
                     <strong>Daja Cayetano,</strong> <i>Project Coordinator</i>
                     <br>
-                    <strong>Phone Number </strong>| (619) 205 - 6250 x1920
+                    <strong>Phone Number </strong>| (619) 205-6250 x1920
                     <br>
-                    <strong>Email Address  </strong>| dcayetano@cdasd.org
+                    <strong>Email Address </strong>| <a href="mailto:dcayetano@cdasd.org">dcayetano@cdasd.org</a>
                     <br><br>
                     <strong>Liz Valadez,</strong> <i>Project Coordinator</i>
                     <br>
-                    <strong>Phone Number </strong> | (619) 205 - 6250 x1923
+                    <strong>Phone Number </strong> | (619) 205-6250 x1923
                     <br>
-                    <strong>Email Address </strong>| lvaladez@cdasd.org
+                    <strong>Email Address </strong>| <a href="mailto:lvaladez@cdasd.org">lvaladez@cdasd.org</a>
                 </div>
             </div>
         </div>
@@ -71,15 +71,15 @@
                     <br><br>
                     <strong>Daja Cayetano,</strong> <i>Project Coordinator</i>
                     <br>
-                    <strong>Phone Number </strong>| (619) 205 - 6250 x1920
+                    <strong>Phone Number </strong>| (619) 205-6250 x1920
                     <br>
-                    <strong>Email Address </strong>| dcayetano@cdasd.org
+                    <strong>Email Address </strong>| <a href="mailto:dcayetano@cdasd.org">dcayetano@cdasd.org</a>
                     <br><br>
                     <strong>Liz Valadez,</strong> <i>Project Coordinator</i>
                     <br>
-                    <strong>Phone Number </strong>| (619) 205 - 6250 x1923
+                    <strong>Phone Number </strong>| (619) 205-6250 x1923
                     <br>
-                    <strong>Email Address </strong>| lvaladez@cdasd.org
+                    <strong>Email Address </strong>| <a href="mailto:lvaladez@cdasd.org">lvaladez@cdasd.org</a>
                 </div>
             </div>
         </div>
@@ -111,7 +111,7 @@
                     CDA is unable to issue payment without complete data and a valid W-9 Form. Once CDA has received all the information required, CDA will calculate and issue payment to the provider within 25 calendar days of complete information being received
                     <br>
                     <br>
-                    CDA Project Specialists are available to assist providers with any questions they may have about the process. Providers may reach a CDA representative at (619) 205 - 6250.
+                    CDA Project Specialists are available to assist providers with any questions they may have about the process. Providers may reach a CDA representative at (619) 205-6250.
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
                     CDA will calculate and issue payment via check to eligible providers within 25 calendar days of complete information being received. An Explanation of Payment (EOP) letter will be included.
                     The EOP will show the payment month, child count, and applicable reduction of union due fees not to exceed $90.00
                     <br><br>
-                    CDA Project Specialists are available to assist providers at (619) 205 - 6250 .
+                    CDA Project Specialists are available to assist providers at (619) 205-6250 .
                 </div>
             </div>
         </div>
