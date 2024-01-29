@@ -49,7 +49,7 @@ class ViewMracArac extends Component
             $this->user_name = $mrac_arac->user->first_name . ' ' . $mrac_arac->user->last_name;
             $this->user_id = $mrac_arac->user->id;
             $this->user_email = $mrac_arac->user->email;
-            $this->county_full = $mrac_arac->county->county;
+            $this->county_full = $mrac_arac->county?->county;
             $this->created_at = $mrac_arac->created_at;
     
             $this->mrac_arac_files = MracAracFiles::where("mrac_arac_id", $id)->get();

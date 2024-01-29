@@ -49,7 +49,7 @@ class ViewPaymentReport extends Component
             $this->user_name = $payment_report->user->first_name . ' ' . $payment_report->user->last_name;
             $this->user_id = $payment_report->user->id;
             $this->user_email = $payment_report->user->email;
-            $this->county_full = $payment_report->county->county;
+            $this->county_full = $payment_report->county?->county;
             $this->created_at = $payment_report->created_at;
     
             $this->payment_report_files = PaymentReportFiles::where("payment_report_id", $id)->get();
