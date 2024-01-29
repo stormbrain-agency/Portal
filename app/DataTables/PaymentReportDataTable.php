@@ -38,7 +38,7 @@ class PaymentReportDataTable extends DataTable
                 return $payment_report->created_at->toTimeString();
             })
             ->editColumn('county_fips', function (PaymentReport $payment_report) {
-                return $payment_report->county->county;
+                return $payment_report->county?->county;
             })
             ->editColumn('comment', function (PaymentReport $payment_report) {
                 return $payment_report->comments;
@@ -63,7 +63,7 @@ class PaymentReportDataTable extends DataTable
     {
         $query = $model->newQuery();
         $query->join('users', 'payment_report.user_id', '=', 'users.id')
-              ->join('counties', 'payment_report.county_fips', '=', 'counties.county_fips')
+              ->leftJoin('counties', 'payment_report.county_fips', '=', 'counties.county_fips')
               ->where('users.status', 1)
               ->select('payment_report.*', 'counties.county_full', 'users.email'); 
     
