@@ -70,7 +70,7 @@ class W9DataTable extends DataTable
         $query = $model->newQuery();
         
         $query->join('users', 'w9_upload.user_id', '=', 'users.id')
-              ->join('counties', 'w9_upload.w9_county_fips', '=', 'counties.county_fips') 
+              ->leftJoin('counties', 'w9_upload.w9_county_fips', '=', 'counties.county_fips') 
               ->where('users.status', 1)
               ->select('w9_upload.*','w9_upload.created_at', 'counties.county','w9_upload.id'); 
         

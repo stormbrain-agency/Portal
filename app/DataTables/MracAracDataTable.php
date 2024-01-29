@@ -37,7 +37,7 @@ class MracAracDataTable extends DataTable
                 return $mrac_arac->created_at->toTimeString();
             })
             ->editColumn('county_fips', function (MracArac $mrac_arac) {
-                return $mrac_arac->county->county;
+                return $mrac_arac->county?->county;
             })
             ->editColumn('comment', function (MracArac $mrac_arac) {
                 return $mrac_arac->comments;
@@ -63,7 +63,7 @@ class MracAracDataTable extends DataTable
     {
         $query = $model->newQuery();
         $query->join('users', 'mrac_arac.user_id', '=', 'users.id')
-              ->join('counties', 'mrac_arac.county_fips', '=', 'counties.county_fips')
+              ->leftJoin('counties', 'mrac_arac.county_fips', '=', 'counties.county_fips')
               ->where('users.status', 1)
               ->select('mrac_arac.*', 'counties.county_full', 'users.email'); 
     

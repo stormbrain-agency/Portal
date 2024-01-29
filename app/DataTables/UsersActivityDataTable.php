@@ -256,7 +256,7 @@ class UsersActivityDataTable extends DataTable
             ->minifiedAjax()
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-            ->orderBy(3)
+            ->orderBy(4)
             ->buttons([
                 [
                     'extend' => 'csv',
