@@ -50,7 +50,7 @@ class CountyMRAC_ARACController extends Controller
         'month_year.required' => 'The month and year field is required.',
         'mrac_arac_files.required' => 'The mRec/aRec Files field is required.',
         'mrac_arac_files.*.file' => 'The mRec/aRec Files field must be a file.',
-        'mrac_arac_files.*.mimes' => 'The mRec/aRec Files must be of type: csv.',
+        'mrac_arac_files.*.mimes' => 'The mRec/aRec Files must be of type: .csv',
         'mrac_arac_files.*.max' => 'The mRec/aRec Files may not be greater than 20MB.',
         'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);
