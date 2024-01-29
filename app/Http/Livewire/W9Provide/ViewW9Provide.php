@@ -43,7 +43,7 @@ class ViewW9Provide extends Component
             $this->user_name = $w9_upload->user->first_name . ' ' . $w9_upload->user->last_name;
             $this->user_id = $w9_upload->user->id;
             $this->user_email = $w9_upload->user->email;
-            $this->county_full = $w9_upload->county->county;
+            $this->county_full = $w9_upload->county?->county;
             $this->file_name = $w9_upload->original_name;
             $this->created_at = $w9_upload->created_at;
 
