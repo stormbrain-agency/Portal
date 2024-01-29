@@ -55,7 +55,7 @@ class PaymentReportController extends Controller
             'month_year.required' => 'The month and year field is required.',
             'payment_report_files.required' => 'The payment report files field is required.',
             'payment_report_files.*.file' => 'Each payment report file must be a file.',
-            'payment_report_files.*.mimes' => 'Each payment report file must be of type: csv.',
+            'payment_report_files.*.mimes' => 'Each payment report file must be of type: .csv',
             'payment_report_files.*.max' => 'Each payment report file may not be greater than 20MB.',
             'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);
