@@ -40,6 +40,10 @@
                                 @endif
                                 <!--begin::Badge-->
                             @endforeach
+                            @if($user->status == 3)
+                                <div class="badge badge-lg badge-light-danger d-inline">Disabled</div>
+                            @endif
+
                         </div>
                         <!--end::Position-->
                     
@@ -164,13 +168,16 @@
                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
                         <!--begin::Menu item-->
                         @if ($user->status == 1)
+                        <a href="{{ route('user-management.county-users.disable', $user->id) }}" class="menu-item px-5"><button type="submit" class="btn btn-outline-white menu-link px-5 w-100 text-disabled-status" id="disableUser">Disable User</button></a>
                         <form method="POST" action="{{ route('user-management.county-users.destroy', $user) }}" class="menu-item px-5" id="deleteUserForm">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-white menu-link text-danger px-5 w-100">Delete User</button>
                         </form>
                         @endif
-
+                        @if ($user->status == 3)
+                            <a href="{{ route('user-management.county-users.active', $user->id) }}" class="menu-item px-5"><button type="submit" class="btn btn-outline-white menu-link px-5 w-100 text-primary" id="activeUser">Active User</button></a>
+                        @endif
                         <!--end::Menu item-->
                     </div>
                     <!--end::Menu-->

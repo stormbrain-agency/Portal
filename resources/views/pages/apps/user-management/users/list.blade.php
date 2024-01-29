@@ -15,6 +15,13 @@
                 <!--begin::Card toolbar-->
                 <div class="card-toolbar gx-10 d-flex justify-content-end" style="gap: 10px">
                     <div style="width: 150px">
+                        <select id="select_status" class="form-select form-select-solid text-center">
+                            <option value="">Select Status</option>
+                            <option value="1">Active</option>
+                            <option value="3">Disabled</option>
+                        </select>
+                    </div>
+                    <div style="width: 150px">
                         <select id="select_role" class="form-select form-select-solid text-center">
                             <option value="">Select Role</option>
                             <option value="Admin">Admin</option>
@@ -73,6 +80,11 @@
                  document.getElementById('select_role').addEventListener('change', function() {
                     var select_role = this.value;
                     window.LaravelDataTables['users-table'].column('roles.name:name').search(select_role).draw();
+                });
+                 document.getElementById('select_status').addEventListener('change', function() {
+                    var select_status = this.value;
+                    console.log(select_status);
+                    window.LaravelDataTables['users-table'].column('status:name').search(select_status).draw();
                 });
             });
             $("#export_csv").on('click', function(e) {

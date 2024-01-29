@@ -91,7 +91,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" id="mobile_phone" placeholder="Mobile Phone Number *" name="mobile_phone" autocomplete="off" class="form-control bg-transparent"/>
+            <input type="text" id="mobile_phone" placeholder="Mobile Phone Number" name="mobile_phone" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->

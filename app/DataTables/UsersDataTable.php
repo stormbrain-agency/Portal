@@ -49,7 +49,8 @@ class UsersDataTable extends DataTable
         $query->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
             ->select('users.*', 'roles.name as role_name')
-            ->where('users.status', 1);
+            // ->where('users.status', 1);
+            ->whereIn('users.status', [1, 3]);
         return $query;
 
     }
@@ -96,6 +97,7 @@ class UsersDataTable extends DataTable
                 Column::make('role')->name("roles.name"),
                 Column::make('last_login_at')->title('Last Login'),
                 Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
+                Column::make('status')->addClass('text-nowrap')->name('status')->visible(false),
                 Column::computed('action')
                     ->addClass('text-end text-nowrap')
                     ->exportable(false)
@@ -108,6 +110,7 @@ class UsersDataTable extends DataTable
                 Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('role')->name("roles.name"),
                 Column::make('last_login_at')->title('Last Login'),
+                Column::make('status')->addClass('text-nowrap')->name('status')->visible(false),
                 Column::make('created_at')->title('Joined Date')->addClass('text-nowrap'),
             ];
         }

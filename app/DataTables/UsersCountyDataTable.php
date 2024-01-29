@@ -23,6 +23,9 @@ class UsersCountyDataTable extends DataTable
             ->editColumn('user', function (User $user) {
                 return view('pages.apps.user-management.users-county.columns._user', compact('user'));
             })
+            ->editColumn('county', function (User $user) {
+                return view('pages.apps.user-management.users-county.columns._county', compact('user'));
+            })
             ->editColumn('status', function (User $user) {
                 return view('pages.apps.user-management.users-county.columns._status', compact('user'));
             })
@@ -73,7 +76,7 @@ class UsersCountyDataTable extends DataTable
             ->dom('rt' . "<'row'<'col-sm-12 col-md-5'l><'col-sm-12 col-md-7'p>>",)
             ->addTableClass('table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer text-gray-600 fw-semibold')
             ->setTableHeadClass('text-start text-muted fw-bold fs-7 text-uppercase gs-0')
-            ->orderBy(3)
+            ->orderBy(4)
             ->drawCallback("function() {" . file_get_contents(resource_path('views/pages//apps/user-management/users-county/columns/_draw-scripts.js')) . "}")
             ->buttons([
                 [
@@ -99,6 +102,7 @@ class UsersCountyDataTable extends DataTable
         if (auth()->user()->hasRole('admin')) {
             return [
                 Column::make('user')->addClass('align-items-center')->name('first_name')->title("Full Name"),
+                Column::make('county')->addClass('align-items-center')->name('county_designation')->title("County"),
                 Column::make('email')->addClass('align-items-center')->name('email'),
                 Column::make('status')->addClass('text-nowrap')->name('status'),
                 Column::make('created_at')->title('Created Date')->addClass('text-nowrap'),

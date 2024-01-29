@@ -26,6 +26,7 @@
                             <option value="1">Approved</option>
                             <option value="0">Approval Needed</option>
                             <option value="2">Declined</option>
+                            <option value="3">Disabled</option>
                         </select>
                     </div>
                     <button id="export_csv" class="btn btn-outline btn-outline-solid">

@@ -202,3 +202,7 @@
     font-size: 18px;
     color: #48AE64;
 }
+
+.text-disabled-status {
+    color: #ff8400 !important;
+}

@@ -45,7 +45,7 @@ class AddUserModal extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
-        'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
+        // 'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
         'role' => 'required|string',
     ];
 
@@ -54,7 +54,7 @@ class AddUserModal extends Component
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
         'business_phone' => ['required', 'string', 'max:255'],
-        'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
+        // 'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
         'mailing_address' => ['required', 'string', 'max:255'],
         'vendor_id' => ['required', 'string', 'max:255'],
         'county_designation' => ['required', 'string', 'max:255'],
@@ -70,6 +70,8 @@ class AddUserModal extends Component
         'delete_user' => 'deleteUser',
         'update_user' => 'updateUser',
         'create_view' => 'createUserShow',
+        'disable_user' => 'disableUser',
+        'able_user' => 'ableUser',
     ];
 
     public function render()
@@ -237,6 +239,46 @@ class AddUserModal extends Component
 
         // Emit a success event with a message
         $this->emit('success', 'User successfully deleted');
+    }
+
+    public function disableUser($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            $this->emit('error', 'User not found');
+            return;
+        }
+        // Prevent deletion of current user
+        if ($id == Auth::id()) {
+            $this->emit('error', 'User cannot be update');
+            return;
+        }
+
+        // Disable the user record with the specified ID
+        User::where('id', $id)->update(['status' => 3]);
+
+        // Emit a success event with a message
+        $this->emit('success', 'User successfully disabled');
+    }
+
+    public function ableUser($id)
+    {
+        $user = User::find($id);
+        if (!$user) {
+            $this->emit('error', 'User not found');
+            return;
+        }
+        // Prevent deletion of current user
+        if ($id == Auth::id()) {
+            $this->emit('error', 'User cannot be update');
+            return;
+        }
+
+        // Disable the user record with the specified ID
+        User::where('id', $id)->update(['status' => 1]);
+
+        // Emit a success event with a message
+        $this->emit('success', 'User successfully activated');
     }
 
     public function updateUser($id)

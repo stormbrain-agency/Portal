@@ -81,6 +81,54 @@ document.querySelectorAll('[data-kt-action="deny_row"]').forEach(function (eleme
     });
 });
 
+document.querySelectorAll('[data-kt-action="disable_row"]').forEach(function (element) {
+    element.addEventListener('click', function () {
+        Swal.fire({
+            text: "This action will disable this user!\nAre you sure?",
+            icon: "warning",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            customClass: {
+                confirmButton: "btn btn-danger",
+                cancelButton: "btn btn-secondary",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emit(
+                    "disable_user",
+                    this.getAttribute("data-kt-user-id")
+                );
+            }
+        });
+    });
+});
+
+document.querySelectorAll('[data-kt-action="able_row"]').forEach(function (element) {
+    element.addEventListener('click', function () {
+        Swal.fire({
+            text: "This action will active this user!\nAre you sure?",
+            icon: "info",
+            buttonsStyling: false,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            customClass: {
+                confirmButton: "btn btn-primary",
+                cancelButton: "btn btn-secondary",
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.emit(
+                    "able_user",
+                    this.getAttribute("data-kt-user-id")
+                );
+            }
+        });
+    });
+});
+
 // Listen for 'success' event emitted by Livewire
 Livewire.on('success', (message) => {
     // Reload the users-table datatable
