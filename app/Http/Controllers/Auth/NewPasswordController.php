@@ -28,6 +28,10 @@ class NewPasswordController extends Controller
             if ($request->has('email')) {
                 $user = User::where('email', $request->input('email'))->first();
                 if ($user) {
+                    if ($user->status == 3) {
+                        Auth::logout();
+                        return redirect()->route('login')->with('error', 'Your account has been disabled');
+                    }
                     if ($user->first_login != $firstLogin) {
                         return redirect()->route('dashboard')->with('error', 'Your email has been previously verified.');
                     }
@@ -69,6 +73,11 @@ class NewPasswordController extends Controller
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
+                if ($user->status == 3) {
+                    Auth::logout();
+                    return redirect()->route('login')->with('error', 'Your account has been disabled');
+                }
+
                 $user->forceFill([
                     'password' => Hash::make($request->password),
                     'remember_token' => Str::random(60),
