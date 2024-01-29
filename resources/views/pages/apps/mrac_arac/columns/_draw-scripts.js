@@ -8,6 +8,12 @@ document.querySelectorAll('[data-kt-action="view_row"]').forEach(function (eleme
         Livewire.emit('view_mrac_arac', this.getAttribute('data-kt-mrac-arac-id'));
     });
 });
+
+document.querySelectorAll('[data-kt-action="download_all"]').forEach(function (element) {
+    element.addEventListener('click', function () {
+        Livewire.emit('triggerDownloadAllFilesBtn', this.getAttribute('data-kt-mrac-arac-id'));
+    });
+});
 // Listen for 'success' event emitted by Livewire
 Livewire.on('success', (message) => {
     // Reload the users-table datatable

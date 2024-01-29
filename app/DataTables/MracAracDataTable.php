@@ -42,13 +42,17 @@ class MracAracDataTable extends DataTable
             ->editColumn('comment', function (MracArac $mrac_arac) {
                 return $mrac_arac->comments;
             })
+            ->editColumn('download', function (MracArac $mrac_arac) {
+                return '<button data-kt-action="download_all" data-kt-mrac-arac-id="' . $mrac_arac->id . '" class="btn btn-primary">Download</button>';
+            })
+
             ->addColumn('user_first_name', function (MracArac $mrac_arac) {
                 return $mrac_arac->user->first_name;
             })
             ->editColumn('view', function (MracArac $mrac_arac) {
                 return view('pages.apps.mrac_arac.columns._view-action', compact('mrac_arac'));
             })
-            ->rawColumns(['user_first_name', 'document_path'])
+            ->rawColumns(['user_first_name', 'document_path', 'download'])
             ->setRowId('id');
     }
 
@@ -171,10 +175,11 @@ public function csv()
                 Column::make('id')->title('ID'),
                 Column::make('created_at')->title('Date'),
                 Column::make('updated_at')->title('Time'),
-                Column::make('county_fips')->title('County Designation')->name('counties.county')->orderable(true)->searchable(true),
+                Column::make('county_fips')->title('County')->name('counties.county')->orderable(true)->searchable(true),
                 Column::make('user')->title('User')->name('users.first_name')->orderable(true),
                 Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
                 Column::make('comment')->title('Comments')->searchable(false)->orderable(false)->exportable(false)->width(200),
+                Column::make('download')->title('Download')->searchable(false)->orderable(false)->exportable(false)->width(120),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
                     ->exportable(false)
@@ -188,7 +193,7 @@ public function csv()
                 Column::make('id')->title('ID'),
                 Column::make('created_at')->title('Date'),
                 Column::make('updated_at')->title('Time'),
-                Column::make('county_fips')->title('County Designation')->name('counties.county')->orderable(true)->searchable(true),
+                Column::make('county_fips')->title('County')->name('counties.county')->orderable(true)->searchable(true),
                 Column::make('user')->title('User')->name('users.first_name')->orderable(true),
                 Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
                 Column::make('comment')->title('Comments')->searchable(false)->orderable(false)->exportable(false)->width(200),

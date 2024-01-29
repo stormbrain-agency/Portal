@@ -43,13 +43,14 @@ class CountyMRAC_ARACController extends Controller
         $request->validate([
         'month_year' => 'required',
         'mrac_arac_files' => 'required|array',
-        'mrac_arac_files.*' => 'file|mimes:zip,doc,docx,xls,xlsx,csv,pdf|max:20480',
+        'mrac_arac_files.*' => 'file|mimes:csv|max:20480',
+        // 'mrac_arac_files.*' => 'file|mimes:zip,doc,docx,xls,xlsx,csv,pdf|max:20480',
         'comment' => 'nullable|max:150',
         ], [
         'month_year.required' => 'The month and year field is required.',
         'mrac_arac_files.required' => 'The mRec/aRec Files field is required.',
         'mrac_arac_files.*.file' => 'The mRec/aRec Files field must be a file.',
-        'mrac_arac_files.*.mimes' => 'The mRec/aRec Files must be of type: zip, doc, docx, xls, xlsx, csv, pdf.',
+        'mrac_arac_files.*.mimes' => 'The mRec/aRec Files must be of type: csv.',
         'mrac_arac_files.*.max' => 'The mRec/aRec Files may not be greater than 20MB.',
         'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);

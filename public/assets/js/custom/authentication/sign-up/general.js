@@ -224,15 +224,6 @@ var KTSignupGeneral = function () {
                                 message: 'Business Phone Number is required'
                             },
                         }
-                    },'mobile_phone': {
-                        validators: {
-                           callback: {
-                                message: 'Please enter a valid Mobile Phone Number',
-                                callback: function (input) {
-                                    return validateMobilePhone(input.value);
-                                }
-                            }
-                        }
                     },'mailing_address': {
                         validators: {
                             notEmpty: {

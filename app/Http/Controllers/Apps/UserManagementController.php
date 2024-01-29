@@ -45,7 +45,7 @@ class UserManagementController extends Controller
     public function show(User $user)
     {
         if ($user) {
-            if ($user->status != 1) {
+            if ($user->status != 1 && $user->status != 3) {
                 return redirect()->route('user-management.county-users.show', $user);
             }
             $paymentReports = $user->paymentReport()->orderBy('created_at', 'desc')->get();
@@ -119,7 +119,7 @@ class UserManagementController extends Controller
             $w9Uploads = $user->w9Upload()->orderBy('created_at', 'desc')->get();
             $paymentReports = $user->paymentReport()->orderBy('created_at', 'desc')->get();
             $mracAracs = $user->mracArac()->orderBy('created_at', 'desc')->get();
-            if ($user->status == 1) {
+            if ($user->status == 1 || $user->status == 3) {
                 if (!$user->hasRole('county user')) {
                     return redirect()->route('user-management.users.show', $user); 
                 }
@@ -181,6 +181,60 @@ class UserManagementController extends Controller
             return route('user-management.county-users.show', $user);
         }
     }
+
+    // public function usersDisable($id)
+    // {
+    //     if (auth()->user()->can('county users management')) {
+    //          $user = User::find($id);
+    //         if (!is_null($user)) {
+               
+    //             $user->status = 3;
+    //             $user->save();
+    //         }
+
+    //         return redirect()->route('user-management.county-users.index');
+
+    //     }else{
+    //         return route('user-management.county-users.show', $user);
+    //     }
+    // }
+
+    public function usersDisable($id)
+    {
+        $user = User::find($id);
+        if (is_null($user)) {
+            return redirect()->back();
+        }
+        if (auth()->user()->can('county users management')) {
+            if ($user->id != auth()->user()->id) {
+                $user->status = 3;
+                $user->save();
+            }
+
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function usersActive($id)
+    {
+        $user = User::find($id);
+        if (is_null($user)) {
+            return redirect()->back();
+        }
+        if (auth()->user()->can('county users management')) {
+            if ($user->id != auth()->user()->id) {
+                $user->status = 1;
+                $user->save();
+            }
+
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
+    }
+
 
     public function profile(){
         $user = auth()->user();

@@ -6,6 +6,7 @@ use App\Models\County;
 use Illuminate\Support\Facades\File;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CountySeeder extends Seeder
 {
@@ -14,7 +15,9 @@ class CountySeeder extends Seeder
      */
     public function run(): void
     {
-       $json = File::get(database_path('seeders/states_and_counties.json'));
+        DB::table('states')->truncate();
+        DB::table('counties')->truncate();
+       $json = File::get(database_path('seeders/counties.json'));
         $data = json_decode($json);
 
         foreach ($data as $item) {

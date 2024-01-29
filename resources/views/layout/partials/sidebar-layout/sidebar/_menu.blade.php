@@ -20,22 +20,22 @@
 					<!--begin:Menu link-->
 					<a class="menu-link {{ request()->routeIs('w9_upload.*') ? 'active' : '' }}" href="{{ route('w9_upload.index') }}">
 						<span class="menu-icon">{!! getIcon('file', 'fs-1') !!}</span>
-						<span class="menu-title">County Provider W-9</span>
+						<span class="menu-title">County W-9 Forms</span>
 					</a>
 					<!--end:Menu link-->
-				</div>
-				{{-- Payment Report --}}
-				<div class="menu-item">
-					<a class="menu-link {{ request()->routeIs('county-provider-payment-report.*') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
-						<span class="menu-icon">{!! getIcon('dollar', 'fs-1') !!}</span>
-						<span class="menu-title">County Provider Payment Report</span>
-					</a>
 				</div>
 				<!-- mRec/aRec -->
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('county-mrac-arac.*') ? 'active' : '' }}" href="{{ route('county-mrac-arac.index') }}">
 						<span class="menu-icon">{!! getIcon('graph-up', 'fs-1') !!}</span>
 						<span class="menu-title">County mRec/aRec</span>
+					</a>
+				</div>
+				{{-- Payment Report --}}
+				<div class="menu-item">
+					<a class="menu-link {{ request()->routeIs('county-provider-payment-report.*') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
+						<span class="menu-icon">{!! getIcon('dollar', 'fs-1') !!}</span>
+						<span class="menu-title">CDSS Payment Report</span>
 					</a>
 				</div>
 				<!-- Notifications -->
@@ -95,6 +95,15 @@
 					</a>
 				</div>
 				@endif
+				{{-- Help/FAQ --}}
+				<div class="menu-item">
+					<!--begin:Menu link-->
+					<a class="menu-link {{ request()->routeIs('help-faq') ? 'active' : '' }}" href="{{ url('/help-faq') }}">
+						<span class="menu-icon">{!! getIcon('chart', 'fs-1') !!}</span>
+						<span class="menu-title">FAQs</span>
+					</a>
+					<!--end:Menu link-->
+				</div>
 				{{-- Profile --}}
 				<div class="menu-item">
 					<a class="menu-link {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ url('/profile') }}">
@@ -108,7 +117,7 @@
 					<!--begin:Menu link-->
 					<span class="menu-link ">
 						<span class="menu-icon">{!! getIcon('file', 'fs-1') !!}</span>
-						<a href="{{ route('w9_upload.create') }}" class="menu-title">Submit Provider W-9</a>
+						<a href="{{ route('w9_upload.create') }}" class="menu-title">County W-9 Forms</a>
 						<span class="menu-arrow"></span>
 					</span>
 					{{-- <a href="{{ route('w9_upload.create') }}"></a> --}}
@@ -119,7 +128,7 @@
 						<div class="menu-item">
 							<!--begin:Menu link-->
 							<a class="menu-link {{ request()->routeIs('w9_upload.create') ? 'active' : '' }}" href="{{ route('w9_upload.create') }}">
-								<span class="menu-title">Submit Provider W-9</span>
+								<span class="menu-title">Submit W-9 Forms</span>
 							</a>
 							<!--end:Menu link-->
 						</div>
@@ -134,31 +143,11 @@
 					</div>
 					<!--end:Menu sub-->
 				</div>
-				{{-- Payment Report --}}
-				<div class="menu-item menu-accordion {{ request()->routeIs('county-provider-payment-report.*') ? 'hover show' : '' }}">
-					<span class="menu-link">
-						<span class="menu-icon">{!! getIcon('dollar', 'fs-1') !!}</span>
-						<a href="{{ route('county-provider-payment-report.create') }}" class="menu-title ">Submit Provider Payment Report</a>
-						<span class="menu-arrow"></span>
-					</span>
-					<div class="menu-sub menu-sub-accordion">
-						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('county-provider-payment-report.create') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.create') }}">
-								<span class="menu-title">Submit Report</span>
-							</a>
-						</div>
-						<div class="menu-item">
-							<a class="menu-link {{ request()->routeIs('county-provider-payment-report.index') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
-								<span class="menu-title">Submission History</span>
-							</a>
-						</div>
-					</div>
-				</div>
 				{{-- mRec/aRec --}}
 				<div class="menu-item menu-accordion {{ request()->routeIs('county-mrac-arac.*') ? 'hover show' : '' }}">
 					<span class="menu-link">
 						<span class="menu-icon">{!! getIcon('graph-up', 'fs-1') !!}</span>
-						<a href="{{ route('county-mrac-arac.create') }}" class="menu-title">mRec/aRec</a>
+						<a href="{{ route('county-mrac-arac.create') }}" class="menu-title">County mRec/aRec</a>
 						<span class="menu-arrow"></span>
 					</span>
 					<div class="menu-sub menu-sub-accordion">
@@ -174,12 +163,33 @@
 						</div>
 					</div>
 				</div>
+				{{-- Payment Report --}}
+				<div class="menu-item menu-accordion {{ request()->routeIs('county-provider-payment-report.*') ? 'hover show' : '' }}">
+					<span class="menu-link">
+						<span class="menu-icon">{!! getIcon('dollar', 'fs-1') !!}</span>
+						<a href="{{ route('county-provider-payment-report.create') }}" class="menu-title ">CDSS Payment Report</a>
+						<span class="menu-arrow"></span>
+					</span>
+					<div class="menu-sub menu-sub-accordion">
+						<div class="menu-item">
+							<a class="menu-link {{ request()->routeIs('county-provider-payment-report.create') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.create') }}">
+								<span class="menu-title">Submit Payment Report</span>
+							</a>
+						</div>
+						<div class="menu-item">
+							<a class="menu-link {{ request()->routeIs('county-provider-payment-report.index') ? 'active' : '' }}" href="{{ route('county-provider-payment-report.index') }}">
+								<span class="menu-title">Submission History</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				
 				{{-- Help/FAQ --}}
 				<div class="menu-item">
 					<!--begin:Menu link-->
 					<a class="menu-link {{ request()->routeIs('help-faq') ? 'active' : '' }}" href="{{ url('/help-faq') }}">
 						<span class="menu-icon">{!! getIcon('chart', 'fs-1') !!}</span>
-						<span class="menu-title">Help/FAQ</span>
+						<span class="menu-title">FAQs</span>
 					</a>
 					<!--end:Menu link-->
 				</div>

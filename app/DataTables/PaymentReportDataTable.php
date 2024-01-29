@@ -43,13 +43,16 @@ class PaymentReportDataTable extends DataTable
             ->editColumn('comment', function (PaymentReport $payment_report) {
                 return $payment_report->comments;
             })
+            ->editColumn('download', function (PaymentReport $payment_report) {
+                return '<button data-kt-action="download_all" data-kt-payment-report-id="' . $payment_report->id . '" class="btn btn-primary">Download</button>';
+            })
             ->addColumn('user_first_name', function (PaymentReport $payment_report) {
                 return $payment_report->user->first_name;
             })
             ->editColumn('view', function (PaymentReport $payment_report) {
                 return view('pages.apps.payment-report.columns._view-action', compact('payment_report'));
             })
-            ->rawColumns(['user_first_name', 'document_path'])
+            ->rawColumns(['user_first_name', 'document_path', 'download'])
             ->setRowId('id');
     }
 
@@ -183,6 +186,7 @@ public function csv()
                 Column::make('user')->title('User')->name('users.first_name')->orderable(true),
                 Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
                 Column::make('comment')->title('Comments')->searchable(false)->orderable(false)->exportable(false)->width(200),
+                Column::make('download')->title('Download')->searchable(false)->orderable(false)->exportable(false)->width(120),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
                     ->exportable(false)

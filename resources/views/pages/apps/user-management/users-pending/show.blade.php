@@ -92,7 +92,7 @@
                             @endif
                             <!--begin::Details item-->
                             <!--begin::Details item-->
-                            @if ($user->vendor_id)
+                            @if ($user->county?->county_full)
                             <div class="fw-bold mt-5">County Designation</div>
                             <div class="text-gray-600">{{$user->county->county_full}}</div>
                             @endif

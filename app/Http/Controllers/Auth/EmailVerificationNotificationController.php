@@ -25,6 +25,10 @@ class EmailVerificationNotificationController extends Controller
 
         $user = $request->user();
 
+        if ($user->status == 3) {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Your account has been disabled');
+        }
 
         $user->email_verification_hash = md5(uniqid());
         $user->save();

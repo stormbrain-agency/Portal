@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', 'string', 'min:8', 'regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'],
             'business_phone' => ['required', 'string', 'max:255'],
-            'mobile_phone' => ['required', 'string', 'max:255'],
+            // 'mobile_phone' => ['required', 'string', 'max:255'],
             'mailing_address' => ['required', 'string', 'max:255'],
             'vendor_id' => ['required', 'string', 'max:255'],
             'county_designation' => ['required', 'string', 'max:255'],

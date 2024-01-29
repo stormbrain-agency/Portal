@@ -45,7 +45,7 @@ class EditUserModal extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
-        'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
+        // 'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
         'role' => 'required|string',
     ];
 
@@ -54,7 +54,7 @@ class EditUserModal extends Component
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255'],
         'business_phone' => ['required', 'string', 'max:255'],
-        'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
+        // 'mobile_phone' => ['required', 'string', 'regex:/^\d{10}$/'],
         'mailing_address' => ['required', 'string', 'max:255'],
         'vendor_id' => ['required', 'string', 'max:255'],
         'county_designation' => ['required', 'string', 'max:255'],

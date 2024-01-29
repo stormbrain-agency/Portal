@@ -19,7 +19,21 @@
         </a>
     </div>
     <!--end::Menu item-->
-
+    @if ($user->status != 3)
+    <div class="menu-item px-3">
+        <a href="#" class="menu-link px-3 text-disabled-status" data-kt-user-id="{{ $user->id }}" data-kt-action="disable_row">
+            Disable
+        </a>
+    </div>
+    @endif
+    <!--end::Menu item-->
+    @if ($user->status == 3) 
+    <div class="menu-item px-3">
+        <a href="#" class="menu-link px-3 text-primary" data-kt-user-id="{{ $user->id }}" data-kt-action="able_row">
+            Active
+        </a>
+    </div>
+    @endif
     <!--begin::Menu item-->
     <div class="menu-item px-3">
         <a href="#" class="menu-link px-3 text-danger" data-kt-user-id="{{ $user->id }}" data-kt-action="delete_row">

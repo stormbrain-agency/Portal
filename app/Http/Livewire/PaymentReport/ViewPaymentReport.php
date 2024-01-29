@@ -30,6 +30,7 @@ class ViewPaymentReport extends Component
     protected $listeners = [
         'view_payment' => 'viewPaymentReport',
         'triggerDownloadAllFiles' => 'downloadAllFiles',
+        'triggerDownloadAllFilesBtn' => 'downloadAllFilesBtn',
     ];
     
 
@@ -81,6 +82,46 @@ class ViewPaymentReport extends Component
                 if (!empty($downloadUrls)) {
                     PaymentReportDownloadHistory::create([
                         'payment_report_id' => $this->payment_id,
+                        'user_id' => $user_id,
+                    ]);
+                    $this->emit('downloadAllFiles', $downloadUrls);
+        
+                }
+            } else {
+                $this->emit('error', __('No files to download.'));
+
+            }
+        } else {
+            $this->emit('error', __('User not logged in.'));
+
+        }
+    }
+
+    public function downloadAllFilesBtn($id)
+    {
+        $user_id = Auth::id();
+
+        if ($user_id) {
+            
+            $payment_report_files = PaymentReportFiles::where("payment_report_id", $id)->get();
+            
+            if ($payment_report_files->isNotEmpty()) {
+                $downloadUrls = [];
+
+                foreach ($payment_report_files as $payment_report_file) {
+                    $filename = $payment_report_file->file_path;
+                    $file = storage_path('app/uploads/payment_reports/' . $filename);
+
+                    if (file_exists($file)) {
+                        $downloadUrls [] = route('county-provider-payment-report.download', ['filename' => $filename]);
+                    }else {
+                        $this->emit('error', __('Could not find ' .$filename. ' file to download.'));
+                    }
+                }
+
+                if (!empty($downloadUrls)) {
+                    PaymentReportDownloadHistory::create([
+                        'payment_report_id' => $id,
                         'user_id' => $user_id,
                     ]);
                     $this->emit('downloadAllFiles', $downloadUrls);

@@ -30,6 +30,7 @@ class ViewMracArac extends Component
     protected $listeners = [
         'view_mrac_arac' => 'viewMracArac',
         'triggerDownloadAllFiles' => 'downloadAllFiles',
+        'triggerDownloadAllFilesBtn' => 'downloadAllFilesBtn',
     ];
     
 
@@ -81,6 +82,46 @@ class ViewMracArac extends Component
                 if (!empty($downloadUrls)) {
                     MracAracDownloadHistory::create([
                         'mrac_arac_id' => $this->mrac_arac_id,
+                        'user_id' => $user_id,
+                    ]);
+                    $this->emit('downloadAllFiles', $downloadUrls);
+        
+                }
+            } else {
+                $this->emit('error', __('No files to download.'));
+
+            }
+        } else {
+            $this->emit('error', __('User not logged in.'));
+
+        }
+    }
+
+    public function downloadAllFilesBtn($id)
+    {
+        $user_id = Auth::id();
+
+        if ($user_id) {
+            
+            $mrac_arac_files = MracAracFiles::where("mrac_arac_id", $id)->get();
+            if ($mrac_arac_files->isNotEmpty()) {
+                
+                $downloadUrls = [];
+
+                foreach ($mrac_arac_files as $mrac_arac_file) {
+                    $filename = $mrac_arac_file->file_path;
+                    $file = storage_path('app/uploads/mrac_arac/' . $filename);
+
+                    if (file_exists($file)) {
+                        $downloadUrls [] = route('county-mrac-arac.download', ['filename' => $filename]);
+                    }else {
+                        $this->emit('error', __('Could not find ' .$filename. ' file to download.'));
+                    }
+                }
+
+                if (!empty($downloadUrls)) {
+                    MracAracDownloadHistory::create([
+                        'mrac_arac_id' => $id,
                         'user_id' => $user_id,
                     ]);
                     $this->emit('downloadAllFiles', $downloadUrls);

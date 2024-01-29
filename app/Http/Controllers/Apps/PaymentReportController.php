@@ -49,13 +49,13 @@ class PaymentReportController extends Controller
         $request->validate([
             'month_year' => 'required',
             'payment_report_files' => 'required|array',
-            'payment_report_files.*' => 'file|mimes:zip,doc,docx,xls,xlsx,csv,pdf|max:20480',
+            'payment_report_files.*' => 'file|mimes:csv|max:20480',
             'comment' => 'nullable|max:150',
         ], [
             'month_year.required' => 'The month and year field is required.',
             'payment_report_files.required' => 'The payment report files field is required.',
             'payment_report_files.*.file' => 'Each payment report file must be a file.',
-            'payment_report_files.*.mimes' => 'Each payment report file must be of type: zip, doc, docx, xls, xlsx, csv, pdf.',
+            'payment_report_files.*.mimes' => 'Each payment report file must be of type: csv.',
             'payment_report_files.*.max' => 'Each payment report file may not be greater than 20MB.',
             'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);

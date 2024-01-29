@@ -19,6 +19,7 @@ use App\Models\PaymentReportDownloadHistory;
 use App\Models\MracArac;
 use App\Models\MracAracDownloadHistory;
 use App\Models\User;
+use App\Models\County;
 
 class UsersActivityDataTable extends DataTable
 {
@@ -32,6 +33,12 @@ class UsersActivityDataTable extends DataTable
         return (new EloquentDataTable($query))
          ->editColumn('first_name', function ($data) {
             return view('pages.apps.activity-management.columns._user', compact('data'));
+        })
+        ->editColumn('county', function ($data) {
+            $countyDesignation = $data->county_designation;
+            $county = County::where('county_fips', $countyDesignation)->first();
+            
+            return $county ? $county->county : '';
         })
         ->editColumn('action', function ($data) {
             return ucfirst($data->action);
@@ -60,6 +67,7 @@ class UsersActivityDataTable extends DataTable
         DB::raw('CASE WHEN w9_upload.id IS NOT NULL THEN "County W9" WHEN payment_report.id IS NOT NULL THEN "Payment Report" WHEN mrac_arac.id IS NOT NULL THEN "mRec/aRec" END AS fc'),
         'users.first_name',
         'users.last_name',
+        'users.county_designation',
         'w9_upload.created_at AS time'
     )
         ->from('w9_upload')
@@ -73,6 +81,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'Payment Report'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'payment_report.created_at AS time'
         )->from('payment_report')
             ->leftJoin('users', 'payment_report.user_id', '=', 'users.id')
@@ -85,6 +94,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'mRec/aRec'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'mrac_arac.created_at AS time'
         )->from('mrac_arac')
             ->leftJoin('users', 'mrac_arac.user_id', '=', 'users.id')
@@ -97,6 +107,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'County W9'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'w9_download_history.created_at AS time'
         )->from('w9_download_history')
             ->leftJoin('users', 'w9_download_history.user_id', '=', 'users.id')
@@ -110,6 +121,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'Payment Report'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'payment_report_download_history.created_at AS time'
         )->from('payment_report_download_history')
             ->leftJoin('users', 'payment_report_download_history.user_id', '=', 'users.id')
@@ -123,6 +135,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'mRec/aRec'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'mrac_arac_download_history.created_at AS time'
         )->from('mrac_arac_download_history')
             ->leftJoin('users', 'mrac_arac_download_history.user_id', '=', 'users.id')
@@ -137,6 +150,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw('CASE WHEN w9_upload.id IS NOT NULL THEN "County W9" WHEN payment_report.id IS NOT NULL THEN "Payment Report" WHEN mrac_arac.id IS NOT NULL THEN "mRec/aRec" END AS fc'),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'w9_upload.created_at AS time'
         )
         ->from('w9_upload')
@@ -151,6 +165,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'Payment Report'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'payment_report.created_at AS time'
         )->from('payment_report')
             ->where("users.id", '=', $user_id)
@@ -164,6 +179,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'mRec/aRec'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'mrac_arac.created_at AS time'
         )->from('mrac_arac')
             ->where("users.id", '=', $user_id)
@@ -177,6 +193,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'County W9'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'w9_download_history.created_at AS time'
         )->from('w9_download_history')
             ->where("users.id", '=', $user_id)
@@ -191,6 +208,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'Payment Report'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'payment_report_download_history.created_at AS time'
         )->from('payment_report_download_history')
             ->where("users.id", '=', $user_id)
@@ -205,6 +223,7 @@ class UsersActivityDataTable extends DataTable
             DB::raw("'mRec/aRec'"),
             'users.first_name',
             'users.last_name',
+            'users.county_designation',
             'mrac_arac_download_history.created_at AS time'
         )->from('mrac_arac_download_history')
             ->where("users.id", '=', $user_id)
@@ -261,7 +280,7 @@ class UsersActivityDataTable extends DataTable
     {
         return [
             Column::make('first_name')->name('first_name')->title('Full Name')->orderable(true),
-            // Column::make('full_name')->name('full_name')->title('Full Name')->orderable(true),
+            Column::make('county')->name('county')->title('County')->orderable(false),
             Column::make('action')->title('Action')->orderable(true),
             Column::make('fc')->title('Function')->orderable(true),
             Column::make('time')->name("time")->title('Time')->orderable(true),

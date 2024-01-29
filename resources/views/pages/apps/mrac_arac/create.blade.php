@@ -84,11 +84,6 @@ line-height: 16px;
         <div class="card-body py-4 pt-0">
             <span class="text-gray-700 fs-6"><i>If you have any questions, refer to our <a class="text-gray-700 fs-6 text-decoration-underline" href="{{route('help-faq')}}">FAQs</a> or submit a request via our <a class="text-gray-700 fs-6 text-decoration-underline" target="_blank" href="https://supplementalratepayment.org/contact-us/">contact us</a> form.</i> </span>
             <br>
-            <a href="{{ route('county-mrac-arac.download_template') }}" class="btn btn-bg-primary me-6 text-light mt-5">
-                <i class="ki-duotone ki-arrow-down text-light">
-                    <span class="path1"></span>
-                    <span class="path2"></span>
-                </i>Download Template</a>
             <hr>
             <form action="{{ route('county-mrac-arac.store') }}" method="POST" id="myform" class="form" enctype="multipart/form-data">
                 @csrf
@@ -104,9 +99,15 @@ line-height: 16px;
                                     <option value="">Select Month/Year</option>
                                     @for ($year = 2024; $year <= 2025; $year++)
                                         @for ($month = 1; $month <= 12; $month++)
-                                            <option value="{{ date('F Y', strtotime($year . '-' . sprintf('%02d', $month) . '-01')) }}">
-                                                {{ date('F Y', strtotime($year . '-' . sprintf('%02d', $month) . '-01')) }}
-                                            </option>
+                                            @php
+                                                $date = strtotime($year . '-' . sprintf('%02d', $month) . '-01');
+                                                $current_date = strtotime('2025-07-01'); // Ngày hiện tại (tháng 7 năm 2025)
+                                            @endphp
+                                            @if ($date <= $current_date)
+                                                <option value="{{ date('F Y', $date) }}">
+                                                    {{ date('F Y', $date) }}
+                                                </option>
+                                            @endif
                                         @endfor
                                     @endfor
                                 </select>
@@ -116,6 +117,7 @@ line-height: 16px;
                                 @enderror
                             </div>
                         </div>
+
                         <!--end::Select-->
                     </div>
                     <!--end::Input group-->
@@ -134,7 +136,7 @@ line-height: 16px;
                             <div class="dz-message needsclick text-center justify-content-center w-50 mx-auto">
                                 <!--begin::Info-->
                                 <div class="ms-4">
-                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload mRec/aRec Files</h3>
+                                    <h3 class="fs-5 fw-bold text-gray-900 mb-1 mt-3">Upload mRec/aRec Files (.csv files only)</h3>
                                     <p class="fs-7 fw-semibold text-gray-500 drop-zone__prompt">Drag & Drop or <span class="text-decoration-underline">choose files</span> from computer</p>
                                     <p class="fs-7 fw-semibold text-gray-500 font-italic">
                                         <i>

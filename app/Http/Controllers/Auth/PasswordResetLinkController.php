@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ResetPasswordMail;
+use Illuminate\Support\Facades\Auth;
 
 class PasswordResetLinkController extends Controller
 {
@@ -40,6 +41,10 @@ class PasswordResetLinkController extends Controller
         $user = User::where('email', $request->email)->first();
         
         if ($user) {
+            if ($user->status == 3) {
+                Auth::logout();
+                return redirect()->route('login')->with('error', 'Your account has been disabled');
+            }
             $token = Password::createToken($user);
             $actionUrl = url(route('password.reset', ['token' => $token, 'email' => $request->email], false));
 

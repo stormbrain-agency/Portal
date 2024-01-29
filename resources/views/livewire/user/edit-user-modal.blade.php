@@ -123,7 +123,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">Mobile Phone Number.</label>
+                            <label class="fw-semibold fs-6 mb-2">Mobile Phone Number</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" wire:model.defer="mobile_phone" id="mobile_phone" name="mobile_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Mobile Phone Number"/>
