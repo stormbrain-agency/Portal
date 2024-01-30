@@ -91,23 +91,7 @@
         <!--begin::Input group--->
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="text" id="mobile_phone" placeholder="Mobile Phone Number" name="mobile_phone" autocomplete="off" class="form-control bg-transparent"/>
-            <!--end::Email-->
-        </div>
-        <!--end::Input group--->
-
-        <!--begin::Input group--->
-        <div class="fv-row mb-8">
-            <!--begin::Email-->
             <input type="text" placeholder="Agency Mailing Address *" name="mailing_address" autocomplete="off" class="form-control bg-transparent"/>
-            <!--end::Email-->
-        </div>
-        <!--end::Input group--->
-
-        <!--begin::Input group--->
-        <div class="fv-row mb-8">
-            <!--begin::Email-->
-            <input type="text" placeholder="Vendor ID Number *" name="vendor_id" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->
@@ -132,14 +116,11 @@
         </div>
 
         <!--end::Input group--->
-
+        
         <!--begin::Input group--->
-        <div class="text-muted mb-2 required">
-           Upload Provider W9
-        </div>
         <div class="fv-row mb-8">
             <!--begin::Email-->
-            <input type="file" placeholder="Upload Provider W9" name="w9_file_path" autocomplete="off" class="form-control bg-transparent" accept=".zip" title="Upload Provider W9"/>
+            <input type="text" placeholder="Vendor ID Number *" name="vendor_id" autocomplete="off" class="form-control bg-transparent"/>
             <!--end::Email-->
         </div>
         <!--end::Input group--->

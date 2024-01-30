@@ -74,12 +74,6 @@
                             @endif
                             <!--begin::Details item-->
                             <!--begin::Details item-->
-                            @if ($user->mobile_phone)
-                            <div class="fw-bold mt-5">Mobile Phone</div>
-                            <div class="text-gray-600">{{$user->getFormattedMobilePhoneAttribute()}}</div>
-                            @endif
-                            <!--begin::Details item-->
-                            <!--begin::Details item-->
                             @if ($user->mailing_address)
                             <div class="fw-bold mt-5">Agency Mailing Address</div>
                             <div class="text-gray-600">{{$user->mailing_address}}</div>

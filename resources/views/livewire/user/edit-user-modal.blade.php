@@ -120,17 +120,6 @@
                         </div>
                         <!--end::Input group-->
                         @endif
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="fw-semibold fs-6 mb-2">Mobile Phone Number</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" wire:model.defer="mobile_phone" id="mobile_phone" name="mobile_phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Mobile Phone Number"/>
-                            <!--end::Input-->
-                            @error('mobile_phone')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
                         @if ($county_require == true)
                         <!--end::Input group-->
                         <!--begin::Input group-->
@@ -142,18 +131,6 @@
                             <input type="text" wire:model.defer="mailing_address" name="mailing_address" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Agency Mailing Address"/>
                             <!--end::Input-->
                             @error('mailing_address')
-                            <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <!--end::Input group-->
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fw-semibold fs-6 mb-2">Vendor ID Number</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" wire:model.defer="vendor_id" name="vendor_id" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Vendor ID Number"/>
-                            <!--end::Input-->
-                            @error('vendor_id')
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->
@@ -183,6 +160,19 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fw-semibold fs-6 mb-2">Vendor ID Number</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" wire:model.defer="vendor_id" name="vendor_id" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Vendor ID Number"/>
+                            <!--end::Input-->
+                            @error('vendor_id')
+                            <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <!--end::Input group-->
+                        
                         @endif
                     </div>
                     <!--end::Scroll-->
@@ -208,10 +198,3 @@
     <!--end::Modal dialog-->
 </div>
 
-@push('scripts')
-    <script>
-        Inputmask({
-            "mask" : "(999) 999-9999",
-        }).mask("#mobile_phone");
-    </script>
-@endpush

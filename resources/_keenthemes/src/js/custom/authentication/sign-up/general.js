@@ -242,16 +242,6 @@ var KTSignupGeneral = function () {
                                 message: 'County Designation is required'
                             }
                         }
-                    },'w9_file_path': {
-                        validators: {
-                            notEmpty: {
-                                message: 'W-9 File Upload is required'
-                            }
-                        },file: {
-                            extension: 'zip',
-                            type: 'application/zip',
-                            message: 'The selected file is not a valid ZIP file'
-                        }
                     },'toc': {
                         validators: {
                             notEmpty: {
@@ -400,10 +390,6 @@ var KTSignupGeneral = function () {
             form = document.querySelector('#kt_sign_up_form');
             submitButton = document.querySelector('#kt_sign_up_submit');
             passwordMeter = KTPasswordMeter.getInstance(form.querySelector('[data-kt-password-meter="true"]'));
-
-            Inputmask({
-                "mask" : "(999) 999-9999",
-            }).mask("#mobile_phone");
             
             if (isValidUrl(submitButton.closest('form').getAttribute('action'))) {
                 handleFormAjax();

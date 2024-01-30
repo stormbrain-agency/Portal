@@ -94,10 +94,13 @@
                     <br>
                     <br>
                     <ul>
-                        <li>English: <a target="_blank" href="https://forms.cdasd.org/232275453406151">https://forms.cdasd.org/232275453406151</a></li>
-                        <li>Spanish: <a target="_blank" href="https://forms.cdasd.org/232985402065154">https://forms.cdasd.org/232985402065154</a></li>
+                        <li>English: <a target="_blank" href="https://forms.cdasd.org/232275453406151" onclick="preventTabClose(event)">https://forms.cdasd.org/232275453406151</a></li>
+                        <li>Spanish: <a target="_blank" href="https://forms.cdasd.org/232985402065154" onclick="preventTabClose(event)">https://forms.cdasd.org/232985402065154</a></li>
                     </ul>
-                    <strong>Note: </strong><i>Even though it is not a requirement, CDA would appreciate counties supply a copy of the provider’s W-9 Form that they have collected to help ensure timely payment to the childcare provider.</i>
+                    <strong>Note: </strong><i>Note: Even though it is not a requirement, CDA would appreciate counties supplying a copy of the provider’s W-9 Form that they have collected to help ensure timely payment to the child care provider. Click below to download a copy of the “Release of W-9 Form to CDA.”.</i>
+                    <br/>
+                    <br/>
+                    <a id="download-faq" href="{{route('download-faq-w9')}}" onclick="preventTabClose(event)">Release of W-9 Form to CDA.pdf</a>
                 </div>
             </div>
         </div>
@@ -133,6 +136,7 @@
     </div>
 </div>
 <script>
+    
     function toggleAnswer(box) {
         var elements = document.getElementsByClassName("box-question");
         var child = box.querySelector('.ki-duotone');
@@ -147,6 +151,10 @@
             box.classList.add('active');
             child.classList.replace('ki-plus-square', 'ki-minus-square');
         }
+    }
+
+    function preventTabClose(event) {
+        event.stopPropagation();
     }
 </script>
 </x-default-layout>
