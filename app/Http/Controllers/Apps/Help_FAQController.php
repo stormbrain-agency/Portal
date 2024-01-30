@@ -62,4 +62,16 @@ class Help_FAQController extends Controller
     {
         //
     }
+
+    public function downloadFaqW9()
+    {
+        $filename = "Consent Form_CDA.pdf";
+        $path = public_path("libs/faqs/{$filename}");
+
+        if (file_exists($path)) {
+            return response()->download($path);
+        }else {
+            return redirect()->back()->with('error', 'mRec/aRec Template File not found.');
+        }
+    }
 }

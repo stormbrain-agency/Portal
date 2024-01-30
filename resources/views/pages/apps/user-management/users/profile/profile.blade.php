@@ -83,12 +83,6 @@
                             @endif
                             <!--begin::Details item-->
                             <!--begin::Details item-->
-                            @if ($user->mobile_phone)
-                            <div class="fw-bold mt-5">Mobile Phone</div>
-                            <div class="text-gray-600">{{$user->getFormattedMobilePhoneAttribute()}}</div>
-                            @endif
-                            <!--begin::Details item-->
-                            <!--begin::Details item-->
                             @if ($user->mailing_address)
                             <div class="fw-bold mt-5">Agency Mailing Address</div>
                             <div class="text-gray-600">{{$user->mailing_address}}</div>
@@ -194,19 +188,6 @@
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>Mobile Phone</td>
-                                                <td>{{$user->getFormattedMobilePhoneAttribute()}}</td>
-                                                <td class="text-end">
-                                                    <button type="button" class="btn btn-icon btn-active-light-primary w-30px h-30px ms-auto" data-bs-toggle="modal" data-bs-target="#kt_modal_update_mobile_phone">
-                                                        <i class="ki-duotone ki-pencil fs-3">
-                                                            <span class="path1"></span>
-                                                            <span class="path2"></span>
-                                                        </i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                           
                                         </tbody>
                                     </table>
                                 <!--end::Table-->

@@ -122,7 +122,10 @@ Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
             Route::get('/users/{user_id}', [ActivityController::class, 'show'])->name('show');
         });
     });
+
     Route::get('/help-faq', [Help_FAQController::class, 'index'])->name('help-faq');
+    Route::get('/help-faq/download-release-w9', [Help_FAQController::class, 'downloadFaqW9'])->name('download-faq-w9');
+
 });
 
 Route::get('/error', function () {

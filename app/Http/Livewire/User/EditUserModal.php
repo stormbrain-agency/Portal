@@ -20,7 +20,6 @@ class EditUserModal extends Component
     public $last_name;
     public $email;
     public $business_phone;
-    public $mobile_phone;
     public $mailing_address;
     public $vendor_id;
     public $county_designation;
@@ -87,7 +86,6 @@ class EditUserModal extends Component
 
     public function submit()
     {
-        $this->mobile_phone = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
         $this->business_phone = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
         if ($this->role === 'county user' || $this->role === 'CDSS') {
             $checkRules = $this->rules_for_county_user;
@@ -158,7 +156,6 @@ class EditUserModal extends Component
         $this->last_name = $user->last_name;
         $this->email = $user->email;
         $this->business_phone = $user->business_phone;
-        $this->mobile_phone = $user->getFormattedMobilePhoneAttribute();
         $this->mailing_address = $user->mailing_address;
         $this->vendor_id = $user->vendor_id;
         $this->county_designation = $user->county_designation;
@@ -170,7 +167,6 @@ class EditUserModal extends Component
     private function prepareUserData()
     {
         // Prepare the data for creating or updating a user
-        $cleanedMobilePhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->mobile_phone);
         $cleanedBusinessPhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
 
         $data = [
@@ -178,7 +174,6 @@ class EditUserModal extends Component
             'last_name' => $this->last_name,
             'email' => $this->email,
             'business_phone' => $this->business_phone,
-            'mobile_phone' => $this->mobile_phone,
             'mailing_address' => $this->mailing_address,
             'vendor_id' => $this->vendor_id,
             'county_designation' => $this->county_designation,
