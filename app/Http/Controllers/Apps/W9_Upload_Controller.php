@@ -91,7 +91,7 @@ class W9_Upload_Controller extends Controller
                             $newFile->user_id = $user->id;
                             $newFile->comments = $request->input('comments');
                             $newFile->original_name = $uniqueName;
-                            $newFile->w9_county_fips = $user->county_designation;
+                            $newFile->w9_county_fips = $user->county_designation ? $user->county_designation : '';
                             $newFile->save();
     
                             $adminEmails = User::whereHas('roles', function ($query) {
@@ -120,8 +120,76 @@ class W9_Upload_Controller extends Controller
                             }
     
                             return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
+                        }else{
+                            $newFile = new W9Upload();
+                            $newFile->user_id = $user->id;
+                            $newFile->comments = $request->input('comments');
+                            $newFile->original_name = $uniqueName;
+                            $newFile->w9_county_fips = '';
+                            $newFile->save();
+    
+                            $adminEmails = User::whereHas('roles', function ($query) {
+                                $query->where('name', 'admin')->orWhere('name', 'manager');
+                            })->pluck('email');
+    
+                            $data = [
+                                'email' => $user->email,
+                                'name' => $user->first_name .' ' . $user->last_name,
+                                'county_designation' => "",
+                                'time' => $newFile->created_at,
+                            ];
+    
+                            foreach($adminEmails as $adminEmail){
+                                try {
+                                    Mail::to($adminEmail)->send(new W9MailAdmin($data));
+                                } catch (\Exception $e) {
+                                    Log::error('Error sending email to admins: ' . $e->getMessage());
+                                }
+                            }
+                            try {
+                                $userEmail = $user->email;
+                                Mail::to($userEmail)->send(new W9MailUser($data));
+                            } catch (\Throwable $th) {
+                                Log::error('Error sending email to user: ' . $e->getMessage());
+                            }
+    
+                            return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
                         }
-                    }
+                    }else{
+                            $newFile = new W9Upload();
+                            $newFile->user_id = $user->id;
+                            $newFile->comments = $request->input('comments');
+                            $newFile->original_name = $uniqueName;
+                            $newFile->w9_county_fips = '';
+                            $newFile->save();
+    
+                            $adminEmails = User::whereHas('roles', function ($query) {
+                                $query->where('name', 'admin')->orWhere('name', 'manager');
+                            })->pluck('email');
+    
+                            $data = [
+                                'email' => $user->email,
+                                'name' => $user->first_name .' ' . $user->last_name,
+                                'county_designation' => "",
+                                'time' => $newFile->created_at,
+                            ];
+    
+                            foreach($adminEmails as $adminEmail){
+                                try {
+                                    Mail::to($adminEmail)->send(new W9MailAdmin($data));
+                                } catch (\Exception $e) {
+                                    Log::error('Error sending email to admins: ' . $e->getMessage());
+                                }
+                            }
+                            try {
+                                $userEmail = $user->email;
+                                Mail::to($userEmail)->send(new W9MailUser($data));
+                            } catch (\Throwable $th) {
+                                Log::error('Error sending email to user: ' . $e->getMessage());
+                            }
+    
+                            return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
+                        }
         
                     return redirect('/county-w9/upload')->with('error', 'Error retrieving user county information.');
                 } else {
