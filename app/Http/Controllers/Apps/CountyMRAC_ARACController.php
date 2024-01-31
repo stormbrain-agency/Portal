@@ -91,7 +91,7 @@ class CountyMRAC_ARACController extends Controller
         $data = [
             'email' => $user->email,
             'name' => $user->first_name .' ' . $user->last_name,
-            'county_designation' => $user->county->county ?? "",
+            'county_designation' => $user->county?->county ?? "",
             'time' => $mracArac->created_at,
         ];
 

@@ -97,7 +97,7 @@ class PaymentReportController extends Controller
         $data = [
             'email' => $user->email,
             'name' => $user->first_name .' ' . $user->last_name,
-            'county_designation' => $user->county->county ? $user->county->county : "",
+            'county_designation' => $user->county?->county ?? "",
             'time' => $paymentReport->created_at,
             'month_year' => $paymentReport->month_year,
         ];
