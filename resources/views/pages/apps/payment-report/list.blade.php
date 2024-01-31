@@ -12,7 +12,7 @@
             <!--begin::Card title-->
             <div class="card-title">
                 @cannot('create provider payment')
-                County Provider Payment Resports
+                County Provider Payment Reports
                 @else
                 Provider Payment Report | Submission History
                 @endcannot

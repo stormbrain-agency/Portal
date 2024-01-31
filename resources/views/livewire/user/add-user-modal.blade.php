@@ -126,6 +126,8 @@
                             <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <!--end::Input group-->
+                        @if ($cdss_county_disable == false)
+                            
                         <!--begin::Input group-->
                        <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -153,6 +155,8 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        @endif
+
                         <!--end::Input group-->
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">

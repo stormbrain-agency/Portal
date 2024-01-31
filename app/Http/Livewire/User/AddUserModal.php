@@ -39,6 +39,7 @@ class AddUserModal extends Component
     public $countyDropdown;
     public $edit_mode = false;
     public $county_require = true;
+    public $cdss_county_disable = false;
 
     protected $rules = [
         'first_name' => ['required', 'string', 'max:255'],
@@ -59,6 +60,16 @@ class AddUserModal extends Component
         'county_designation' => ['required', 'string', 'max:255'],
         'role' => ['required', 'string'],
 
+    ];
+
+    protected $rules_for_cdss = [
+        'first_name' => ['required', 'string', 'max:255'],
+        'last_name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255'],
+        'business_phone' => ['required', 'string', 'max:255'],
+        'mailing_address' => ['required', 'string', 'max:255'],
+        'vendor_id' => ['required', 'string', 'max:255'],
+        'role' => ['required', 'string'],
     ];
 
     protected $messages = [
@@ -94,8 +105,10 @@ class AddUserModal extends Component
 
     public function submit()
     {
-        if ($this->role === 'county user' || $this->role === 'CDSS') {
+        if ($this->role === 'county user') {
             $checkRules = $this->rules_for_county_user;
+        }elseif($this->role === 'CDSS'){
+            $checkRules = $this->rules_for_cdss;
         }else{
             $checkRules = $this->rules;
         }
@@ -204,6 +217,15 @@ class AddUserModal extends Component
                 'vendor_id' => $this->vendor_id,
                 'county_designation' => $this->county_designation,
             ];
+        }elseif ($this->cdss_county_disable == true) {
+            $data = [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'business_phone' => $this->business_phone,
+                'mailing_address' => $this->mailing_address,
+                'vendor_id' => $this->vendor_id,
+            ];
         }else{
             $data = [
                 'first_name' => $this->first_name,
@@ -309,10 +331,16 @@ class AddUserModal extends Component
     }
 
     public function updateRole(){
-        if($this->role == "county user" || $this->role == "CDSS"){
+        if($this->role == "county user"){
             $this->county_require = true;
+            $this->cdss_county_disable = false;
+        }
+        elseif($this->role == "CDSS"){
+            $this->county_require = true;
+            $this->cdss_county_disable = true;
         }else{
             $this->county_require = false;
+            $this->cdss_county_disable = false;
         }
     }
 

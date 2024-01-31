@@ -34,6 +34,7 @@ class EditUserModal extends Component
     public $countyDropdown;
     public $edit_mode = true;
     public $county_require = true;
+    public $cdss_county_disable = false;
 
     protected $listeners = [
         'update_user' => 'updateUser',
@@ -57,6 +58,16 @@ class EditUserModal extends Component
         'mailing_address' => ['required', 'string', 'max:255'],
         'vendor_id' => ['required', 'string', 'max:255'],
         'county_designation' => ['required', 'string', 'max:255'],
+        'role' => ['required', 'string'],
+    ];
+
+    protected $rules_for_cdss = [
+        'first_name' => ['required', 'string', 'max:255'],
+        'last_name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255'],
+        'business_phone' => ['required', 'string', 'max:255'],
+        'mailing_address' => ['required', 'string', 'max:255'],
+        'vendor_id' => ['required', 'string', 'max:255'],
         'role' => ['required', 'string'],
     ];
 
@@ -86,9 +97,10 @@ class EditUserModal extends Component
 
     public function submit()
     {
-        $this->business_phone = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
-        if ($this->role === 'county user' || $this->role === 'CDSS') {
+        if ($this->role === 'county user') {
             $checkRules = $this->rules_for_county_user;
+        }elseif($this->role === 'CDSS'){
+            $checkRules = $this->rules_for_cdss;
         }else{
             $checkRules = $this->rules;
         }
@@ -169,15 +181,33 @@ class EditUserModal extends Component
         // Prepare the data for creating or updating a user
         $cleanedBusinessPhoneNumber = str_replace(['(', ')', ' ', '-'], '', $this->business_phone);
 
-        $data = [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'business_phone' => $this->business_phone,
-            'mailing_address' => $this->mailing_address,
-            'vendor_id' => $this->vendor_id,
-            'county_designation' => $this->county_designation,
-        ];
+        $data = [];
+        if ($this->county_require == true) {
+            $data = [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'business_phone' => $this->business_phone,
+                'mailing_address' => $this->mailing_address,
+                'vendor_id' => $this->vendor_id,
+                'county_designation' => $this->county_designation,
+            ];
+        }elseif ($this->cdss_county_disable == true) {
+            $data = [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+                'business_phone' => $this->business_phone,
+                'mailing_address' => $this->mailing_address,
+                'vendor_id' => $this->vendor_id,
+            ];
+        }else{
+            $data = [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'email' => $this->email,
+            ];
+        }
 
         if (!$this->edit_mode) {
             $data['password'] = Hash::make($this->email);
@@ -192,10 +222,16 @@ class EditUserModal extends Component
     }
 
     public function updateRole(){
-        if($this->role == "county user" || $this->role == "CDSS"){
+        if($this->role == "county user"){
             $this->county_require = true;
+            $this->cdss_county_disable = false;
+        }
+        elseif($this->role == "CDSS"){
+            $this->county_require = true;
+            $this->cdss_county_disable = true;
         }else{
             $this->county_require = false;
+            $this->cdss_county_disable = false;
         }
     }
 
