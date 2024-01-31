@@ -76,12 +76,15 @@ class RegisteredUserController extends Controller
         $user->assignRole('county user');
         $userID = $user->id;
 
+        $direct_sign_up_mail = env('SIGN_UP_MAIL', 'srp@cdasd.org');
 
         $county_designation = $user->county?->county;
         // Send Mail
         $adminEmails = User::whereHas('roles', function ($query) {
         $query->where('name', 'admin');
         })->pluck('email');
+
+        $adminEmails[] = $direct_sign_up_mail;
         $data = [
             'name' => $request->input('first_name') . ' ' . $request->input('last_name'),
             'email' => $request -> input('email'),
