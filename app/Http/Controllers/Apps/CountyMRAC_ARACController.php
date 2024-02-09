@@ -54,17 +54,6 @@ class CountyMRAC_ARACController extends Controller
         'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);
 
-
-        $user = Auth::user();
-        $countyFips = $user ? ($user->county_designation ?? '') : '';
-
-        $mracArac = MracArac::create([
-            'month_year' => $request->month_year,
-            'county_fips' => $countyFips,
-            'user_id' => $user->id,
-            'comments' => $request->comment,
-        ]);
-
         foreach ($request->file('mrac_arac_files') as $uploadedFile) {
             if ($uploadedFile->isValid()) {
                 $extension = $uploadedFile->getClientOriginalExtension();
@@ -76,6 +65,16 @@ class CountyMRAC_ARACController extends Controller
                 return redirect('/county-mrac-arac/create')->with('error', 'File upload failed.');
             }
         }
+
+        $user = Auth::user();
+        $countyFips = $user ? ($user->county_designation ?? '') : '';
+
+        $mracArac = MracArac::create([
+            'month_year' => $request->month_year,
+            'county_fips' => $countyFips,
+            'user_id' => $user->id,
+            'comments' => $request->comment,
+        ]);
 
         foreach ($request->file('mrac_arac_files') as $uploadedFile) {
             if ($uploadedFile->isValid()) {

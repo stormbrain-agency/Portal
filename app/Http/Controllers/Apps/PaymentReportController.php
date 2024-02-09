@@ -60,18 +60,6 @@ class PaymentReportController extends Controller
             'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);
 
-
-
-        $user = Auth::user();
-        $countyFips = $user ? ($user->county_designation ?? '') : '';
-
-        $paymentReport = PaymentReport::create([
-            'month_year' => $request->month_year,
-            'county_fips' => $countyFips,
-            'user_id' => $user->id,
-            'comments' => $request->comment,
-        ]);
-
         foreach ($request->file('payment_report_files') as $uploadedFile) {
             if ($uploadedFile->isValid()) {
                 $extension = $uploadedFile->getClientOriginalExtension();
@@ -83,6 +71,16 @@ class PaymentReportController extends Controller
             }
 
         }
+
+        $user = Auth::user();
+        $countyFips = $user ? ($user->county_designation ?? '') : '';
+
+        $paymentReport = PaymentReport::create([
+            'month_year' => $request->month_year,
+            'county_fips' => $countyFips,
+            'user_id' => $user->id,
+            'comments' => $request->comment,
+        ]);
 
         foreach ($request->file('payment_report_files') as $uploadedFile) {
             if ($uploadedFile->isValid()) {
