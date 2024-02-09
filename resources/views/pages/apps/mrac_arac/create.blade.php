@@ -146,7 +146,7 @@ line-height: 16px;
                                 </div>
                                 <!--end::Info-->
                             </div>
-                            <input type="file" multiple name="mrac_arac_files[]" class="drop-zone__input form-control-file" id="mrac_arac_file">
+                            <input type="file" multiple name="mrac_arac_files[]" accept=".csv" class="drop-zone__input form-control-file" id="mrac_arac_file">
 
                         </div>
                         <!--end::Dropzone-->

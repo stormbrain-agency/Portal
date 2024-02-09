@@ -43,18 +43,28 @@ class CountyMRAC_ARACController extends Controller
         $request->validate([
         'month_year' => 'required',
         'mrac_arac_files' => 'required|array',
-        'mrac_arac_files.*' => 'file|mimes:csv|max:20480',
-        // 'mrac_arac_files.*' => 'file|mimes:zip,doc,docx,xls,xlsx,csv,pdf|max:20480',
+        'mrac_arac_files.*' => 'required|file|max:20480',
         'comment' => 'nullable|max:150',
         ], [
         'month_year.required' => 'The month and year field is required.',
         'mrac_arac_files.required' => 'The mRec/aRec Files field is required.',
         'mrac_arac_files.*.file' => 'The mRec/aRec Files field must be a file.',
-        'mrac_arac_files.*.mimes' => 'The mRec/aRec Files must be of type: .csv',
+        // 'mrac_arac_files.*.mimes' => 'The mRec/aRec Files must be of type: .csv',
         'mrac_arac_files.*.max' => 'The mRec/aRec Files may not be greater than 20MB.',
         'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);
 
+        foreach ($request->file('mrac_arac_files') as $uploadedFile) {
+            if ($uploadedFile->isValid()) {
+                $extension = $uploadedFile->getClientOriginalExtension();
+
+                if ($extension !== 'csv') {
+                    return redirect('/county-mrac-arac/create')->with('error', 'Only CSV files are allowed.');
+                }
+            }else{
+                return redirect('/county-mrac-arac/create')->with('error', 'File upload failed.');
+            }
+        }
 
         $user = Auth::user();
         $countyFips = $user ? ($user->county_designation ?? '') : '';

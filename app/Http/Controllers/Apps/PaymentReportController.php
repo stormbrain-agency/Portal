@@ -49,18 +49,28 @@ class PaymentReportController extends Controller
         $request->validate([
             'month_year' => 'required',
             'payment_report_files' => 'required|array',
-            'payment_report_files.*' => 'file|mimes:csv|max:20480',
+            'payment_report_files.*' => 'required|file|max:20480',
             'comment' => 'nullable|max:150',
         ], [
             'month_year.required' => 'The month and year field is required.',
             'payment_report_files.required' => 'The payment report files field is required.',
             'payment_report_files.*.file' => 'Each payment report file must be a file.',
-            'payment_report_files.*.mimes' => 'Each payment report file must be of type: .csv',
+            // 'payment_report_files.*.mimes' => 'Each payment report file must be of type: .csv',
             'payment_report_files.*.max' => 'Each payment report file may not be greater than 20MB.',
             'comment.max' => 'The comment field must not exceed 150 characters.',
         ]);
 
+        foreach ($request->file('payment_report_files') as $uploadedFile) {
+            if ($uploadedFile->isValid()) {
+                $extension = $uploadedFile->getClientOriginalExtension();
+                if ($extension !== 'csv') {
+                    return redirect('county-provider-payment-report/create')->with('error', 'Only CSV files are allowed.');
+                }
+            }else{
+                return redirect('/county-provider-payment-report/create')->with('error', 'File upload failed.');
+            }
 
+        }
 
         $user = Auth::user();
         $countyFips = $user ? ($user->county_designation ?? '') : '';

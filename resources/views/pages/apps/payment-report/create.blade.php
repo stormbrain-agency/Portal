@@ -154,7 +154,7 @@ line-height: 16px;
                                 </div>
                                 <!--end::Info-->
                             </div>
-                            <input type="file" multiple name="payment_report_files[]" class="drop-zone__input form-control-file" id="payment_report_file">
+                            <input type="file" multiple name="payment_report_files[]" accept=".csv" class="drop-zone__input form-control-file" id="payment_report_file">
 
                         </div>
                         <!--end::Dropzone-->
