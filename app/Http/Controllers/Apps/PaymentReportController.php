@@ -199,11 +199,16 @@ class PaymentReportController extends Controller
 
     public function downloadFile($filename)
     {
-        $file = storage_path('app/uploads/payment_reports/'. $filename);
-        if (file_exists($file)) {
-            return response()->download($file);
-        } else {
-            return redirect('/county-provider-payment-report')->with('error', 'File not found.');
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+            $file = storage_path('app/uploads/payment_reports/'. $filename);
+            if (file_exists($file)) {
+                return response()->download($file);
+            } else {
+                return redirect('/county-provider-payment-report')->with('error', 'File not found.');
+            }
+        }
+        else{
+            return redirect('/county-provider-payment-report')->with('error', 'No file found to download.');
         }
     }
 

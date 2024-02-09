@@ -38,23 +38,28 @@ class W9_Upload_Controller extends Controller
 
     public function downloadFile($w9_id, $filename)
     {
-        $file = storage_path('app/uploads/' . $filename);
-        if (file_exists($file)) {
-            $user_id = Auth::id();
-            W9DownloadHistory::create([
-                'w9_id'=>$w9_id,
-                'user_id'=>$user_id
-            ]);
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+           $file = storage_path('app/uploads/' . $filename);
+            if (file_exists($file)) {
+                $user_id = Auth::id();
+                W9DownloadHistory::create([
+                    'w9_id'=>$w9_id,
+                    'user_id'=>$user_id
+                ]);
 
-            $headers = [
-            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
-            'Pragma' => 'no-cache',
-            'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
-        ];
-            return response()->download($file, $filename, $headers);
-        } else {
-            return redirect('/county-w9')->with('error', 'No file found to download.');
+                $headers = [
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                'Pragma' => 'no-cache',
+                'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
+            ];
+                return response()->download($file, $filename, $headers);
+            } else {
+                return redirect('/county-w9')->with('error', 'No file found to download.');
+            }
+        }else{
+            return redirect('/county-w9')->with('error', 'You do not have permission to access this file.');
         }
+        
     }
 
 

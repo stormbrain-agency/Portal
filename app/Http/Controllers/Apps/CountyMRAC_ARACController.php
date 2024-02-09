@@ -190,11 +190,16 @@ class CountyMRAC_ARACController extends Controller
 
     public function downloadFile($filename)
     {
-        $file = storage_path('app/uploads/mrac_arac/'. $filename);
-        if (file_exists($file)) {
-            return response()->download($file);
-        } else {
-            return redirect('/county-mrac-arac')->with('error', 'File not found.');
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+            $file = storage_path('app/uploads/mrac_arac/'. $filename);
+            if (file_exists($file)) {
+                return response()->download($file);
+            } else {
+                return redirect('/county-mrac-arac')->with('error', 'File not found.');
+            }
+        }
+        else{
+            return redirect('/county-mrac-arac')->with('error', 'No file found to download.');
         }
     }
 

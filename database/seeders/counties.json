@@ -1,16 +1,5 @@
 [
   {
-    "county": "Colusa",
-    "county_ascii": "Colusa",
-    "county_full": "Colusa County",
-    "county_fips": "06011",
-    "state_id": "CA",
-    "state_name": "California",
-    "lat": 39.1775,
-    "lng": -122.237,
-    "population": 21780
-  },
-  {
     "county": "Contra Costa",
     "county_ascii": "Contra Costa",
     "county_full": "Contra Costa County",
