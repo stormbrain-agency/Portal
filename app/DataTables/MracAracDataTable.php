@@ -170,7 +170,7 @@ public function csv()
     public function getColumns(): array
     {
         //view layout
-        if (!auth()->user()->hasRole('county user')) {
+        if (!auth()->user()->hasRole('county user') || !auth()->user()->hasRole('CDSS')) {
             return [
                 Column::make('id')->title('ID'),
                 Column::make('created_at')->title('Date'),
