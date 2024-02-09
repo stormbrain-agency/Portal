@@ -139,7 +139,7 @@ class W9DataTable extends DataTable
                     ->width(60),
             ];
         } 
-        if (auth()->user()->hasRole('county user')) {
+        if (auth()->user()->hasRole('county user' ) || auth()->user()->hasRole('CDSS')) {
             return [
                 Column::make('id')->name("w9_upload.id")->title('ID'),
                 Column::make('created_at')->name("w9_upload.created_at")->title('Date')->orderable(true)->searchable(true),
