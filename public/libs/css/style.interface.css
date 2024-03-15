@@ -96,6 +96,22 @@
     opacity: 1;
 }
 
+.card.help-faq .box-question.active .content table{
+    width: 100%;
+    border: 2px solid #000;
+}
+
+.card.help-faq .box-question.active .content table th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.card.help-faq .box-question.active .content table th:last-child, td:last-child {
+    border-right: none;
+}
+
 [data-kt-app-layout=light-sidebar] .app-sidebar .menu .menu-sub .menu-item .menu-link {
     padding-left: 45px;
     margin: 0px;
