@@ -101,14 +101,14 @@
     border: 2px solid #000;
 }
 
-.card.help-faq .box-question.active .content table th, td {
+.card.help-faq .box-question.active .content table th, .card.help-faq .box-question.active .content table td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
     border-right: 1px solid #ddd;
 }
 
-.card.help-faq .box-question.active .content table th:last-child, td:last-child {
+.card.help-faq .box-question.active .content table th:last-child, .card.help-faq .box-question.active .content table td:last-child {
     border-right: none;
 }
 
