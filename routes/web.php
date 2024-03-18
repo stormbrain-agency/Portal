@@ -125,6 +125,7 @@ Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
 
     Route::get('/help-faq', [Help_FAQController::class, 'index'])->name('help-faq');
     Route::get('/help-faq/download-release-w9', [Help_FAQController::class, 'downloadFaqW9'])->name('download-faq-w9');
+    Route::get('/help-faq/download-attachment', [Help_FAQController::class, 'downloadFaqAttachment'])->name('download-faq-attachment');
 
 });
 

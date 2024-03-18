@@ -250,7 +250,7 @@
                         <li>Spanish: <a target="_blank" href="https://forms.cdasd.org/232985402065154" onclick="preventTabClose(event)">https://forms.cdasd.org/232985402065154</a></li>
                     </ul>
                     <br>
-                    CDA also created a flyer you can share with your child care providers. It includes a QR code that will prompt them to complete the W-9 Form digitally. Click to download <a href="#">[attachment]</a>
+                    CDA also created a flyer you can share with your child care providers. It includes a QR code that will prompt them to complete the W-9 Form digitally. Click to download <a onclick="preventTabClose(event)" href="{{route('download-faq-attachment')}}">[attachment]</a>
                     <br>
                     <br>
                     <strong>Note: </strong><i>Even though it is not a requirement, CDA would appreciate counties supplying a copy of the provider’s W-9 Form that they have collected to help ensure timely payment to the child care provider. Click below to download a copy of the “Release of W-9 Form to CDA.”.</i>

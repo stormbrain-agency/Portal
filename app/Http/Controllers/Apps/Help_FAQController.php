@@ -71,7 +71,19 @@ class Help_FAQController extends Controller
         if (file_exists($path)) {
             return response()->download($path);
         }else {
-            return redirect()->back()->with('error', 'mRec/aRec Template File not found.');
+            return redirect()->back()->with('error', 'File not found.');
+        }
+    }
+
+    public function downloadFaqAttachment()
+    {
+        $filename = "W_9 CDA Flyer_SRRP_ENG.SPAN.pdf";
+        $path = public_path("libs/faqs/{$filename}");
+
+        if (file_exists($path)) {
+            return response()->download($path);
+        }else {
+            return redirect()->back()->with('error', 'File not found.');
         }
     }
 }
