@@ -292,9 +292,9 @@
                 </h3>
                 <div class="content ">
                     CDA will calculate and issue payment via check to eligible providers within 25 calendar days of complete information being received. An Explanation of Payment (EOP) letter will be included.
-                    The EOP will show the payment month, child count, and applicable reduction of union due fees not to exceed $90.00
+                    The EOP will show the payment month, child count, and applicable reduction of union due fees not to exceed $90.00.
                     <br><br>
-                    CDA Project Specialists are available to assist providers at (619) 205-6250 .
+                    CDA Project Specialists are available to assist providers at (619) 205-6250.
                 </div>
             </div>
         </div>
