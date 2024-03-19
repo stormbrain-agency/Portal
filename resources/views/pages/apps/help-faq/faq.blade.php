@@ -191,7 +191,7 @@
                     Who can child care providers contact for help regarding their payments?
                 </h3>
                 <div class="content ">
-                    Please share the contact information below for providers to reach the Project Coordinator in their county.
+                    Please share the contact information below for providers to reach the Project Specialist in their county.
                     <br><br>
                     <strong>Email: </strong>| <a href="mailto:dcayetano@cdasd.org">srp@cdasd.org</a>
                     <br>
@@ -250,7 +250,7 @@
                         <li>Spanish: <a target="_blank" href="https://forms.cdasd.org/232985402065154" onclick="preventTabClose(event)">https://forms.cdasd.org/232985402065154</a></li>
                     </ul>
                     <br>
-                    CDA also created a flyer you can share with your child care providers. It includes a QR code that will prompt them to complete the W-9 Form digitally. Click to download <a onclick="preventTabClose(event)" href="{{route('download-faq-attachment')}}">[attachment]</a>
+                    CDA also created a flyer you can share with your child care providers. It includes a QR code that will prompt them to complete the W-9 Form digitally. Click here to download <a onclick="preventTabClose(event)" href="{{route('download-faq-attachment')}}">W-9 Form Flyer</a>.
                     <br>
                     <br>
                     <strong>Note: </strong><i>Even though it is not a requirement, CDA would appreciate counties supplying a copy of the provider’s W-9 Form that they have collected to help ensure timely payment to the child care provider. Click below to download a copy of the “Release of W-9 Form to CDA.”.</i>
@@ -277,7 +277,7 @@
                     How can a child care provider get the status of their Cost of Care Plus Rate Payment?
                 </h3>
                 <div class="content">
-                    CDA is unable to issue payment without complete data and a valid W-9 Form. Once CDA has received all the information required, CDA will calculate and issue payment to the provider within 25 calendar days of complete information being received
+                    CDA is unable to issue payment without complete data and a valid W-9 Form. Once CDA has received all the information required, CDA will calculate and issue payment to the provider within 25 calendar days of complete information being received.
                     <br>
                     <br>
                     CDA Project Specialists are available to assist providers with any questions they may have about the process. Providers may reach a CDA representative at (619) 205-6250.
