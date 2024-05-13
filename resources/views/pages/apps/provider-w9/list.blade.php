@@ -74,7 +74,7 @@
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
                 window.LaravelDataTables['w9-upload-table'].search(this.value).draw();
             });
-              
+
         </script>
         <script>
          $(document).ready(function () {
@@ -90,7 +90,7 @@
                 minYear: 2022,
                 maxYear: 2026,
                 locale: {
-                    format: 'YYYY-MM-DD', 
+                    format: 'YYYY-MM-DD',
                     placeholder: 'Pick a day'
                 }
             });

@@ -6,10 +6,10 @@ use App\DataTables\UsersDataTable;
 use App\DataTables\UsersPendingDataTable;
 use App\DataTables\W9DataTable;
 use App\Http\Controllers\Controller;
-use App\Models\W9Upload;    
+use App\Models\W9Upload;
 use App\Models\User;
 use App\Models\W9DownloadHistory;
-use App\Models\County; 
+use App\Models\County;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -59,38 +59,66 @@ class W9_Upload_Controller extends Controller
         }else{
             return redirect('/county-w9')->with('error', 'You do not have permission to access this file.');
         }
-        
+
     }
 
+    public function delete(Request $request, $id)
+    {
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+            $w9_upload = W9Upload::findOrFail($id);
+            if ($w9_upload) {
+                $w9_upload->delete();
+                return response()->json(['success' => 'W9 deleted successfully.']);
+            } else {
+                return response()->json(['error' => 'W9 not found.'], 404);
+            }
+        } else {
+            return response()->json(['error' => 'You do not have permission to delete.'], 403);
+        }
+    }
 
+    public function deleteDownloadHistory(Request $request, $id)
+    {
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+            $w9_download_history = W9DownloadHistory::where('w9_id', $id);
+            if ($w9_download_history) {
+                $w9_download_history->delete();
+                return response()->json(['success' => 'W9 deleted successfully.']);
+            } else {
+                return response()->json(['error' => 'W9 not found.'], 404);
+            }
+        } else {
+            return response()->json(['error' => 'You do not have permission to delete.'], 403);
+        }
+    }
 
     public function uploadFile(Request $request)
     {
         try{
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-        
+
                 if ($file->getClientOriginalExtension() === 'zip') {
                     $originalName = $file->getClientOriginalName();
-        
+
                     $counter = 0;
                     $uniqueName = $originalName;
-        
+
                     while (file_exists(storage_path('app/uploads/' . $uniqueName))) {
                         $counter++;
                         $pathInfo = pathinfo($originalName);
                         $uniqueName = $pathInfo['filename'] . "($counter)." . $pathInfo['extension'];
                     }
-        
+
                     $path = $file->storeAs('uploads', $uniqueName, 'local');
                     $user = auth()->user();
-        
+
                     if ($user->county) {
                         $county = County::join('users', 'counties.county_fips', '=', 'users.county_designation')
                                         ->where('users.id', $user->id)
                                         ->select('counties.county')
                                         ->first();
-        
+
                         if ($county) {
                             $newFile = new W9Upload();
                             $newFile->user_id = $user->id;
@@ -98,18 +126,18 @@ class W9_Upload_Controller extends Controller
                             $newFile->original_name = $uniqueName;
                             $newFile->w9_county_fips = $user->county_designation ? $user->county_designation : '';
                             $newFile->save();
-    
+
                             $adminEmails = User::whereHas('roles', function ($query) {
                                 $query->where('name', 'admin')->orWhere('name', 'manager');
                             })->pluck('email');
-    
+
                             $data = [
                                 'email' => $user->email,
                                 'name' => $user->first_name .' ' . $user->last_name,
                                 'county_designation' => $user->county->county ? $user->county->county : "",
                                 'time' => $newFile->created_at,
                             ];
-    
+
                             foreach($adminEmails as $adminEmail){
                                 try {
                                     Mail::to($adminEmail)->send(new W9MailAdmin($data));
@@ -123,7 +151,7 @@ class W9_Upload_Controller extends Controller
                             } catch (\Throwable $th) {
                                 Log::error('Error sending email to user: ' . $e->getMessage());
                             }
-    
+
                             return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
                         }else{
                             $newFile = new W9Upload();
@@ -132,18 +160,18 @@ class W9_Upload_Controller extends Controller
                             $newFile->original_name = $uniqueName;
                             $newFile->w9_county_fips = '';
                             $newFile->save();
-    
+
                             $adminEmails = User::whereHas('roles', function ($query) {
                                 $query->where('name', 'admin')->orWhere('name', 'manager');
                             })->pluck('email');
-    
+
                             $data = [
                                 'email' => $user->email,
                                 'name' => $user->first_name .' ' . $user->last_name,
                                 'county_designation' => "",
                                 'time' => $newFile->created_at,
                             ];
-    
+
                             foreach($adminEmails as $adminEmail){
                                 try {
                                     Mail::to($adminEmail)->send(new W9MailAdmin($data));
@@ -157,7 +185,7 @@ class W9_Upload_Controller extends Controller
                             } catch (\Throwable $th) {
                                 Log::error('Error sending email to user: ' . $e->getMessage());
                             }
-    
+
                             return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
                         }
                     }else{
@@ -167,18 +195,18 @@ class W9_Upload_Controller extends Controller
                             $newFile->original_name = $uniqueName;
                             $newFile->w9_county_fips = '';
                             $newFile->save();
-    
+
                             $adminEmails = User::whereHas('roles', function ($query) {
                                 $query->where('name', 'admin')->orWhere('name', 'manager');
                             })->pluck('email');
-    
+
                             $data = [
                                 'email' => $user->email,
                                 'name' => $user->first_name .' ' . $user->last_name,
                                 'county_designation' => "",
                                 'time' => $newFile->created_at,
                             ];
-    
+
                             foreach($adminEmails as $adminEmail){
                                 try {
                                     Mail::to($adminEmail)->send(new W9MailAdmin($data));
@@ -192,10 +220,10 @@ class W9_Upload_Controller extends Controller
                             } catch (\Throwable $th) {
                                 Log::error('Error sending email to user: ' . $e->getMessage());
                             }
-    
+
                             return redirect('/county-w9/upload')->with('success', 'File uploaded successfully.');
                         }
-        
+
                     return redirect('/county-w9/upload')->with('error', 'Error retrieving user county information.');
                 } else {
                     return redirect('/county-w9/upload')->with('error', 'Invalid file format. Only ZIP files are allowed.');
@@ -212,3 +240,4 @@ class W9_Upload_Controller extends Controller
 
 
 }
+

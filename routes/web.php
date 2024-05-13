@@ -27,7 +27,7 @@ use App\Http\Middleware\CheckPermission;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/downloads', [W9_Historydownload_Controller::class, 'showDownloads'])->name('downloads');
+// Route::get('/downloads', [W9_Historydownload_Controller::class, 'showDownloads'])->name('downloads');
 
 Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -75,9 +75,15 @@ Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
             });
             //download
             Route::get('/downloadss/{w9_id}/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
+
+            //delete
+            Route::delete('/delete/{w9_id}', [W9_Upload_Controller::class, 'delete'])->name('delete');
         });
         Route::prefix('/w9_downloadhistory')->name('w9_downloadhistory.')->group(function () {
-            Route::get('/', [W9_Historydownload_Controller::class,'w9_downloadhistory_index'])->name('index');
+            // Route::get('/', [W9_Historydownload_Controller::class,'w9_downloadhistory_index'])->name('index');
+
+            //delete download history
+            Route::delete('/delete-download/{w9_id}', [W9_Upload_Controller::class, 'deleteDownloadHistory'])->name('delete_download_history');
         });
     });
     Route::middleware(['permission:read mrac_arac'])->group(function () {

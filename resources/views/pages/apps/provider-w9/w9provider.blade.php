@@ -92,7 +92,7 @@
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
                 window.LaravelDataTables['w9-upload-table'].search(this.value).draw();
             });
-              
+
         </script>
         <script>
          $(document).ready(function () {
@@ -106,7 +106,7 @@
                     placeholder: 'Pick a day'
                 }
                 }, function(start, end) {
-                    window.LaravelDataTables['w9-upload-table'].column('created_at:name').search(start.format('YYYY-MM-DD')).draw();            
+                    window.LaravelDataTables['w9-upload-table'].column('created_at:name').search(start.format('YYYY-MM-DD')).draw();
             });
 
             function clearDateFilter() {
@@ -132,7 +132,7 @@
                 }
                 window.LaravelDataTables['w9-upload-table'].column('users.email:name').search(value).draw();
             });
-            
+
             $("#export_csv").on('click', function(e) {
                 var table = window.LaravelDataTables['w9-upload-table'];
                 table.column('comment:name').visible(false);
@@ -140,10 +140,11 @@
                 table.button('.buttons-csv').trigger();
 
                 table.column('comment:name').visible(true);
-               
+
             })
         })
     </script>
     @endpush
 
 </x-default-layout>
+

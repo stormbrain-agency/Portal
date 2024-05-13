@@ -11,7 +11,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 class ViewW9Provide extends Component
 {
-    use WithFileUploads; 
+    use WithFileUploads;
 
     public $w9_id;
     public $file_name;
@@ -27,7 +27,7 @@ class ViewW9Provide extends Component
     protected $listeners = [
         'view_w9' => 'viewW9Provide',
     ];
-    
+
 
     public function render()
     {

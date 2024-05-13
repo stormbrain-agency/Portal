@@ -34,15 +34,15 @@
                                 @if ($user_id)
                                     @if (auth()->user()->hasRole('admin'))
                                         <a href="{{ route('user-management.county-users.show', $user_id) }}" class="text-primary-800 text-hover-primary mb-1">
-                                            {{ $user_name}} 
+                                            {{ $user_name}}
                                         </a>
                                     @elseif(auth()->user()->hasRole('county user'))
                                         <a href="{{ route('profile') }}" class="text-primary-800 text-hover-primary mb-1">
-                                            {{ $user_name}} 
+                                            {{ $user_name}}
                                         </a>
                                     @else
                                         <span class="text-primary-800 mb-1">
-                                            {{ $user_name}} 
+                                            {{ $user_name}}
                                         </span>
                                     @endif
                                 @endif
@@ -61,14 +61,14 @@
                                         <b>File(s) :</b>
 
                                     </div>
-                                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) 
+                                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
                                         @if (isset($file_name))
                                             <div>
                                                 <a href="{{route('w9_upload.w9_download', ['w9_id' => $w9_id, 'filename' => $file_name]) }}" class="btn btn-primary bnt-active-light-primary btn-sm">Download</a>
                                             </div>
                                         @endif
                                     @endif
-                                    
+
                                 </div>
                             </label>
                             <div class="bg-light rounded p-2 mb-2 pt-4">
@@ -82,7 +82,7 @@
                             </div>
                         </div>
 
-                        @if(!auth()->user()->hasRole('county user')) 
+                        @if(!auth()->user()->hasRole('county user'))
                         <div class="fv-row mb-7">
                             <label class="fw-semibold mb-2">
                                 <b>Download History:</b>
@@ -103,14 +103,14 @@
                                                     <th scope="row" class="text-center text-nowrap">{{ $index + 1 }}</th>
                                                     <td class=" text-nowrap">
                                                         @if (isset($download->user->id) && !empty($download->user->id))
-                                                        <a href="{{ route('user-management.users.show', $download->user->id) }}"> {{ $download->user->first_name}} {{ $download->user->last_name}} 
+                                                        <a href="{{ route('user-management.users.show', $download->user->id) }}"> {{ $download->user->first_name}} {{ $download->user->last_name}}
                                                             @if (isset($download->user->roles?->first()?->name))
                                                             <span class="fs-6 fw-bold">
                                                                 ({{ ucwords($download->user->roles?->first()?->name)}})
-                                                            </span> 
+                                                            </span>
                                                             @endif
                                                         </a>
-                                                        @endif 
+                                                        @endif
                                                     </td>
                                                     <td class="text-center text-nowrap">{{ $download['created_at']->format('Y-m-d H:i:s') }}</td>
                                                 </tr>
@@ -129,6 +129,15 @@
                     <div class="text-center pt-15">
                         <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close" wire:loading.attr="disabled">Discard</button>
                     </div>
+                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
+                        @if (isset($download_history) && count($download_history) > 0)
+                            <div class="text-center pt-5">
+                                <button type="button" class="btn btn-danger me-3 delete-download-history" data-w9-download-id="{{ $w9_id }}" data-kt-action="delete_download_history">
+                                    Delete Download History
+                                </button>
+                            </div>
+                        @endif
+                    @endif
                     <!--end::Actions-->
                 </form>
                 <!--end::Form-->
@@ -139,3 +148,37 @@
     </div>
     <!--end::Modal dialog-->
 </div>
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#kt_modal_view_w9').on('shown.bs.modal', function () {
+                var deleteHistoryButtons = document.querySelectorAll('.delete-download-history');
+                if (deleteHistoryButtons.length > 0) {
+                    deleteHistoryButtons.forEach(function (element) {
+                        element.addEventListener('click', function () {
+                            var w9Id = this.getAttribute("data-w9-download-id");
+                            console.log(w9Id)
+                            if (confirm('Are you sure you want to delete the download history for W9 with ID ' + w9Id + '?')) {
+                                $.ajax({
+                                    url: '/w9_downloadhistory/delete-download/' + w9Id,
+                                    type: 'DELETE',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function(data) {
+                                        alert('Download history deleted successfully.');
+                                        window.location.reload();
+                                    },
+                                    error: function(xhr, status, error) {
+                                        alert('Error deleting download history: ' + error);
+                                    }
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+@endpush
+

@@ -22,7 +22,7 @@ class W9DataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->editColumn('id', function (W9Upload $upload) {
-                return '#'.$upload->id.''; 
+                return '#'.$upload->id.'';
             })
 
             ->editColumn('user', function (W9Upload $upload) {
@@ -48,9 +48,13 @@ class W9DataTable extends DataTable
             ->editColumn('w9_file_path', function(W9Upload $upload) {
                 return '<a href="' . route('w9_upload.w9_download', ['w9_id' => $upload->id, 'filename' => $upload->original_name]) . '" class="btn btn-primary">Download</a>';
             })
- 
+
             ->addColumn('user_first_name', function (W9Upload $upload) {
                 return $upload->user->first_name;
+            })
+
+            ->editColumn('delete', function (W9Upload $upload) {
+                return view('pages.apps.provider-w9.columns._delete-action', compact('upload'));
             })
 
             ->addColumn('email', function (W9Upload $upload) {
@@ -68,12 +72,12 @@ class W9DataTable extends DataTable
     public function query(W9Upload $model): QueryBuilder
     {
         $query = $model->newQuery();
-        
+
         $query->join('users', 'w9_upload.user_id', '=', 'users.id')
-              ->leftJoin('counties', 'w9_upload.w9_county_fips', '=', 'counties.county_fips') 
+              ->leftJoin('counties', 'w9_upload.w9_county_fips', '=', 'counties.county_fips')
               ->where('users.status', 1)
-              ->select('w9_upload.*','w9_upload.created_at', 'counties.county','w9_upload.id'); 
-        
+              ->select('w9_upload.*','w9_upload.created_at', 'counties.county','w9_upload.id');
+
         if (auth()->user()->hasRole('county user') || auth()->user()->hasRole('CDSS')) {
             $query->where('users.id', auth()->user()->id);
         }
@@ -88,7 +92,7 @@ class W9DataTable extends DataTable
         if ($endDate) {
             $query->where('w9_upload.created_at', '<=', $endDate);
         }
-        
+
         return $query;
     }
 
@@ -120,7 +124,7 @@ class W9DataTable extends DataTable
      * Get the dataTable columns definition.
      */
     public function getColumns(): array
-    {        
+    {
         //view layout
         if (auth()->user()->hasRole('view only')) {
             return [
@@ -138,7 +142,7 @@ class W9DataTable extends DataTable
                     ->printable(false)
                     ->width(60),
             ];
-        } 
+        }
         if (auth()->user()->hasRole('county user' ) || auth()->user()->hasRole('CDSS')) {
             return [
                 Column::make('id')->name("w9_upload.id")->title('ID'),
@@ -160,6 +164,7 @@ class W9DataTable extends DataTable
                 Column::make('email')->name("users.email")->visible(false),
                 Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->width(200),
                 Column::make('w9_file_path')->addClass('export-hidden')->title('Download')->searchable(false)->orderable(false)->visible(true)->exportable(false),
+                Column::make('delete')->addClass('text-center text-nowrap')->title('Delete')->searchable(false)->orderable(false)->visible(true)->exportable(false),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
                     ->addClass('export-hidden')

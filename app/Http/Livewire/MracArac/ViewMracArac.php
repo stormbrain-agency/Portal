@@ -12,7 +12,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 class ViewMracArac extends Component
 {
-    use WithFileUploads; 
+    use WithFileUploads;
 
     public $mrac_arac_id;
     public $year;
@@ -32,7 +32,7 @@ class ViewMracArac extends Component
         'triggerDownloadAllFiles' => 'downloadAllFiles',
         'triggerDownloadAllFilesBtn' => 'downloadAllFilesBtn',
     ];
-    
+
 
     public function render()
     {
@@ -51,7 +51,7 @@ class ViewMracArac extends Component
             $this->user_email = $mrac_arac->user->email;
             $this->county_full = $mrac_arac->county?->county;
             $this->created_at = $mrac_arac->created_at;
-    
+
             $this->mrac_arac_files = MracAracFiles::where("mrac_arac_id", $id)->get();
             $this->download_history = MracAracDownloadHistory::where("mrac_arac_id", $id)->orderBy('id', 'desc')->get();
         }
@@ -62,10 +62,10 @@ class ViewMracArac extends Component
         $user_id = Auth::id();
 
         if ($user_id) {
-            
+
             $mrac_arac_files = MracAracFiles::where("mrac_arac_id", $this->mrac_arac_id)->get();
             if ($mrac_arac_files->isNotEmpty()) {
-                
+
                 $downloadUrls = [];
 
                 foreach ($mrac_arac_files as $mrac_arac_file) {
@@ -85,7 +85,7 @@ class ViewMracArac extends Component
                         'user_id' => $user_id,
                     ]);
                     $this->emit('downloadAllFiles', $downloadUrls);
-        
+
                 }
             } else {
                 $this->emit('error', __('No files to download.'));
@@ -102,10 +102,10 @@ class ViewMracArac extends Component
         $user_id = Auth::id();
 
         if ($user_id) {
-            
+
             $mrac_arac_files = MracAracFiles::where("mrac_arac_id", $id)->get();
             if ($mrac_arac_files->isNotEmpty()) {
-                
+
                 $downloadUrls = [];
 
                 foreach ($mrac_arac_files as $mrac_arac_file) {
@@ -125,7 +125,7 @@ class ViewMracArac extends Component
                         'user_id' => $user_id,
                     ]);
                     $this->emit('downloadAllFiles', $downloadUrls);
-        
+
                 }
             } else {
                 $this->emit('error', __('No files to download.'));

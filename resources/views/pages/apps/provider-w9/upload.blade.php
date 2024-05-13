@@ -63,7 +63,7 @@
                             <input type="file" name="file" style="display:none" class="drop-zone__input form-control-file" id="w9_uploadInput">
                         </div>
                         <!--end::Dropzone-->
-                       
+
                         @if(session('error'))
                             <div class="alert bg-light-danger border-danger d-flex align-items-center p-5 mt-5">
                                 <i class="ki-duotone ki-shield-tick fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
@@ -74,7 +74,7 @@
                                 <button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
                                     <i class="ki-duotone ki-cross fs-1 text-danger"><span class="path1"></span><span class="path2"></span></i>
                                 </button>
-                            </div> 
+                            </div>
                         @endif
 
                     </div>
@@ -95,7 +95,7 @@
                                     <div class="sub-title">{{ $message }}</div>
                                 </div>
                                 {!! getIcon('cross','fs-1 btn-alert') !!}
-                            </div> 
+                            </div>
                             @enderror
                         </div>
                         <!--end::Input group-->
@@ -145,7 +145,7 @@
 
         dropZoneElement.addEventListener("drop", (e) => {
             e.preventDefault();
-            
+
             if (e.dataTransfer.files.length > 1) {
               dropZoneElement.classList.remove("drop-zone--over");
               return;

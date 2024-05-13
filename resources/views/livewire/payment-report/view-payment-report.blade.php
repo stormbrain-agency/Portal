@@ -39,15 +39,15 @@
                                 @if ($user_id)
                                     @if (auth()->user()->hasRole('admin'))
                                         <a href="{{ route('user-management.county-users.show', $user_id) }}" class="text-primary-800 text-hover-primary mb-1">
-                                            {{ $user_name}} 
+                                            {{ $user_name}}
                                         </a>
                                     @elseif(auth()->user()->hasRole('county user'))
                                         <a href="{{ route('profile') }}" class="text-primary-800 text-hover-primary mb-1">
-                                            {{ $user_name}} 
+                                            {{ $user_name}}
                                         </a>
                                     @else
                                         <span class="text-primary-800 mb-1">
-                                            {{ $user_name}} 
+                                            {{ $user_name}}
                                         </span>
                                     @endif
                                 @endif
@@ -66,12 +66,12 @@
                                         <b>File(s) :</b>
 
                                     </div>
-                                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) 
+                                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
                                         <div>
                                             <button type="button" id="downloadBtn" class="btn btn-primary bnt-active-light-primary btn-sm">Download All</button>
                                         </div>
                                     @endif
-                                    
+
                                 </div>
                             </label>
                             <div class="bg-light rounded p-2 mb-2 pt-4">
@@ -95,7 +95,7 @@
                             </div>
                         </div>
 
-                        @if(!auth()->user()->hasRole('county user')) 
+                        @if(!auth()->user()->hasRole('county user'))
                         <div class="fv-row mb-7">
                             <label class="fw-semibold mb-2">
                                 <b>Download History:</b>
@@ -116,14 +116,14 @@
                                                     <th scope="row" class="text-center text-nowrap">{{ $index + 1 }}</th>
                                                     <td class=" text-nowrap">
                                                         @if (isset($download->user->id) && !empty($download->user->id))
-                                                        <a href="{{ route('user-management.users.show', $download->user->id) }}"> {{ $download->user->first_name}} {{ $download->user->last_name}} 
+                                                        <a href="{{ route('user-management.users.show', $download->user->id) }}"> {{ $download->user->first_name}} {{ $download->user->last_name}}
                                                             @if (isset($download->user->roles?->first()?->name))
                                                             <span class="fs-6 fw-bold">
                                                                 ({{ ucwords($download->user->roles?->first()?->name)}})
-                                                            </span> 
+                                                            </span>
                                                             @endif
                                                         </a>
-                                                        @endif 
+                                                        @endif
                                                     </td>
                                                     <td class="text-center text-nowrap">{{ $download['created_at']->format('Y-m-d H:i:s') }}</td>
                                                 </tr>
@@ -167,7 +167,7 @@
                 return;
             }
 
-            var url = urls.shift(); 
+            var url = urls.shift();
             downloadFile(url);
 
 
