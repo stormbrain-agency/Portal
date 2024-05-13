@@ -28,7 +28,7 @@ class MracAracDataTable extends DataTable
                 return view('pages.apps.mrac_arac.columns._user', compact('mrac_arac'));
             })
             ->editColumn('id', function (MracArac $mrac_arac) {
-                return '#'.$mrac_arac->id.''; 
+                return '#'.$mrac_arac->id.'';
             })
             ->editColumn('created_at', function (MracArac $mrac_arac) {
                 return $mrac_arac->created_at->toDateString();
@@ -44,6 +44,10 @@ class MracAracDataTable extends DataTable
             })
             ->editColumn('download', function (MracArac $mrac_arac) {
                 return '<button data-kt-action="download_all" data-kt-mrac-arac-id="' . $mrac_arac->id . '" class="btn btn-primary">Download</button>';
+            })
+
+            ->editColumn('delete', function (MracArac $mrac_arac) {
+                return view('pages.apps.mrac_arac.columns._delete-action', compact('mrac_arac'));
             })
 
             ->addColumn('user_first_name', function (MracArac $mrac_arac) {
@@ -65,8 +69,8 @@ class MracAracDataTable extends DataTable
         $query->join('users', 'mrac_arac.user_id', '=', 'users.id')
               ->leftJoin('counties', 'mrac_arac.county_fips', '=', 'counties.county_fips')
               ->where('users.status', 1)
-              ->select('mrac_arac.*', 'counties.county_full', 'users.email'); 
-    
+              ->select('mrac_arac.*', 'counties.county_full', 'users.email');
+
         if (auth()->user()->hasRole('county user') || auth()->user()->hasRole('CDSS')) {
             $query->where('users.id', auth()->user()->id);
         }
@@ -77,7 +81,7 @@ class MracAracDataTable extends DataTable
 
         $startDate = request()->query('startDate');
         $endDate = request()->query('endDate');
-        
+
         if ($startDate) {
             $query->where('mrac_arac.created_at', '>=', $startDate);
         }
@@ -180,6 +184,7 @@ public function csv()
                 Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
                 Column::make('comment')->title('Comments')->searchable(false)->orderable(false)->exportable(false)->width(200),
                 Column::make('download')->title('Download')->searchable(false)->orderable(false)->exportable(false)->width(120),
+                Column::make('delete')->title('Delete')->searchable(false)->orderable(false)->visible(true)->exportable(false)->width(120),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
                     ->exportable(false)
@@ -219,7 +224,7 @@ public function csv()
 
             ];
         }
-        
+
     }
 
     /**

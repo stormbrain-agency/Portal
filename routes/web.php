@@ -97,6 +97,11 @@ Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
             Route::get('/downloads/{filename}', [CountyMRAC_ARACController::class, 'downloadFile'])->name('download');
             Route::get('/downloads/{filename}/{payment_id}', [CountyMRAC_ARACController::class, 'downloadFile2'])->name('download2');
             Route::get('/download-all-files/{payment_id}', [CountyMRAC_ARACController::class, 'downloadAllFiles'])->name('downloadAllFiles');
+            //delete mrac arac
+            Route::delete('/delete/{mrac_arac_id}', [CountyMRAC_ARACController::class, 'delete'])->name('delete');
+            //delete download history
+            Route::delete('/delete-download/{mrac_arac_id}', [CountyMRAC_ARACController::class, 'deleteDownloadHistory'])->name('delete_download_history');
+
         });
     });
     Route::name('notification-management.')->group(function () {

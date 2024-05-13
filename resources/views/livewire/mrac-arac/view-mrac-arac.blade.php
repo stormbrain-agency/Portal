@@ -39,15 +39,15 @@
                                 @if ($user_id)
                                     @if (auth()->user()->hasRole('admin'))
                                         <a href="{{ route('user-management.county-users.show', $user_id) }}" class="text-primary-800 text-hover-primary mb-1">
-                                            {{ $user_name}} 
+                                            {{ $user_name}}
                                         </a>
                                     @elseif(auth()->user()->hasRole('county user'))
                                         <a href="{{ route('profile') }}" class="text-primary-800 text-hover-primary mb-1">
-                                            {{ $user_name}} 
+                                            {{ $user_name}}
                                         </a>
                                     @else
                                         <span class="text-primary-800 mb-1">
-                                            {{ $user_name}} 
+                                            {{ $user_name}}
                                         </span>
                                     @endif
                                 @endif
@@ -66,12 +66,12 @@
                                         <b>File(s) :</b>
 
                                     </div>
-                                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) 
+                                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
                                         <div>
                                             <button type="button" id="downloadBtn" class="btn btn-primary bnt-active-light-primary btn-sm">Download All</button>
                                         </div>
                                     @endif
-                                    
+
                                 </div>
                             </label>
                             <div class="bg-light rounded p-2 mb-2 pt-4">
@@ -93,7 +93,7 @@
                                 @endif
                             </div>
                         </div>
-                        @if(!auth()->user()->hasRole('county user')) 
+                        @if(!auth()->user()->hasRole('county user'))
                         <div class="fv-row mb-7">
                             <label class="fw-semibold mb-2">
                                 <b>Download History:</b>
@@ -114,14 +114,14 @@
                                                     <th scope="row" class="text-center text-nowrap">{{ $index + 1 }}</th>
                                                     <td class=" text-nowrap">
                                                         @if (isset($download->user->id) && !empty($download->user->id))
-                                                        <a href="{{ route('user-management.users.show', $download->user->id) }}"> {{ $download->user->first_name}} {{ $download->user->last_name}} 
+                                                        <a href="{{ route('user-management.users.show', $download->user->id) }}"> {{ $download->user->first_name}} {{ $download->user->last_name}}
                                                             @if (isset($download->user->roles?->first()?->name))
                                                             <span class="fs-6 fw-bold">
                                                                 ({{ ucwords($download->user->roles?->first()?->name)}})
-                                                            </span> 
+                                                            </span>
                                                             @endif
                                                         </a>
-                                                        @endif 
+                                                        @endif
                                                     </td>
                                                     <td class="text-center text-nowrap">{{ $download['created_at']->format('Y-m-d H:i:s') }}</td>
                                                 </tr>
@@ -140,6 +140,15 @@
                     <div class="text-center pt-15">
                         <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close" wire:loading.attr="disabled">Discard</button>
                     </div>
+                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
+                        @if (isset($download_history) && count($download_history) > 0)
+                            <div class="text-center pt-5">
+                                <button type="button" class="btn btn-danger me-3 delete-download-history" data-mrac-arac-download-id="{{ $mrac_arac_id }}" data-kt-action="delete_download_history">
+                                    Delete Download History
+                                </button>
+                            </div>
+                        @endif
+                    @endif
                     <!--end::Actions-->
                 </form>
                 <!--end::Form-->
@@ -151,39 +160,70 @@
     <!--end::Modal dialog-->
 </div>
 @push('scripts')
-<script>
-    document.addEventListener('livewire:load', function () {
-        document.getElementById("downloadBtn").addEventListener("click", function () {
-            Livewire.emit("triggerDownloadAllFiles");
-        });
-        Livewire.on('downloadAllFiles', function (downloadUrls) {
-            downloadFilesSequentially(downloadUrls);
-        });
+    <script>
+        document.addEventListener('livewire:load', function () {
+            document.getElementById("downloadBtn").addEventListener("click", function () {
+                Livewire.emit("triggerDownloadAllFiles");
+            });
+            Livewire.on('downloadAllFiles', function (downloadUrls) {
+                downloadFilesSequentially(downloadUrls);
+            });
 
-        function downloadFilesSequentially(urls) {
-            if (urls.length === 0) {
-                return;
+            function downloadFilesSequentially(urls) {
+                if (urls.length === 0) {
+                    return;
+                }
+
+                var url = urls.shift();
+                downloadFile(url);
+
+
+                setTimeout(function() {
+                    downloadFilesSequentially(urls);
+                }, 500);
             }
 
-            var url = urls.shift(); 
-            downloadFile(url);
-
-
-            setTimeout(function() {
-                downloadFilesSequentially(urls);
-            }, 500);
-        }
-
-        function downloadFile(url) {
-            var link = document.createElement('a');
-            link.href = url;
-            link.download = '';
-            document.body.appendChild(link);
-            setTimeout(function() {
-                link.click();
-            }, 500);
-            document.body.removeChild(link);
-        }
-    });
-</script>
+            function downloadFile(url) {
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = '';
+                document.body.appendChild(link);
+                setTimeout(function() {
+                    link.click();
+                }, 500);
+                document.body.removeChild(link);
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#kt_modal_view_mrac_arac').on('shown.bs.modal', function () {
+                var deleteHistoryButtons = document.querySelectorAll('.delete-download-history');
+                if (deleteHistoryButtons.length > 0) {
+                    deleteHistoryButtons.forEach(function (element) {
+                        element.addEventListener('click', function () {
+                            var mrac_arac_id = this.getAttribute("data-mrac-arac-download-id");
+                            console.log(mrac_arac_id)
+                            if (confirm('Are you sure you want to delete the download history for MRAC ARAC with ID ' + mrac_arac_id + '?')) {
+                                $.ajax({
+                                    url: '/county-mrac-arac/delete-download/' + mrac_arac_id,
+                                    type: 'DELETE',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function(data) {
+                                        alert('Download history deleted successfully.');
+                                        window.location.reload();
+                                    },
+                                    error: function(xhr, status, error) {
+                                        alert('Error deleting download history: ' + error);
+                                    }
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    </script>
 @endpush

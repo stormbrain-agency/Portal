@@ -2,6 +2,28 @@
 KTMenu.init();
 
 // Add click event listener to delete buttons
+document.querySelectorAll('[data-kt-action="delete_row"]').forEach(function (element) {
+    element.addEventListener('click', function () {
+        var mrac_arac_id = this.getAttribute("data-kt-mrac-id");
+        if (confirm('Are you sure you want to delete MRAC ARAC with this id'+ ' ' + mrac_arac_id + ' ' + '?')) {
+            $.ajax({
+                url: '/county-mrac-arac/delete/' + mrac_arac_id,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data) {
+                    alert('MRAC ARAC deleted successfully.');
+                    LaravelDataTables["mrac_arac-table"].ajax.reload();
+                },
+                error: function(xhr, status, error) {
+                    alert('Error deleting MRAC ARAC: ' + error);
+                }
+            });
+        }
+    });
+});
+
 // Add click event listener to update buttons
 document.querySelectorAll('[data-kt-action="view_row"]').forEach(function (element) {
     element.addEventListener('click', function () {
