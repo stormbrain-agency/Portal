@@ -203,8 +203,7 @@
                     deleteHistoryButtons.forEach(function (element) {
                         element.addEventListener('click', function () {
                             var mrac_arac_id = this.getAttribute("data-mrac-arac-download-id");
-                            console.log(mrac_arac_id)
-                            if (confirm('Are you sure you want to delete the download history for MRAC ARAC with ID ' + mrac_arac_id + '?')) {
+                            if (confirm('Are you sure you want to delete the download history for mRec/aRec with ID ' + mrac_arac_id + '?')) {
                                 $.ajax({
                                     url: '/county-mrac-arac/delete-download/' + mrac_arac_id,
                                     type: 'DELETE',

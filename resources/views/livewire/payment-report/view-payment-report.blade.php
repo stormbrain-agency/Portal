@@ -142,6 +142,15 @@
                     <div class="text-center pt-15">
                         <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close" wire:loading.attr="disabled">Discard</button>
                     </div>
+                    @if(auth()->user()->hasRole('admin'))
+                        @if (isset($download_history) && count($download_history) > 0)
+                            <div class="text-center pt-5">
+                                <button type="button" class="btn btn-danger me-3 delete-download-history" data-payment-download-id="{{ $payment_id }}" data-kt-action="delete_download_history">
+                                    Delete Download History
+                                </button>
+                            </div>
+                        @endif
+                    @endif
                     <!--end::Actions-->
                 </form>
                 <!--end::Form-->
@@ -153,39 +162,69 @@
     <!--end::Modal dialog-->
 </div>
 @push('scripts')
-<script>
-    document.addEventListener('livewire:load', function () {
-        document.getElementById("downloadBtn").addEventListener("click", function () {
-            Livewire.emit("triggerDownloadAllFiles");
-        });
-        Livewire.on('downloadAllFiles', function (downloadUrls) {
-            downloadFilesSequentially(downloadUrls);
-        });
+    <script>
+        document.addEventListener('livewire:load', function () {
+            document.getElementById("downloadBtn").addEventListener("click", function () {
+                Livewire.emit("triggerDownloadAllFiles");
+            });
+            Livewire.on('downloadAllFiles', function (downloadUrls) {
+                downloadFilesSequentially(downloadUrls);
+            });
 
-        function downloadFilesSequentially(urls) {
-            if (urls.length === 0) {
-                return;
+            function downloadFilesSequentially(urls) {
+                if (urls.length === 0) {
+                    return;
+                }
+
+                var url = urls.shift();
+                downloadFile(url);
+
+
+                setTimeout(function() {
+                    downloadFilesSequentially(urls);
+                }, 500);
             }
 
-            var url = urls.shift();
-            downloadFile(url);
-
-
-            setTimeout(function() {
-                downloadFilesSequentially(urls);
-            }, 500);
-        }
-
-        function downloadFile(url) {
-            var link = document.createElement('a');
-            link.href = url;
-            link.download = '';
-            document.body.appendChild(link);
-            setTimeout(function() {
-                link.click();
-            }, 500);
-            document.body.removeChild(link);
-        }
-    });
-</script>
+            function downloadFile(url) {
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = '';
+                document.body.appendChild(link);
+                setTimeout(function() {
+                    link.click();
+                }, 500);
+                document.body.removeChild(link);
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#kt_modal_view_payment_report').on('shown.bs.modal', function () {
+                var deleteHistoryButtons = document.querySelectorAll('.delete-download-history');
+                if (deleteHistoryButtons.length > 0) {
+                    deleteHistoryButtons.forEach(function (element) {
+                        element.addEventListener('click', function () {
+                            var payment_id = this.getAttribute("data-payment-download-id");
+                            if (confirm('Are you sure you want to delete the download history for Payment Report with ID ' + payment_id + '?')) {
+                                $.ajax({
+                                    url: '/county-provider-payment-report/delete-download/' + payment_id,
+                                    type: 'DELETE',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    success: function(data) {
+                                        alert('Download history deleted successfully.');
+                                        window.location.reload();
+                                    },
+                                    error: function(xhr, status, error) {
+                                        alert('Error deleting download history: ' + error);
+                                    }
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    </script>
 @endpush

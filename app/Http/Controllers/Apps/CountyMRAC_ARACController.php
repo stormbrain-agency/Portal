@@ -247,9 +247,9 @@ class CountyMRAC_ARACController extends Controller
             $mrac_arac = MracArac::findOrFail($id);
             if ($mrac_arac) {
                 $mrac_arac->delete();
-                return response()->json(['success' => 'W9 deleted successfully.']);
+                return response()->json(['success' => 'mRec/aRec deleted successfully.']);
             } else {
-                return response()->json(['error' => 'W9 not found.'], 404);
+                return response()->json(['error' => 'mRec/aRec not found.'], 404);
             }
         } else {
             return response()->json(['error' => 'You do not have permission to delete.'], 403);
@@ -262,9 +262,9 @@ class CountyMRAC_ARACController extends Controller
             $mrac_arac_download_history = MracAracDownloadHistory::where('mrac_arac_id', $id);
             if ($mrac_arac_download_history) {
                 $mrac_arac_download_history->delete();
-                return response()->json(['success' => 'W9 deleted successfully.']);
+                return response()->json(['success' => 'mRec/aRec deleted successfully.']);
             } else {
-                return response()->json(['error' => 'W9 not found.'], 404);
+                return response()->json(['error' => 'mRec/aRec not found.'], 404);
             }
         } else {
             return response()->json(['error' => 'You do not have permission to delete.'], 403);

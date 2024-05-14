@@ -274,4 +274,34 @@ class PaymentReportController extends Controller
     {
         return $dataTable->csv();
     }
+
+    public function delete(Request $request, $id)
+    {
+        if (auth()->user()->hasRole('admin')) {
+            $payment_report = PaymentReport::findOrFail($id);
+            if ($payment_report) {
+                $payment_report->delete();
+                return response()->json(['success' => 'Payment Report deleted successfully.']);
+            } else {
+                return response()->json(['error' => 'Payment Report not found.'], 404);
+            }
+        } else {
+            return response()->json(['error' => 'You do not have permission to delete.'], 403);
+        }
+    }
+
+    public function deleteDownloadHistory(Request $request, $id)
+    {
+        if (auth()->user()->hasRole('admin')) {
+            $payment_report_download_history = PaymentReportDownloadHistory::where('payment_report_id', $id);
+            if ($payment_report_download_history) {
+                $payment_report_download_history->delete();
+                return response()->json(['success' => 'Payment Report deleted successfully.']);
+            } else {
+                return response()->json(['error' => 'Payment Report not found.'], 404);
+            }
+        } else {
+            return response()->json(['error' => 'You do not have permission to delete.'], 403);
+        }
+    }
 }

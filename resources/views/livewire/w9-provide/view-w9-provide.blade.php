@@ -157,7 +157,6 @@
                     deleteHistoryButtons.forEach(function (element) {
                         element.addEventListener('click', function () {
                             var w9Id = this.getAttribute("data-w9-download-id");
-                            console.log(w9Id)
                             if (confirm('Are you sure you want to delete the download history for W9 with ID ' + w9Id + '?')) {
                                 $.ajax({
                                     url: '/w9_downloadhistory/delete-download/' + w9Id,

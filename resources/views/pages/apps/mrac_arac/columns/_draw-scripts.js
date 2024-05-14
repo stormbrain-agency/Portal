@@ -5,7 +5,7 @@ KTMenu.init();
 document.querySelectorAll('[data-kt-action="delete_row"]').forEach(function (element) {
     element.addEventListener('click', function () {
         var mrac_arac_id = this.getAttribute("data-kt-mrac-id");
-        if (confirm('Are you sure you want to delete MRAC ARAC with this id'+ ' ' + mrac_arac_id + ' ' + '?')) {
+        if (confirm('Are you sure you want to delete mRec/aRec with this id'+ ' ' + mrac_arac_id + ' ' + '?')) {
             $.ajax({
                 url: '/county-mrac-arac/delete/' + mrac_arac_id,
                 type: 'DELETE',
@@ -13,11 +13,11 @@ document.querySelectorAll('[data-kt-action="delete_row"]').forEach(function (ele
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(data) {
-                    alert('MRAC ARAC deleted successfully.');
+                    alert('mRec/aRec deleted successfully.');
                     LaravelDataTables["mrac_arac-table"].ajax.reload();
                 },
                 error: function(xhr, status, error) {
-                    alert('Error deleting MRAC ARAC: ' + error);
+                    alert('Error deleting mRec/aRec: ' + error);
                 }
             });
         }
