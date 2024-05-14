@@ -174,7 +174,7 @@ public function csv()
     public function getColumns(): array
     {
         //view layout
-        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+        if (auth()->user()->hasRole('admin')) {
             return [
                 Column::make('id')->title('ID'),
                 Column::make('created_at')->title('Date'),
@@ -185,6 +185,25 @@ public function csv()
                 Column::make('comment')->title('Comments')->searchable(false)->orderable(false)->exportable(false)->width(200),
                 Column::make('download')->title('Download')->searchable(false)->orderable(false)->exportable(false)->width(120),
                 Column::make('delete')->title('Delete')->searchable(false)->orderable(false)->visible(true)->exportable(false)->width(120),
+                Column::computed('view')
+                    ->addClass('text-center text-nowrap')
+                    ->exportable(false)
+                    ->printable(false)
+                    ->width(60),
+                Column::make('email')->name("users.email")->visible(false),
+
+            ];
+        }
+        if (auth()->user()->hasRole('manager')) {
+            return [
+                Column::make('id')->title('ID'),
+                Column::make('created_at')->title('Date'),
+                Column::make('updated_at')->title('Time'),
+                Column::make('county_fips')->title('County')->name('counties.county')->orderable(true)->searchable(true),
+                Column::make('user')->title('User')->name('users.first_name')->orderable(true),
+                Column::make('month_year')->title('Month/Year')->name('month_year')->orderable(true)->searchable(true)->addClass('text-center'),
+                Column::make('comment')->title('Comments')->searchable(false)->orderable(false)->exportable(false)->width(200),
+                Column::make('download')->title('Download')->searchable(false)->orderable(false)->exportable(false)->width(120),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
                     ->exportable(false)

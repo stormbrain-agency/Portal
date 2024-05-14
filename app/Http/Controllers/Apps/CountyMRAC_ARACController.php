@@ -243,7 +243,7 @@ class CountyMRAC_ARACController extends Controller
 
     public function delete(Request $request, $id)
     {
-        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+        if (auth()->user()->hasRole('admin')) {
             $mrac_arac = MracArac::findOrFail($id);
             if ($mrac_arac) {
                 $mrac_arac->delete();
@@ -258,7 +258,7 @@ class CountyMRAC_ARACController extends Controller
 
     public function deleteDownloadHistory(Request $request, $id)
     {
-        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+        if (auth()->user()->hasRole('admin')) {
             $mrac_arac_download_history = MracAracDownloadHistory::where('mrac_arac_id', $id);
             if ($mrac_arac_download_history) {
                 $mrac_arac_download_history->delete();

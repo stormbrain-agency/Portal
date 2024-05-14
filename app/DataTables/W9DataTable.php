@@ -126,6 +126,25 @@ class W9DataTable extends DataTable
     public function getColumns(): array
     {
         //view layout
+        if(auth()->user()->hasRole('admin')){
+            return [
+                Column::make('id')->name("w9_upload.id")->title('ID'),
+                Column::make('created_at')->name("w9_upload.created_at")->title('Date')->orderable(true)->searchable(true),
+                Column::make('updated_at')->title('Time')->name('w9_upload.created_at')->orderable(true),
+                Column::make('w9_county_fips')->title('County Designation')->name('counties.county')->orderable(true)->searchable(true),
+                Column::make('user')->title('USER WHO SUBMITTED')->name('users.first_name')->orderable(true),
+                Column::make('email')->name("users.email")->visible(false),
+                Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->width(200),
+                Column::make('w9_file_path')->addClass('export-hidden')->title('Download')->searchable(false)->orderable(false)->visible(true)->exportable(false),
+                Column::make('delete')->addClass('text-center text-nowrap')->title('Delete')->searchable(false)->orderable(false)->visible(true)->exportable(false),
+                Column::computed('view')
+                    ->addClass('text-center text-nowrap')
+                    ->addClass('export-hidden')
+                    ->exportable(false)
+                    ->printable(false)
+                    ->width(60),
+            ];
+        }
         if (auth()->user()->hasRole('view only')) {
             return [
                 Column::make('id')->name("w9_upload.id")->title('ID'),
@@ -164,7 +183,6 @@ class W9DataTable extends DataTable
                 Column::make('email')->name("users.email")->visible(false),
                 Column::make('comment')->title('Comment')->searchable(false)->orderable(false)->width(200),
                 Column::make('w9_file_path')->addClass('export-hidden')->title('Download')->searchable(false)->orderable(false)->visible(true)->exportable(false),
-                Column::make('delete')->addClass('text-center text-nowrap')->title('Delete')->searchable(false)->orderable(false)->visible(true)->exportable(false),
                 Column::computed('view')
                     ->addClass('text-center text-nowrap')
                     ->addClass('export-hidden')

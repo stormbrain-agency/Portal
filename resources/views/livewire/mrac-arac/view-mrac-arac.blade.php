@@ -140,7 +140,7 @@
                     <div class="text-center pt-15">
                         <button type="reset" class="btn btn-light me-3" data-bs-dismiss="modal" aria-label="Close" wire:loading.attr="disabled">Discard</button>
                     </div>
-                    @if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager'))
+                    @if(auth()->user()->hasRole('admin'))
                         @if (isset($download_history) && count($download_history) > 0)
                             <div class="text-center pt-5">
                                 <button type="button" class="btn btn-danger me-3 delete-download-history" data-mrac-arac-download-id="{{ $mrac_arac_id }}" data-kt-action="delete_download_history">

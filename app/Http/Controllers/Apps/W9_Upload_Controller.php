@@ -64,7 +64,7 @@ class W9_Upload_Controller extends Controller
 
     public function delete(Request $request, $id)
     {
-        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+        if (auth()->user()->hasRole('admin')) {
             $w9_upload = W9Upload::findOrFail($id);
             if ($w9_upload) {
                 $w9_upload->delete();
@@ -79,7 +79,7 @@ class W9_Upload_Controller extends Controller
 
     public function deleteDownloadHistory(Request $request, $id)
     {
-        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('manager')) {
+        if (auth()->user()->hasRole('admin')) {
             $w9_download_history = W9DownloadHistory::where('w9_id', $id);
             if ($w9_download_history) {
                 $w9_download_history->delete();
