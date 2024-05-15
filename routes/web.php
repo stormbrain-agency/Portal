@@ -62,7 +62,7 @@ Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
             Route::get('/template/download', [PaymentReportController::class, 'downloadTemplate'])->name('download_template');
             Route::get('/downloads/{filename}', [PaymentReportController::class, 'downloadFile'])->name('download');
             Route::get('/downloads/{filename}/{payment_id}', [PaymentReportController::class, 'downloadFile'])->name('download2');
-            //delete mrac arac
+            //delete payment report
             Route::delete('/delete/{payment_id}', [PaymentReportController::class, 'delete'])->name('delete');
             //delete download history
             Route::delete('/delete-download/{payment_id}', [PaymentReportController::class, 'deleteDownloadHistory'])->name('delete_download_history');
@@ -79,7 +79,7 @@ Route::middleware(['auth', 'verified', 'check_status'])->group(function () {
             });
             //download
             Route::get('/downloadss/{w9_id}/{filename}', [W9_Upload_Controller::class, 'downloadFile'])->name('w9_download');
-            //delete
+            //delete w9
             Route::delete('/delete/{w9_id}', [W9_Upload_Controller::class, 'delete'])->name('delete');
         });
         Route::prefix('/w9_downloadhistory')->name('w9_downloadhistory.')->group(function () {
