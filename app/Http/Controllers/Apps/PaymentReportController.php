@@ -101,7 +101,7 @@ class PaymentReportController extends Controller
         }
 
         $adminEmails = User::whereHas('roles', function ($query) {
-            $query->where('name', 'admin')->orWhere('name', 'manager');
+            $query->where('name', 'admin');
         })->pluck('email');
 
         $data = [
